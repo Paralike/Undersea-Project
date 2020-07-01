@@ -9,17 +9,14 @@ namespace Undersea.BLL.DTOs
     {
         public List<UnitDto> UnitList { get; set; }
 
-        private int armyFoodNeccesity;
+        public int ArmyFoodNeccesity { get; set; }
 
-        public int ArmyFoodNeccesity
+        public static ArmyDto FromModel()
         {
-            get {
-                armyFoodNeccesity = 0;
-                foreach(var unit in UnitList)
-                    armyFoodNeccesity += unit.Price;
-                return armyFoodNeccesity; 
-            }
+            return new ArmyDto()
+            {
+                //  armyFoodNeccesity = 
+            };
         }
-
     }
 }

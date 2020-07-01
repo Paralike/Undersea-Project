@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace Undersea.BLL.DTOs
 {
-    class RankDto
+    class RegisterDto
     {
         public string Username { get; set; }
-        public int Point { get; set; }
+        public string Password { get; set; }
+        public string City { get; set; }
+
     }
 }

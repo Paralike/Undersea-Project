@@ -7,9 +7,6 @@ namespace Undersea.BLL.DTOs
 {
     class AttackDto
     {
-        public JwtSecurityToken Attacker { get; set; }
-        public Dictionary<JwtSecurityToken, ArmyDto> Battles { get; set; }
-
-        
+        public Dictionary<int, ArmyDto> Battles { get; set; }        
     }
 }

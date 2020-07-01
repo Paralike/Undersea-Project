@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Undersea.DAL.Enums;
 
 namespace Undersea.BLL.DTOs
 {
@@ -12,11 +13,5 @@ namespace Undersea.BLL.DTOs
         public int Damage { get; set; }
         public int Defense { get; set; }
         public UnitType UnitType { get; set; }
-    }
-    enum UnitType
-    {
-        Rohamfoka,
-        Csatacsiko,
-        Lezercsapa
     }
 }
