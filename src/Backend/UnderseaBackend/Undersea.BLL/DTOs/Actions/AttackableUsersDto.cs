@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Undersea.BLL.DTOs
 {
-    class UnitPurchaseDto
+    public class AttackableUsersDto
     {
-        public Dictionary<UnitDto, int> PurchasedUnits { get; set; }
+        public Dictionary<int, string> AttackableUsers { get; set; }
     }
 }

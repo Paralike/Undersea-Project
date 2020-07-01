@@ -5,18 +5,10 @@ using System.Threading;
 
 namespace Undersea.BLL.DTOs
 {
-    class ArmyDto
+    public class ArmyDto
     {
         public List<UnitDto> UnitList { get; set; }
 
         public int ArmyFoodNeccesity { get; set; }
-
-        public static ArmyDto FromModel()
-        {
-            return new ArmyDto()
-            {
-                //  armyFoodNeccesity = 
-            };
-        }
     }
 }

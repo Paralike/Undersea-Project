@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Undersea.BLL.DTOs
 {
-    class AttackDto
+    public class AttackDto
     {
         public Dictionary<int, ArmyDto> Battles { get; set; }        
     }
