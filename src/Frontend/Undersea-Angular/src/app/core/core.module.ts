@@ -12,7 +12,6 @@ import { SharedModule } from '../shared/shared.module';
   ],
   exports: [
     SharedModule
-
   ]
 })
 export class CoreModule { }
