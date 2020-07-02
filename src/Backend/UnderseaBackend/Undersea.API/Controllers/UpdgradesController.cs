@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Undersea.BLL.DTOs;
 
 namespace Undersea.API.Controllers
 {
@@ -12,5 +13,10 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class UpdgradesController : ControllerBase
     {
+        [HttpGet]
+        public async Task<ActionResult<UpgradeDto>> GetUpgrades()
+        {
+            return Ok();
+        }
     }
 }

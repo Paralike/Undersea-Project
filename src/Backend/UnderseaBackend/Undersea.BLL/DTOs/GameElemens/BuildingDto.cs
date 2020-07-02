@@ -7,7 +7,7 @@ using Undersea.DAL.Enums;
 namespace Undersea.BLL.DTOs
 {
 
-    class BuildingDto
+    public class BuildingDto
     {
         public Status Status { get; set; }
         public int Price { get; set; }

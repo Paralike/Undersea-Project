@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Undersea.BLL.DTOs;
 
 namespace Undersea.API.Controllers
 {
@@ -11,5 +12,11 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class BuildingsController : ControllerBase
     {
+        [HttpGet]
+        public async Task<ActionResult<BuildingDto>> GetBuilding()
+        {
+            return Ok();
+        }
+
     }
 }

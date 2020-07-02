@@ -5,7 +5,7 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.BLL.DTOs
 {
-    class UpgradeDto
+    public class UpgradeDto
     {
         public int Id { get; set; }
 

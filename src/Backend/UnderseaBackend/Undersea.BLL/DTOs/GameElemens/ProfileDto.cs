@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Undersea.BLL.DTOs
 {
-    class ProfileDto
+    public class ProfileDto
     {        
         public int PearlCount { get; set; }
         public int PearlProduction { get; set; }
