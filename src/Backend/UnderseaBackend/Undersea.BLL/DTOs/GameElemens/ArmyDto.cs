@@ -9,6 +9,6 @@ namespace Undersea.BLL.DTOs
     {
         public List<UnitDto> UnitList { get; set; }
 
-        public int ArmyFoodNeccesity { get; set; }
+        public int ArmyFoodNecessity { get; set; }
     }
 }
