@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body{
+    background-image: url("./assets/background/undersea_game-01.png");
+    background-repeat: no-repeat;
+
+}
+@font-face {
+    font-family: baloo;
+    src: url(assets/fonts/baloo/Baloo-Regular.ttf) format("opentype");
+  }
+
+
+
