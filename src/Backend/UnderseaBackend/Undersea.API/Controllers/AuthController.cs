@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Auth;
+using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
 {
@@ -20,6 +21,13 @@ namespace Undersea.API.Controllers
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
+        IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult> AuthenticateUser([FromBody] LoginDto login)
         {
@@ -28,21 +36,14 @@ namespace Undersea.API.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            var user = new UserDto();
-            // db-ből kiszedni user-t kiszedni
+            var user = await _authService.GetUser(login);            
 
-            if (login.Username == "johndoe" && login.Password == "def@123")
+            if (user != null)
             {
-
                 var claims = new[] {
-                    //new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-                    //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    //new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                     new Claim("Id", user.Id.ToString()),
-                    new Claim("Username", user.Username),
-                    new Claim("CityName", user.CityName),
+                    new Claim("Username", user.UserName),
                    };
-
 
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -64,9 +65,16 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser([FromBody] RegisterDto registration)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterDto registration)
         {
-            return Ok();
+            await _authService.RegisterUser(registration);
+
+            // TODO check sikeres-e a regisztráció
+            if (true)
+                return Ok();
+
+            else
+                return BadRequest();
         }
 
     }
