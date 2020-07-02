@@ -1,0 +1,21 @@
+.content{
+  width: 15vw;
+  height: 20vh;
+}
+
+.main-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 4vh;
+}
+::ng-deep .mat-dialog-container{
+  background-color: #03255F !important;
+  color: white;
+
+}
+
+.building-modal {
+  background-color: red;
+}
