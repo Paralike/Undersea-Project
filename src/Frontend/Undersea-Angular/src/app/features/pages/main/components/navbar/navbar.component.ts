@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {BuildingsComponent} from '../../../../buildings/components/buildings.component';
-import {AttackComponent} from '../../../../attack/components/attack.component';
-import {FightComponent} from '../../../../fight/components/fight.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BuildingsComponent } from '../../../../buildings/components/buildings.component';
+import { AttackComponent } from '../../../../attack/components/attack.component';
+import { FightComponent } from '../../../../fight/components/fight.component';
 
 
 

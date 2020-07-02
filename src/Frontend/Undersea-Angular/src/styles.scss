@@ -11,4 +11,8 @@ body{
     src: url(assets/fonts/baloo/Baloo-Regular.ttf) format("opentype");
   }
 
+::ng-deep .mat-dialog-container{
+  background-color: #03255F !important;
+}
+
 

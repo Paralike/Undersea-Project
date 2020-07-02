@@ -49,8 +49,11 @@ export class AuthPageComponent implements OnInit {
   login(){
     console.log("login")
     if (this.loginForm.valid) {
-      if(this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']) == 200)
-        this.router.navigate(['/main'])
+     this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(res => {
+       if(res === 200)
+       this.router.navigate(['/main'])
+     })
+
     }
 
   }
@@ -58,10 +61,11 @@ export class AuthPageComponent implements OnInit {
   register(name: string, pwd: string, cityName: string){
     console.log("register");
     if (this.registerForm.valid) {
-     if(this.authService.register(this.registerForm.value['name'], this.registerForm.value['password'], this.registerForm.value['cityName']) == 200)
-       this.router.navigate(['/main'])
-     }
-
+     this.authService.register(this.registerForm.value['name'], this.registerForm.value['password'], this.registerForm.value['cityName']).subscribe(res => {
+       if (res === 200)
+        this.router.navigate(['/main'])
+     })
+    }
   }
 
   changeMode(mode: boolean){
