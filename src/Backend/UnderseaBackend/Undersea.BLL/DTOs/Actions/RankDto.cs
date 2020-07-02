@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Undersea.BLL.DTOs
 {
-    class RankDto
+    public class RankDto
     {
         public string Username { get; set; }
         public int Point { get; set; }
