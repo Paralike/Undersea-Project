@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+body{
+    background-image: url("./assets/background/undersea_game-01.png");
+    background-repeat: no-repeat;
+
+}
+@font-face {
+    font-family: baloo;
+    src: url(assets/fonts/baloo/Baloo-Regular.ttf) format("opentype");
+  }
+
+h2{
+    color: pink;
+}
+
+h3{
+    color: gainsboro;
+}
