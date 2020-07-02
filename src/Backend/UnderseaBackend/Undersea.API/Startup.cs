@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Undersea.BLL.Services;
+using Undersea.DAL;
 
 namespace Undersea.API
 {
@@ -27,6 +31,18 @@ namespace Undersea.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>();
+
+            // b => b.MigrationsAssembly("Undersea.API")
+
+            services.AddDbContext<AppDbContext>(o =>
+                    o.UseSqlServer(Configuration["ConnectionString"]));
+
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<UserManager<IdentityUser>>();
+            services.AddTransient<SignInManager<IdentityUser>>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -61,6 +77,7 @@ namespace Undersea.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+           
 
             app.UseEndpoints(endpoints =>
             {
