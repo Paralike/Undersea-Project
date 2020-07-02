@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,9 @@ namespace Undersea.API.Controllers
         // TODO FromBody csak egy paraméterhez lehet
         public async Task<ActionResult> StartAttack([FromBody] AttackDto attack)
         {
+
+            int id = int.Parse(User.FindFirst("Id")?.Value);
+            //User-ből id-t ki lehet szedni
             return Ok();
         }
 
