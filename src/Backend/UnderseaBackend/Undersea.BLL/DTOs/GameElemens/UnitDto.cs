@@ -7,7 +7,6 @@ namespace Undersea.BLL.DTOs
 {
     public class UnitDto
     {
-        public string Name { get; set; }
         public int Price { get; set; }
         public int FoodNecessity { get; set; }
         public int Damage { get; set; }
