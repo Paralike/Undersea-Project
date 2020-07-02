@@ -13,7 +13,7 @@ import { ProfileCardComponent } from './components/profile-card/profile-card.com
   exports: [MainPageComponent, HeaderComponent,  NavbarComponent, ProfileCardComponent],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
   ]
 })
 export class MainModule { }
