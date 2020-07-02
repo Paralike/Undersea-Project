@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-attack',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AttackComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private el: ElementRef) { }
+  ngOnInit() {
+      // we added this so that when the backdrop is clicked the modal is closed.
+     
   }
-
+  
 }
+
+

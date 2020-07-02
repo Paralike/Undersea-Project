@@ -26,6 +26,15 @@ export class NavbarComponent implements OnInit {
   }
 
   openAttack() {
+    const dialogRef = this.dialog.open(AttackComponent, {
+      width: '70vw',
+      data: {},
+      backdropClass: 'backdropBackground'
+    });
+
+  }
+
+  openFights() {
     const dialogRef = this.dialog.open(FightComponent, {
       width: '70vw',
       data: {}
@@ -33,12 +42,6 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  openFights() {
-    const dialogRef = this.dialog.open(AttackComponent, {
-      width: '70vw',
-      data: {}
-    });
 
-  }
 
 }
