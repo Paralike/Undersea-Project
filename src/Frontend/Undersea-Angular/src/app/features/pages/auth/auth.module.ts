@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth_routing';
 import { AuthPageComponent } from './components/auth-page/auth-page.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 
 
@@ -9,7 +11,8 @@ import { AuthPageComponent } from './components/auth-page/auth-page.component';
   declarations: [AuthPageComponent],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ]
 })
 export class AuthModule { }

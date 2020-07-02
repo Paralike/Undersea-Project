@@ -1,1 +1,83 @@
-<p>auth-page works!</p>
+<div class = "flexbox">
+
+  <div style="height: 30vh;"></div>
+
+  <h2 class = "title">Undersea</h2>
+
+  <mat-card class = "login-card">
+
+    <h2 class="card-title">Belépés</h2>
+
+      <form *ngIf="!isReg" [formGroup]="loginForm" class="auth" (ngSubmit)="login()">
+
+          <input  id="name" name="name" type="text" formControlName="name" placeholder="Felhasználónév">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="alert-danger">
+            <div *ngIf="name.errors.required">
+              Név kitöltése költelező
+            </div>
+          </div>
+
+          <input type="password" formControlName="password" placeholder="Jelszó">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="alert-danger">
+            <div *ngIf="name.errors.required">
+              Jelszó kitöltése költelező
+            </div>
+          </div>
+
+          <button  class="auth-button" type="submit" [disabled]="!loginForm.valid">Belépés</button>
+
+      </form>
+
+      <form *ngIf="isReg" [formGroup]="registerForm" class="auth" (ngSubmit)="register()">
+
+          <input type="text" formControlName="name" placeholder="Felhasználónév">
+          <div *ngIf="namer.invalid && (namer.dirty || namer.touched)"
+            class="alert-danger">
+            <div *ngIf="namer.errors.required">
+              Név kitöltése költelező
+            </div>
+          </div>
+
+          <input id="password" class="form-control" type="password" formControlName="password" placeholder="Jelszó" minlength="8">
+          <div *ngIf="passwordr.invalid && (passwordr.dirty || passwordr.touched)"
+            class="alert-danger">
+            <div *ngIf="passwordr.errors.required">
+              Jelszó kitöltése költelező
+            </div>
+            <div *ngIf="passwordr.errors.minlength">
+              A jelszó legalább 8 karakter legyen!
+            </div>
+          </div>
+
+          <input type="password" formControlName="password2" placeholder="Jelszó megerősítése" minlength="8">
+          <div *ngIf="passwordr2.invalid && (passwordr2.dirty || passwordr2.touched)"
+            class="alert-danger">
+            <div *ngIf="passwordr2.errors.required">
+              Jelszó kitöltése költelező
+            </div>
+            <div *ngIf="passwordr2.errors.minlength">
+              A jelszó legalább 8 karakter legyen!
+            </div>
+          </div>
+
+          <input type="text" formControlName="cityName" placeholder="A városod neve, amit építesz">
+          <div *ngIf="cityNamer.invalid && (cityNamer.dirty || cityNamer.touched)"
+            class="alert-danger">
+            <div *ngIf="cityNamer.errors.required">
+              Városnáv kitöltése költelező
+            </div>
+          </div>
+
+          <button class="auth-button" type="submit" [disabled]="!registerForm.valid">Regisztráció</button>
+
+      </form>
+
+    <button *ngIf="!isReg" class = "mode-button"
+    (click) = "changeMode(true)">Regisztráció</button>
+
+    <button *ngIf="isReg" class = "mode-button"
+    (click) = "changeMode(false)">Bejelentkezés</button>
+  </mat-card>
+</div>
