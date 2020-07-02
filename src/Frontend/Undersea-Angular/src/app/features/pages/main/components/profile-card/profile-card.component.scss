@@ -1,0 +1,27 @@
+.card {
+    width: 192px;
+    height: 250px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 16px;
+    opacity: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: baloo;
+    outline: none;
+    text-align: center;
+}
+.card span {
+    display: block;
+    font-family: baloo;
+    font-size: 21px;
+    opacity: 1;
+}
+
+.card > span > img {
+    margin-top: 5%;
+    width: 70px;
+    height: 88px;
+    border: 2px solid #428DFF;
+	border-radius: 14px;
+	opacity: 1;
+}

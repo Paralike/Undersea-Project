@@ -20,7 +20,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatDialogModule
   ],
   exports: [
-    MatDialogModule
+    MatDialogModule,
     MatCardModule,
     MatButtonModule,
     MatInputModule,
