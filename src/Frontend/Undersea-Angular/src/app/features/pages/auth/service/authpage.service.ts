@@ -15,10 +15,12 @@ export class AuthpageService {
   logind = new LoginDto;
   registerd = new RegisterDto;
   public jwtHelper;
+  router: any;
 
   constructor(private authClient: AuthClient) {
     this.jwtHelper = new JwtHelperService();
   }
+
 
   login(name: string, pwd: string): Observable<AuthResponseDto> {
     this.logind.username = name;
@@ -48,6 +50,5 @@ export class AuthpageService {
       return null;
     }
     return !this.jwtHelper.isTokenExpired(token);
-    return true;
   }
 }
