@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
-import { LoginDto, AuthClient, FileResponse, RegisterDto } from 'src/app/shared';
+import { LoginDto, AuthClient, FileResponse, RegisterDto, AuthResponseDto } from 'src/app/shared';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthPageComponent } from '../components/auth-page/auth-page.component';
@@ -19,7 +19,7 @@ export class AuthpageService {
     this.jwtHelper = new JwtHelperService();
   }
 
-  login(name: string, pwd: string): Observable<FileResponse> {
+  login(name: string, pwd: string): Observable<AuthResponseDto> {
     this.logind.username = name;
     this.logind.password = pwd;
 
@@ -29,7 +29,7 @@ export class AuthpageService {
 
 
 
-  register(name: string, pwd: string, pwd2: string, cityName: string): Observable<FileResponse> {
+  register(name: string, pwd: string, pwd2: string, cityName: string): Observable<AuthResponseDto> {
 
     this.registerd.username = name;
     this.registerd.password = pwd;

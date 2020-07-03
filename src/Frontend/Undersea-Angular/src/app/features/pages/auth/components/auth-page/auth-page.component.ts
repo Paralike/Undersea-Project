@@ -52,7 +52,7 @@ export class AuthPageComponent implements OnInit {
     console.log('login');
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
-        if (res.status === 200) {
+        if (res.token == null) {
           console.log(res);
           this.router.navigate(['/main']);
         }
@@ -73,7 +73,7 @@ export class AuthPageComponent implements OnInit {
           this.registerForm.value.cityName,
           this.registerForm.value.password2
         ).subscribe(res => {
-          if (res.status === 200) {
+          if (res.token == null) {
             console.log(res);
             this.router.navigate(['/main']);
           }
