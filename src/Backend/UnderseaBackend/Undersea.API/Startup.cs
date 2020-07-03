@@ -35,14 +35,14 @@ namespace Undersea.API
             services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>();
 
-            // b => b.MigrationsAssembly("Undersea.API")
-
             services.AddDbContext<AppDbContext>(o =>
                     o.UseSqlServer(Configuration["ConnectionString"]));
 
             services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<UserManager<IdentityUser>>();
-            services.AddTransient<SignInManager<IdentityUser>>();
+
+            services.AddScoped<UserManager<IdentityUser>>();
+            services.AddScoped<SignInManager<IdentityUser>>();
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -67,9 +67,7 @@ namespace Undersea.API
 
             services.AddControllers();
 
-
-
-            // services.AddSwaggerDocument();
+            services.AddSwaggerDocument();
 
 
         }
@@ -89,20 +87,23 @@ namespace Undersea.API
 
             app.UseStaticFiles();
             app.UseOpenApi();
-            //app.UseSwaggerUi3();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+                //context.Database.Migrate();
+            }
         }
     }
 }
