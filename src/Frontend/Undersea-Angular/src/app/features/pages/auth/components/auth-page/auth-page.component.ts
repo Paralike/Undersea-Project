@@ -4,6 +4,9 @@ import { AuthpageService } from '../../service/authpage.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from '@angular/compiler/src/util';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-auth-page',
@@ -33,9 +36,9 @@ export class AuthPageComponent implements OnInit {
   constructor(private authService: AuthpageService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
+    localStorage.setItem('token', '');
   }
 
-  // tslint:disable:typedef
   get name() { return this.loginForm.get('name'); }
 
   get password() { return this.loginForm.get('password'); }
@@ -48,6 +51,7 @@ export class AuthPageComponent implements OnInit {
 
   get cityNamer() { return this.registerForm.get('cityName'); }
 
+
   login() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
@@ -57,6 +61,11 @@ export class AuthPageComponent implements OnInit {
           localStorage.setItem('token', res.token);
           this.router.navigate(['/main']);
         }
+
+      },
+      (err) => {
+        this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
+        console.error('HURKAAAAA', err);
       });
 
     }
@@ -79,6 +88,10 @@ export class AuthPageComponent implements OnInit {
             localStorage.setItem('token', res.token);
             this.router.navigate(['/main']);
           }
+          // tslint:disable-next-line:no-unused-expression
+        }, (err) => {
+          this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'kuka');
+          console.error('HURKAAAAA', err);
         });
       }
       else {
