@@ -123,6 +123,11 @@
           "text/json",
           "application/*+json"
         ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "parameters": [
           {
             "name": "login",
@@ -136,10 +141,10 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "file"
+              "$ref": "#/definitions/AuthResponseDto"
             }
           }
         }
@@ -156,6 +161,11 @@
           "text/json",
           "application/*+json"
         ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "parameters": [
           {
             "name": "registration",
@@ -169,10 +179,10 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "file"
+              "$ref": "#/definitions/AuthResponseDto"
             }
           }
         }
@@ -393,6 +403,14 @@
           "additionalProperties": {
             "type": "string"
           }
+        }
+      }
+    },
+    "AuthResponseDto": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
         }
       }
     },

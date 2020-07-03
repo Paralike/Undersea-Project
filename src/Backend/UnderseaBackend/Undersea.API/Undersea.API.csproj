@@ -29,7 +29,7 @@
 
 	<Target Name="NSwag" AfterTargets="Build">
 		<Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Core31) aspnetcore2openapi /assembly:$(TargetDir)Undersea.API.dll /output:swagger.json" />
-		<Exec Command="$(NSwagExe_Core31) openapi2tsclient /input:swagger.json /output:../../../Frontend/Undersea-Angular/src/app/shared/index.ts" />
+		<Exec Command="$(NSwagExe_Core31) run index_gen.nswag /variables:Configuration=$(Configuration) /output:../../../Frontend/Undersea-Angular/src/app/shared/index.ts" />
 	</Target>
 
 </Project>
