@@ -29,7 +29,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> AuthenticateUser([FromBody] LoginDto login)
+        public async Task<ActionResult<string>> AuthenticateUser([FromBody] LoginDto login)
         {
             if (login == null)
             {

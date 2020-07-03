@@ -109,3 +109,9 @@ input {
 .alert-danger {
   color: red;
 }
+
+::ng-deep .mat-snack-bar-container{
+  background-color: darkmagenta !important;
+  color: pink;
+}
+
