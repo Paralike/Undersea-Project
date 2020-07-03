@@ -30,7 +30,14 @@ import { JwtHelperService, JwtInterceptor, JWT_OPTIONS, JwtModule,  } from '@aut
     CoreModule,
     SharedModule,
     HttpClientModule,
-    JwtModule.forRoot({})
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['localhost:4200']
+      }
+    })
 
   ],
   providers: [

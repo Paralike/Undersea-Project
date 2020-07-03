@@ -13,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthClient } from '.';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 
 
 
@@ -41,6 +42,7 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
   ],
   providers: [
     AuthClient,
+    AuthGuardService
   ]
 
 })

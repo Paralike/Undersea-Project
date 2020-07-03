@@ -49,10 +49,10 @@ export class AuthPageComponent implements OnInit {
   get cityNamer() { return this.registerForm.get('cityName'); }
 
   login() {
-    console.log('login');
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
-        if (res.token == null) {
+        console.log(res);
+        if (res.token !== null) {
           console.log(res);
           this.router.navigate(['/main']);
         }
@@ -73,8 +73,9 @@ export class AuthPageComponent implements OnInit {
           this.registerForm.value.cityName,
           this.registerForm.value.password2
         ).subscribe(res => {
-          if (res.token == null) {
+          if (res.token != null) {
             console.log(res);
+            localStorage.setItem('token', res.token);
             this.router.navigate(['/main']);
           }
         });

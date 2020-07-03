@@ -14,8 +14,9 @@ export class AuthpageService {
   // tslint:disable:new-parens
   logind = new LoginDto;
   registerd = new RegisterDto;
+  public jwtHelper;
 
-  constructor(private authClient: AuthClient, public jwtHelper: JwtHelperService) {
+  constructor(private authClient: AuthClient) {
     this.jwtHelper = new JwtHelperService();
   }
 
@@ -43,7 +44,10 @@ export class AuthpageService {
     const token = localStorage.getItem('token');
     // Check whether the token is expired and return
     // true or false
-    // return !this.jwtHelper.isTokenExpired(token);
+    if (token === null) {
+      return null;
+    }
+    return !this.jwtHelper.isTokenExpired(token);
     return true;
   }
 }
