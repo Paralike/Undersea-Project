@@ -1,8 +1,8 @@
 import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
-import { AuthpageService } from '../../service/authpage.service'
+import { AuthpageService } from '../../service/authpage.service';
 
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule  } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-page',
@@ -24,51 +24,51 @@ export class AuthPageComponent implements OnInit {
       Validators.required,
       Validators.minLength(8)]),
     password2: new FormControl('',
-     Validators.required),
+      Validators.required),
     cityName: new FormControl('', Validators.required),
 
   });
 
-  constructor(private authService: AuthpageService, private router: Router ) {}
+  constructor(private authService: AuthpageService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  get name() {return this.loginForm.get('name')}
+  get name() { return this.loginForm.get('name'); }
 
-  get password() {return this.loginForm.get('password')}
+  get password() { return this.loginForm.get('password'); }
 
-  get namer() {return this.registerForm.get('name')}
+  get namer() { return this.registerForm.get('name'); }
 
-  get passwordr() {return this.registerForm.get('password')}
+  get passwordr() { return this.registerForm.get('password'); }
 
-  get passwordr2() {return this.registerForm.get('password2')}
+  get passwordr2() { return this.registerForm.get('password2'); }
 
-  get cityNamer() {return this.registerForm.get('cityName')}
+  get cityNamer() { return this.registerForm.get('cityName'); }
 
-  login(){
+  login() {
     console.log("login")
     if (this.loginForm.valid) {
-     this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(res => {
-       if(res === 200)
-       this.router.navigate(['/main'])
-     })
+      this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(res => {
+        if (res.status === 200)
+          this.router.navigate(['/main'])
+      })
 
     }
 
   }
 
-  register(name: string, pwd: string, cityName: string){
+  register(name: string, pwd: string, cityName: string) {
     console.log("register");
     if (this.registerForm.valid) {
-     this.authService.register(this.registerForm.value['name'], this.registerForm.value['password'], this.registerForm.value['cityName']).subscribe(res => {
-       if (res === 200)
-        this.router.navigate(['/main'])
-     })
+      this.authService.register(this.registerForm.value['name'], this.registerForm.value['password'], this.registerForm.value['cityName']).subscribe(res => {
+        if (res.status === 200)
+          this.router.navigate(['/main'])
+      })
     }
   }
 
-  changeMode(mode: boolean){
+  changeMode(mode: boolean) {
     this.isReg = mode;
     this.ngOnInit();
   }

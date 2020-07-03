@@ -12,21 +12,23 @@ export class AuthpageService {
   logind = new LoginDto;
   registerd = new RegisterDto;
 
-  constructor() { }
+  constructor(private authClient: AuthClient) { }
 
-  login(name: string, pwd: string): Observable<Number>{
-    this.logind.password = pwd;
+  login(name: string, pwd: string): Observable<FileResponse> {
     this.logind.username = name;
+    this.logind.password = pwd;
 
-  // return from(this.authClient.authenticateUser(this.logind))
-    return of(200);
-    
+    return from(this.authClient.authenticateUser(this.logind))
+
+
   }
 
-  register(name: string, pwd: string, cityName: string): Observable<Number>{
-    this.registerd.init([name, pwd, cityName]);
+  register(name: string, pwd: string, cityName: string): Observable<FileResponse> {
+    this.registerd.username = name;
+    this.registerd.password = pwd;
+    this.registerd.city = cityName;
 
-   // return from(this.authClient.registerUser(this.registerd))
-    return of(200);
+    return from(this.authClient.registerUser(this.registerd));
+
   }
 }
