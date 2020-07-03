@@ -3,3 +3,7 @@
 ################################################################################
 
 /src/Backend/UnderseaBackend/Undersea.DAL/obj
+/src/Backend/UnderseaBackend/Undersea.BLL/obj
+/src/Backend/UnderseaBackend/Undersea.API/obj
+/src/Backend/UnderseaBackend/.vs/UnderseaBackend/v16
+/.vs

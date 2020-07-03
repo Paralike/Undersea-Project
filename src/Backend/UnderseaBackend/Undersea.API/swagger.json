@@ -1,0 +1,556 @@
+{
+  "x-generator": "NSwag v13.6.2.0 (NJsonSchema v10.1.23.0 (Newtonsoft.Json v12.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/Army": {
+      "get": {
+        "tags": [
+          "Army"
+        ],
+        "operationId": "Army_GetArmy",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UnitDto"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Army"
+        ],
+        "operationId": "Army_PurchaseUnits",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "purchase",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UnitPurchaseDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/Attack": {
+      "post": {
+        "tags": [
+          "Attack"
+        ],
+        "operationId": "Attack_StartAttack",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "attack",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AttackDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Attack"
+        ],
+        "operationId": "Attack_GetAttackableUsers",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AttackableUsersDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Auth_AuthenticateUser",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Auth_RegisterUser",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "registration",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/Buildings": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "operationId": "Buildings_GetBuilding",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/BuildingDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/{id}": {
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_DeleteProfile",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProfileDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_GetProfile",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProfileDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/ranks": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_GetRanks",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/Updgrades": {
+      "get": {
+        "tags": [
+          "Updgrades"
+        ],
+        "operationId": "Updgrades_GetUpgrades",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpgradeDto"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UnitDto": {
+      "type": "object",
+      "required": [
+        "price",
+        "foodNecessity",
+        "damage",
+        "defense",
+        "unitType"
+      ],
+      "properties": {
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "foodNecessity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "damage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "defense": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unitType": {
+          "$ref": "#/definitions/UnitType"
+        }
+      }
+    },
+    "UnitType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Rohamfoka",
+        "Csatacsiko",
+        "Lezercsapa"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "UnitPurchaseDto": {
+      "type": "object",
+      "properties": {
+        "purchasedUnits": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "AttackDto": {
+      "type": "object",
+      "properties": {
+        "battles": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ArmyDto"
+          }
+        }
+      }
+    },
+    "ArmyDto": {
+      "type": "object",
+      "required": [
+        "armyFoodNecessity"
+      ],
+      "properties": {
+        "unitList": {
+          "type": "object",
+          "x-dictionaryKey": {
+            "$ref": "#/definitions/UnitType"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "armyFoodNecessity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "AttackableUsersDto": {
+      "type": "object",
+      "properties": {
+        "attackableUsers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "LoginDto": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "minLength": 1
+        },
+        "password": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "RegisterDto": {
+      "type": "object",
+      "required": [
+        "username",
+        "password",
+        "city"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "minLength": 1
+        },
+        "password": {
+          "type": "string",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "BuildingDto": {
+      "type": "object",
+      "required": [
+        "status",
+        "price",
+        "turnCount",
+        "buildingType"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/Status"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "turnCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "buildingType": {
+          "$ref": "#/definitions/BuildingType"
+        }
+      }
+    },
+    "Status": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "InProgress",
+        "Done",
+        "UnBuilt"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "BuildingType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Aramlasiranyito",
+        "Zatonyvar"
+      ],
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "ProfileDto": {
+      "type": "object",
+      "required": [
+        "pearlCount",
+        "pearlProduction",
+        "coralCount",
+        "coralProduction"
+      ],
+      "properties": {
+        "pearlCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pearlProduction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "coralCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "coralProduction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "buildings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BuildingDto"
+          }
+        },
+        "upgrades": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UpgradeDto"
+          }
+        },
+        "army": {
+          "$ref": "#/definitions/ArmyDto"
+        }
+      }
+    },
+    "UpgradeDto": {
+      "type": "object",
+      "required": [
+        "id",
+        "turnCount",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "turnCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
+        }
+      }
+    }
+  }
+}
