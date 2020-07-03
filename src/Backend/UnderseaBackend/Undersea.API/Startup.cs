@@ -60,12 +60,16 @@ namespace Undersea.API
                     ValidAudience = "http://localhost:5000",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
                 };
-                services.AddCors();
+
             });
+
+            services.AddCors();
 
             services.AddControllers();
 
-            services.AddSwaggerDocument();
+
+
+            // services.AddSwaggerDocument();
 
 
         }
@@ -77,23 +81,26 @@ namespace Undersea.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(
+            options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );
+
+
             app.UseStaticFiles();
             app.UseOpenApi();
-            app.UseSwaggerUi3();
+            //app.UseSwaggerUi3();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors(
-            options => options.WithOrigins("http://localhost:5000").AllowAnyMethod()
-             );
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            }); 
+            });
         }
     }
 }
