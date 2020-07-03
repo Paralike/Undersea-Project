@@ -24,7 +24,8 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
     MatDialogModule,
     MatGridListModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSnackBarModule
   ],
   exports: [
     MatDialogModule,

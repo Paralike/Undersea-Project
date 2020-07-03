@@ -3,6 +3,7 @@ import { AuthpageService } from '../../service/authpage.service';
 
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-auth-page',
@@ -29,11 +30,12 @@ export class AuthPageComponent implements OnInit {
 
   });
 
-  constructor(private authService: AuthpageService, private router: Router) { }
+  constructor(private authService: AuthpageService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
 
+  // tslint:disable:typedef
   get name() { return this.loginForm.get('name'); }
 
   get password() { return this.loginForm.get('password'); }
@@ -47,24 +49,41 @@ export class AuthPageComponent implements OnInit {
   get cityNamer() { return this.registerForm.get('cityName'); }
 
   login() {
-    console.log("login")
+    console.log('login');
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value['name'], this.loginForm.value['password']).subscribe(res => {
-        if (res.status === 200)
-          this.router.navigate(['/main'])
-      })
+      this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
+        if (res.status === 200) {
+          console.log(res);
+          this.router.navigate(['/main']);
+        }
+      });
 
     }
 
   }
 
-  register(name: string, pwd: string, cityName: string) {
-    console.log("register");
+
+  register() {
+
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value['name'], this.registerForm.value['password'], this.registerForm.value['cityName']).subscribe(res => {
-        if (res.status === 200)
-          this.router.navigate(['/main'])
-      })
+      if (this.registerForm.value.password === this.registerForm.value.password2) {
+        this.authService.register(
+          this.registerForm.value.name,
+          this.registerForm.value.password,
+          this.registerForm.value.cityName,
+          this.registerForm.value.password2
+        ).subscribe(res => {
+          if (res.status === 200) {
+            console.log(res);
+            this.router.navigate(['/main']);
+          }
+        });
+      }
+      else {
+        this.snackbar.open('A 2 jelszó nem egyezik', 'kuka', {
+          duration: 5000
+        });
+      }
     }
   }
 

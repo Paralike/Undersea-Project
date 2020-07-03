@@ -15,4 +15,9 @@ body{
   background-color: #03255F !important;
 }
 
+::ng-deep .mat-snack-bar-container{
+  background-color: darkmagenta !important;
+  color: pink;
+}
+
 

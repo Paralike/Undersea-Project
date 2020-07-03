@@ -9,12 +9,17 @@ import { MainModule } from './features/pages/main/main.module';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
-import { HttpHandler, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpHandler, HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtHelperService, JwtInterceptor, JWT_OPTIONS, JwtModule,  } from '@auth0/angular-jwt';
+
+
+
+
 
 
 @NgModule({
   declarations: [
-   AppComponent,
+    AppComponent,
 
   ],
   imports: [
@@ -24,11 +29,14 @@ import { HttpHandler, HttpClient, HttpClientModule } from '@angular/common/http'
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({})
 
   ],
   providers: [
-    HttpClient
+    HttpClient,
+    JwtHelperService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
