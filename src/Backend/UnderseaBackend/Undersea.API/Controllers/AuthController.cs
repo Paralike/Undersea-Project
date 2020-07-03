@@ -29,52 +29,48 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost("login")]
+<<<<<<< HEAD
         public async Task<ActionResult<string>> AuthenticateUser([FromBody] LoginDto login)
+=======
+        public async Task<ActionResult<AuthResponseDto>> AuthenticateUser([FromBody] LoginDto login)
+>>>>>>> 0fa85993e032cd2fe64a851270880fea832d1161
         {
             if (login == null)
             {
                 return BadRequest("Invalid client request");
             }
 
-            var user = await _authService.GetUser(login);            
+            var user = await _authService.GetUser(login);
 
-            if (user != null)
+            var response = _authService.GetToken(user);
+
+            if (response != null)
             {
-                var claims = new[] {
-                    new Claim("Id", user.Id.ToString()),
-                    new Claim("Username", user.UserName),
-                   };
-
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:5000",
-                    audience: "http://localhost:5000",
-                    claims: new List<Claim>(), 
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+                return Ok(response);
             }
 
             else
+            {
                 return Unauthorized();
+            }
+
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterDto registration)
+        public async Task<ActionResult<AuthResponseDto>> RegisterUser([FromBody] RegisterDto registration)
         {
-            await _authService.RegisterUser(registration);
+            var result = await _authService.RegisterUser(registration);
 
-            // TODO check sikeres-e a regisztráció
-            if (true)
-                return Ok();
+            if (result != null)
+            {
+                return Ok(result);
+            }
 
             else
+            {
                 return BadRequest();
+            }
+
         }
 
     }
