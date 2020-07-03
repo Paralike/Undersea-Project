@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Undersea.BLL.Services;
 using Undersea.DAL;
 
+
 namespace Undersea.API
 {
     public class Startup
@@ -63,6 +64,10 @@ namespace Undersea.API
             });
 
             services.AddControllers();
+
+            services.AddSwaggerDocument();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +77,9 @@ namespace Undersea.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
 
@@ -85,7 +93,7 @@ namespace Undersea.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            }); 
         }
     }
 }

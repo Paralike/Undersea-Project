@@ -24,7 +24,7 @@ namespace Undersea.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("ranks")]
         public async Task<ActionResult> GetRanks()
         {
             return Ok();
