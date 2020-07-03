@@ -77,7 +77,10 @@ namespace Undersea.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-           
+
+            app.UseCors(
+            options => options.WithOrigins("http://localhost:5000").AllowAnyMethod()
+             );
 
             app.UseEndpoints(endpoints =>
             {
