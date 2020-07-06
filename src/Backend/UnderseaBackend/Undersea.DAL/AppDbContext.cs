@@ -1,23 +1,26 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using Undersea.DAL.Models;
 
 namespace Undersea.DAL
 {
-    public class AppDbContext : IdentityDbContext<User>
+    public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
           : base(options)
         {
+            //Database.Migrate();
         }
 
-        public DbSet<Army> Army { get; set; }
-        public DbSet<Attack> Attack { get; set; }
-        public DbSet<BuildingAttributes> BuildingAttributes { get; set; }
-        public DbSet<City> Profile { get; set; }
-        public DbSet<Unit> Unit { get; set; }
-        public DbSet<Upgrade> Upgrade { get; set; }
-        public DbSet<UpgradeAttributes> UpgradeAttributes { get; set; }
+        public DbSet<Army> Armies { get; set; }
+        public DbSet<Attack> Attacks { get; set; }
+        public DbSet<BuildingAttribute> BuildingAttributes { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Unit> Units { get; set; }
+        public DbSet<Upgrade> Upgrades { get; set; }
+        public DbSet<UpgradeAttribute> UpgradeAttributes { get; set; }
         public DbSet<BuildingAttributeJoin> CityBuildings { get; set; }
         public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
 
@@ -41,11 +44,14 @@ namespace Undersea.DAL
             {
                 entity.HasOne(a => a.Army)
                     .WithMany(a => a.Attacks)
-                    .HasForeignKey(a => a.ArmyId);
+                    .HasForeignKey(a => a.ArmyId)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(a => a.AttackerCity)
-                .WithMany(c => c.Attacks)
-                .HasForeignKey(a => a.AttackerCityId);
+                    .WithMany(c => c.Attacks)
+                    .HasForeignKey(a => a.AttackerCityId)
+                    .OnDelete(DeleteBehavior.NoAction);               
+                
             });
 
             modelBuilder.Entity<City>(entity =>

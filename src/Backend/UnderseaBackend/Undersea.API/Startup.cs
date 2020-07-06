@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 using Undersea.BLL.Services;
 using Undersea.DAL;
@@ -26,7 +27,7 @@ namespace Undersea.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<AppDbContext>(o =>

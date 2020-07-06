@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
@@ -11,7 +11,7 @@ namespace Undersea.DAL.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -25,7 +25,7 @@ namespace Undersea.DAL.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -50,7 +50,7 @@ namespace Undersea.DAL.Migrations
                 name: "BuildingAttributes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Resident = table.Column<int>(nullable: false),
                     Coral = table.Column<int>(nullable: false),
                     HostCapacity = table.Column<int>(nullable: false)
@@ -64,7 +64,7 @@ namespace Undersea.DAL.Migrations
                 name: "UpgradeAttributes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CoralProduction = table.Column<int>(nullable: false),
                     DefensePoints = table.Column<int>(nullable: false),
                     AttackPoints = table.Column<int>(nullable: false),
@@ -81,7 +81,7 @@ namespace Undersea.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -102,7 +102,7 @@ namespace Undersea.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -124,7 +124,7 @@ namespace Undersea.DAL.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,8 +141,8 @@ namespace Undersea.DAL.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,7 +165,7 @@ namespace Undersea.DAL.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -182,11 +182,11 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Profile",
+                name: "Cities",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    Id = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     PearlCount = table.Column<int>(nullable: false),
                     PearlProduction = table.Column<int>(nullable: false),
@@ -196,9 +196,9 @@ namespace Undersea.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profile", x => x.UserId);
+                    table.PrimaryKey("PK_Cities", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Profile_AspNetUsers_UserId",
+                        name: "FK_Cities_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -206,97 +206,95 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Army",
+                name: "Armies",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    CityId = table.Column<string>(nullable: true)
+                    Id = table.Column<Guid>(nullable: false),
+                    CityId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Army", x => x.Id);
+                    table.PrimaryKey("PK_Armies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Army_Profile_CityId",
+                        name: "FK_Armies_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "Profile",
+                        principalTable: "Cities",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Building",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     BuildingType = table.Column<int>(nullable: false),
-                    CityId = table.Column<string>(nullable: true),
+                    CityId = table.Column<Guid>(nullable: false),
                     CurrentTurn = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Building", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Building_Profile_CityId",
+                        name: "FK_Building_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "Profile",
+                        principalTable: "Cities",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Upgrade",
+                name: "Upgrades",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     UpgradeType = table.Column<int>(nullable: false),
-                    CityId = table.Column<string>(nullable: true),
+                    CityId = table.Column<Guid>(nullable: false),
                     CurrentTurn = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Upgrade", x => x.Id);
+                    table.PrimaryKey("PK_Upgrades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Upgrade_Profile_CityId",
+                        name: "FK_Upgrades_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "Profile",
+                        principalTable: "Cities",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attack",
+                name: "Attacks",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    AttackerCityId = table.Column<string>(nullable: true),
-                    DefenderCityId = table.Column<string>(nullable: true),
-                    ArmyId = table.Column<string>(nullable: true)
+                    Id = table.Column<Guid>(nullable: false),
+                    AttackerCityId = table.Column<Guid>(nullable: false),
+                    DefenderCityId = table.Column<Guid>(nullable: false),
+                    ArmyId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attack", x => x.Id);
+                    table.PrimaryKey("PK_Attacks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attack_Army_ArmyId",
+                        name: "FK_Attacks_Armies_ArmyId",
                         column: x => x.ArmyId,
-                        principalTable: "Army",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalTable: "Armies",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Attack_Profile_AttackerCityId",
+                        name: "FK_Attacks_Cities_AttackerCityId",
                         column: x => x.AttackerCityId,
-                        principalTable: "Profile",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalTable: "Cities",
+                        principalColumn: "UserId");
                     table.ForeignKey(
-                        name: "FK_Attack_Profile_DefenderCityId",
+                        name: "FK_Attacks_Cities_DefenderCityId",
                         column: x => x.DefenderCityId,
-                        principalTable: "Profile",
+                        principalTable: "Cities",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Unit",
+                name: "Units",
                 columns: table => new
                 {
                     UnitType = table.Column<int>(nullable: false),
@@ -304,15 +302,15 @@ namespace Undersea.DAL.Migrations
                     FoodNecessity = table.Column<int>(nullable: false),
                     Damage = table.Column<int>(nullable: false),
                     Defense = table.Column<int>(nullable: false),
-                    ArmyId = table.Column<string>(nullable: true)
+                    ArmyId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Unit", x => x.UnitType);
+                    table.PrimaryKey("PK_Units", x => x.UnitType);
                     table.ForeignKey(
-                        name: "FK_Unit_Army_ArmyId",
+                        name: "FK_Units_Armies_ArmyId",
                         column: x => x.ArmyId,
-                        principalTable: "Army",
+                        principalTable: "Armies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -321,8 +319,8 @@ namespace Undersea.DAL.Migrations
                 name: "CityBuildings",
                 columns: table => new
                 {
-                    BuildingAttributeId = table.Column<string>(nullable: false),
-                    BuildingId = table.Column<string>(nullable: false)
+                    BuildingAttributeId = table.Column<Guid>(nullable: false),
+                    BuildingId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -345,8 +343,8 @@ namespace Undersea.DAL.Migrations
                 name: "CityUpgrades",
                 columns: table => new
                 {
-                    UpgradeAttributeId = table.Column<string>(nullable: false),
-                    UpgradeId = table.Column<string>(nullable: false)
+                    UpgradeAttributeId = table.Column<Guid>(nullable: false),
+                    UpgradeId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -358,16 +356,16 @@ namespace Undersea.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CityUpgrades_Upgrade_UpgradeId",
+                        name: "FK_CityUpgrades_Upgrades_UpgradeId",
                         column: x => x.UpgradeId,
-                        principalTable: "Upgrade",
+                        principalTable: "Upgrades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Army_CityId",
-                table: "Army",
+                name: "IX_Armies_CityId",
+                table: "Armies",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
@@ -410,18 +408,18 @@ namespace Undersea.DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attack_ArmyId",
-                table: "Attack",
+                name: "IX_Attacks_ArmyId",
+                table: "Attacks",
                 column: "ArmyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attack_AttackerCityId",
-                table: "Attack",
+                name: "IX_Attacks_AttackerCityId",
+                table: "Attacks",
                 column: "AttackerCityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attack_DefenderCityId",
-                table: "Attack",
+                name: "IX_Attacks_DefenderCityId",
+                table: "Attacks",
                 column: "DefenderCityId");
 
             migrationBuilder.CreateIndex(
@@ -440,13 +438,13 @@ namespace Undersea.DAL.Migrations
                 column: "UpgradeAttributeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Unit_ArmyId",
-                table: "Unit",
+                name: "IX_Units_ArmyId",
+                table: "Units",
                 column: "ArmyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Upgrade_CityId",
-                table: "Upgrade",
+                name: "IX_Upgrades_CityId",
+                table: "Upgrades",
                 column: "CityId");
         }
 
@@ -468,7 +466,7 @@ namespace Undersea.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Attack");
+                name: "Attacks");
 
             migrationBuilder.DropTable(
                 name: "CityBuildings");
@@ -477,7 +475,7 @@ namespace Undersea.DAL.Migrations
                 name: "CityUpgrades");
 
             migrationBuilder.DropTable(
-                name: "Unit");
+                name: "Units");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -492,13 +490,13 @@ namespace Undersea.DAL.Migrations
                 name: "UpgradeAttributes");
 
             migrationBuilder.DropTable(
-                name: "Upgrade");
+                name: "Upgrades");
 
             migrationBuilder.DropTable(
-                name: "Army");
+                name: "Armies");
 
             migrationBuilder.DropTable(
-                name: "Profile");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

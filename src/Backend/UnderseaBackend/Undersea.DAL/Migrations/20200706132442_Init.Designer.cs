@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200706121212_Guid")]
-    partial class Guid
+    [Migration("20200706132442_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,10 +21,11 @@ namespace Undersea.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -48,7 +49,7 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,9 +62,8 @@ namespace Undersea.DAL.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -72,7 +72,7 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,9 +85,8 @@ namespace Undersea.DAL.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -96,7 +95,7 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -107,9 +106,8 @@ namespace Undersea.DAL.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -118,13 +116,13 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -133,10 +131,10 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -158,29 +156,30 @@ namespace Undersea.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Army");
+                    b.ToTable("Armies");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Attack", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ArmyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AttackerCityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AttackerCityId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("DefenderCityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("DefenderCityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -190,19 +189,20 @@ namespace Undersea.DAL.Migrations
 
                     b.HasIndex("DefenderCityId");
 
-                    b.ToTable("Attack");
+                    b.ToTable("Attacks");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Building", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("BuildingType")
                         .HasColumnType("int");
 
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CurrentTurn")
                         .HasColumnType("int");
@@ -214,25 +214,11 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("Building");
                 });
 
-            modelBuilder.Entity("Undersea.DAL.Models.BuildingAttributeJoin", b =>
+            modelBuilder.Entity("Undersea.DAL.Models.BuildingAttribute", b =>
                 {
-                    b.Property<string>("BuildingId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BuildingAttributeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("BuildingId", "BuildingAttributeId");
-
-                    b.HasIndex("BuildingAttributeId");
-
-                    b.ToTable("CityBuildings");
-                });
-
-            modelBuilder.Entity("Undersea.DAL.Models.BuildingAttributes", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Coral")
                         .HasColumnType("int");
@@ -248,10 +234,25 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("BuildingAttributes");
                 });
 
+            modelBuilder.Entity("Undersea.DAL.Models.BuildingAttributeJoin", b =>
+                {
+                    b.Property<Guid>("BuildingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BuildingAttributeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BuildingId", "BuildingAttributeId");
+
+                    b.HasIndex("BuildingAttributeId");
+
+                    b.ToTable("CityBuildings");
+                });
+
             modelBuilder.Entity("Undersea.DAL.Models.City", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CoralCount")
                         .HasColumnType("int");
@@ -259,8 +260,8 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("CoralProduction")
                         .HasColumnType("int");
 
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -276,7 +277,7 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Profile");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Unit", b =>
@@ -303,16 +304,17 @@ namespace Undersea.DAL.Migrations
 
                     b.HasIndex("ArmyId");
 
-                    b.ToTable("Unit");
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CurrentTurn")
                         .HasColumnType("int");
@@ -324,28 +326,14 @@ namespace Undersea.DAL.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Upgrade");
+                    b.ToTable("Upgrades");
                 });
 
-            modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
+            modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttribute", b =>
                 {
-                    b.Property<string>("UpgradeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UpgradeAttributeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UpgradeId", "UpgradeAttributeId");
-
-                    b.HasIndex("UpgradeAttributeId");
-
-                    b.ToTable("CityUpgrades");
-                });
-
-            modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributes", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AttackPoints")
                         .HasColumnType("int");
@@ -364,10 +352,26 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("UpgradeAttributes");
                 });
 
+            modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
+                {
+                    b.Property<Guid>("UpgradeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UpgradeAttributeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UpgradeId", "UpgradeAttributeId");
+
+                    b.HasIndex("UpgradeAttributeId");
+
+                    b.ToTable("CityUpgrades");
+                });
+
             modelBuilder.Entity("Undersea.DAL.Models.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -429,16 +433,16 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.User", null)
                         .WithMany()
@@ -447,7 +451,7 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.User", null)
                         .WithMany()
@@ -456,9 +460,9 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -471,7 +475,7 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.User", null)
                         .WithMany()
@@ -484,7 +488,9 @@ namespace Undersea.DAL.Migrations
                 {
                     b.HasOne("Undersea.DAL.Models.City", "City")
                         .WithMany("Armies")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Attack", b =>
@@ -492,29 +498,35 @@ namespace Undersea.DAL.Migrations
                     b.HasOne("Undersea.DAL.Models.Army", "Army")
                         .WithMany("Attacks")
                         .HasForeignKey("ArmyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Undersea.DAL.Models.City", "AttackerCity")
                         .WithMany("Attacks")
-                        .HasForeignKey("AttackerCityId");
+                        .HasForeignKey("AttackerCityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Undersea.DAL.Models.City", "DefenderCity")
                         .WithMany()
-                        .HasForeignKey("DefenderCityId");
+                        .HasForeignKey("DefenderCityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Building", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.City", "City")
                         .WithMany("Buildings")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.BuildingAttributeJoin", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.BuildingAttributes", "BuildingAttribute")
-                        .WithMany("BuildingAttribute")
+                    b.HasOne("Undersea.DAL.Models.BuildingAttribute", "BuildingAttribute")
+                        .WithMany("BuildingAttributes")
                         .HasForeignKey("BuildingAttributeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -546,12 +558,14 @@ namespace Undersea.DAL.Migrations
                 {
                     b.HasOne("Undersea.DAL.Models.City", "City")
                         .WithMany("Upgrades")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.UpgradeAttributes", "UpgradeAttribute")
+                    b.HasOne("Undersea.DAL.Models.UpgradeAttribute", "UpgradeAttribute")
                         .WithMany()
                         .HasForeignKey("UpgradeAttributeId")
                         .OnDelete(DeleteBehavior.Cascade)

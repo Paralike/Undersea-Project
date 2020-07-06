@@ -1,10 +1,12 @@
-﻿namespace Undersea.DAL.Models
+﻿using System;
+
+namespace Undersea.DAL.Models
 {
     public class BuildingAttributeJoin
     {
-        public string BuildingAttributeId { get; set; }
-        public BuildingAttributes BuildingAttribute { get; set; }
-        public string BuildingId { get; set; }
+        public Guid BuildingAttributeId { get; set; }
+        public BuildingAttribute BuildingAttribute { get; set; }
+        public Guid BuildingId { get; set; }
         public Building Building { get; set; }
 
     }

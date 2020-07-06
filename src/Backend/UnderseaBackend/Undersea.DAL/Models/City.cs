@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Undersea.DAL.Models
 {
     public class City
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public User User { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public int PearlCount { get; set; }
         public int PearlProduction { get; set; }
         public int CoralCount { get; set; }

@@ -1,10 +1,12 @@
-﻿namespace Undersea.DAL.Models
+﻿using System;
+
+namespace Undersea.DAL.Models
 {
     public class UpgradeAttributeJoin
     {
-        public string UpgradeAttributeId { get; set; }
-        public UpgradeAttributes UpgradeAttribute { get; set; }
-        public string UpgradeId { get; set; }
+        public Guid UpgradeAttributeId { get; set; }
+        public UpgradeAttribute UpgradeAttribute { get; set; }
+        public Guid UpgradeId { get; set; }
         public Upgrade Upgrade { get; set; }
     }
 }
