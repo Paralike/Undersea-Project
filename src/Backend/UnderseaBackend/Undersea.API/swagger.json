@@ -469,12 +469,6 @@
           "type": "integer",
           "format": "int32"
         },
-        "description": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
         "turnCount": {
           "type": "integer",
           "format": "int32"

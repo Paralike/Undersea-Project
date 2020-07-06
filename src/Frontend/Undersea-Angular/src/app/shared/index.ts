@@ -1004,7 +1004,6 @@ export interface IRegisterDto {
 export class BuildingDto implements IBuildingDto {
     status!: Status;
     price!: number;
-    description?: string[] | undefined;
     turnCount!: number;
     buildingType!: BuildingType;
 
@@ -1021,11 +1020,6 @@ export class BuildingDto implements IBuildingDto {
         if (_data) {
             this.status = _data["status"];
             this.price = _data["price"];
-            if (Array.isArray(_data["description"])) {
-                this.description = [] as any;
-                for (let item of _data["description"])
-                    this.description!.push(item);
-            }
             this.turnCount = _data["turnCount"];
             this.buildingType = _data["buildingType"];
         }
@@ -1042,11 +1036,6 @@ export class BuildingDto implements IBuildingDto {
         data = typeof data === 'object' ? data : {};
         data["status"] = this.status;
         data["price"] = this.price;
-        if (Array.isArray(this.description)) {
-            data["description"] = [];
-            for (let item of this.description)
-                data["description"].push(item);
-        }
         data["turnCount"] = this.turnCount;
         data["buildingType"] = this.buildingType;
         return data; 
@@ -1056,7 +1045,6 @@ export class BuildingDto implements IBuildingDto {
 export interface IBuildingDto {
     status: Status;
     price: number;
-    description?: string[] | undefined;
     turnCount: number;
     buildingType: BuildingType;
 }
