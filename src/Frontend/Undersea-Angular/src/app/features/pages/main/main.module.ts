@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 import { BuildingsComponent } from '../../buildings/components/buildings.component';
+import { AttackComponent } from '../../attack/components/attack.component'
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -16,9 +17,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HeaderComponent,
     NavbarComponent,
     ProfileCardComponent,
-    BuildingsComponent
+    BuildingsComponent,
+    AttackComponent
   ],
-  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent],
+  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent],
   imports: [
     CommonModule,
     MainRoutingModule,

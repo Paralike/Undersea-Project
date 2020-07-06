@@ -1,5 +1,29 @@
 <div class="container">
+    <h1>Támadás</h1>
     <div class="infos">
-        Felhasználónév
+        <table>
+            <tr>
+                <th>1. Jelöld ki, kit szeretnél megtámadni!</th>
+                <th>2. Állítsd be, kiket küldessz harcba!</th>
+            </tr>
+            <tr>
+                <td><input class="search" type="text" placeholder="Felhasználónév"></td>
+                <td><img src='assets/images/007-shark.svg'>Lézercápa: <input class="slider" type="number" [value] = "matslider?.value"> példány <mat-slider #matslider class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><img src='assets/images/025-seal.svg'>Rohamfóka: <input class="slider" type="number" [value] = "matslider2?.value"> példány <mat-slider #matslider2 class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><img src='assets/images/013-seahorse.svg'>Csatacsikó: <input class="slider" type="number" [value] = "matslider3?.value"> példány <mat-slider #matslider3 class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
+            </tr>
+           
+        </table>
+       
     </div>
+
+    <h3></h3>
+   
 </div>
+

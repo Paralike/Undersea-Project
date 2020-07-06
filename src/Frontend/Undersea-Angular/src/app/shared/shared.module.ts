@@ -11,10 +11,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { AuthClient } from '.';
+import { AuthClient, ProfileClient, BuildingsClient } from '.';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
-
+import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 
@@ -26,7 +27,9 @@ import { AuthGuardService } from '../features/pages/auth/service/auth-guard.serv
     MatGridListModule,
     MatCardModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSliderModule,
+    MatSelectModule
   ],
   exports: [
     MatDialogModule,
@@ -38,11 +41,15 @@ import { AuthGuardService } from '../features/pages/auth/service/auth-guard.serv
     ReactiveFormsModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSliderModule,
+    MatSelectModule
   ],
   providers: [
     AuthClient,
-    AuthGuardService
+    AuthGuardService,
+    ProfileClient,
+    BuildingsClient
   ]
 
 })

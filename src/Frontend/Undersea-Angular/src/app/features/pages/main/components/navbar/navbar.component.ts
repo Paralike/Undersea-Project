@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { BuildingsComponent } from '../../../../buildings/components/buildings.component';
 import { AttackComponent } from '../../../../attack/components/attack.component';
 import { FightComponent } from '../../../../fight/components/fight.component';
+import { RankComponent } from '../../../../rank/components/rank.component';
+import { ArmyComponent } from '../../../../army/components/army.component';
 
 
 
@@ -27,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
   openAttack() {
     const dialogRef = this.dialog.open(AttackComponent, {
-      width: '70vw',
+      width: '50vw',
       data: {},
       backdropClass: 'backdropBackground'
     });
@@ -39,7 +41,20 @@ export class NavbarComponent implements OnInit {
       width: '70vw',
       data: {}
     });
+  }
 
+  openRanks() {
+    const dialogRef = this.dialog.open(RankComponent, {
+      width: '70vw',
+      data: {}
+    });
+  }
+
+  openArmy() {
+    const dialogRef = this.dialog.open(ArmyComponent, {
+      width: '70vw',
+      data: {}
+    });
   }
 
 

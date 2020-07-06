@@ -1,4 +1,54 @@
-.container {
-    background-color: #03255F;
+html {
+    background-color: #03255f;
+    width: 80%;
+    height: 80%;
 }
 
+h1 {
+    text-align: left;
+    font-family: baloo;
+    font-size: 32px;
+    letter-spacing: 0px;
+    color: #ffffff;
+    opacity: 1;
+}
+.search {
+    width: 378px;
+    height: 40px;
+    font-family: baloo;
+    border-radius: 15px;
+    color: #1c3e76;
+    font-size: 16px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 20px;
+    opacity: 0.39;
+    margin-right: 20%;
+}
+.infos {
+    display: inline-block;
+}
+
+.infos > table > tr > td > img {
+    width: 42px;
+    height: 45px;
+    background: #9ffff0 0% 0% no-repeat padding-box;
+    border: 2px solid #428dff;
+    border-radius: 14px;
+    opacity: 1;
+}
+
+
+
+::ng-deep .mat-dialog-container{
+    background-color: #03255F !important;
+    color: white;
+  
+  }
+
+
+.slider {
+    width: 30px;
+}
+::ng-deep .mat-slide {
+    background-color: #ffe066;
+}
