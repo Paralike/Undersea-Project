@@ -24,11 +24,6 @@ namespace Undersea.DAL
         public DbSet<BuildingAttributeJoin> CityBuildings { get; set; }
         public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=undersea;Trusted_Connection=True;");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -50,8 +45,7 @@ namespace Undersea.DAL
                 entity.HasOne(a => a.AttackerCity)
                     .WithMany(c => c.Attacks)
                     .HasForeignKey(a => a.AttackerCityId)
-                    .OnDelete(DeleteBehavior.NoAction);               
-                
+                    .OnDelete(DeleteBehavior.NoAction);                
             });
 
             modelBuilder.Entity<City>(entity =>

@@ -1,1 +1,36 @@
-<p>army works!</p>
+
+<div class="flex ">
+    <h2>
+      Sereg
+    </h2>
+    <p style="font-weight: bold; margin: 0">
+      Kattints rá, amelyiket szeretnéd megvenni.
+    </p>
+    <div class="main-content">
+      <div *ngFor="let unit of this.army"  class="content">
+  
+        <mat-card></mat-card>
+        <div class="unitName">
+          {{unit.name}}
+        </div>
+        <div class="buildingDesc">
+          
+        </div>
+  
+        <div class="quantity">
+          
+        </div>
+        <div class="price">
+         
+        </div>
+  
+      </div>
+  
+  
+    </div>
+    <mat-divider></mat-divider>
+    <div class="buttonsDiv">
+      <button mat-button class="buildingButton" id="buildButton">Megveszem</button>
+    </div>
+  
+  </div>
