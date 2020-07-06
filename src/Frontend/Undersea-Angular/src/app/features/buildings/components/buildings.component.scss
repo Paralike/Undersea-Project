@@ -1,6 +1,13 @@
 .content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 15vw;
   height: 20vh;
+  background-color: #03255F ;
+  margin-bottom: 0.4vh;
+  cursor: pointer;
 }
 
 .main-content{
@@ -9,6 +16,7 @@
   justify-content: space-around;
   align-items: center;
   margin-top: 4vh;
+  background-color: #03255F ;
 }
 ::ng-deep .mat-dialog-container{
   background-color: #03255F !important;
