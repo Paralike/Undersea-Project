@@ -38,3 +38,9 @@ input {
     border-radius: 14px;
     opacity: 1;
 }
+
+::ng-deep .mat-dialog-container{
+    background-color: #03255F !important;
+    color: white;
+  
+  }
