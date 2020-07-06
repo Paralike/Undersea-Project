@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FightComponent implements OnInit {
 
+  displayedColumns: string[] = ['cityName', 'sharks', 'seals', 'seahorses'];
+
   constructor() { }
 
   ngOnInit(): void {
