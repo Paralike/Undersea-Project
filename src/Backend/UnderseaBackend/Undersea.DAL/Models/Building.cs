@@ -3,11 +3,11 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public class Upgrade
+    public class Building
     {
         public string Id { get; set; }
-        public UpgradeType UpgradeType { get; set; }
-        public virtual ICollection<UpgradeAttributeJoin> UpgradeAttributes { get; set; }
+        public BuildingType BuildingType { get; set; }
+        public virtual ICollection<BuildingAttributeJoin> BuildingAttributes { get; set; }
         public City City { get; set; }
         public string CityId { get; set; }
         public int CurrentTurn { get; set; }

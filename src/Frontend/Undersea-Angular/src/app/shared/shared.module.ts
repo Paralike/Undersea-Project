@@ -16,7 +16,7 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table'  
 
 
 

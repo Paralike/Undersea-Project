@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Undersea.BLL.DTOs
 {
     public class ProfileDto
-    {        
+    {
         public int PearlCount { get; set; }
         public int PearlProduction { get; set; }
         public int CoralCount { get; set; }

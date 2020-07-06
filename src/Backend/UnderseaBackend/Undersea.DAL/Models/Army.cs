@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Undersea.DAL.Models
 {
-    public partial class Army
+    public class Army
     {
-        public Army()
-        {
-            Attack = new HashSet<Attack>();
-        }
-
-        public int Id { get; set; }
-        public int? UserId { get; set; }
-        public int? Units { get; set; }
-
-        public virtual Profile User { get; set; }
-        public virtual ICollection<Attack> Attack { get; set; }
+        public string Id { get; set; }
+        public City City { get; set; }
+        public string CityId { get; set; }
+        public virtual ICollection<Unit> Units { get; set; }
+        public virtual ICollection<Attack> Attacks { get; set; }
     }
 }

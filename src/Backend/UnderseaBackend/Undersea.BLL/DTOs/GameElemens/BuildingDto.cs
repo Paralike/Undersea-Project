@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Undersea.DAL.Enums;
+﻿using Undersea.DAL.Enums;
 
 namespace Undersea.BLL.DTOs
 {
