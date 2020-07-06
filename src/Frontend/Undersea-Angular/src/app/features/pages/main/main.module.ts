@@ -6,8 +6,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 import { BuildingsComponent } from '../../buildings/components/buildings.component';
-import { AttackComponent } from '../../attack/components/attack.component'
+import { AttackComponent } from '../../attack/components/attack.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FightComponent } from '../../fight/components/fight.component';
 
 
 
@@ -18,9 +19,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NavbarComponent,
     ProfileCardComponent,
     BuildingsComponent,
-    AttackComponent
+    AttackComponent,
+    FightComponent
   ],
-  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent],
+  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent, FightComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
