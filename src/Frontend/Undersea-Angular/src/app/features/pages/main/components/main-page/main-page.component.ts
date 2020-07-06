@@ -13,7 +13,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileClient.getProfile().subscribe(res => {
-      console.log(res.coralCount, '--> Corall');
+
     });
   }
 

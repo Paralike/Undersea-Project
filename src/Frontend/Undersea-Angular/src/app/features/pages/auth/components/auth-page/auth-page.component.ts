@@ -55,18 +55,18 @@ export class AuthPageComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
-        console.log(res);
+
         if (res.token != null) {
-          console.log(res);
+
           localStorage.setItem('token', res.token);
           this.router.navigate(['/main']);
         }
 
       },
-      (err) => {
-        this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
-        console.error('HURKAAAAA', err);
-      });
+        (err) => {
+          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
+          console.error('HURKAAAAA', err);
+        });
 
     }
 
@@ -84,7 +84,7 @@ export class AuthPageComponent implements OnInit {
           this.registerForm.value.password2
         ).subscribe(res => {
           if (res.token != null) {
-            console.log(res);
+
             localStorage.setItem('token', res.token);
             this.router.navigate(['/main']);
           }
