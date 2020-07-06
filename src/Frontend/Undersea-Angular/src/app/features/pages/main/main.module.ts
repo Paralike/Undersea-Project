@@ -9,6 +9,7 @@ import { BuildingsComponent } from '../../buildings/components/buildings.compone
 import { AttackComponent } from '../../attack/components/attack.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FightComponent } from '../../fight/components/fight.component';
+import { ArmyComponent } from '../../army/components/army.component';
 
 
 
@@ -20,9 +21,10 @@ import { FightComponent } from '../../fight/components/fight.component';
     ProfileCardComponent,
     BuildingsComponent,
     AttackComponent,
-    FightComponent
+    FightComponent,
+    ArmyComponent,
   ],
-  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent, FightComponent],
+  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent, FightComponent, ArmyComponent],
   imports: [
     CommonModule,
     MainRoutingModule,
