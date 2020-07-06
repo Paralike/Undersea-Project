@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BuildingModel } from '../model/building.model';
+import { FeatureService } from '../../service/feature.service';
 
 @Component({
   selector: 'app-buildings',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buildings.component.scss']
 })
 export class BuildingsComponent implements OnInit {
+  private buildings: BuildingModel[];
 
-  constructor() { }
+  constructor(private featureService: FeatureService) { }
 
   ngOnInit(): void {
+    this.buildings = [];
+    // this.featureService.getBuildings().subscribe( res => {
+    //   console.log(res);
+    // });
   }
 
 }
