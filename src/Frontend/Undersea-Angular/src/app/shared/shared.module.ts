@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { AuthClient, ProfileClient } from '.';
+import { AuthClient, ProfileClient, BuildingsClient } from '.';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 import {MatSelectModule} from '@angular/material/select';
@@ -48,7 +48,8 @@ import {MatSliderModule} from '@angular/material/slider';
   providers: [
     AuthClient,
     AuthGuardService,
-    ProfileClient
+    ProfileClient,
+    BuildingsClient
   ]
 
 })
