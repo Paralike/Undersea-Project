@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+body{
+    background-image: url("./assets/background/undersea_game-01.png");
+    background-repeat: no-repeat;
+
+}
+@font-face {
+    font-family: baloo;
+    src: url(assets/fonts/baloo/Baloo-Regular.ttf) format("opentype");
+  }
+
+::ng-deep .mat-dialog-container{
+  background-color: #03255F !important;
+}
+
+::ng-deep .mat-snack-bar-container{
+  background-color: darkmagenta !important;
+  color: pink;
+}
+
+
