@@ -16,6 +16,7 @@ export class AuthpageService {
   registerd = new RegisterDto;
   public jwtHelper;
   router: any;
+  newUser: boolean;
 
   constructor(private authClient: AuthClient) {
     this.jwtHelper = new JwtHelperService();
@@ -25,6 +26,7 @@ export class AuthpageService {
   login(name: string, pwd: string): Observable<AuthResponseDto> {
     this.logind.username = name;
     this.logind.password = pwd;
+    this.newUser = false;
 
     return from(this.authClient.authenticateUser(this.logind));
 
@@ -37,6 +39,7 @@ export class AuthpageService {
     this.registerd.username = name;
     this.registerd.password = pwd;
     this.registerd.city = cityName;
+    this.newUser = true;
 
     return from(this.authClient.registerUser(this.registerd));
 

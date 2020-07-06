@@ -12,7 +12,12 @@ export class ProfileCardComponent implements OnInit {
 
   name;
   ngOnInit(): void {
-    this.name = this.authPageService.logind.username;
+    if(this.authPageService.newUser == false){
+      this.name = this.authPageService.logind.username;
+    } else if(this.authPageService.newUser == true){
+      this.name = this.authPageService.registerd.username;
+    }
+    
   }
 
 }
