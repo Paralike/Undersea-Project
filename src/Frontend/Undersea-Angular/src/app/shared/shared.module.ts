@@ -16,7 +16,7 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
-
+import { MatTableModule } from '@angular/material/table'  
 
 
 @NgModule({
@@ -29,7 +29,8 @@ import {MatSliderModule} from '@angular/material/slider';
     MatDividerModule,
     MatSnackBarModule,
     MatSliderModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   exports: [
     MatDialogModule,
@@ -43,7 +44,8 @@ import {MatSliderModule} from '@angular/material/slider';
     MatGridListModule,
     MatDividerModule,
     MatSliderModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [
     AuthClient,

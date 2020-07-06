@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
 
   openRanks() {
     const dialogRef = this.dialog.open(RankComponent, {
-      width: '70vw',
+      width: '50vw',
       data: {}
     });
   }
