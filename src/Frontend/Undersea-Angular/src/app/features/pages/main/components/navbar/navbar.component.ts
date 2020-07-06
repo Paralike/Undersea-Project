@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
 
   openAttack() {
     const dialogRef = this.dialog.open(AttackComponent, {
-      width: '70vw',
+      width: '50vw',
       data: {},
       backdropClass: 'backdropBackground'
     });

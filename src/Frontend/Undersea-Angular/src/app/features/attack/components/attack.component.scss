@@ -14,7 +14,7 @@ h1{
     color: #FFFFFF;
     opacity: 1;
 }
-input {
+.search {
     width: 378px;
     height: 40px;
     font-family: baloo;
@@ -37,4 +37,12 @@ input {
     border: 2px solid #428DFF;
     border-radius: 14px;
     opacity: 1;
+}
+
+.slider {
+    width: 30px;
+
+}
+::ng-deep .mat-slide {
+    background-color: #ffe066;
 }
