@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { AuthClient } from '.';
+import { AuthClient, ProfileClient } from '.';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 
@@ -42,7 +42,8 @@ import { AuthGuardService } from '../features/pages/auth/service/auth-guard.serv
   ],
   providers: [
     AuthClient,
-    AuthGuardService
+    AuthGuardService,
+    ProfileClient
   ]
 
 })
