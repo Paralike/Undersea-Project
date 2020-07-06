@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthClient, ProfileClient } from 'src/app/shared';
 
 
 @Component({
@@ -8,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private profileClient: ProfileClient) { }
 
   ngOnInit(): void {
+    this.profileClient.getProfile().subscribe(res => {
+      console.log(res.coralCount, '--> Corall');
+    });
   }
 
 }
