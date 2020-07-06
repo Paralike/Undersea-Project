@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Undersea.DAL;
 
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200706120009_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,9 +154,8 @@ namespace Undersea.DAL.Migrations
 
             modelBuilder.Entity("Undersea.DAL.Models.Army", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CityId")
                         .HasColumnType("nvarchar(450)");
@@ -171,8 +172,8 @@ namespace Undersea.DAL.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("ArmyId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ArmyId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AttackerCityId")
                         .HasColumnType("nvarchar(450)");
@@ -282,8 +283,8 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("UnitType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ArmyId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ArmyId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Damage")
                         .HasColumnType("int");
@@ -489,9 +490,7 @@ namespace Undersea.DAL.Migrations
                 {
                     b.HasOne("Undersea.DAL.Models.Army", "Army")
                         .WithMany("Attacks")
-                        .HasForeignKey("ArmyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArmyId");
 
                     b.HasOne("Undersea.DAL.Models.City", "AttackerCity")
                         .WithMany("Attacks")
