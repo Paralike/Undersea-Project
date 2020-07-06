@@ -28,8 +28,12 @@ namespace Undersea.API.Controllers
             {
                 return BadRequest("Invalid client request");
             }
-
             var user = await _authService.GetUser(login);
+
+            if(user == null)
+            { 
+                return Unauthorized();
+            }
 
             var response = _authService.GetToken(user);
 
