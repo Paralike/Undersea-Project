@@ -1,17 +1,30 @@
-
+<h1>Támadás</h1>
 <div class="container">
-    <h1>Támadás</h1>
+   
     <div class="tables">
         <div class="infos">
             <span>1. Jelöld ki, kit szeretnél megtámadni!</span>
             <table mat-table [dataSource]="userList" class="left-table">
                 <ng-container matColumnDef="target">
                   <th mat-header-cell *matHeaderCellDef><input class="search" type="text" placeholder="Felhasználónév"></th>
-                  <td mat-cell *matCellDef="let element"> {{element}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
+                <ng-container matColumnDef="choice" >
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <div *ngIf="selected">
+                            <span class="checkmark">
+                                <div class="checkmark_circle"></div>
+                                <div class="checkmark_stem"></div>
+                                <div class="checkmark_kick"></div>
+                            </span>
+                        </div>
+                        
+                    </td>
+                  </ng-container>
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)"></tr>
             </table>
         </div>
         <div class="infos">
@@ -23,11 +36,9 @@
                     <td><img src='assets/images/007-shark.svg'>Lézercápa:  <span>{{matslider?.value}}</span> példány <br> <mat-slider #matslider class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
                 </tr>
                 <tr>
-                  
                     <td><img src='assets/images/025-seal.svg'>Rohamfóka: <span>{{matslider2?.value}}</span> példány <br> <mat-slider #matslider2 class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
                 </tr>
-                <tr>
-                  
+                <tr>                  
                     <td><img src='assets/images/013-seahorse.svg'>Csatacsikó: <span>{{matslider3?.value}}</span> példány <br> <mat-slider #matslider3 class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
                 </tr>
                
@@ -36,12 +47,12 @@
            
         </div>
        
-        
+       
        
        
     </div>
-    <button>Megtámadom!</button>
+    
 </div>
 
 
-
+<button><span>Megtámadom!</span></button>
