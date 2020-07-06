@@ -52,11 +52,17 @@ namespace Undersea.BLL.Services
 
         public async Task<User> GetUser(LoginDto user)
         {
-            var user1 = await _userManager.FindByNameAsync(user.Username);
-            var result = await _signInManager.PasswordSignInAsync(user1, user.Password, false, false);
+            var _user = await _userManager.FindByNameAsync(user.Username);
+
+            if (_user == null)
+            { 
+                return null;
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(_user, user.Password, false, false);
 
             if (result.Succeeded)
-                return user1;
+                return _user;
 
             else
                 return null;
