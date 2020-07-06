@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Undersea.DAL.Models
+﻿namespace Undersea.DAL.Models
 {
-    public partial class Attack
+    public class Attack
     {
-        public int Id { get; set; }
-        public int? TamadoUserId { get; set; }
-        public int? Army { get; set; }
-        public int? VedoUserId { get; set; }
-
-        public virtual Army ArmyNavigation { get; set; }
+        public string Id { get; set; }
+        public City AttackerCity { get; set; }
+        public City DefenderCity { get; set; }
+        public string AttackerCityId { get; set; }
+        public string DefenderCityId { get; set; }
+        public Army Army { get; set; }
+        public string ArmyId { get; set; }
     }
 }
