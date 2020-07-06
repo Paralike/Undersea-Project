@@ -2,24 +2,41 @@
   <h2>
     Épületek
   </h2>
-  <p style="font-weight: bold;">
-    Kattints rá, amelyiket szeretnéd megvenni.    
+  <p style="font-weight: bold; margin: 0">
+    Kattints rá, amelyiket szeretnéd megvenni.
   </p>
-  <p>
+  <p style="margin: 0;">
     Egyszerre csak egy épület épülhet!
   </p>
   <div class="main-content">
-    <mat-card class="content">
-      content
-    </mat-card>
-    <mat-card class="content">
-      content
-    </mat-card>
+    <div *ngFor="let building of this.buildings" (click)="selected(building)" class="content" tabindex="-1">
+
+      <img src='../../../../assets/images/building_{{building.buildingType}}.png'>
+      <div class="buildingName">
+        {{building.name}}
+      </div>
+      <div class="buildingDesc">
+        <div *ngFor="let desc of building.description">
+          {{desc}}
+        </div>
+      </div>
+
+      <div class="quantity">
+        {{data.building[building.buildingType - 1]}} db
+      </div>
+      <div class="price">
+        {{data.price[building.buildingType - 1]}} Gyöngy / db
+      </div>
+
+
+
+    </div>
+
 
   </div>
   <mat-divider></mat-divider>
-  <div class="main-content">
-    <button mat-button class="buildingButton">Megveszem</button>
+  <div class="buttonsDiv">
+    <button mat-button class="buildingButton" id="buildButton">Megveszem</button>
   </div>
-  
+
 </div>

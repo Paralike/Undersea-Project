@@ -2,15 +2,28 @@ html {
     background-color: #03255f;
     width: 80%;
     height: 80%;
+    position: relative;
+}
+
+.container{
+    display: flex;
+    text-align: left;
+   flex-direction: column;
+   align-items: center;
+}
+.tables {
+    display: flex;
+    flex-direction: row;
 }
 
 h1 {
-    text-align: left;
+   text-align: left;
     font-family: baloo;
     font-size: 32px;
     letter-spacing: 0px;
     color: #ffffff;
     opacity: 1;
+    
 }
 .search {
     width: 378px;
@@ -24,9 +37,7 @@ h1 {
     opacity: 0.39;
     margin-right: 20%;
 }
-.infos {
-    display: inline-block;
-}
+
 
 .infos > table > tr > td > img {
     width: 42px;
@@ -52,3 +63,25 @@ h1 {
 ::ng-deep .mat-slide {
     background-color: #ffe066;
 }
+ button {
+    background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #3B7DBD;
+    border-radius: 90px;
+    opacity: 1;
+    font-family: baloo;
+    width: 118px;
+    padding-top: 0.2%;
+    text-align: center;
+    margin-top: 5%;
+    height: 28px;
+    display: flex;
+  
+    
+ }
+
+
+ .left-table{
+    background-color: #03255F !important;
+    overflow-x: scroll;
+
+ }

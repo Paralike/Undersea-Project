@@ -9,7 +9,9 @@ export class RankComponent implements OnInit {
 
   constructor() { }
 
+  rankList; 
   ngOnInit(): void {
+    this.rankList = ["user1", "user2", "user3", "user4"];
   }
 
 }

@@ -1,1 +1,30 @@
-<p>fight works!</p>
+<div class="flex">
+    <h2>Harc</h2>
+    <li class="fightsList">
+        <mat-divider></mat-divider>
+        <mat-table>
+            <ng-container matColumnDef="cityName">
+                <mat-header-cell *matHeaderCellDef> city </mat-header-cell>
+                <mat-cell>FEFEF </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sharks">
+                <mat-header-cell *matHeaderCellDef> shark </mat-header-cell>
+                <mat-cell>FEFEF </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="seals">
+                <mat-header-cell *matHeaderCellDef> seal</mat-header-cell>
+                <mat-cell>FEFEF </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="seahorses">
+                <mat-header-cell *matHeaderCellDef> seahorse </mat-header-cell>
+                <mat-cell>FEFEF </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </li>
+</div>

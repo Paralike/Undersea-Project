@@ -6,7 +6,11 @@ import { FightComponent } from '../../../../fight/components/fight.component';
 import { RankComponent } from '../../../../rank/components/rank.component';
 import { ArmyComponent } from '../../../../army/components/army.component';
 
+export interface BuildingData {
+  building: number[];
+  price: number[];
 
+}
 
 @Component({
   selector: 'app-navbar',
@@ -22,8 +26,11 @@ export class NavbarComponent implements OnInit {
 
   openBuildings() {
     const dialogRef = this.dialog.open(BuildingsComponent, {
-      width: '70vw',
-      data: {}
+      width: '50vw',
+      data: {
+        building: [0, 0],
+        price: [45, 35]
+      }
     });
   }
 
@@ -38,21 +45,21 @@ export class NavbarComponent implements OnInit {
 
   openFights() {
     const dialogRef = this.dialog.open(FightComponent, {
-      width: '70vw',
+      width: '50vw',
       data: {}
     });
   }
 
   openRanks() {
     const dialogRef = this.dialog.open(RankComponent, {
-      width: '70vw',
+      width: '50vw',
       data: {}
     });
   }
 
   openArmy() {
     const dialogRef = this.dialog.open(ArmyComponent, {
-      width: '70vw',
+      width: '50vw',
       data: {}
     });
   }
