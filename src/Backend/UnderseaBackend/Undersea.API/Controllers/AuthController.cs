@@ -41,7 +41,6 @@ namespace Undersea.API.Controllers
             {
                 return Ok(response);
             }
-
             else
             {
                 return Unauthorized();

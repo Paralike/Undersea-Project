@@ -1,7 +1,5 @@
 html {
     background-color: #03255f;
-    width: 80%;
-    height: 80%;
     position: relative;
 }
 
@@ -10,14 +8,19 @@ html {
     text-align: left;
    flex-direction: column;
    align-items: center;
+   height: 40%;
 }
+
 .tables {
     display: flex;
     flex-direction: row;
+    border-bottom: solid 0.1px #428dff;
+   
 }
 
+
 h1 {
-   text-align: left;
+   margin-left: 12%;
     font-family: baloo;
     font-size: 32px;
     letter-spacing: 0px;
@@ -69,19 +72,67 @@ h1 {
     border-radius: 90px;
     opacity: 1;
     font-family: baloo;
-    width: 118px;
     padding-top: 0.2%;
     text-align: center;
     margin-top: 5%;
-    height: 28px;
     display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 192px;
+    height: 50px;
+    font-size: 18px;
+    padding: 1%;
+    padding-left: 4%;
+   
   
     
  }
 
 
+.infos > span {
+    font-weight: bold;
+}
+
  .left-table{
     background-color: #03255F !important;
     overflow-x: scroll;
+    overflow: auto;
 
  }
+
+ .checkmark {
+    display:inline-block;
+    width: 22px;
+    height:22px;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+}
+
+.checkmark_circle {
+    position: absolute;
+    width:22px;
+    height:22px;
+    background-color: #9FFFF0;
+    border-radius:11px;
+    left:0;
+    top:0;
+}
+
+.checkmark_stem {
+    position: absolute;
+    width:3px;
+    height:9px;
+    background-color:#03255F;
+    left:11px;
+    top:6px;
+}
+
+.checkmark_kick {
+    position: absolute;
+    width:3px;
+    height:3px;
+    background-color:#03255F;
+    left:8px;
+    top:12px;
+}
