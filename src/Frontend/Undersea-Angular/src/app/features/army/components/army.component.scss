@@ -8,11 +8,9 @@
     background-color: #03255f;
     margin-bottom: 0.4vh;
     cursor: pointer;
-  }
-  
-  
-  
-  .main-content {
+}
+
+.main-content {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -20,10 +18,10 @@
     margin-top: 4vh;
     background-color: #03255f;
     height: 25vh;
-    margin: 5vh;
-  }
-  
-  .buttonsDiv {
+    margin-bottom: 5vh;
+}
+
+.buttonsDiv {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -31,21 +29,23 @@
     margin-top: 4vh;
     background-color: #03255f;
     height: 5vh;
-  }
-  
-  ::ng-deep .mat-dialog-container {
+}
+
+::ng-deep .mat-dialog-container {
     background-color: #03255f !important;
     color: white;
-  }
-  
-  .building-modal {
-    background-color: red;
-  }
-  
-  .buildingButton {
+}
+.imgCard {
+    background: #9ffff0 0% 0% no-repeat padding-box;
+    border: 2px solid #428dff;
+    border-radius: 14px;
+    opacity: 1;
+}
+
+.armyButton {
     display: block;
     width: 10vw;
-    background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #3b7dbd;
     border-radius: 90px;
     opacity: 0.4;
@@ -56,17 +56,14 @@
     color: #001234;
     padding: 0.5%;
     margin-bottom: 1%;
-    
-    
-  }
-  
-  
-  .buildingName {
+}
+
+.buildingName {
     font-weight: bold;
     margin: none;
-  } 
-  
-  .buildingDesc {
+}
+
+.buildingDesc {
     font-weight: bold;
     margin: none;
     min-height: 5vh;
@@ -76,21 +73,39 @@
     justify-content: flex-start;
     outline: none;
     border-radius: 16px;
-  }
-  
-  div:focus {
-    background-color: rgba($color: #FFFF, $alpha: 0.12);
+}
+
+.unitName {
+    margin: 2vh;
+    font-weight: bold;
+}
+
+.unitContent {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+}
+.descriptions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 10vw;
+}
+.values {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+div:focus {
+    background-color: rgba($color: #ffff, $alpha: 0.12);
     outline: none;
     border-radius: 16px;
-    
-  }
-  
-  .quantity {
-    margin: 0.5vh;
-  }
-  
-  .price {
+}
+
+.price {
     margin-bottom: 0.5vh;
-  }
-   
-  
+}

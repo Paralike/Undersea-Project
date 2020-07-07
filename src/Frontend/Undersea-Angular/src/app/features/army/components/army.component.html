@@ -7,22 +7,44 @@
       Kattints rá, amelyiket szeretnéd megvenni.
     </p>
     <div class="main-content">
-      <div *ngFor="let unit of this.army"  class="content">
+      <div *ngFor="let unit of this.army"  class="content" tabindex="-1">
   
-        <mat-card></mat-card>
+        <mat-card class="imgCard">
+            <img src={{unit.img}} >
+        </mat-card>
         <div class="unitName">
           {{unit.name}}
         </div>
-        <div class="buildingDesc">
-          
-        </div>
-  
-        <div class="quantity">
-          
-        </div>
-        <div class="price">
-         
-        </div>
+        <div class="unitContent">
+            <div class="descriptions">
+                <div>Birtokodban:</div>
+                <div>Támadás/Védekezés</div>
+                <div>Zsold (/kör/példány</div>
+                <div>Ellátmány</div>
+                <div>Ár</div>
+            </div>
+            <div class="values">
+    
+                <div class="quantity">
+                  0 db
+                </div>
+                <div class="attack/def">
+                    {{unit.damage}}/{{unit.defense}}
+                </div>
+                <div class="pay">
+                    {{unit.foodNecessity}} Gyöngy
+                </div>
+                <div class="food">
+                    {{unit.foodNecessity}} Korall
+                </div>
+                <div class="price">
+                    {{unit.price}} Gyöngy
+                </div>
+            </div>
+            <div class="plusminus">
+                
+            </div>
+        </div>    
   
       </div>
   
@@ -30,7 +52,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="buttonsDiv">
-      <button mat-button class="buildingButton" id="buildButton">Megveszem</button>
+      <button mat-button class="armyButton" id="armyButton">Megveszem</button>
     </div>
   
   </div>
