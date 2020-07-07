@@ -1,58 +1,70 @@
-
 <div class="flex ">
     <h2>
-      Sereg
+        Sereg
     </h2>
     <p style="font-weight: bold; margin: 0">
-      Kattints rá, amelyiket szeretnéd megvenni.
+        Kattints rá, amelyiket szeretnéd megvenni.
     </p>
     <div class="main-content">
-      <div *ngFor="let unit of this.army"  class="content" tabindex="-1">
-  
-        <mat-card class="imgCard">
-            <img src={{unit.img}} >
-        </mat-card>
-        <div class="unitName">
-          {{unit.name}}
-        </div>
-        <div class="unitContent">
-            <div class="descriptions">
-                <div>Birtokodban:</div>
-                <div>Támadás/Védekezés</div>
-                <div>Zsold (/kör/példány</div>
-                <div>Ellátmány</div>
-                <div>Ár</div>
+        <div *ngFor="let unit of this.army" class="content">
+            <div tabindex="-1" class="content">
+                <mat-card class="imgCard">
+                    <img src={{unit.img}}>
+                </mat-card>
+                <div class="unitName">
+                    {{unit.name}}
+                </div>
+                <div class="unitContent">
+                    <div class="descriptions">
+                        <div>Birtokodban:</div>
+                        <div>Támadás/Védekezés</div>
+                        <div>Zsold (/kör/példány</div>
+                        <div>Ellátmány</div>
+                        <div>Ár</div>
+                    </div>
+                    <div class="values">
+
+                        <div class="quantity">
+                            {{data.units[unit.unitType]}} db
+                        </div>
+                        <div class="attack/def">
+                            {{unit.damage}}/{{unit.defense}}
+                        </div>
+                        <div class="pay">
+                            {{unit.foodNecessity}} Gyöngy
+                        </div>
+                        <div class="food">
+                            {{unit.foodNecessity}} Korall
+                        </div>
+                        <div class="price">
+                            {{unit.price}} Gyöngy
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="values">
-    
-                <div class="quantity">
-                  0 db
-                </div>
-                <div class="attack/def">
-                    {{unit.damage}}/{{unit.defense}}
-                </div>
-                <div class="pay">
-                    {{unit.foodNecessity}} Gyöngy
-                </div>
-                <div class="food">
-                    {{unit.foodNecessity}} Korall
-                </div>
-                <div class="price">
-                    {{unit.price}} Gyöngy
-                </div>
-            </div>
+
             <div class="plusminus">
-                
+                <svg height="25" width="25" class="plusButton" (click) = "minusUnit(unit.unitType)">
+                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0"  />
+                    <text x="50%" y="50%" text-anchor="middle" stroke="#03255F " stroke-width="0.5px" dy=".2em">-</text>
+                </svg>
+                <div>
+                    {{this.addUnit[unit.unitType]}}
+                </div>
+                <svg height="25" width="25" class="plusButton" (click) = "plusUnit(unit.unitType)">
+                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0"  />
+                    <text x="50%" y="50%" text-anchor="middle" stroke="#03255F " stroke-width="0.5px" dy=".3em">+</text>
+                </svg>
+
             </div>
-        </div>    
-  
-      </div>
-  
-  
+        </div>
+
+
     </div>
     <mat-divider></mat-divider>
     <div class="buttonsDiv">
-      <button mat-button class="armyButton" id="armyButton">Megveszem</button>
+        <button mat-button class="armyButton" id="armyButton">Megveszem</button>
     </div>
-  
-  </div>
+
+</div>
