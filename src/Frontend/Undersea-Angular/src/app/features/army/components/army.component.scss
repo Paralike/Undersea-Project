@@ -1,0 +1,108 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15vw;
+    height: 35vh;
+    background-color: #03255f;
+    margin-bottom: 0.4vh;
+    
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4vh;
+    background-color: #03255f;
+    height: 35vh;
+    margin-bottom: 2vh;
+    font-size: 0.8vw;
+}
+
+.buttonsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4vh;
+    background-color: #03255f;
+    height: 5vh;
+}
+
+::ng-deep .mat-dialog-container {
+    background-color: #03255f !important;
+    color: white;
+}
+.imgCard {
+    background: #9ffff0 0% 0% no-repeat padding-box;
+    border: 2px solid #428dff;
+    border-radius: 14px;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.armyButton {
+    display: block;
+    width: 10vw;
+    background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #3b7dbd;
+    border-radius: 90px;
+    opacity: 0.4;
+    border: none;
+    font-family: baloo;
+    font-size: 0.8vw;
+    letter-spacing: 0px;
+    color: #001234;
+    padding: 0.5%;
+    margin-bottom: 1%;
+}
+
+.unitName {
+    margin: 2vh;
+    font-weight: bold;
+}
+
+.unitContent {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+}
+.descriptions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 10vw;
+}
+.values {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+div:focus {
+    background-color: rgba($color: #ffff, $alpha: 0.12);
+    outline: none;
+    border-radius: 16px;
+}
+
+.price {
+    margin-bottom: 0.5vh;
+}
+
+.plusminus {
+    margin: 2vh;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+    width: 10vw;
+}
+.plusButton {
+    cursor: pointer;
+}

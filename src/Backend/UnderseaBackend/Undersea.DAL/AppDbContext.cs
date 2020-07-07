@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Undersea.DAL.Configurations;
 using Undersea.DAL.Models;
 
 namespace Undersea.DAL
@@ -31,57 +32,12 @@ namespace Undersea.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Army>(entity =>
-            {
-                entity.HasOne(a => a.City)
-                    .WithMany(c => c.Armies)
-                    .HasForeignKey(a => a.CityId);
-            });
-
-            modelBuilder.Entity<Attack>(entity =>
-            {
-                entity.HasOne(a => a.Army)
-                    .WithMany(a => a.Attacks)
-                    .HasForeignKey(a => a.ArmyId)
-                    .OnDelete(DeleteBehavior.NoAction);
-
-                entity.HasOne(a => a.AttackerCity)
-                    .WithMany(c => c.Attacks)
-                    .HasForeignKey(a => a.AttackerCityId)
-                    .OnDelete(DeleteBehavior.NoAction);                
-            });
-
-            modelBuilder.Entity<City>(entity =>
-            {
-                entity.HasKey(c => c.UserId);
-
-                entity.HasOne(c => c.User)
-                .WithMany(u => u.Cities)
-                .HasForeignKey(u => u.UserId);
-
-                entity.HasMany(c => c.Armies)
-                .WithOne(a => a.City)
-                .HasForeignKey(a => a.CityId);
-
-                entity.HasMany(c => c.Upgrades)
-                .WithOne(u => u.City)
-                .HasForeignKey(u => u.CityId);
-
-                entity.HasMany(c => c.Buildings)
-                .WithOne(b => b.City)
-                .HasForeignKey(b => b.CityId);
-            });
-
-            modelBuilder.Entity<Unit>(entity =>
-            {
-                entity.HasKey(e => e.UnitType);
-            });
-
-            modelBuilder.Entity<BuildingAttributeJoin>()
-                .HasKey(ba => new { ba.BuildingId, ba.BuildingAttributeId });
-
-            modelBuilder.Entity<UpgradeAttributeJoin>()
-                .HasKey(ua => new { ua.UpgradeId, ua.UpgradeAttributeId });
+        modelBuilder.ApplyConfiguration(new ArmyConfiguration());
+        modelBuilder.ApplyConfiguration(new AttackConfiguration());
+        modelBuilder.ApplyConfiguration(new CityConfiguration());
+        modelBuilder.ApplyConfiguration(new UnitConfiguration());
+        modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
+        modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
 
         }
     }
