@@ -1,17 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { PeriodicElement } from '../model/fight.model';
+import { FeatureService } from '../../service/feature.service';
 
-export interface PeriodicElement {
-  city: string;
-  sharks: number;
-  seals: number;
-  seahorses: number;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { city: 'Atlantisz', sharks: 6, seals: 5, seahorses: 32 },
-  { city: 'Atlantisz2', sharks: 6, seals: 5, seahorses: 32 },
 
-];
+
 
 @Component({
   selector: 'app-fight',
@@ -21,11 +14,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class FightComponent implements OnInit {
 
   displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses'];
-  dataSource = ELEMENT_DATA;
+  dataSource: PeriodicElement[];
 
-  constructor() { }
+  constructor(private featureService: FeatureService) { }
 
   ngOnInit(): void {
+    this.featureService.getFights().subscribe(res => {
+      this.dataSource = res;
+    },
+      (err) => {
+        console.log(err);
+      });
   }
 
 }

@@ -22,7 +22,10 @@ export class BuildingsComponent implements OnInit {
   ngOnInit(): void {
     this.buildings = [];
     this.featureService.getBuildings().subscribe(res => {
-      this.buildings = BUIDLDINGS;
+      this.buildings = res;
+    },
+    (err) => {
+      console.log('Fefefe');
     });
   }
 

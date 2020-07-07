@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { BuildingDto, BuildingsClient } from 'src/app/shared';
+import { BUIDLDINGS } from '../buildings/model/mockBuildings';
+import { BuildingModel } from '../buildings/model/building.model';
+import { FIGTHS } from '../fight/model/mock-fight';
+import { PeriodicElement } from '../fight/model/fight.model';
+import { ArmyModel } from '../army/model/army.model';
+import { ARMY } from '../army/model/mock-army';
 
 const mock = [
   {
@@ -48,7 +54,7 @@ const mock = [
     name: 'Mock 9',
     points: 1200
   }
-]
+];
 
 @Injectable({
   providedIn: 'root'
@@ -57,15 +63,27 @@ export class FeatureService {
 
   constructor(private buildingsClient: BuildingsClient) { }
 
-  getBuildings(): Observable<BuildingDto> {
-    return this.buildingsClient.getBuilding();
+  getBuildings(): Observable<BuildingModel[]> {
+    // return this.buildingsClient.getBuilding();
+    return of(BUIDLDINGS);
   }
 
-  getArmy(): Observable<any> {
+  getAttack(): Observable<any> {
     return of(mock);
   }
+
+
 
   getRanks(): Observable<any> {
     return of(mock);
   }
+
+  getFights(): Observable<PeriodicElement[]> {
+    return of(FIGTHS);
+  }
+
+  getArmy(): Observable<ArmyModel[]> {
+    return of(ARMY);
+  }
+
 }
