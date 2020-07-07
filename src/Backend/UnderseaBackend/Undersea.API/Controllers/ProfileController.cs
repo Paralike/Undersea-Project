@@ -9,7 +9,7 @@ namespace Undersea.API.Controllers
     public class ProfileController : ControllerBase
     {
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ProfileDto>> DeleteProfile(int id)
+        public async Task<ActionResult> DeleteProfile(int id)
         {
             return Ok();
         }
