@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BuildingDto, BuildingsClient } from 'src/app/shared';
+import { BuildingDto, BuildingsClient, AttackClient, AttackableUsersDto } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
@@ -61,15 +61,17 @@ const mock = [
 })
 export class FeatureService {
 
-  constructor(private buildingsClient: BuildingsClient) { }
+  constructor(private buildingsClient: BuildingsClient, private attackClient: AttackClient) { }
 
   getBuildings(): Observable<BuildingModel[]> {
     // return this.buildingsClient.getBuilding();
     return of(BUIDLDINGS);
   }
 
-  getAttack(): Observable<any> {
-    return of(mock);
+  getAttack(): Observable<AttackableUsersDto[]> {
+   // return of(mock);
+
+    return this.attackClient.getAttackableUsers();
   }
 
 

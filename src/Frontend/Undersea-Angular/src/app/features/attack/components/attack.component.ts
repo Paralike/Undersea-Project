@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeatureService } from '../../service/feature.service';
+import { AttackModel } from '../model/attack.model';
 
 
 @Component({
@@ -12,13 +13,15 @@ export class AttackComponent implements OnInit {
 
   constructor(private el: ElementRef, private snackbar: MatSnackBar, private service: FeatureService) { }
   displayedColumns: string[] = ['target', 'choice'];
-  userList;
+  userList: AttackModel[];
   selected;
   alreadySelected: Array<number> = new Array<number>();
   selectedRowIndex: any;
 
   ngOnInit() {
-    this.service.getAttack().subscribe(res => this.userList = res);
+    this.service.getAttack().subscribe(res => {
+      this.userList = res;
+    });
     this.selected = false;
     this.alreadySelected.push(-1);
     // we added this so that when the backdrop is clicked the modal is closed.
