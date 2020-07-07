@@ -11,5 +11,6 @@ export interface ArmyModel {
     defense: number;
     unitType: units;
     name: string;
+    img: string;
 }
 
