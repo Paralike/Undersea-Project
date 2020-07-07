@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {
         building: [0, 0],
-        price: [45, 35]
+        price: [45, 35] // TO DO
       }
     });
   }
