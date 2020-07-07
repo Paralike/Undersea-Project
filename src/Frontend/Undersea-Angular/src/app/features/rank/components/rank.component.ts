@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FeatureService } from '../../service/feature.service';
+
 
 @Component({
   selector: 'app-rank',
@@ -7,11 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RankComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private service: FeatureService) { }
+  displayedColumns: string[] = ['name', 'points'];
   rankList; 
   ngOnInit(): void {
-    this.rankList = ["user1", "user2", "user3", "user4"];
+    this.service.getRanks().subscribe(res => this.rankList = res);
   }
 
 }
