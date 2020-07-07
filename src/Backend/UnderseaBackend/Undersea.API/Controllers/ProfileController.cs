@@ -9,7 +9,7 @@ namespace Undersea.API.Controllers
     public class ProfileController : ControllerBase
     {
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ProfileDto>> DeleteProfile(int id)
+        public async Task<ActionResult> DeleteProfile(int id)
         {
             return Ok();
         }
@@ -21,7 +21,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet("ranks")]
-        public async Task<ActionResult> GetRanks()
+        public async Task<ActionResult<RankDto>> GetRanks()
         {
             return Ok();
         }

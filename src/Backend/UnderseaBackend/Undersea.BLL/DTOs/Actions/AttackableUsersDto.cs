@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Undersea.BLL.DTOs
 {
     public class AttackableUsersDto
     {
-        public Dictionary<int, string> AttackableUsers { get; set; }
+        public Guid Id { get; set; }
+
+        public string Username { get; set; }
     }
 }

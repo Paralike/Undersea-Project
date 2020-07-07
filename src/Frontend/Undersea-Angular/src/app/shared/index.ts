@@ -25,7 +25,7 @@ export class ArmyClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getArmy(): Observable<UnitDto> {
+    getArmy(): Observable<UnitDto[]> {
         let url_ = this.baseUrl + "/api/Army";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -44,14 +44,14 @@ export class ArmyClient {
                 try {
                     return this.processGetArmy(<any>response_);
                 } catch (e) {
-                    return <Observable<UnitDto>><any>_observableThrow(e);
+                    return <Observable<UnitDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UnitDto>><any>_observableThrow(response_);
+                return <Observable<UnitDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetArmy(response: HttpResponseBase): Observable<UnitDto> {
+    protected processGetArmy(response: HttpResponseBase): Observable<UnitDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -62,7 +62,11 @@ export class ArmyClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UnitDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UnitDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -70,7 +74,7 @@ export class ArmyClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UnitDto>(<any>null);
+        return _observableOf<UnitDto[]>(<any>null);
     }
 
     purchaseUnits(purchase: UnitPurchaseDto): Observable<FileResponse | null> {
@@ -185,7 +189,7 @@ export class AttackClient {
         return _observableOf<FileResponse | null>(<any>null);
     }
 
-    getAttackableUsers(): Observable<AttackableUsersDto> {
+    getAttackableUsers(): Observable<AttackableUsersDto[]> {
         let url_ = this.baseUrl + "/api/Attack";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -204,14 +208,14 @@ export class AttackClient {
                 try {
                     return this.processGetAttackableUsers(<any>response_);
                 } catch (e) {
-                    return <Observable<AttackableUsersDto>><any>_observableThrow(e);
+                    return <Observable<AttackableUsersDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<AttackableUsersDto>><any>_observableThrow(response_);
+                return <Observable<AttackableUsersDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAttackableUsers(response: HttpResponseBase): Observable<AttackableUsersDto> {
+    protected processGetAttackableUsers(response: HttpResponseBase): Observable<AttackableUsersDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -222,7 +226,11 @@ export class AttackClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = AttackableUsersDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(AttackableUsersDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -230,7 +238,7 @@ export class AttackClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AttackableUsersDto>(<any>null);
+        return _observableOf<AttackableUsersDto[]>(<any>null);
     }
 }
 
@@ -520,7 +528,7 @@ export class ProfileClient {
         return _observableOf<ProfileDto>(<any>null);
     }
 
-    getRanks(): Observable<FileResponse | null> {
+    getRanks(): Observable<RankDto> {
         let url_ = this.baseUrl + "/api/Profile/ranks";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -528,7 +536,7 @@ export class ProfileClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -539,31 +547,33 @@ export class ProfileClient {
                 try {
                     return this.processGetRanks(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                    return <Observable<RankDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+                return <Observable<RankDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetRanks(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processGetRanks(response: HttpResponseBase): Observable<RankDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RankDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf<RankDto>(<any>null);
     }
 }
 
@@ -834,7 +844,8 @@ export interface IArmyDto {
 }
 
 export class AttackableUsersDto implements IAttackableUsersDto {
-    attackableUsers?: { [key: string]: string; } | undefined;
+    id!: string;
+    username?: string | undefined;
 
     constructor(data?: IAttackableUsersDto) {
         if (data) {
@@ -847,13 +858,8 @@ export class AttackableUsersDto implements IAttackableUsersDto {
 
     init(_data?: any) {
         if (_data) {
-            if (_data["attackableUsers"]) {
-                this.attackableUsers = {} as any;
-                for (let key in _data["attackableUsers"]) {
-                    if (_data["attackableUsers"].hasOwnProperty(key))
-                        this.attackableUsers![key] = _data["attackableUsers"][key];
-                }
-            }
+            this.id = _data["id"];
+            this.username = _data["username"];
         }
     }
 
@@ -866,19 +872,15 @@ export class AttackableUsersDto implements IAttackableUsersDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (this.attackableUsers) {
-            data["attackableUsers"] = {};
-            for (let key in this.attackableUsers) {
-                if (this.attackableUsers.hasOwnProperty(key))
-                    data["attackableUsers"][key] = this.attackableUsers[key];
-            }
-        }
+        data["id"] = this.id;
+        data["username"] = this.username;
         return data; 
     }
 }
 
 export interface IAttackableUsersDto {
-    attackableUsers?: { [key: string]: string; } | undefined;
+    id: string;
+    username?: string | undefined;
 }
 
 export class AuthResponseDto implements IAuthResponseDto {
@@ -1178,6 +1180,46 @@ export interface IUpgradeDto {
     id: number;
     turnCount: number;
     status: Status;
+}
+
+export class RankDto implements IRankDto {
+    username?: string | undefined;
+    point!: number;
+
+    constructor(data?: IRankDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.username = _data["username"];
+            this.point = _data["point"];
+        }
+    }
+
+    static fromJS(data: any): RankDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RankDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["username"] = this.username;
+        data["point"] = this.point;
+        return data; 
+    }
+}
+
+export interface IRankDto {
+    username?: string | undefined;
+    point: number;
 }
 
 export interface FileResponse {

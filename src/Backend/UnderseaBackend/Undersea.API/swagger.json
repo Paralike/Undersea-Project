@@ -22,7 +22,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/UnitDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UnitDto"
+              }
             }
           }
         }
@@ -106,7 +109,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/AttackableUsersDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttackableUsersDto"
+              }
             }
           }
         }
@@ -270,12 +276,17 @@
           "Profile"
         ],
         "operationId": "Profile_GetRanks",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "file"
+              "$ref": "#/definitions/RankDto"
             }
           }
         }
@@ -397,12 +408,16 @@
     },
     "AttackableUsersDto": {
       "type": "object",
+      "required": [
+        "id"
+      ],
       "properties": {
-        "attackableUsers": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+        "id": {
+          "type": "string",
+          "format": "guid"
+        },
+        "username": {
+          "type": "string"
         }
       }
     },
@@ -564,6 +579,21 @@
         },
         "status": {
           "$ref": "#/definitions/Status"
+        }
+      }
+    },
+    "RankDto": {
+      "type": "object",
+      "required": [
+        "point"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "point": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     }

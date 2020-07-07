@@ -13,6 +13,10 @@ export interface BuildingData {
 
 }
 
+export interface ArmyData {
+  units: number[];
+}
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -30,7 +34,7 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {
         building: [0, 0],
-        price: [45, 35]
+        price: [45, 35] // TO DO
       }
     });
   }
@@ -61,7 +65,9 @@ export class NavbarComponent implements OnInit {
   openArmy() {
     const dialogRef = this.dialog.open(ArmyComponent, {
       width: '50vw',
-      data: {}
+      data: {
+        units: [0, 5, 0]
+      }
     });
   }
  openDevelopments(){

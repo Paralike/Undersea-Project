@@ -22,6 +22,9 @@ namespace Undersea.DAL
         public DbSet<Unit> Units { get; set; }
         public DbSet<Upgrade> Upgrades { get; set; }
         public DbSet<UpgradeAttribute> UpgradeAttributes { get; set; }
+
+        // TODO rename
+
         public DbSet<BuildingAttributeJoin> CityBuildings { get; set; }
         public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
 
