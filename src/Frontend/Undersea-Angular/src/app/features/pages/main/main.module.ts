@@ -10,6 +10,8 @@ import { AttackComponent } from '../../attack/components/attack.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FightComponent } from '../../fight/components/fight.component';
 import { ArmyComponent } from '../../army/components/army.component';
+import { RankComponent } from '../../rank/components/rank.component';
+import { DevelopmentsComponent } from '../../developments/components/developments.component'
 
 
 
@@ -23,8 +25,10 @@ import { ArmyComponent } from '../../army/components/army.component';
     AttackComponent,
     FightComponent,
     ArmyComponent,
+    RankComponent,
+    DevelopmentsComponent
   ],
-  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent, FightComponent, ArmyComponent],
+  exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent, FightComponent, ArmyComponent, RankComponent, DevelopmentsComponent],
   imports: [
     CommonModule,
     MainRoutingModule,

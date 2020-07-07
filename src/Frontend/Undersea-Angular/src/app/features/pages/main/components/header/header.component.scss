@@ -1,94 +1,36 @@
-body{
-	position: relative;
-}
-.header{
-    top: 25px;
-	left: 21px;
-	width: 1878px;
+
+  .navbar {
+	width: 95%;
+	background-color: #FFFFFF;
+	border-radius: 16px;
+	padding-left: 30px;
+	padding-right: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	height: 84px;
 
-	border-radius: 16px;
-	opacity: 1;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-	.header {
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px); 
-		background-color:#FFFFFF ;
-	}
-	
   }
-.header > .infos > ul > li > span {
-text-align: left;
-font-family: baloo ;
-letter-spacing: 0px;
-font-size: 32px;
-margin-left: 2rem;
-color: #1C3E76;
-opacity: 1;
-
-}
-
-.header > .infos > ul {
-	padding: 0;
-	margin: 0;
-	overflow: hidden;
-}
-
-.header > .infos > ul > li {
+  
+  .infos{
+	font-family: baloo ;
+	color: #1C3E76;
+  }
+ 
+  
+  .nav-links {
+	list-style: none;
+	display: flex;
+  }
+  
+  .nav-item span {
 	display: inline-block;
-	padding: 0.2% 3%;
-}
-
-.header > .infos > ul > li > span > img{
-	border: 2px solid #428DFF;
-	border-radius: 14px;
-	opacity: 1;
-	width: 42px;
-	height: 45px;
-	
-
-}
-
-.header > .infos >  ul > li > .icons > span >  img{
-
-	border: 2px solid #428DFF;
-	border-radius: 14px;
-	opacity: 1;
-	width: 42px;
-	height: 45px;
-	
-
-}
-
-.header > .infos >  .game-infos{
-
-	
-	border: 2px solid #428DFF;
-	border-radius: 14px;
-	opacity: 1;
-	width: 42px;
-	height: 45px;
-	
-
-}
-
-.header > .title {
-	font-family: baloo;
-	font-size: 38px;
-	color: #9FFFF0;
+	padding: 5px 10px;
+	text-decoration: none;
+	font-family: baloo ;
 	letter-spacing: 0px;
-	text-align: left;
-	position: fixed;
-	top: 1100%;
-	opacity: 1;
-	left: 1%;
-
-
-	
-	
-	
-}
+	font-size: 32px;
+	margin-left: 2rem;
+	color: #1C3E76;
+  }
+  

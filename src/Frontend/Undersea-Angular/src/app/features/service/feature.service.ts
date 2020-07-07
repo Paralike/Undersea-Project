@@ -47,6 +47,16 @@ const mock = [
     id: 8,
     name: 'Mock 9',
     points: 1200
+  },
+  {
+    id: 9,
+    name: 'Mock 10',
+    points: 1200
+  },
+  {
+    id: 10,
+    name: 'Mock 11',
+    points: 1200
   }
 ]
 
