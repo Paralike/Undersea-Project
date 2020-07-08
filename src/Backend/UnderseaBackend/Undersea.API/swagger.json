@@ -22,10 +22,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UnitDto"
-              }
+              "$ref": "#/definitions/ArmyDto"
             }
           }
         }
@@ -352,81 +349,14 @@
     }
   },
   "definitions": {
-    "UnitDto": {
-      "type": "object",
-      "required": [
-        "price",
-        "foodNecessity",
-        "damage",
-        "defense",
-        "unitType"
-      ],
-      "properties": {
-        "price": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "foodNecessity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "damage": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "defense": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "unitType": {
-          "$ref": "#/definitions/UnitType"
-        }
-      }
-    },
-    "UnitType": {
-      "type": "integer",
-      "description": "",
-      "x-enumNames": [
-        "Rohamfoka",
-        "Csatacsiko",
-        "Lezercsapa"
-      ],
-      "enum": [
-        0,
-        1,
-        2
-      ]
-    },
-    "UnitPurchaseDto": {
-      "type": "object",
-      "properties": {
-        "purchasedUnits": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      }
-    },
-    "AttackDto": {
-      "type": "object",
-      "properties": {
-        "battles": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/ArmyDto"
-          }
-        }
-      }
-    },
     "ArmyDto": {
       "type": "object",
       "required": [
-        "armyFoodNecessity"
+        "armyFoodNecessity",
+        "armySumCost"
       ],
       "properties": {
-        "unitList": {
+        "unitDictionary": {
           "type": "object",
           "x-dictionaryKey": {
             "$ref": "#/definitions/UnitType"
@@ -439,13 +369,64 @@
         "armyFoodNecessity": {
           "type": "integer",
           "format": "int32"
+        },
+        "armySumCost": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "UnitType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Rohamfoka",
+        "Csatacsiko",
+        "Lezercapa"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "UnitPurchaseDto": {
+      "type": "object",
+      "properties": {
+        "purchasedUnits": {
+          "type": "object",
+          "x-dictionaryKey": {
+            "$ref": "#/definitions/UnitType"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "AttackDto": {
+      "type": "object",
+      "required": [
+        "attackerArmyId",
+        "defenderCityId"
+      ],
+      "properties": {
+        "attackerArmyId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "defenderCityId": {
+          "type": "string",
+          "format": "guid"
         }
       }
     },
     "AttackableUsersDto": {
       "type": "object",
       "required": [
-        "id"
+        "id",
+        "username"
       ],
       "properties": {
         "id": {
@@ -453,7 +434,8 @@
           "format": "guid"
         },
         "username": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         }
       }
     },

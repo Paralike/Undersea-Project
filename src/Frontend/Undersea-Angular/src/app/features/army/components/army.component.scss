@@ -105,3 +105,19 @@ div:focus {
 .plusButton {
     cursor: pointer;
 }
+
+.plus-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #9FFFF0;
+    width: 25px;
+    height: 25px;
+    border-radius: 13px;
+    color: #03255f;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+}

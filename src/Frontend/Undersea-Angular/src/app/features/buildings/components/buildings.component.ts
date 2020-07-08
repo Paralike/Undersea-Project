@@ -15,21 +15,23 @@ export class BuildingsComponent implements OnInit {
   public selectedBuilding: number;
   public id: string;
 
-
   constructor(private featureService: FeatureService, @Inject(MAT_DIALOG_DATA) public data: BuildingData) { }
 
   ngOnInit(): void {
     this.buildings = [];
     this.featureService.getBuildings().subscribe(res => this.buildings = res,
-    (err) => {
-      console.log(err);
-    });
+      (err) => {
+        console.log(err);
+      });
   }
 
   selected(building: BuildingModel) {
     this.selectedBuilding = building.buildingType;
-    document.getElementById('buildButton').style.opacity = '1';
 
   }
 
+  sendData(){
+    console.log(this.selectedBuilding);
+    console.log(this.buildings[this.selectedBuilding - 1].name);
+  }
 }

@@ -1,40 +1,50 @@
 ﻿
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
-using Undersea.DAL;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
+using Undersea.DAL.Repository.Interfaces;
 
 namespace Undersea.BLL.Services
 {
     public class AttackService : IAttackService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAttackRepository _attackRepository;
         private readonly IMapper _mapper;
 
-        public AttackService(IUserRepository userRepository, IMapper mapper)
+        public AttackService(IUserRepository userRepository, IAttackRepository attackRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _attackRepository = attackRepository;
             _mapper = mapper;
         }
         public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers()
         {
-            var list = _userRepository.GetAll();
+            // TODO saját magát ne adja vissza
+
+            var list = await _userRepository.GetAll();
 
             return _mapper.Map<List<AttackableUsersDto>>(list);
         }
 
-        public Task<ActionResult> StartAttack(AttackDto attack)
+        public Task StartAttack(Guid id, AttackDto attack)
         {
-            throw new NotImplementedException();
+            Attack newAttack = new Attack()
+            {
+                DefenderCityId = attack.DefenderCityId,
+                AttackerCityId = id,
+                ArmyId = attack.AttackerArmyId                
+
+                // TODO lekérni a army-t, attackert és defender-t db-ből?
+            };
+
+            return _attackRepository.Add(newAttack);
         }
     }
 }

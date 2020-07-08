@@ -10,7 +10,5 @@ namespace Undersea.BLL.DTOs
 
         public Status Status { get; set; }
 
-        // TODO enum melyik fejlesztés
-
     }
 }

@@ -9,16 +9,21 @@ namespace Undersea.DAL.Models
         public string Name { get; set; }
         public User User { get; set; }
         public Guid UserId { get; set; }
-        public int PearlCount { get; set; }
-        public int PearlProduction { get; set; }
-        public int CoralCount { get; set; }
-        public int CoralProduction { get; set; }
+        public int PearlCount { get; set; } = 1000;
+        public int PearlProduction { get; set; } = 200;
+        public int CoralCount { get; set; } = 1000;
+        public int CoralProduction { get; set; } = 200;
         public int Points { get; set; }
-        public virtual ICollection<Army> Armies { get; set; }
+        public Army AvailableArmy { get; set; } 
+        public Guid AvailableArmyId { get; set; }
         public virtual ICollection<Upgrade> Upgrades { get; set; }
         public virtual ICollection<Building> Buildings { get; set; }
         public virtual ICollection<Attack> Attacks { get; set; }
 
-
+        public City()
+        {
+            Id = Guid.NewGuid();
+            AvailableArmy = new Army();
+        }
     }
 }

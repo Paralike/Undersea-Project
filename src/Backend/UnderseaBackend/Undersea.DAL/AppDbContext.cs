@@ -22,23 +22,22 @@ namespace Undersea.DAL
         public DbSet<Unit> Units { get; set; }
         public DbSet<Upgrade> Upgrades { get; set; }
         public DbSet<UpgradeAttribute> UpgradeAttributes { get; set; }
-
-        // TODO rename
-
         public DbSet<BuildingAttributeJoin> CityBuildings { get; set; }
         public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
+        public DbSet<ArmyUnitJoin> ArmyUnitJoins { get; set; }
+        public DbSet<ApplicationLog> ApplicationLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new ArmyConfiguration());
-        modelBuilder.ApplyConfiguration(new AttackConfiguration());
-        modelBuilder.ApplyConfiguration(new CityConfiguration());
-        modelBuilder.ApplyConfiguration(new UnitConfiguration());
-        modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
-        modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ArmyConfiguration());
+            modelBuilder.ApplyConfiguration(new AttackConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new UnitConfiguration());
+            modelBuilder.ApplyConfiguration(new ArmyUnitJoinConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
+            modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
         }
     }
 }

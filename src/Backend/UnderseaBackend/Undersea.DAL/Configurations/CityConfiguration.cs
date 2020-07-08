@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Undersea.DAL.Models;
 
 namespace Undersea.DAL.Configurations
@@ -17,9 +14,9 @@ namespace Undersea.DAL.Configurations
             .WithMany(u => u.Cities)
             .HasForeignKey(u => u.UserId);
 
-            entity.HasMany(c => c.Armies)
+            entity.HasOne(c => c.AvailableArmy)
             .WithOne(a => a.City)
-            .HasForeignKey(a => a.CityId);
+            .HasForeignKey<City>(c => c.AvailableArmyId);
 
             entity.HasMany(c => c.Upgrades)
             .WithOne(u => u.City)

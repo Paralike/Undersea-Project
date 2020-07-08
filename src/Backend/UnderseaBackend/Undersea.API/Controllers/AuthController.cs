@@ -30,8 +30,8 @@ namespace Undersea.API.Controllers
             }
             var user = await _authService.GetUser(login);
 
-            if(user == null)
-            { 
+            if (user == null)
+            {
                 return Unauthorized();
             }
 

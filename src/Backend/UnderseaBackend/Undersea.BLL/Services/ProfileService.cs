@@ -24,12 +24,18 @@ namespace Undersea.BLL.Services
 
         public async Task DeleteProfile(Guid id)
         {
-            _userRepository.Delete(id);
+            var user = await _userRepository.GetById(id);
+            await _userRepository.Remove(user);
         }
 
         public Task<CityDto> GetProfile(User user)
         {
             throw new NotImplementedException();
         }
+
+        //public Task<ProfileDto> GetProfile(User user)
+        // {
+        //     var profile 
+        // }
     }
 }

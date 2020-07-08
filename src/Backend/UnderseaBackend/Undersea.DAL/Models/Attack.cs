@@ -2,7 +2,7 @@
 
 namespace Undersea.DAL.Models
 {
-    public class Attack
+    public class Attack : IDbEntity
     {
         public Guid Id { get; set; }
         public City AttackerCity { get; set; }
