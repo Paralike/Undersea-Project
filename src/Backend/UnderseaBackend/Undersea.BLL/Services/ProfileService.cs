@@ -12,40 +12,41 @@ namespace Undersea.BLL.Services
     class ProfileService : IProfileService
     {
 <<<<<<< HEAD
-
-        private readonly AppDbContext _dbContext;
-        public ProfileService(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-      private readonly IUserRepository _userRepository;
-=======
-        private readonly ICityRepository _cityRepository;
->>>>>>> parent of badbb1c... Add city service
-        private readonly IMapper _mapper;
-
-        public ProfileService(ICityRepository cityRepository, IMapper mapper)
-        {
-            _cityRepository = cityRepository;
-            _mapper = mapper;
-
-        }
         public Task DeleteProfile(int id)
-        {
-<<<<<<< HEAD
-
-=======
-            _cityRepository.Delete(id);
->>>>>>> parent of badbb1c... Add city service
-        }
-
-        public Task<ProfileDto> GetProfile(User user)
         {
             throw new NotImplementedException();
         }
 
-        //public Task<ProfileDto> GetProfile(User user)
-        //{
-        //       var profile 
-        //}
+
+        /*       private readonly AppDbContext _dbContext;
+               public ProfileService(AppDbContext dbContext)
+               {
+                   _dbContext = dbContext;
+             private readonly IUserRepository _userRepository;
+
+               private readonly ICityRepository _cityRepository;
+
+
+               private readonly ICityRepository _cityRepository;
+
+               private readonly IMapper _mapper;
+
+               public ProfileService(ICityRepository cityRepository, IMapper mapper)
+               {
+                   _cityRepository = cityRepository;
+                   _mapper = mapper;
+
+               }
+               public Task DeleteProfile(int id)
+               {
+
+                   _cityRepository.Delete(id);
+                   _cityRepository.Delete(id);
+               }
+        */
+        public Task<ProfileDto> GetProfile(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
