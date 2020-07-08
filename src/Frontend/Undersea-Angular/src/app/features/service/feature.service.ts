@@ -7,7 +7,10 @@ import { FIGTHS } from '../fight/model/mock-fight';
 import { PeriodicElement } from '../fight/model/fight.model';
 import { ArmyModel } from '../army/model/army.model';
 import { ARMY } from '../army/model/mock-army';
+import { DevelopmentModel} from '../developments/model/development.model';
+import { DEVELOPMENTS} from '../developments/model/mockDevelopment';
 import {PROFILE, ProfileModel} from '../pages/main/model/profile.model';
+
 
 const mock = [
   {
@@ -77,6 +80,9 @@ export class FeatureService {
   getBuildings(): Observable<BuildingModel[]> {
     // return this.buildingsClient.getBuilding();
     return of(BUIDLDINGS);
+  }
+  getDevelopments(): Observable<DevelopmentModel[]> {
+    return of(DEVELOPMENTS);
   }
 
   getAttack(): Observable<AttackableUsersDto[]> {

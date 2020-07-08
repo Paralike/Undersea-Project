@@ -34,7 +34,9 @@
   </div>
   <mat-divider></mat-divider>
   <div class="buttonsDiv">
-    <button [disabled]="!selectedBuilding" mat-button class="buildingButton" id="buildButton">Megveszem</button>
+
+    <button [disabled]="!selectedBuilding" mat-button class="buildingButton" (click)="sendData()" id="buildButton">Megveszem</button>
+
   </div>
 
 </div>

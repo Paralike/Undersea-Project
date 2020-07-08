@@ -267,7 +267,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": false,
+            "x-nullable": true,
             "description": "",
             "schema": {
               "$ref": "#/definitions/CityDto"
