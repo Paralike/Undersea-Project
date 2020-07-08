@@ -33,7 +33,7 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AttackableUsersDto>>> GetAttackableUsers()
         {
-            Guid id = Guid.Parse(User.FindFirst("Id")?.Value);
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             return Ok(await _attackService.GetAttackableUsers());
         }
