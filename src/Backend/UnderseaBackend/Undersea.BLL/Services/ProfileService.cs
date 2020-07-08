@@ -11,14 +11,23 @@ namespace Undersea.BLL.Services
 {
     class ProfileService : IProfileService
     {
+
         private readonly AppDbContext _dbContext;
         public ProfileService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+      private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
+        public ProfileService(IUserRepository userRepository, IMapper mapper)
+        {
+            _userRepository = userRepository;
+            _mapper = mapper;
+
         }
         public Task DeleteProfile(int id)
         {
-            throw new NotImplementedException();
+
         }
 
         public Task<ProfileDto> GetProfile(User user)
