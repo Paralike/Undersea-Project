@@ -1,6 +1,5 @@
-
-
-<h1>Ranglista</h1>
+<div>
+  <h1>Ranglista</h1>
 <input class="search" type="text" placeholder="Felhasználónév">
 
 
@@ -24,3 +23,5 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)" [ngClass]="{'onSelect': selectedRowIndex == row.id}"></tr>
     </table>
 </div>
+</div>
+

@@ -1,6 +1,7 @@
 ::ng-deep .mat-dialog-container{
     background-color: #03255F !important;
     color: white;
+    overflow-x: hidden;
   
   }
 
@@ -36,6 +37,7 @@
     border-radius: 20px;
     opacity: 0.39;
     margin-right: 20%;
+    outline: none;
 }
 
 
