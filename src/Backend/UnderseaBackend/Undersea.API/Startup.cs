@@ -16,6 +16,9 @@ using Undersea.DAL;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories;
 using Undersea.DAL.Repositories.Interfaces;
+using Undersea.DAL.Repositories.Repositories;
+using Undersea.DAL.Repository.Interfaces;
+using Undersea.DAL.Repository.Repositories;
 
 namespace Undersea.API
 {
@@ -40,10 +43,11 @@ namespace Undersea.API
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAttackService, AttackService>();
             services.AddTransient<IArmyService, ArmyService>();
-            services.AddTransient<IBuildingService, BuildingService>();
+
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IBuildingRepository, BuildingRepository>();
-            services.AddTransient<IUpgradeRepository, UpgradeRepository>();
+            services.AddTransient<IArmyRepository, ArmyRepository>();
+            services.AddTransient<IAttackRepository, AttackRepository>();
+            services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
 
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
@@ -74,7 +78,6 @@ namespace Undersea.API
             services.AddControllers();
 
             services.AddSwaggerDocument();
-
 
         }
 

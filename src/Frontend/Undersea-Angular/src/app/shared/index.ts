@@ -25,7 +25,7 @@ export class ArmyClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getArmy(): Observable<UnitDto[]> {
+    getArmy(): Observable<ArmyDto> {
         let url_ = this.baseUrl + "/api/Army";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -44,14 +44,14 @@ export class ArmyClient {
                 try {
                     return this.processGetArmy(<any>response_);
                 } catch (e) {
-                    return <Observable<UnitDto[]>><any>_observableThrow(e);
+                    return <Observable<ArmyDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UnitDto[]>><any>_observableThrow(response_);
+                return <Observable<ArmyDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetArmy(response: HttpResponseBase): Observable<UnitDto[]> {
+    protected processGetArmy(response: HttpResponseBase): Observable<ArmyDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -62,11 +62,7 @@ export class ArmyClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(UnitDto.fromJS(item));
-            }
+            result200 = ArmyDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -74,7 +70,7 @@ export class ArmyClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UnitDto[]>(<any>null);
+        return _observableOf<ArmyDto>(<any>null);
     }
 
     purchaseUnits(purchase: UnitPurchaseDto): Observable<FileResponse | null> {
@@ -700,14 +696,12 @@ export class UpgradesClient {
     }
 }
 
-export class UnitDto implements IUnitDto {
-    price!: number;
-    foodNecessity!: number;
-    damage!: number;
-    defense!: number;
-    unitType!: UnitType;
+export class ArmyDto implements IArmyDto {
+    unitDictionary?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    armyFoodNecessity!: number;
+    armySumCost!: number;
 
-    constructor(data?: IUnitDto) {
+    constructor(data?: IArmyDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -718,48 +712,54 @@ export class UnitDto implements IUnitDto {
 
     init(_data?: any) {
         if (_data) {
-            this.price = _data["price"];
-            this.foodNecessity = _data["foodNecessity"];
-            this.damage = _data["damage"];
-            this.defense = _data["defense"];
-            this.unitType = _data["unitType"];
+            if (_data["unitDictionary"]) {
+                this.unitDictionary = {} as any;
+                for (let key in _data["unitDictionary"]) {
+                    if (_data["unitDictionary"].hasOwnProperty(key))
+                        this.unitDictionary![key] = _data["unitDictionary"][key];
+                }
+            }
+            this.armyFoodNecessity = _data["armyFoodNecessity"];
+            this.armySumCost = _data["armySumCost"];
         }
     }
 
-    static fromJS(data: any): UnitDto {
+    static fromJS(data: any): ArmyDto {
         data = typeof data === 'object' ? data : {};
-        let result = new UnitDto();
+        let result = new ArmyDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["price"] = this.price;
-        data["foodNecessity"] = this.foodNecessity;
-        data["damage"] = this.damage;
-        data["defense"] = this.defense;
-        data["unitType"] = this.unitType;
+        if (this.unitDictionary) {
+            data["unitDictionary"] = {};
+            for (let key in this.unitDictionary) {
+                if (this.unitDictionary.hasOwnProperty(key))
+                    data["unitDictionary"][key] = this.unitDictionary[key];
+            }
+        }
+        data["armyFoodNecessity"] = this.armyFoodNecessity;
+        data["armySumCost"] = this.armySumCost;
         return data; 
     }
 }
 
-export interface IUnitDto {
-    price: number;
-    foodNecessity: number;
-    damage: number;
-    defense: number;
-    unitType: UnitType;
+export interface IArmyDto {
+    unitDictionary?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    armyFoodNecessity: number;
+    armySumCost: number;
 }
 
 export enum UnitType {
     Rohamfoka = 0,
     Csatacsiko = 1,
-    Lezercsapa = 2,
+    Lezercapa = 2,
 }
 
 export class UnitPurchaseDto implements IUnitPurchaseDto {
-    purchasedUnits?: { [key: string]: number; } | undefined;
+    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
 
     constructor(data?: IUnitPurchaseDto) {
         if (data) {
@@ -803,11 +803,12 @@ export class UnitPurchaseDto implements IUnitPurchaseDto {
 }
 
 export interface IUnitPurchaseDto {
-    purchasedUnits?: { [key: string]: number; } | undefined;
+    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
 }
 
 export class AttackDto implements IAttackDto {
-    battles?: { [key: string]: ArmyDto; } | undefined;
+    attackerArmyId!: string;
+    defenderCityId!: string;
 
     constructor(data?: IAttackDto) {
         if (data) {
@@ -820,13 +821,8 @@ export class AttackDto implements IAttackDto {
 
     init(_data?: any) {
         if (_data) {
-            if (_data["battles"]) {
-                this.battles = {} as any;
-                for (let key in _data["battles"]) {
-                    if (_data["battles"].hasOwnProperty(key))
-                        this.battles![key] = _data["battles"][key] ? ArmyDto.fromJS(_data["battles"][key]) : new ArmyDto();
-                }
-            }
+            this.attackerArmyId = _data["attackerArmyId"];
+            this.defenderCityId = _data["defenderCityId"];
         }
     }
 
@@ -839,76 +835,20 @@ export class AttackDto implements IAttackDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (this.battles) {
-            data["battles"] = {};
-            for (let key in this.battles) {
-                if (this.battles.hasOwnProperty(key))
-                    data["battles"][key] = this.battles[key] ? this.battles[key].toJSON() : <any>undefined;
-            }
-        }
+        data["attackerArmyId"] = this.attackerArmyId;
+        data["defenderCityId"] = this.defenderCityId;
         return data; 
     }
 }
 
 export interface IAttackDto {
-    battles?: { [key: string]: ArmyDto; } | undefined;
-}
-
-export class ArmyDto implements IArmyDto {
-    unitList?: { [key in keyof typeof UnitType]?: number; } | undefined;
-    armyFoodNecessity!: number;
-
-    constructor(data?: IArmyDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (_data["unitList"]) {
-                this.unitList = {} as any;
-                for (let key in _data["unitList"]) {
-                    if (_data["unitList"].hasOwnProperty(key))
-                        this.unitList![key] = _data["unitList"][key];
-                }
-            }
-            this.armyFoodNecessity = _data["armyFoodNecessity"];
-        }
-    }
-
-    static fromJS(data: any): ArmyDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ArmyDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.unitList) {
-            data["unitList"] = {};
-            for (let key in this.unitList) {
-                if (this.unitList.hasOwnProperty(key))
-                    data["unitList"][key] = this.unitList[key];
-            }
-        }
-        data["armyFoodNecessity"] = this.armyFoodNecessity;
-        return data; 
-    }
-}
-
-export interface IArmyDto {
-    unitList?: { [key in keyof typeof UnitType]?: number; } | undefined;
-    armyFoodNecessity: number;
+    attackerArmyId: string;
+    defenderCityId: string;
 }
 
 export class AttackableUsersDto implements IAttackableUsersDto {
     id!: string;
-    username?: string | undefined;
+    username!: string;
 
     constructor(data?: IAttackableUsersDto) {
         if (data) {
@@ -943,7 +883,7 @@ export class AttackableUsersDto implements IAttackableUsersDto {
 
 export interface IAttackableUsersDto {
     id: string;
-    username?: string | undefined;
+    username: string;
 }
 
 export class AuthResponseDto implements IAuthResponseDto {

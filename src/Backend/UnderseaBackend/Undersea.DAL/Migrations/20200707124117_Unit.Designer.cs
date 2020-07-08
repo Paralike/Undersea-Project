@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Undersea.DAL;
 
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200707124117_Unit")]
+    partial class Unit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,26 +161,9 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("Armies");
-                });
-
-            modelBuilder.Entity("Undersea.DAL.Models.ArmyUnitJoin", b =>
-                {
-                    b.Property<Guid>("ArmyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("UnitType")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("UnitCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArmyId", "UnitType");
-
-                    b.ToTable("ArmyUnitJoins");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Attack", b =>
@@ -269,9 +254,6 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AvailableArmyId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("CoralCount")
                         .HasColumnType("int");
 
@@ -295,9 +277,6 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("AvailableArmyId")
-                        .IsUnique();
-
                     b.ToTable("Cities");
                 });
 
@@ -315,18 +294,30 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("FoodNecessity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("PearlNecessity")
-                        .HasColumnType("int");
-
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("UnitType");
 
                     b.ToTable("Units");
+                });
+
+            modelBuilder.Entity("Undersea.DAL.Models.UnitCount", b =>
+                {
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ArmyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.HasKey("Type");
+
+                    b.HasIndex("ArmyId");
+
+                    b.ToTable("UnitCounts");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>
@@ -506,11 +497,11 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Undersea.DAL.Models.ArmyUnitJoin", b =>
+            modelBuilder.Entity("Undersea.DAL.Models.Army", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.Army", "Army")
-                        .WithMany("Units")
-                        .HasForeignKey("ArmyId")
+                    b.HasOne("Undersea.DAL.Models.City", "City")
+                        .WithMany("Armies")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -562,17 +553,18 @@ namespace Undersea.DAL.Migrations
 
             modelBuilder.Entity("Undersea.DAL.Models.City", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.Army", "AvailableArmy")
-                        .WithOne("City")
-                        .HasForeignKey("Undersea.DAL.Models.City", "AvailableArmyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Undersea.DAL.Models.User", "User")
                         .WithMany("Cities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Undersea.DAL.Models.UnitCount", b =>
+                {
+                    b.HasOne("Undersea.DAL.Models.Army", null)
+                        .WithMany("Units")
+                        .HasForeignKey("ArmyId");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>

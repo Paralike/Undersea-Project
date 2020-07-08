@@ -9,5 +9,6 @@ namespace Undersea.BLL.DTOs
         public int Damage { get; set; }
         public int Defense { get; set; }
         public UnitType UnitType { get; set; }
+        public string Name { get; set; }
     }
 }

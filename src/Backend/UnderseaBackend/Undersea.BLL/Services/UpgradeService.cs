@@ -30,7 +30,7 @@ namespace Undersea.BLL.Services
 
         public async Task PurchaseUpgrade(UpgradeDto upgrade)
         {
-            _upgradeRepository.Insert(_mapper.Map<Upgrade>(upgrade));
+            await _upgradeRepository.Add(_mapper.Map<Upgrade>(upgrade));
         }
     }
 }

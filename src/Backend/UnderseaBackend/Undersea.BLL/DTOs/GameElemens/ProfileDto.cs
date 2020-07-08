@@ -10,6 +10,7 @@ namespace Undersea.BLL.DTOs
         public int CoralProduction { get; set; }
         public List<BuildingDto> Buildings { get; set; }
         public List<UpgradeDto> Upgrades { get; set; }
-        public ArmyDto Army { get; set; }
+        //public List<ArmyDto> FightingArmies { get; set; }
+        public ArmyDto AvailableArmy { get; set; }
     }
 }
