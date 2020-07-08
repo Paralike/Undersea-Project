@@ -36,7 +36,6 @@ export class AuthPageComponent implements OnInit {
   constructor(private authService: AuthpageService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    localStorage.setItem('token', '');
   }
 
   get name() { return this.loginForm.get('name'); }

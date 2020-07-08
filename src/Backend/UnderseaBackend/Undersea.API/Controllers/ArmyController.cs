@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 
@@ -11,7 +12,7 @@ namespace Undersea.API.Controllers
     public class ArmyController : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<UnitDto>> GetArmy()
+        public async Task<ActionResult<ICollection<UnitDto>>> GetArmy()
         {
             return Ok(new UnitDto());
         }

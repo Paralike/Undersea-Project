@@ -1,0 +1,71 @@
+.example-card {
+    max-width: 100px;
+    max-height: 100px;
+    background-color: #03255f !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+    text-align: center;
+
+}
+.flex{
+  height: 80%;
+}
+table{
+  width: 100%;
+  height: 60%;
+}
+td {
+  padding: 1%;
+}
+.guide {
+    font-family: "Open Sans";
+    font-weight: bold; 
+    font-size: 16px;
+    margin: 0
+  }
+
+.info {
+    font-family: "Open Sans";
+    font-size: 16px;
+
+  }
+
+  .main-content > div {
+    text-align: center;
+  }
+h2 {
+    font-family: baloo;
+    font-size: 32px;
+
+}
+::ng-deep .mat-dialog-container {
+    background-color: #03255f !important;
+    color: white;
+  }
+ 
+img {
+    width: 95px;
+    height: 122px;
+}
+
+button {
+  background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #3B7DBD;
+  border-radius: 90px;
+  opacity: 1;
+  font-family: baloo;
+  padding-top: 0.2%;
+  text-align: center;
+  margin-top: 5%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 192px;
+  height: 50px;
+  font-size: 18px;
+  padding: 1%;
+  padding-left: 4%;
+ 
+
+  
+}

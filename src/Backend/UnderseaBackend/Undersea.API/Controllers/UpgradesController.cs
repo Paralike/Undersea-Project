@@ -6,7 +6,7 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UpdgradesController : ControllerBase
+    public class UpgradesController : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<UpgradeDto>> GetUpgrades()

@@ -4,7 +4,6 @@ import { FeatureService } from '../../service/feature.service';
 import { BUIDLDINGS } from '../model/mockBuildings';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BuildingData } from '../../pages/main/components/navbar/navbar.component';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-buildings',
@@ -21,8 +20,9 @@ export class BuildingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildings = [];
-    this.featureService.getBuildings().subscribe(res => {
-      this.buildings = BUIDLDINGS;
+    this.featureService.getBuildings().subscribe(res => this.buildings = res,
+    (err) => {
+      console.log(err);
     });
   }
 

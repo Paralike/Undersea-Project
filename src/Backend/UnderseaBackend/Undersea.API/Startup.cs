@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +10,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 using Undersea.DAL;
 using Undersea.DAL.Models;
+using Undersea.DAL.Repositories;
+using Undersea.DAL.Repositories.Interfaces;
 
 namespace Undersea.API
 {
@@ -34,9 +38,15 @@ namespace Undersea.API
                     o.UseSqlServer(Configuration["ConnectionString"]));
 
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAttackService, AttackService>();
+            services.AddTransient<IArmyService, ArmyService>();
+
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
