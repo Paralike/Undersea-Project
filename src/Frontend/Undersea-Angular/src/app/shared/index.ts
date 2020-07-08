@@ -429,7 +429,7 @@ export class ProfileClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    deleteProfile(id: number): Observable<ProfileDto> {
+    deleteProfile(id: number): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/Profile/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -440,7 +440,7 @@ export class ProfileClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/json"
+                "Accept": "application/octet-stream"
             })
         };
 
@@ -451,33 +451,31 @@ export class ProfileClient {
                 try {
                     return this.processDeleteProfile(<any>response_);
                 } catch (e) {
-                    return <Observable<ProfileDto>><any>_observableThrow(e);
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ProfileDto>><any>_observableThrow(response_);
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
         }));
     }
 
-    protected processDeleteProfile(response: HttpResponseBase): Observable<ProfileDto> {
+    protected processDeleteProfile(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProfileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ProfileDto>(<any>null);
+        return _observableOf<FileResponse | null>(<any>null);
     }
 
     getProfile(): Observable<ProfileDto> {
@@ -578,7 +576,7 @@ export class ProfileClient {
 }
 
 @Injectable()
-export class UpdgradesClient {
+export class UpgradesClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -589,7 +587,7 @@ export class UpdgradesClient {
     }
 
     getUpgrades(): Observable<UpgradeDto> {
-        let url_ = this.baseUrl + "/api/Updgrades";
+        let url_ = this.baseUrl + "/api/Upgrades";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

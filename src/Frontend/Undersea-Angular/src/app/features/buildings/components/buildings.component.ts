@@ -33,4 +33,8 @@ export class BuildingsComponent implements OnInit {
 
   }
 
+  sendData(){
+    console.log(this.selectedBuilding);
+    console.log(this.buildings[this.selectedBuilding - 1].name);
+  }
 }

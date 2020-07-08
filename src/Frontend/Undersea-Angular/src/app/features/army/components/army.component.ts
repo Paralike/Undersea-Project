@@ -40,6 +40,9 @@ export class ArmyComponent implements OnInit {
 
   }
 
+  sendData() {
+    console.log(this.addUnit);
+  }
   // selected(building: BuildingModel) {
   //   this.selectedBuilding = building.buildingType;
   //   document.getElementById('buildButton').style.opacity = '1';

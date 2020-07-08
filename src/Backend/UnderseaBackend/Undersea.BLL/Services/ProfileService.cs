@@ -23,7 +23,12 @@ namespace Undersea.BLL.Services
 
         public Task<ProfileDto> GetProfile(User user)
         {
-               var profile 
+            throw new NotImplementedException();
         }
+
+        //public Task<ProfileDto> GetProfile(User user)
+        // {
+        //     var profile 
+        // }
     }
 }

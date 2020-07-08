@@ -1,13 +1,10 @@
-<<<<<<< HEAD
-<h1>Ranglista</h1>
+
+
+ <h1>Ranglista</h1>
 <input class="search" type="text" placeholder="Felhasználónév">
-=======
-<!-- <h1>Ranglista</h1>
-<th><input class="search" type="text" placeholder="Felhasználónév"></th>
->>>>>>> 1208c5612bf61aa22125de66c6682de8550cf3bb
+
 
 <div class="infos">
-    
     <table mat-table [dataSource]="rankList" class="left-table">
         <ng-container matColumnDef="place">
           <th mat-header-cell *matHeaderCellDef></th>
@@ -26,4 +23,4 @@
 
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)" [ngClass]="{'onSelect': selectedRowIndex == row.id}"></tr>
     </table>
-</div> -->
+</div>

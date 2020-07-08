@@ -1,51 +1,84 @@
-.example-card {
-    max-width: 100px;
-    max-height: 100px;
-    background-color: #03255f !important;
-    font-family: "Open Sans";
-    font-size: 16px;
-    text-align: center;
-
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 11vw;
+  height: 19vh;
+  background-color: #03255f;
+  margin-bottom: 0.4vh;
+  cursor: pointer;
+  font-family: "Open Sans";
 }
-.flex{
-  height: 80%;
-}
-table{
-  width: 100%;
-  height: 60%;
-}
-td {
-  padding: 1%;
-}
-.guide {
-    font-family: "Open Sans";
-    font-weight: bold; 
-    font-size: 16px;
-    margin: 0
-  }
 
-.info {
-    font-family: "Open Sans";
-    font-size: 16px;
-
-  }
-
-  .main-content > div {
-    text-align: center;
-  }
-h2 {
-    font-family: baloo;
-    font-size: 32px;
-
+.guide{
+  font-weight: bold;
 }
+h2{
+  font-family: baloo;
+}
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 4vh;
+  background-color: #03255f;
+  height: 25vh;
+  margin: 5vh;
+  flex-wrap: wrap;
+}
+
+.buttonsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 4vh;
+  background-color: #03255f;
+  height: 5vh;
+}
+
 ::ng-deep .mat-dialog-container {
-    background-color: #03255f !important;
-    color: white;
-  }
- 
-img {
-    width: 95px;
-    height: 122px;
+  background-color: #03255f !important;
+  color: white;
+}
+
+.building-modal {
+  background-color: red;
+}
+
+
+.buildingName {
+  font-weight: bold;
+  margin: none;
+} 
+
+.developmentDesc {
+  font-weight: bold;
+  margin: none;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  outline: none;
+  border-radius: 16px;
+}
+
+div:focus {
+  background-color: rgba($color: #FFFF, $alpha: 0.12);
+  outline: none;
+  border-radius: 16px;
+  
+}
+
+.quantity {
+  margin: 0.5vh;
+}
+
+.price {
+  margin-bottom: 0.5vh;
 }
 
 button {
@@ -65,7 +98,7 @@ button {
   font-size: 18px;
   padding: 1%;
   padding-left: 4%;
- 
-
-  
+}
+.flex{
+  height: 80%;
 }

@@ -9,66 +9,18 @@
         Minden fejlesztés 15 kört vesz igénybe, egyszerre csak egy dolog fejleszthető és minden csak egyszer fejleszthető ki (nem lehet két kombájn).
     </div>
     <div class="main-content">
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <img src="assets/images/undersea_game-09.png" alt="iszaptraktor">
-              <p>Iszaptraktor</p>
-              <p>növeli a krumpli termesztést 10%-kal</p>
-            </div>
-          </td>
-          <td>
-            <div>
-              <img src="assets/images/undersea_game-09.png" alt="iszaptraktor">
-              <p>Iszaptraktor</p>
-              <p>növeli a krumpli termesztést 10%-kal</p>
-            </div>
-          </td>
-          <td>
-            <div>
-              <img src="assets/images/undersea_game-09.png" alt="iszaptraktor">
-              <p>Iszaptraktor</p>
-              <p>növeli a krumpli termesztést 10%-kal</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div>
-              <img src="assets/images/undersea_game-09.png" alt="iszaptraktor">
-              <p>Iszaptraktor</p>
-              <p>növeli a krumpli termesztést 10%-kal</p>
-            </div>
-          </td>
-          <td>
-            <div>
-              <img src="assets/images/undersea_game-09.png" alt="iszaptraktor">
-              <p>Iszaptraktor</p>
-              <p>növeli a krumpli termesztést 10%-kal</p>
-            </div>
-          </td>
-          <td>
-            <div>
-              <img src="assets/images/undersea_game-09.png" alt="iszaptraktor">
-              <p>Iszaptraktor</p>
-              <p>növeli a krumpli termesztést 10%-kal</p>
-            </div>
-          </td>
-        </tr>
-      </table>
-   
-  
-      
+      <div *ngFor="let development of developments" (click)="selected(development)" class="content" tabindex="-1">
+        <img src='../../../../assets/images/development_{{development.developmentType}}.png'>
+        <div class="developmentName">
+          {{development.name}}
+        </div>
+        <div class="developmentDesc">
+          {{development.desc}}
+        </div>
+      </div>
     </div>
     <mat-divider></mat-divider>
-    <div class="buttonsDiv">
-    </div>
-    <button mat-button class="buildingButton" id="buildButton">Megveszem</button>
-
+  </div>
+  <div class="buttonsDiv">
+    <button mat-button class="developmentButton" id="developmentButton">Megveszem</button>
   </div>

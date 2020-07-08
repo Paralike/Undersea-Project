@@ -45,15 +45,15 @@
             </div>
 
             <div class="plusminus">
-                <svg height="25" width="25" class="plusButton" (click) = "minusUnit(unit.unitType)">
-                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0"  />
+                <svg height="25" width="25" class="plusButton" (click)="minusUnit(unit.unitType)">
+                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0" />
                     <text x="50%" y="50%" text-anchor="middle" stroke="#03255F " stroke-width="0.5px" dy=".2em">-</text>
                 </svg>
                 <div>
                     {{this.addUnit[unit.unitType]}}
                 </div>
-                <svg height="25" width="25" class="plusButton" (click) = "plusUnit(unit.unitType)">
-                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0"  />
+                <svg height="25" width="25" class="plusButton" (click)="plusUnit(unit.unitType)">
+                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0" />
                     <text x="50%" y="50%" text-anchor="middle" stroke="#03255F " stroke-width="0.5px" dy=".3em">+</text>
                 </svg>
 
@@ -64,7 +64,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="buttonsDiv">
-        <button mat-button class="armyButton" id="armyButton">Megveszem</button>
+        <button mat-button class="armyButton" id="armyButton" (click)="sendData()">Megveszem</button>
     </div>
 
 </div>
