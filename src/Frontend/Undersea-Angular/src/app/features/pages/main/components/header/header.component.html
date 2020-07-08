@@ -1,20 +1,84 @@
-<nav class="navbar">
-    <a  class="infos">
-        <span>4.kör</span>    
+<div class="flex">
+  <div class="navbar">
+    <a class="infos">
+      <span>4.kör</span>
+      <span>23.hely</span>
+      <button mat-button>Kör vége</button>
     </a>
-    <a  class="infos">
-        <span>23.hely</span>    
-    </a>
+
     <ul class="nav-links">
-      <li class="nav-item"><span><img src="assets/images/007-shark.svg" alt="image"></span>
-        <span>0</span></li>
-      <li class="nav-item"><span><img src="assets/images/025-seal.svg" alt="image"></span>
-        <span>5</span></li>
-      <li class="nav-item"> <span><img src="assets/images/013-seahorse.svg" alt="image"></span>
-        <span>13</span></li>
-      <li class="nav-item"> <span><img src="assets/images/shell.svg" alt="image"></span>
-        <span>230</span></li>
-        <li class="nav-item"> <span><img src="assets/images/018-coral.svg" alt="image"></span>
-        <span>230</span></li>
+      <li class="nav-item">
+        <span>
+          <div class="imgDiv">
+            <img src="assets/images/007-shark.svg" alt="image">
+          </div>
+          <div class="data">{{city.army.unitList.sharks}}</div>
+        </span>
+      </li>
+      <li class="nav-item"><span>
+          <div class="imgDiv">
+            <img src="assets/images/025-seal.svg" alt="image">
+          </div>
+          <div class="data">{{city.army.unitList.seals}}</div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="imgDiv">
+            <img src="assets/images/013-seahorse.svg" alt="image">
+          </div>
+          <div class="data">{{city.army.unitList.seahorses}}</div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="imgDiv">
+            <img src="assets/images/shell.svg" alt="image">
+          </div>
+          <div class="data">
+            <div>{{city.pearlCount}}</div>
+            <div class="secondData">{{city.pearlProduction}}/kör</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="imgDiv">
+            <img src="assets/images/018-coral.svg" alt="image">
+          </div>
+          <div class="data">
+            <div>{{city.coralCount}}</div>
+            <div class="secondData">{{city.coralProduction}}/kör</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="imgDiv">
+
+          </div>
+          <div class="data">
+            <div>{{city.buildings[0]}}</div>
+            <div class="secondData">0 épül</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="imgDiv">
+
+          </div>
+          <div class="data">
+            <div>{{city.buildings[1]}}</div>
+            <div class="secondData">1 épül</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="imgDiv">
+
+          </div>
+          <div class="data">
+            <div>{{city.buildings[2]}}</div>
+            <div class="secondData">0 épül</div>
+          </div>
+        </span>
+      </li>
     </ul>
-  </nav>
+  </div>
+</div>

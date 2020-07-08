@@ -6,7 +6,7 @@
         Kattints rá, amelyiket szeretnéd megvenni.
     </p>
     <div class="main-content">
-        <div *ngFor="let unit of this.army" class="content">
+        <div *ngFor="let unit of army; let i = index" class="content">
             <div tabindex="-1" class="content">
                 <mat-card class="imgCard">
                     <img src={{unit.img}}>
@@ -25,19 +25,19 @@
                     <div class="values">
 
                         <div class="quantity">
-                            {{data.units[unit.unitType]}} db
+                            {{data.units[i]}} db
                         </div>
                         <div class="attack/def">
                             {{unit.damage}}/{{unit.defense}}
                         </div>
                         <div class="pay">
-                            {{unit.foodNecessity}} Gyöngy
+                            {{unit.foodNecessity}} {{ gyongy }}
                         </div>
                         <div class="food">
                             {{unit.foodNecessity}} Korall
                         </div>
                         <div class="price">
-                            {{unit.price}} Gyöngy
+                            {{unit.price}} {{ gyongy }}
                         </div>
                     </div>
 
@@ -45,17 +45,18 @@
             </div>
 
             <div class="plusminus">
-                <svg height="25" width="25" class="plusButton" (click)="minusUnit(unit.unitType)">
-                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0" />
-                    <text x="50%" y="50%" text-anchor="middle" stroke="#03255F " stroke-width="0.5px" dy=".2em">-</text>
-                </svg>
+
+               
+                <div class="plus-icon" (click) = "minusUnit(i)">
+                    -
+                </div>
                 <div>
                     {{this.addUnit[unit.unitType]}}
                 </div>
-                <svg height="25" width="25" class="plusButton" (click)="plusUnit(unit.unitType)">
-                    <circle cx="12" cy="12" r="10" stroke="black" stroke-width="0.5" fill="#9FFFF0" />
-                    <text x="50%" y="50%" text-anchor="middle" stroke="#03255F " stroke-width="0.5px" dy=".3em">+</text>
-                </svg>
+                <div class="plus-icon" (click) = "minusUnit(i)">
+                    +
+                </div>
+
 
             </div>
         </div>

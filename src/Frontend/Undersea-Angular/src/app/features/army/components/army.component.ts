@@ -13,6 +13,7 @@ import { FeatureService } from '../../service/feature.service';
 export class ArmyComponent implements OnInit {
   public army: ArmyModel[];
   public addUnit: number[];
+  gyongy = 'Gyöngy';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: ArmyData, private featureService: FeatureService) {
     this.addUnit = [0, 0, 0];

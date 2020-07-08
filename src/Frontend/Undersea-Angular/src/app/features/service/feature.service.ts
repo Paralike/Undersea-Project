@@ -9,6 +9,8 @@ import { ArmyModel } from '../army/model/army.model';
 import { ARMY } from '../army/model/mock-army';
 import { DevelopmentModel} from '../developments/model/development.model';
 import { DEVELOPMENTS} from '../developments/model/mockDevelopment';
+import {PROFILE, ProfileModel} from '../pages/main/model/profile.model';
+
 
 const mock = [
   {
@@ -101,6 +103,10 @@ export class FeatureService {
 
   getArmy(): Observable<ArmyModel[]> {
     return of(ARMY);
+  }
+
+  getProfile(): Observable<ProfileModel> {
+    return of(PROFILE);
   }
 
 }

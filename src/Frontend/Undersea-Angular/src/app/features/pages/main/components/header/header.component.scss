@@ -1,7 +1,15 @@
+.flex {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
 
-  .navbar {
+.navbar {
 	width: 95%;
-	background-color: #FFFFFF;
+	background-color: rgba($color: white, $alpha: 0.4);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
 	border-radius: 16px;
 	padding-left: 30px;
 	padding-right: 10px;
@@ -9,28 +17,88 @@
 	justify-content: space-between;
 	align-items: center;
 	height: 84px;
+	margin-top: 1vh;
+}
 
-  }
-  
-  .infos{
-	font-family: baloo ;
-	color: #1C3E76;
-  }
- 
-  
-  .nav-links {
+.infos {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: space-around;
+	font-family: baloo;
+	font-size: 1.2vw;
+	color: #1c3e76;
+	width: 15vw;
+}
+
+.infos span {
+	margin: 5px;
+}
+
+.nav-links {
 	list-style: none;
 	display: flex;
-  }
-  
-  .nav-item span {
-	display: inline-block;
+}
+
+.nav-item span {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	padding: 5px 10px;
 	text-decoration: none;
-	font-family: baloo ;
+	font-family: baloo;
 	letter-spacing: 0px;
 	font-size: 32px;
-	margin-left: 2rem;
-	color: #1C3E76;
-  }
-  
+	margin-left: 3rem;
+	color: #1c3e76;
+}
+
+.nav-item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.imgDiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5vh;
+	background: #9ffff0 0% 0% no-repeat padding-box;
+	border: 2px solid #428dff;
+	border-radius: 14px;
+	width: 2.5vw;
+	height: 2.5vw;
+}
+
+.data {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	margin-left: 1rem;
+	font-size: 1.3vw;
+	font-family: baloo;
+	letter-spacing: 0px;
+}
+
+.secondData {
+	font-size: 0.9vw !important;
+}
+
+button {
+	background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
+	box-shadow: 0px 3px 6px #3b7dbd;
+	border-radius: 90px;
+	opacity: 1;
+	border: none;
+	font-family: baloo;
+	font-size: 1vw;
+	letter-spacing: 0px;
+	color: #001234;
+	width: 10vw;
+	margin-left: 10px;
+}
