@@ -79,8 +79,8 @@ export class AuthPageComponent implements OnInit {
         this.authService.register(
           this.registerForm.value.name,
           this.registerForm.value.password,
+          this.registerForm.value.password2,
           this.registerForm.value.cityName,
-          this.registerForm.value.password2
         ).subscribe(res => {
           if (res.token != null) {
             console.log(res);

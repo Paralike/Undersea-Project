@@ -39,9 +39,7 @@ namespace Undersea.BLL.Services
             {
                 DefenderCityId = attack.DefenderCityId,
                 AttackerCityId = id,
-                ArmyId = attack.AttackerArmyId                
-
-                // TODO lekérni a army-t, attackert és defender-t db-ből?
+                ArmyId = attack.AttackerArmyId     
             };
 
             return _attackRepository.Add(newAttack);

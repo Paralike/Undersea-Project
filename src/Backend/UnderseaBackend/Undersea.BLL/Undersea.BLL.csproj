@@ -8,8 +8,6 @@
 
     <PackageReference Include="AutoMapper" Version="10.0.0" />
 
-    <PackageReference Include="Enco.BllCommon" Version="1.4.0" />
-
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />

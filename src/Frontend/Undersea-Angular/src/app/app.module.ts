@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpHandler, HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelperService, JwtInterceptor, JWT_OPTIONS, JwtModule, } from '@auth0/angular-jwt';
 import { TokenInterceptor } from './features/pages/auth/interceptor';
+import { ArmyClient } from './shared';
 
 
 
@@ -42,6 +43,7 @@ import { TokenInterceptor } from './features/pages/auth/interceptor';
     HttpClient,
     JwtHelperService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    ArmyClient,
   ],
   bootstrap: [AppComponent]
 })

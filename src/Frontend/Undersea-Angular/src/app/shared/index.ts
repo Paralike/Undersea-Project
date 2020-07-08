@@ -697,7 +697,7 @@ export class UpgradesClient {
 }
 
 export class ArmyDto implements IArmyDto {
-    unitDictionary?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    unitList?: ArmyUnitDto[] | undefined;
     armyFoodNecessity!: number;
     armySumCost!: number;
 
@@ -712,12 +712,10 @@ export class ArmyDto implements IArmyDto {
 
     init(_data?: any) {
         if (_data) {
-            if (_data["unitDictionary"]) {
-                this.unitDictionary = {} as any;
-                for (let key in _data["unitDictionary"]) {
-                    if (_data["unitDictionary"].hasOwnProperty(key))
-                        this.unitDictionary![key] = _data["unitDictionary"][key];
-                }
+            if (Array.isArray(_data["unitList"])) {
+                this.unitList = [] as any;
+                for (let item of _data["unitList"])
+                    this.unitList!.push(ArmyUnitDto.fromJS(item));
             }
             this.armyFoodNecessity = _data["armyFoodNecessity"];
             this.armySumCost = _data["armySumCost"];
@@ -733,12 +731,10 @@ export class ArmyDto implements IArmyDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (this.unitDictionary) {
-            data["unitDictionary"] = {};
-            for (let key in this.unitDictionary) {
-                if (this.unitDictionary.hasOwnProperty(key))
-                    data["unitDictionary"][key] = this.unitDictionary[key];
-            }
+        if (Array.isArray(this.unitList)) {
+            data["unitList"] = [];
+            for (let item of this.unitList)
+                data["unitList"].push(item.toJSON());
         }
         data["armyFoodNecessity"] = this.armyFoodNecessity;
         data["armySumCost"] = this.armySumCost;
@@ -747,9 +743,49 @@ export class ArmyDto implements IArmyDto {
 }
 
 export interface IArmyDto {
-    unitDictionary?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    unitList?: ArmyUnitDto[] | undefined;
     armyFoodNecessity: number;
     armySumCost: number;
+}
+
+export class ArmyUnitDto implements IArmyUnitDto {
+    unitType!: UnitType;
+    unitCount!: number;
+
+    constructor(data?: IArmyUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.unitType = _data["unitType"];
+            this.unitCount = _data["unitCount"];
+        }
+    }
+
+    static fromJS(data: any): ArmyUnitDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ArmyUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["unitType"] = this.unitType;
+        data["unitCount"] = this.unitCount;
+        return data; 
+    }
+}
+
+export interface IArmyUnitDto {
+    unitType: UnitType;
+    unitCount: number;
 }
 
 export enum UnitType {

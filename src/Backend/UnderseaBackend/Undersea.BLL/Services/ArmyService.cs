@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
+using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 
 namespace Undersea.BLL.Services
@@ -16,13 +18,14 @@ namespace Undersea.BLL.Services
     {
         private readonly IArmyRepository _armyRepository;
         private readonly IArmyUnitJoinRepository _armyUnitRepository;
-
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository, IMapper mapper)
+        public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository, UserManager<User> userManager, IMapper mapper)
         {
             _armyRepository = armyRepository;
             _armyUnitRepository = armyUnitRepository;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -44,8 +47,7 @@ namespace Undersea.BLL.Services
             {
                 UnitList = unitList,
                 //ArmyFoodNecessity =  list.Sum(x => x.UnitType),
-                //ArmySumCost = 0              
-                              
+                //ArmySumCost = 0                              
             };
 
             return newDto;
@@ -53,6 +55,8 @@ namespace Undersea.BLL.Services
 
         public async Task PurchaseUnits(Guid id, UnitPurchaseDto dto)
         {
+            //var user =  await _userManager.Users
+
             // TODO átírni szebbre
             var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == id && au.UnitType == UnitType.Csatacsiko);
             var unitRohamfoka = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == id && au.UnitType == UnitType.Rohamfoka);

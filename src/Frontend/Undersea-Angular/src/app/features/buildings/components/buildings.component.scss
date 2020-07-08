@@ -34,6 +34,7 @@
 ::ng-deep .mat-dialog-container {
   background-color: #03255f !important;
   color: white;
+  border-radius: 16px;
 }
 
 .building-modal {
@@ -53,6 +54,11 @@
   color: #001234;
   padding: 0.5%;
   margin-bottom: 1%;
+}
+
+button:disabled {
+  opacity: 0.4;
+  color: #001234;
 }
 
 .buildingName {

@@ -27,6 +27,10 @@ export class ArmyComponent implements OnInit {
     (err) => {
       console.log(err);
     });
+
+    this.featureService.getCityArmy().subscribe( res => {
+      console.log(res);
+    });
   }
 
   plusUnit(unit: number) {

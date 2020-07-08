@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
@@ -32,7 +33,7 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AttackableUsersDto>>> GetAttackableUsers()
         {
-            Guid id = Guid.Parse(User.FindFirst("Id")?.Value);
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             return Ok(await _attackService.GetAttackableUsers());
         }
