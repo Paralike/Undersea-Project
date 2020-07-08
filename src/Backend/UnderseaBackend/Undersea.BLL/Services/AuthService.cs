@@ -62,7 +62,7 @@ namespace Undersea.BLL.Services
             var result = await _signInManager.PasswordSignInAsync(_user, user.Password, false, false);
 
             if (result.Succeeded)
-                return _user;
+                throw new Exception();
 
             else
                 return null;
