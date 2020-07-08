@@ -4,7 +4,7 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public class Building
+    public class Building : IDbEntity
     {
         public Guid Id { get; set; }
         public BuildingType BuildingType { get; set; }

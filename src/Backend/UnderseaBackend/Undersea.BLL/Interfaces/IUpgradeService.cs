@@ -7,9 +7,9 @@ using Undersea.BLL.DTOs;
 
 namespace Undersea.BLL.Interfaces
 {
-    public interface IBuildingService
+    public interface IUpgradeService
     {
-        public Task<ActionResult<ICollection<BuildingDto>>> GetBuilding();
-        public Task PurchaseBuilding(BuildingDto building);
+        public Task<ActionResult<ICollection<UpgradeDto>>> GetUpgrade();
+        public Task PurchaseUpgrade(UpgradeDto upgrade);
     }
 }

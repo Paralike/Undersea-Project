@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Undersea.DAL.Models
 {
-    public class City
+    public class City : IDbEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

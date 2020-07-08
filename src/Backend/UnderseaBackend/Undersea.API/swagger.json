@@ -214,21 +214,25 @@
             }
           }
         }
-      }
-    },
-    "/api/Profile/{id}": {
-      "delete": {
+      },
+      "post": {
         "tags": [
-          "Profile"
+          "Buildings"
         ],
-        "operationId": "Profile_DeleteProfile",
+        "operationId": "Buildings_PurchaseBuilding",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "parameters": [
           {
-            "type": "integer",
-            "name": "id",
-            "in": "path",
+            "name": "building",
+            "in": "body",
             "required": true,
-            "format": "int32",
+            "schema": {
+              "$ref": "#/definitions/BuildingDto"
+            },
             "x-nullable": false
           }
         ],
@@ -243,23 +247,60 @@
         }
       }
     },
-    "/api/Profile": {
+    "/api/City/{id}": {
       "get": {
         "tags": [
-          "Profile"
+          "City"
         ],
-        "operationId": "Profile_GetProfile",
+        "operationId": "City_GetCity",
         "produces": [
           "text/plain",
           "application/json",
           "text/json"
         ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
-            "x-nullable": false,
+            "x-nullable": true,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ProfileDto"
+              "$ref": "#/definitions/CityDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/{id}": {
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_DeleteProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
             }
           }
         }
@@ -514,7 +555,7 @@
         1
       ]
     },
-    "ProfileDto": {
+    "CityDto": {
       "type": "object",
       "required": [
         "pearlCount",
