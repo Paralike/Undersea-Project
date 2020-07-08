@@ -7,9 +7,8 @@ using Undersea.BLL.DTOs;
 
 namespace Undersea.BLL.Interfaces
 {
-    public interface IBuildingService
+    public interface ICityService
     {
-        public Task<ActionResult<ICollection<BuildingDto>>> GetBuilding();
-        public Task PurchaseBuilding(BuildingDto building);
+        public Task<ActionResult<CityDto>> GetCity(Guid id);
     }
 }
