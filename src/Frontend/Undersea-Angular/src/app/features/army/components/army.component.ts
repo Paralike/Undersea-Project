@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ARMY } from '../model/mock-army';
 import { ArmyModel } from '../model/army.model';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArmyData } from '../../pages/main/components/navbar/navbar.component';
 import { FeatureService } from '../../service/feature.service';
 
@@ -15,7 +15,11 @@ export class ArmyComponent implements OnInit {
   public addUnit: number[];
   gyongy = 'Gyöngy';
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ArmyData, private featureService: FeatureService) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: ArmyData,
+    private featureService: FeatureService,
+    public dialogRef: MatDialogRef<ArmyComponent>
+    ) {
     this.addUnit = [0, 0, 0];
   }
 
@@ -43,6 +47,7 @@ export class ArmyComponent implements OnInit {
 
   sendData() {
     console.log(this.addUnit);
+    this.dialogRef.close();
   }
   // selected(building: BuildingModel) {
   //   this.selectedBuilding = building.buildingType;
