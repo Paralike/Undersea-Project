@@ -26,6 +26,8 @@ namespace Undersea.BLL.Services
         }
         public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers()
         {
+            // TODO saját magát ne adja vissza
+
             var list = await _userRepository.GetAll();
 
             return _mapper.Map<List<AttackableUsersDto>>(list);
@@ -37,9 +39,7 @@ namespace Undersea.BLL.Services
             {
                 DefenderCityId = attack.DefenderCityId,
                 AttackerCityId = id,
-                ArmyId = attack.AttackerArmyId
-                
-                
+                ArmyId = attack.AttackerArmyId                
 
                 // TODO lekérni a army-t, attackert és defender-t db-ből?
             };
