@@ -222,11 +222,6 @@
           "Profile"
         ],
         "operationId": "Profile_DeleteProfile",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
         "parameters": [
           {
             "type": "integer",
@@ -239,10 +234,10 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": false,
+            "x-nullable": true,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ProfileDto"
+              "type": "file"
             }
           }
         }
@@ -292,12 +287,12 @@
         }
       }
     },
-    "/api/Updgrades": {
+    "/api/Upgrades": {
       "get": {
         "tags": [
-          "Updgrades"
+          "Upgrades"
         ],
-        "operationId": "Updgrades_GetUpgrades",
+        "operationId": "Upgrades_GetUpgrades",
         "produces": [
           "text/plain",
           "application/json",

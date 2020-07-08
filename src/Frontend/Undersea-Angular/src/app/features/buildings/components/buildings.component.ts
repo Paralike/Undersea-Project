@@ -4,7 +4,6 @@ import { FeatureService } from '../../service/feature.service';
 import { BUIDLDINGS } from '../model/mockBuildings';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BuildingData } from '../../pages/main/components/navbar/navbar.component';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-buildings',
