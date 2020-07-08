@@ -11,6 +11,7 @@ namespace Undersea.BLL.Services
 {
     class ProfileService : IProfileService
     {
+<<<<<<< HEAD
         public Task DeleteProfile(int id)
         {
             throw new NotImplementedException();
