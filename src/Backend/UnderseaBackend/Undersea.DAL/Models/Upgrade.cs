@@ -4,7 +4,7 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public class Upgrade
+    public class Upgrade : IDbEntity
     {
         public Guid Id { get; set; }
         public UpgradeType UpgradeType { get; set; }

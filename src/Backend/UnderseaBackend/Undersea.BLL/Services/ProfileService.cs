@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,24 +7,29 @@ using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL;
 using Undersea.DAL.Models;
+using Undersea.DAL.Repositories.Interfaces;
 
 namespace Undersea.BLL.Services
 {
-    class ProfileService : IProfileService
+    public class ProfileService : IProfileService
     {
-        private readonly AppDbContext _dbContext;
-        public ProfileService(AppDbContext dbContext)
+        private readonly ICityRepository _cityRepository;
+        private readonly IMapper _mapper;
+
+        public ProfileService(ICityRepository cityRepository, IMapper mapper)
         {
-            _dbContext = dbContext;
-        }
-        public Task DeleteProfile(int id)
-        {
-            throw new NotImplementedException();
+            _cityRepository = cityRepository;
+            _mapper = mapper;
         }
 
-        public Task<ProfileDto> GetProfile(User user)
+        public async Task DeleteProfile(Guid id)
         {
-               var profile 
+            _cityRepository.Delete(id);
+        }
+
+        public Task<CityDto> GetProfile(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

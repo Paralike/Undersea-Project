@@ -416,6 +416,56 @@ export class BuildingsClient {
         }
         return _observableOf<BuildingDto>(<any>null);
     }
+
+    purchaseBuilding(building: BuildingDto): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Buildings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(building);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPurchaseBuilding(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPurchaseBuilding(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPurchaseBuilding(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
 }
 
 @Injectable()
@@ -429,7 +479,7 @@ export class ProfileClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    deleteProfile(id: number): Observable<ProfileDto> {
+    deleteProfile(id: string): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/Profile/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -440,7 +490,7 @@ export class ProfileClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/json"
+                "Accept": "application/octet-stream"
             })
         };
 
@@ -451,81 +501,31 @@ export class ProfileClient {
                 try {
                     return this.processDeleteProfile(<any>response_);
                 } catch (e) {
-                    return <Observable<ProfileDto>><any>_observableThrow(e);
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ProfileDto>><any>_observableThrow(response_);
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
         }));
     }
 
-    protected processDeleteProfile(response: HttpResponseBase): Observable<ProfileDto> {
+    protected processDeleteProfile(response: HttpResponseBase): Observable<FileResponse | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProfileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ProfileDto>(<any>null);
-    }
-
-    getProfile(): Observable<ProfileDto> {
-        let url_ = this.baseUrl + "/api/Profile";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetProfile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetProfile(<any>response_);
-                } catch (e) {
-                    return <Observable<ProfileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ProfileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetProfile(response: HttpResponseBase): Observable<ProfileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProfileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ProfileDto>(<any>null);
+        return _observableOf<FileResponse | null>(<any>null);
     }
 
     getRanks(): Observable<RankDto> {
@@ -578,7 +578,7 @@ export class ProfileClient {
 }
 
 @Injectable()
-export class UpdgradesClient {
+export class UpgradesClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -589,7 +589,7 @@ export class UpdgradesClient {
     }
 
     getUpgrades(): Observable<UpgradeDto> {
-        let url_ = this.baseUrl + "/api/Updgrades";
+        let url_ = this.baseUrl + "/api/Upgrades";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1062,16 +1062,11 @@ export enum BuildingType {
     Zatonyvar = 1,
 }
 
-export class ProfileDto implements IProfileDto {
-    pearlCount!: number;
-    pearlProduction!: number;
-    coralCount!: number;
-    coralProduction!: number;
-    buildings?: BuildingDto[] | undefined;
-    upgrades?: UpgradeDto[] | undefined;
-    army?: ArmyDto | undefined;
+export class RankDto implements IRankDto {
+    username?: string | undefined;
+    point!: number;
 
-    constructor(data?: IProfileDto) {
+    constructor(data?: IRankDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1082,60 +1077,29 @@ export class ProfileDto implements IProfileDto {
 
     init(_data?: any) {
         if (_data) {
-            this.pearlCount = _data["pearlCount"];
-            this.pearlProduction = _data["pearlProduction"];
-            this.coralCount = _data["coralCount"];
-            this.coralProduction = _data["coralProduction"];
-            if (Array.isArray(_data["buildings"])) {
-                this.buildings = [] as any;
-                for (let item of _data["buildings"])
-                    this.buildings!.push(BuildingDto.fromJS(item));
-            }
-            if (Array.isArray(_data["upgrades"])) {
-                this.upgrades = [] as any;
-                for (let item of _data["upgrades"])
-                    this.upgrades!.push(UpgradeDto.fromJS(item));
-            }
-            this.army = _data["army"] ? ArmyDto.fromJS(_data["army"]) : <any>undefined;
+            this.username = _data["username"];
+            this.point = _data["point"];
         }
     }
 
-    static fromJS(data: any): ProfileDto {
+    static fromJS(data: any): RankDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ProfileDto();
+        let result = new RankDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["pearlCount"] = this.pearlCount;
-        data["pearlProduction"] = this.pearlProduction;
-        data["coralCount"] = this.coralCount;
-        data["coralProduction"] = this.coralProduction;
-        if (Array.isArray(this.buildings)) {
-            data["buildings"] = [];
-            for (let item of this.buildings)
-                data["buildings"].push(item.toJSON());
-        }
-        if (Array.isArray(this.upgrades)) {
-            data["upgrades"] = [];
-            for (let item of this.upgrades)
-                data["upgrades"].push(item.toJSON());
-        }
-        data["army"] = this.army ? this.army.toJSON() : <any>undefined;
+        data["username"] = this.username;
+        data["point"] = this.point;
         return data; 
     }
 }
 
-export interface IProfileDto {
-    pearlCount: number;
-    pearlProduction: number;
-    coralCount: number;
-    coralProduction: number;
-    buildings?: BuildingDto[] | undefined;
-    upgrades?: UpgradeDto[] | undefined;
-    army?: ArmyDto | undefined;
+export interface IRankDto {
+    username?: string | undefined;
+    point: number;
 }
 
 export class UpgradeDto implements IUpgradeDto {
@@ -1180,46 +1144,6 @@ export interface IUpgradeDto {
     id: number;
     turnCount: number;
     status: Status;
-}
-
-export class RankDto implements IRankDto {
-    username?: string | undefined;
-    point!: number;
-
-    constructor(data?: IRankDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.username = _data["username"];
-            this.point = _data["point"];
-        }
-    }
-
-    static fromJS(data: any): RankDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new RankDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["username"] = this.username;
-        data["point"] = this.point;
-        return data; 
-    }
-}
-
-export interface IRankDto {
-    username?: string | undefined;
-    point: number;
 }
 
 export interface FileResponse {

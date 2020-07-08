@@ -214,6 +214,37 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Buildings"
+        ],
+        "operationId": "Buildings_PurchaseBuilding",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "building",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BuildingDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
       }
     },
     "/api/Profile/{id}": {
@@ -222,49 +253,22 @@
           "Profile"
         ],
         "operationId": "Profile_DeleteProfile",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
         "parameters": [
           {
-            "type": "integer",
+            "type": "string",
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int32",
+            "format": "guid",
             "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "x-nullable": false,
+            "x-nullable": true,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ProfileDto"
-            }
-          }
-        }
-      }
-    },
-    "/api/Profile": {
-      "get": {
-        "tags": [
-          "Profile"
-        ],
-        "operationId": "Profile_GetProfile",
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProfileDto"
+              "type": "file"
             }
           }
         }
@@ -292,12 +296,12 @@
         }
       }
     },
-    "/api/Updgrades": {
+    "/api/Upgrades": {
       "get": {
         "tags": [
-          "Updgrades"
+          "Upgrades"
         ],
-        "operationId": "Updgrades_GetUpgrades",
+        "operationId": "Upgrades_GetUpgrades",
         "produces": [
           "text/plain",
           "application/json",
@@ -519,45 +523,18 @@
         1
       ]
     },
-    "ProfileDto": {
+    "RankDto": {
       "type": "object",
       "required": [
-        "pearlCount",
-        "pearlProduction",
-        "coralCount",
-        "coralProduction"
+        "point"
       ],
       "properties": {
-        "pearlCount": {
+        "username": {
+          "type": "string"
+        },
+        "point": {
           "type": "integer",
           "format": "int32"
-        },
-        "pearlProduction": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "coralCount": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "coralProduction": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "buildings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BuildingDto"
-          }
-        },
-        "upgrades": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UpgradeDto"
-          }
-        },
-        "army": {
-          "$ref": "#/definitions/ArmyDto"
         }
       }
     },
@@ -579,21 +556,6 @@
         },
         "status": {
           "$ref": "#/definitions/Status"
-        }
-      }
-    },
-    "RankDto": {
-      "type": "object",
-      "required": [
-        "point"
-      ],
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "point": {
-          "type": "integer",
-          "format": "int32"
         }
       }
     }
