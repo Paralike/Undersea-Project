@@ -7,6 +7,7 @@ import { FIGTHS } from '../fight/model/mock-fight';
 import { PeriodicElement } from '../fight/model/fight.model';
 import { ArmyModel } from '../army/model/army.model';
 import { ARMY } from '../army/model/mock-army';
+import {PROFILE, ProfileModel} from '../pages/main/model/profile.model';
 
 const mock = [
   {
@@ -96,6 +97,10 @@ export class FeatureService {
 
   getArmy(): Observable<ArmyModel[]> {
     return of(ARMY);
+  }
+
+  getProfile(): Observable<ProfileModel> {
+    return of(PROFILE);
   }
 
 }

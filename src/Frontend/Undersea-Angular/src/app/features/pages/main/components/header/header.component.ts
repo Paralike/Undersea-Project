@@ -1,13 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileModel } from '../../model/profile.model';
+import { FeatureService } from 'src/app/features/service/feature.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent
-  {
-    constructor(){}
+export class HeaderComponent implements OnInit {
+  city: ProfileModel;
+
+  constructor(private featureService: FeatureService) { }
+
+  ngOnInit(): void {
+    this.featureService.getProfile().subscribe(res => this.city = res,
+      err => {
+        console.error(err);
+      });
   }
+}
 
 

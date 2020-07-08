@@ -28,7 +28,7 @@
 	font-family: baloo;
 	font-size: 1.2vw;
 	color: #1c3e76;
-	width: 10vw;
+	width: 15vw;
 }
 
 .infos span {
@@ -74,7 +74,7 @@
 	height: 2.5vw;
 }
 
-.data{
+.data {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -87,4 +87,18 @@
 
 .secondData {
 	font-size: 0.9vw !important;
+}
+
+button {
+	background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
+	box-shadow: 0px 3px 6px #3b7dbd;
+	border-radius: 90px;
+	opacity: 1;
+	border: none;
+	font-family: baloo;
+	font-size: 1vw;
+	letter-spacing: 0px;
+	color: #001234;
+	width: 10vw;
+	margin-left: 10px;
 }

@@ -11,6 +11,7 @@ import { AuthPageComponent } from '../components/auth-page/auth-page.component';
 })
 export class AuthpageService {
 
+
   // tslint:disable:new-parens
   logind = new LoginDto;
   registerd = new RegisterDto;
@@ -32,7 +33,9 @@ export class AuthpageService {
 
   }
 
-
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
   register(name: string, pwd: string, pwd2: string, cityName: string): Observable<AuthResponseDto> {
 
