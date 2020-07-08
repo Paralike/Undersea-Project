@@ -9,7 +9,6 @@ import { DevelopmentsComponent } from 'src/app/features/developments/components/
 
 export interface BuildingData {
   building: number[];
-  price: number[];
 
 }
 export interface DevelopmentData {
@@ -36,7 +35,6 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {
         building: [0, 0],
-        price: [45, 35] // TO DO
       }
     });
   }

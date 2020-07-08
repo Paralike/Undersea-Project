@@ -356,14 +356,10 @@
         "armySumCost"
       ],
       "properties": {
-        "unitDictionary": {
-          "type": "object",
-          "x-dictionaryKey": {
-            "$ref": "#/definitions/UnitType"
-          },
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
+        "unitList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
           }
         },
         "armyFoodNecessity": {
@@ -371,6 +367,22 @@
           "format": "int32"
         },
         "armySumCost": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ArmyUnitDto": {
+      "type": "object",
+      "required": [
+        "unitType",
+        "unitCount"
+      ],
+      "properties": {
+        "unitType": {
+          "$ref": "#/definitions/UnitType"
+        },
+        "unitCount": {
           "type": "integer",
           "format": "int32"
         }
