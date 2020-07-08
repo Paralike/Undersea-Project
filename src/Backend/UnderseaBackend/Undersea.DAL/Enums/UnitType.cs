@@ -4,6 +4,6 @@
     {
         Rohamfoka,
         Csatacsiko,
-        Lezercsapa
+        Lezercapa
     }
 }

@@ -55,7 +55,7 @@ namespace Undersea.BLL.Services
             var _user = await _userManager.FindByNameAsync(user.Username);
 
             if (_user == null)
-            { 
+            {
                 return null;
             }
 
@@ -70,7 +70,7 @@ namespace Undersea.BLL.Services
 
         public async Task<AuthResponseDto> RegisterUser(RegisterDto newUser)
         {
-            var user = new User(newUser.Username);
+            var user = new User(newUser.Username, newUser.City);
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUser.Password);
 
             var result = await _userManager.CreateAsync(user);

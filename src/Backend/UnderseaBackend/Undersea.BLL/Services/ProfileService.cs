@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
@@ -23,7 +21,7 @@ namespace Undersea.BLL.Services
 
         public Task<ProfileDto> GetProfile(User user)
         {
-               var profile 
+            throw new NotImplementedException();
         }
     }
 }

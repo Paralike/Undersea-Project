@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Undersea.BLL.DTOs
 {
     public class AttackDto
     {
-        public Dictionary<int, ArmyDto> Battles { get; set; }
+        public Guid AttackerArmyId { get; set; }
+
+        public Guid DefenderCityId { get; set; }
     }
 }

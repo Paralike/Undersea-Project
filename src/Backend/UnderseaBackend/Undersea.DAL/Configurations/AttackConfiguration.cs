@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Undersea.DAL.Models;
 
 namespace Undersea.DAL.Configurations
@@ -20,6 +17,8 @@ namespace Undersea.DAL.Configurations
                 .WithMany(c => c.Attacks)
                 .HasForeignKey(a => a.AttackerCityId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // TODO defender city config
         }
     }
 }
