@@ -11,25 +11,9 @@ namespace Undersea.BLL.Services
 {
     class ProfileService : IProfileService
     {
-
         public Task DeleteProfile(int id)
         {
             throw new NotImplementedException();
-        }
-
-
-        private readonly ICityRepository _cityRepository;
-        private readonly IMapper _mapper;
-
-        public ProfileService(ICityRepository cityRepository, IMapper mapper)
-        {
-            _cityRepository = cityRepository;
-            _mapper = mapper;
-        }
-
-        public async Task DeleteProfile(Guid id)
-        {
-            _cityRepository.Delete(id);
         }
 
 
