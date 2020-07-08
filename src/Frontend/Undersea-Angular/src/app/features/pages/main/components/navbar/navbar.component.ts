@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BuildingsComponent } from '../../../../buildings/components/buildings.component';
 import { AttackComponent } from '../../../../attack/components/attack.component';
@@ -6,17 +6,9 @@ import { FightComponent } from '../../../../fight/components/fight.component';
 import { RankComponent } from '../../../../rank/components/rank.component';
 import { ArmyComponent } from '../../../../army/components/army.component';
 import { DevelopmentsComponent } from 'src/app/features/developments/components/developments.component';
+import { HeaderComponent } from '../header/header.component';
+import { UnitList } from '../../model/profile.model';
 
-export interface BuildingData {
-  building: number[];
-
-}
-export interface DevelopmentData {
-  development: number[];
-}
-export interface ArmyData {
-  units: number[];
-}
 
 @Component({
   selector: 'app-navbar',
@@ -24,8 +16,12 @@ export interface ArmyData {
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  @Input() buildings: number[];
+  @Input() developements: number[];
+  @Input() units: UnitList;
 
-  constructor(private dialog: MatDialog) { }
+
+  constructor(private dialog: MatDialog ) { }
 
   ngOnInit(): void {
   }
@@ -34,7 +30,7 @@ export class NavbarComponent implements OnInit {
     const dialogRef = this.dialog.open(BuildingsComponent, {
       width: '50vw',
       data: {
-        building: [0, 0],
+        building: this.buildings
       }
     });
   }
@@ -66,17 +62,19 @@ export class NavbarComponent implements OnInit {
     const dialogRef = this.dialog.open(ArmyComponent, {
       width: '50vw',
       data: {
-        units: [0, 5, 0]
+        units: [this.units.sharks, this.units.seals, this.units.seahorses]
       }
     });
   }
- openDevelopments(){
-  const dialogRef = this.dialog.open(DevelopmentsComponent, {
-    width: '50vw',
-    height: '35vw',
-    data: {}
-  });
- }
+  openDevelopments() {
+    const dialogRef = this.dialog.open(DevelopmentsComponent, {
+      width: '50vw',
+      height: '35vw',
+      data: {
+        developements: this.developements
+      }
+    });
+  }
 
 
 }

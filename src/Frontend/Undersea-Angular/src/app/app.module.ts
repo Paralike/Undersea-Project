@@ -13,6 +13,7 @@ import { HttpHandler, HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@a
 import { JwtHelperService, JwtInterceptor, JWT_OPTIONS, JwtModule, } from '@auth0/angular-jwt';
 import { TokenInterceptor } from './features/pages/auth/interceptor';
 import { ArmyClient } from './shared';
+import { HeaderComponent } from './features/pages/main/components/header/header.component';
 
 
 
