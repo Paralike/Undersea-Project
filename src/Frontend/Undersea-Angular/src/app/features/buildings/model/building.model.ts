@@ -1,7 +1,3 @@
-// tslint:disable-next-line:one-variable-per-declaration
-
-
-
 export class BuildingModel {
     status: number;
     price: number;

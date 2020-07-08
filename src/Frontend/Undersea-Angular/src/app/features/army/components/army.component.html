@@ -45,6 +45,8 @@
             </div>
 
             <div class="plusminus">
+
+               
                 <div class="plus-icon" (click) = "minusUnit(i)">
                     -
                 </div>
@@ -55,6 +57,7 @@
                     +
                 </div>
 
+
             </div>
         </div>
 
@@ -62,7 +65,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="buttonsDiv">
-        <button mat-button class="armyButton" id="armyButton">Megveszem</button>
+        <button mat-button class="armyButton" id="armyButton" (click)="sendData()">Megveszem</button>
     </div>
 
 </div>

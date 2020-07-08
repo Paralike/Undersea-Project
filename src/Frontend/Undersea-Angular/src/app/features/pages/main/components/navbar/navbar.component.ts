@@ -12,7 +12,9 @@ export interface BuildingData {
   price: number[];
 
 }
-
+export interface DevelopmentData {
+  development: number[];
+}
 export interface ArmyData {
   units: number[];
 }
@@ -73,6 +75,7 @@ export class NavbarComponent implements OnInit {
  openDevelopments(){
   const dialogRef = this.dialog.open(DevelopmentsComponent, {
     width: '50vw',
+    height: '35vw',
     data: {}
   });
  }
