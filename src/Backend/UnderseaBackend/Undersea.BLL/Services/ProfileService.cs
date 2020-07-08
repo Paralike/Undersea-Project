@@ -16,6 +16,8 @@ namespace Undersea.BLL.Services
         {
             throw new NotImplementedException();
         }
+
+
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
 
@@ -23,6 +25,11 @@ namespace Undersea.BLL.Services
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
+        }
+
+        public async Task DeleteProfile(Guid id)
+        {
+            _cityRepository.Delete(id);
         }
 
 
