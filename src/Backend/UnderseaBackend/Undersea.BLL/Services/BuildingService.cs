@@ -27,7 +27,7 @@ namespace Undersea.BLL.Services
         }
 
         public async Task PurchaseBuilding(BuildingDto building) {
-            _buildingRepository.Insert(_mapper.Map< Building > (building));
+            await _buildingRepository.Add(_mapper.Map< Building > (building));
         }
     }
 }

@@ -56,5 +56,6 @@ namespace Undersea.DAL.Repositories
 
         public Task<int> CountWhere(Expression<Func<T, bool>> predicate)
             => _context.Set<T>().CountAsync(predicate);
+
     }
 }
