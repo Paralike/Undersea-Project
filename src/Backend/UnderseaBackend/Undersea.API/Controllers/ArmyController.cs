@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
@@ -28,7 +29,7 @@ namespace Undersea.API.Controllers
         [HttpPost]
         public async Task<ActionResult> PurchaseUnits([FromBody] UnitPurchaseDto purchase)
         {
-            Guid id = Guid.Parse(User.FindFirst("Id")?.Value);
+            Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             await _armyService.PurchaseUnits(id, purchase);
 
             return Ok();

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Undersea.API.Middlewares;
 using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 using Undersea.DAL;
@@ -48,6 +49,8 @@ namespace Undersea.API
             services.AddTransient<IArmyRepository, ArmyRepository>();
             services.AddTransient<IAttackRepository, AttackRepository>();
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
+
+            services.AddTransient<ILogService, LoggerService>();
 
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
@@ -93,6 +96,7 @@ namespace Undersea.API
             options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
             );
 
+            app.UseMiddleware<ExceptionHandler>();
 
             app.UseStaticFiles();
             app.UseOpenApi();
