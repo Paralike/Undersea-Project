@@ -13,18 +13,18 @@ namespace Undersea.BLL.Services
 {
     public class ProfileService : IProfileService
     {
-        private readonly ICityRepository _cityRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public ProfileService(ICityRepository cityRepository, IMapper mapper)
+        public ProfileService(IUserRepository userRepository, IMapper mapper)
         {
-            _cityRepository = cityRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
         public async Task DeleteProfile(Guid id)
         {
-            _cityRepository.Delete(id);
+            _userRepository.Delete(id);
         }
 
         public Task<CityDto> GetProfile(User user)
