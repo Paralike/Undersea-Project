@@ -15,11 +15,13 @@ export class TokenInterceptor implements HttpInterceptor {
         const token = localStorage.getItem('token');
 
 
-        request = request.clone({
-            setHeaders: {
-                Authorization: `Bearer ${this.auth.getToken()}`
-            }
-        });
+        if (token != null) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${this.auth.getToken()}`
+                }
+            });
+        }
 
         console.log('intercepted ');
         return next.handle(request);

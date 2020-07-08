@@ -3,7 +3,6 @@ import { DevelopmentModel } from '../../developments/model/development.model';
 import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DevelopmentData } from '../../pages/main/components/navbar/navbar.component';
 @Component({
   selector: 'app-developments',
   templateUrl: './developments.component.html',
@@ -13,7 +12,7 @@ export class DevelopmentsComponent implements OnInit {
   public developments: DevelopmentModel[];
   public selectedDevelopment: number;
   public id: string;
-  constructor(private featureService: FeatureService, @Inject(MAT_DIALOG_DATA) public data: DevelopmentData) { }
+  constructor(private featureService: FeatureService, @Inject(MAT_DIALOG_DATA) public data: number[]) { }
 
   ngOnInit(): void {
     this.developments = [];

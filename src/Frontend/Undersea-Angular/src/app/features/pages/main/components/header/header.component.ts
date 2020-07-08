@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProfileModel } from '../../model/profile.model';
 import { FeatureService } from 'src/app/features/service/feature.service';
 
@@ -8,15 +8,11 @@ import { FeatureService } from 'src/app/features/service/feature.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  city: ProfileModel;
+  @Input() city: ProfileModel;
 
   constructor(private featureService: FeatureService) { }
 
   ngOnInit(): void {
-    this.featureService.getProfile().subscribe(res => this.city = res,
-      err => {
-        console.error(err);
-      });
   }
 }
 
