@@ -25,7 +25,7 @@ export class ArmyClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getArmy(): Observable<ArmyDto> {
+    getArmy(): Observable<UnitDto[]> {
         let url_ = this.baseUrl + "/api/Army";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -44,14 +44,14 @@ export class ArmyClient {
                 try {
                     return this.processGetArmy(<any>response_);
                 } catch (e) {
-                    return <Observable<ArmyDto>><any>_observableThrow(e);
+                    return <Observable<UnitDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ArmyDto>><any>_observableThrow(response_);
+                return <Observable<UnitDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetArmy(response: HttpResponseBase): Observable<ArmyDto> {
+    protected processGetArmy(response: HttpResponseBase): Observable<UnitDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -62,7 +62,11 @@ export class ArmyClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ArmyDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UnitDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -70,7 +74,7 @@ export class ArmyClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ArmyDto>(<any>null);
+        return _observableOf<UnitDto[]>(<any>null);
     }
 
     purchaseUnits(purchase: UnitPurchaseDto): Observable<FileResponse | null> {
@@ -412,6 +416,119 @@ export class BuildingsClient {
         }
         return _observableOf<BuildingDto>(<any>null);
     }
+
+    purchaseBuilding(building: BuildingDto): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Buildings";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(building);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPurchaseBuilding(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPurchaseBuilding(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPurchaseBuilding(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
+}
+
+@Injectable()
+export class CityClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    getCity(id: string): Observable<CityDto> {
+        let url_ = this.baseUrl + "/api/City/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCity(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCity(<any>response_);
+                } catch (e) {
+                    return <Observable<CityDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CityDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCity(response: HttpResponseBase): Observable<CityDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CityDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CityDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -425,7 +542,7 @@ export class ProfileClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    deleteProfile(id: number): Observable<FileResponse | null> {
+    deleteProfile(id: string): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/Profile/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -472,54 +589,6 @@ export class ProfileClient {
             }));
         }
         return _observableOf<FileResponse | null>(<any>null);
-    }
-
-    getProfile(): Observable<ProfileDto> {
-        let url_ = this.baseUrl + "/api/Profile";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetProfile(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetProfile(<any>response_);
-                } catch (e) {
-                    return <Observable<ProfileDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ProfileDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetProfile(response: HttpResponseBase): Observable<ProfileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ProfileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ProfileDto>(<any>null);
     }
 
     getRanks(): Observable<RankDto> {
@@ -631,12 +700,14 @@ export class UpgradesClient {
     }
 }
 
-export class ArmyDto implements IArmyDto {
-    unitDictionary?: { [key in keyof typeof UnitType]?: number; } | undefined;
-    armyFoodNecessity!: number;
-    armySumCost!: number;
+export class UnitDto implements IUnitDto {
+    price!: number;
+    foodNecessity!: number;
+    damage!: number;
+    defense!: number;
+    unitType!: UnitType;
 
-    constructor(data?: IArmyDto) {
+    constructor(data?: IUnitDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -647,54 +718,48 @@ export class ArmyDto implements IArmyDto {
 
     init(_data?: any) {
         if (_data) {
-            if (_data["unitDictionary"]) {
-                this.unitDictionary = {} as any;
-                for (let key in _data["unitDictionary"]) {
-                    if (_data["unitDictionary"].hasOwnProperty(key))
-                        this.unitDictionary![key] = _data["unitDictionary"][key];
-                }
-            }
-            this.armyFoodNecessity = _data["armyFoodNecessity"];
-            this.armySumCost = _data["armySumCost"];
+            this.price = _data["price"];
+            this.foodNecessity = _data["foodNecessity"];
+            this.damage = _data["damage"];
+            this.defense = _data["defense"];
+            this.unitType = _data["unitType"];
         }
     }
 
-    static fromJS(data: any): ArmyDto {
+    static fromJS(data: any): UnitDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ArmyDto();
+        let result = new UnitDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (this.unitDictionary) {
-            data["unitDictionary"] = {};
-            for (let key in this.unitDictionary) {
-                if (this.unitDictionary.hasOwnProperty(key))
-                    data["unitDictionary"][key] = this.unitDictionary[key];
-            }
-        }
-        data["armyFoodNecessity"] = this.armyFoodNecessity;
-        data["armySumCost"] = this.armySumCost;
+        data["price"] = this.price;
+        data["foodNecessity"] = this.foodNecessity;
+        data["damage"] = this.damage;
+        data["defense"] = this.defense;
+        data["unitType"] = this.unitType;
         return data; 
     }
 }
 
-export interface IArmyDto {
-    unitDictionary?: { [key in keyof typeof UnitType]?: number; } | undefined;
-    armyFoodNecessity: number;
-    armySumCost: number;
+export interface IUnitDto {
+    price: number;
+    foodNecessity: number;
+    damage: number;
+    defense: number;
+    unitType: UnitType;
 }
 
 export enum UnitType {
     Rohamfoka = 0,
     Csatacsiko = 1,
-    Lezercapa = 2,
+    Lezercsapa = 2,
 }
 
 export class UnitPurchaseDto implements IUnitPurchaseDto {
-    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    purchasedUnits?: { [key: string]: number; } | undefined;
 
     constructor(data?: IUnitPurchaseDto) {
         if (data) {
@@ -738,12 +803,11 @@ export class UnitPurchaseDto implements IUnitPurchaseDto {
 }
 
 export interface IUnitPurchaseDto {
-    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    purchasedUnits?: { [key: string]: number; } | undefined;
 }
 
 export class AttackDto implements IAttackDto {
-    attackerArmyId!: string;
-    defenderCityId!: string;
+    battles?: { [key: string]: ArmyDto; } | undefined;
 
     constructor(data?: IAttackDto) {
         if (data) {
@@ -756,8 +820,13 @@ export class AttackDto implements IAttackDto {
 
     init(_data?: any) {
         if (_data) {
-            this.attackerArmyId = _data["attackerArmyId"];
-            this.defenderCityId = _data["defenderCityId"];
+            if (_data["battles"]) {
+                this.battles = {} as any;
+                for (let key in _data["battles"]) {
+                    if (_data["battles"].hasOwnProperty(key))
+                        this.battles![key] = _data["battles"][key] ? ArmyDto.fromJS(_data["battles"][key]) : new ArmyDto();
+                }
+            }
         }
     }
 
@@ -770,20 +839,76 @@ export class AttackDto implements IAttackDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["attackerArmyId"] = this.attackerArmyId;
-        data["defenderCityId"] = this.defenderCityId;
+        if (this.battles) {
+            data["battles"] = {};
+            for (let key in this.battles) {
+                if (this.battles.hasOwnProperty(key))
+                    data["battles"][key] = this.battles[key] ? this.battles[key].toJSON() : <any>undefined;
+            }
+        }
         return data; 
     }
 }
 
 export interface IAttackDto {
-    attackerArmyId: string;
-    defenderCityId: string;
+    battles?: { [key: string]: ArmyDto; } | undefined;
+}
+
+export class ArmyDto implements IArmyDto {
+    unitList?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    armyFoodNecessity!: number;
+
+    constructor(data?: IArmyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (_data["unitList"]) {
+                this.unitList = {} as any;
+                for (let key in _data["unitList"]) {
+                    if (_data["unitList"].hasOwnProperty(key))
+                        this.unitList![key] = _data["unitList"][key];
+                }
+            }
+            this.armyFoodNecessity = _data["armyFoodNecessity"];
+        }
+    }
+
+    static fromJS(data: any): ArmyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ArmyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.unitList) {
+            data["unitList"] = {};
+            for (let key in this.unitList) {
+                if (this.unitList.hasOwnProperty(key))
+                    data["unitList"][key] = this.unitList[key];
+            }
+        }
+        data["armyFoodNecessity"] = this.armyFoodNecessity;
+        return data; 
+    }
+}
+
+export interface IArmyDto {
+    unitList?: { [key in keyof typeof UnitType]?: number; } | undefined;
+    armyFoodNecessity: number;
 }
 
 export class AttackableUsersDto implements IAttackableUsersDto {
     id!: string;
-    username!: string;
+    username?: string | undefined;
 
     constructor(data?: IAttackableUsersDto) {
         if (data) {
@@ -818,7 +943,7 @@ export class AttackableUsersDto implements IAttackableUsersDto {
 
 export interface IAttackableUsersDto {
     id: string;
-    username: string;
+    username?: string | undefined;
 }
 
 export class AuthResponseDto implements IAuthResponseDto {
@@ -1000,16 +1125,16 @@ export enum BuildingType {
     Zatonyvar = 1,
 }
 
-export class ProfileDto implements IProfileDto {
+export class CityDto implements ICityDto {
     pearlCount!: number;
     pearlProduction!: number;
     coralCount!: number;
     coralProduction!: number;
     buildings?: BuildingDto[] | undefined;
     upgrades?: UpgradeDto[] | undefined;
-    availableArmy?: ArmyDto | undefined;
+    army?: ArmyDto | undefined;
 
-    constructor(data?: IProfileDto) {
+    constructor(data?: ICityDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1034,13 +1159,13 @@ export class ProfileDto implements IProfileDto {
                 for (let item of _data["upgrades"])
                     this.upgrades!.push(UpgradeDto.fromJS(item));
             }
-            this.availableArmy = _data["availableArmy"] ? ArmyDto.fromJS(_data["availableArmy"]) : <any>undefined;
+            this.army = _data["army"] ? ArmyDto.fromJS(_data["army"]) : <any>undefined;
         }
     }
 
-    static fromJS(data: any): ProfileDto {
+    static fromJS(data: any): CityDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ProfileDto();
+        let result = new CityDto();
         result.init(data);
         return result;
     }
@@ -1061,19 +1186,19 @@ export class ProfileDto implements IProfileDto {
             for (let item of this.upgrades)
                 data["upgrades"].push(item.toJSON());
         }
-        data["availableArmy"] = this.availableArmy ? this.availableArmy.toJSON() : <any>undefined;
+        data["army"] = this.army ? this.army.toJSON() : <any>undefined;
         return data; 
     }
 }
 
-export interface IProfileDto {
+export interface ICityDto {
     pearlCount: number;
     pearlProduction: number;
     coralCount: number;
     coralProduction: number;
     buildings?: BuildingDto[] | undefined;
     upgrades?: UpgradeDto[] | undefined;
-    availableArmy?: ArmyDto | undefined;
+    army?: ArmyDto | undefined;
 }
 
 export class UpgradeDto implements IUpgradeDto {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
 {
@@ -8,16 +10,17 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProfile(int id)
+        ProfileService _profileService;
+
+        public ProfileController(ProfileService profileService)
         {
-            return Ok();
+            _profileService = profileService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ProfileDto>> GetProfile()
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProfile(Guid id)
         {
-            return Ok();
+            return Ok(_profileService.DeleteProfile(id));
         }
 
         [HttpGet("ranks")]

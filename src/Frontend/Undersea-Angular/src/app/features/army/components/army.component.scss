@@ -50,7 +50,6 @@
     background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #3b7dbd;
     border-radius: 90px;
-    opacity: 0.4;
     border: none;
     font-family: baloo;
     font-size: 0.8vw;
@@ -105,4 +104,14 @@ div:focus {
 }
 .plusButton {
     cursor: pointer;
+}
+
+.plus-icon {
+    background-color: #9FFFF0;
+    width: 25px;
+    height: 25px;
+    border-radius: 13px;
+    color: #03255f;
+    font-weight: bold;
+    font-size: 15px;
 }

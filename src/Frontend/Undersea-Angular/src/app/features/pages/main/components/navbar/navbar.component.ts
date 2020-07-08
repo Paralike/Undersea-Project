@@ -5,6 +5,7 @@ import { AttackComponent } from '../../../../attack/components/attack.component'
 import { FightComponent } from '../../../../fight/components/fight.component';
 import { RankComponent } from '../../../../rank/components/rank.component';
 import { ArmyComponent } from '../../../../army/components/army.component';
+import { DevelopmentsComponent } from 'src/app/features/developments/components/developments.component';
 
 export interface BuildingData {
   building: number[];
@@ -33,7 +34,7 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {
         building: [0, 0],
-        price: [45, 35]
+        price: [45, 35] // TO DO
       }
     });
   }
@@ -69,7 +70,12 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-
+ openDevelopments(){
+  const dialogRef = this.dialog.open(DevelopmentsComponent, {
+    width: '50vw',
+    data: {}
+  });
+ }
 
 
 }

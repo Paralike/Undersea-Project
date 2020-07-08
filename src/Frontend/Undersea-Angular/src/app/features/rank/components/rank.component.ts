@@ -10,10 +10,20 @@ import { FeatureService } from '../../service/feature.service';
 export class RankComponent implements OnInit {
 
   constructor(private service: FeatureService) { }
-  displayedColumns: string[] = ['name', 'points'];
+  displayedColumns: string[] = ['place','name', 'points'];
   rankList; 
+  selectedRowIndex:any;
+  selected;
+
   ngOnInit(): void {
     this.service.getRanks().subscribe(res => this.rankList = res);
+    this.selected = false;
   }
 
+  onSelect(row){
+    
+    this.selectedRowIndex = row.id;
+    this.selected = true;
+     
+   }
 }

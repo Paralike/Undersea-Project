@@ -9,7 +9,7 @@
     Egyszerre csak egy épület épülhet!
   </p>
   <div class="main-content">
-    <div *ngFor="let building of this.buildings" (click)="selected(building)" class="content" tabindex="-1">
+    <div *ngFor="let building of buildings" (click)="selected(building)" class="content" tabindex="-1">
 
       <img src='../../../../assets/images/building_{{building.buildingType}}.png'>
       <div class="buildingName">
@@ -34,7 +34,7 @@
   </div>
   <mat-divider></mat-divider>
   <div class="buttonsDiv">
-    <button mat-button class="buildingButton" id="buildButton">Megveszem</button>
+    <button [disabled]="!selectedBuilding" mat-button class="buildingButton" id="buildButton">Megveszem</button>
   </div>
 
 </div>

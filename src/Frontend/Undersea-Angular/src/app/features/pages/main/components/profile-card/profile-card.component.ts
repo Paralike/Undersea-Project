@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthpageService } from '../../../auth/service/authpage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-card',
@@ -8,16 +9,22 @@ import { AuthpageService } from '../../../auth/service/authpage.service';
 })
 export class ProfileCardComponent implements OnInit {
 
-  constructor(private authPageService: AuthpageService) { }
+  constructor(private authPageService: AuthpageService, private router: Router) { }
 
   name;
   ngOnInit(): void {
-    if(this.authPageService.newUser == false){
+    if (this.authPageService.newUser === false) {
       this.name = this.authPageService.logind.username;
-    } else if(this.authPageService.newUser == true){
+    } else if (this.authPageService.newUser === true) {
       this.name = this.authPageService.registerd.username;
     }
-    
+
+  }
+
+  logout(){
+    localStorage.setItem('token', null);
+    this.router.navigate(['login']);
+
   }
 
 }

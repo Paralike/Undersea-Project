@@ -10,8 +10,6 @@
   cursor: pointer;
 }
 
-
-
 .main-content {
   display: flex;
   flex-direction: row;
@@ -45,10 +43,9 @@
 .buildingButton {
   display: block;
   width: 10vw;
-  background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #3b7dbd;
   border-radius: 90px;
-  opacity: 0.4;
   border: none;
   font-family: baloo;
   font-size: 0.8vw;
@@ -56,15 +53,12 @@
   color: #001234;
   padding: 0.5%;
   margin-bottom: 1%;
-  
-  
 }
-
 
 .buildingName {
   font-weight: bold;
   margin: none;
-} 
+}
 
 .buildingDesc {
   font-weight: bold;
@@ -79,10 +73,9 @@
 }
 
 div:focus {
-  background-color: rgba($color: #FFFF, $alpha: 0.12);
+  background-color: rgba($color: #ffff, $alpha: 0.12);
   outline: none;
   border-radius: 16px;
-  
 }
 
 .quantity {
@@ -92,4 +85,3 @@ div:focus {
 .price {
   margin-bottom: 0.5vh;
 }
- 

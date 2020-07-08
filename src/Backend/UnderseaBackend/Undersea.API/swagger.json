@@ -22,7 +22,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ArmyDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UnitDto"
+              }
             }
           }
         }
@@ -211,21 +214,25 @@
             }
           }
         }
-      }
-    },
-    "/api/Profile/{id}": {
-      "delete": {
+      },
+      "post": {
         "tags": [
-          "Profile"
+          "Buildings"
         ],
-        "operationId": "Profile_DeleteProfile",
+        "operationId": "Buildings_PurchaseBuilding",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "parameters": [
           {
-            "type": "integer",
-            "name": "id",
-            "in": "path",
+            "name": "building",
+            "in": "body",
             "required": true,
-            "format": "int32",
+            "schema": {
+              "$ref": "#/definitions/BuildingDto"
+            },
             "x-nullable": false
           }
         ],
@@ -240,23 +247,60 @@
         }
       }
     },
-    "/api/Profile": {
+    "/api/City/{id}": {
       "get": {
         "tags": [
-          "Profile"
+          "City"
         ],
-        "operationId": "Profile_GetProfile",
+        "operationId": "City_GetCity",
         "produces": [
           "text/plain",
           "application/json",
           "text/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
         ],
         "responses": {
           "200": {
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ProfileDto"
+              "$ref": "#/definitions/CityDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/{id}": {
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_DeleteProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
             }
           }
         }
@@ -308,30 +352,34 @@
     }
   },
   "definitions": {
-    "ArmyDto": {
+    "UnitDto": {
       "type": "object",
       "required": [
-        "armyFoodNecessity",
-        "armySumCost"
+        "price",
+        "foodNecessity",
+        "damage",
+        "defense",
+        "unitType"
       ],
       "properties": {
-        "unitDictionary": {
-          "type": "object",
-          "x-dictionaryKey": {
-            "$ref": "#/definitions/UnitType"
-          },
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "armyFoodNecessity": {
+        "price": {
           "type": "integer",
           "format": "int32"
         },
-        "armySumCost": {
+        "foodNecessity": {
           "type": "integer",
           "format": "int32"
+        },
+        "damage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "defense": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unitType": {
+          "$ref": "#/definitions/UnitType"
         }
       }
     },
@@ -341,7 +389,7 @@
       "x-enumNames": [
         "Rohamfoka",
         "Csatacsiko",
-        "Lezercapa"
+        "Lezercsapa"
       ],
       "enum": [
         0,
@@ -354,9 +402,6 @@
       "properties": {
         "purchasedUnits": {
           "type": "object",
-          "x-dictionaryKey": {
-            "$ref": "#/definitions/UnitType"
-          },
           "additionalProperties": {
             "type": "integer",
             "format": "int32"
@@ -366,26 +411,41 @@
     },
     "AttackDto": {
       "type": "object",
+      "properties": {
+        "battles": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ArmyDto"
+          }
+        }
+      }
+    },
+    "ArmyDto": {
+      "type": "object",
       "required": [
-        "attackerArmyId",
-        "defenderCityId"
+        "armyFoodNecessity"
       ],
       "properties": {
-        "attackerArmyId": {
-          "type": "string",
-          "format": "guid"
+        "unitList": {
+          "type": "object",
+          "x-dictionaryKey": {
+            "$ref": "#/definitions/UnitType"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
         },
-        "defenderCityId": {
-          "type": "string",
-          "format": "guid"
+        "armyFoodNecessity": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
     "AttackableUsersDto": {
       "type": "object",
       "required": [
-        "id",
-        "username"
+        "id"
       ],
       "properties": {
         "id": {
@@ -393,8 +453,7 @@
           "format": "guid"
         },
         "username": {
-          "type": "string",
-          "minLength": 1
+          "type": "string"
         }
       }
     },
@@ -496,7 +555,7 @@
         1
       ]
     },
-    "ProfileDto": {
+    "CityDto": {
       "type": "object",
       "required": [
         "pearlCount",
@@ -533,7 +592,7 @@
             "$ref": "#/definitions/UpgradeDto"
           }
         },
-        "availableArmy": {
+        "army": {
           "$ref": "#/definitions/ArmyDto"
         }
       }
