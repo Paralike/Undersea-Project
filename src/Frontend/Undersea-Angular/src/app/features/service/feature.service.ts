@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BuildingDto, BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto } from 'src/app/shared';
+import { BuildingDto, BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto,  UnitType, FileResponse, ArmyUnitDto } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
@@ -75,6 +75,8 @@ const mock = [
 })
 export class FeatureService {
   army: ArmyDto;
+  unitToSend: ArmyUnitDto;
+  
 
   constructor(private buildingsClient: BuildingsClient, private attackClient: AttackClient, private armyClient: ArmyClient) { }
 
@@ -105,6 +107,11 @@ export class FeatureService {
   getArmy(): Observable<ArmyDto> {
     return this.armyClient.getArmy();
 
+  }
+
+  purchaseUnits(units: ArmyUnitDto[]){
+    console.log(units);
+    return this.armyClient.purchaseUnits(units)
   }
 
   getCityArmy() {

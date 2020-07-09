@@ -21,10 +21,9 @@ namespace Undersea.BLL.Services
             _mapper = mapper;
         }
 
-        public Task<ActionResult<CityDto>> GetCity(Guid id)
+        public async Task<CityDto> GetCity(Guid id)
         {
-            //return _mapper.Map<List<CityDto>>(_cityRepository.GetById(id));
-            throw new NotImplementedException();
+            return _mapper.Map<CityDto>(await _cityRepository.GetById(id));
         }
     }
 }

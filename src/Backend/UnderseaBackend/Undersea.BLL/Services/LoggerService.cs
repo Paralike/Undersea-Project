@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Models;
 using Undersea.DAL.Repository.Repositories;
 
 namespace Undersea.BLL.Services
@@ -24,7 +25,7 @@ namespace Undersea.BLL.Services
         public Task LogWarning(string message, Exception e = null)
         {
             // TODO leszármazni baserepoból
-            //  _loggerRepository.
+            _loggerRepository.Add(new ApplicationLog(e.ToString(),message));
             return null;
         }
 

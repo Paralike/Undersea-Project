@@ -73,7 +73,7 @@ export class ArmyClient {
         return _observableOf<ArmyDto>(<any>null);
     }
 
-    purchaseUnits(purchase: UnitPurchaseDto): Observable<FileResponse | null> {
+    purchaseUnits(purchase: ArmyUnitDto[]): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/Army";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -475,11 +475,8 @@ export class CityClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getCity(id: string): Observable<CityDto> {
-        let url_ = this.baseUrl + "/api/City/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    getCity(): Observable<CityDto> {
+        let url_ = this.baseUrl + "/api/City";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -694,6 +691,56 @@ export class UpgradesClient {
         }
         return _observableOf<UpgradeDto>(<any>null);
     }
+
+    purchaseUpgrade(upgrade: UpgradeDto): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Upgrades";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(upgrade);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processPurchaseUpgrade(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processPurchaseUpgrade(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processPurchaseUpgrade(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
 }
 
 export class ArmyDto implements IArmyDto {
@@ -792,54 +839,6 @@ export enum UnitType {
     Rohamfoka = 0,
     Csatacsiko = 1,
     Lezercapa = 2,
-}
-
-export class UnitPurchaseDto implements IUnitPurchaseDto {
-    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
-
-    constructor(data?: IUnitPurchaseDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (_data["purchasedUnits"]) {
-                this.purchasedUnits = {} as any;
-                for (let key in _data["purchasedUnits"]) {
-                    if (_data["purchasedUnits"].hasOwnProperty(key))
-                        this.purchasedUnits![key] = _data["purchasedUnits"][key];
-                }
-            }
-        }
-    }
-
-    static fromJS(data: any): UnitPurchaseDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UnitPurchaseDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.purchasedUnits) {
-            data["purchasedUnits"] = {};
-            for (let key in this.purchasedUnits) {
-                if (this.purchasedUnits.hasOwnProperty(key))
-                    data["purchasedUnits"][key] = this.purchasedUnits[key];
-            }
-        }
-        return data; 
-    }
-}
-
-export interface IUnitPurchaseDto {
-    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
 }
 
 export class AttackDto implements IAttackDto {
@@ -1102,6 +1101,7 @@ export enum BuildingType {
 }
 
 export class CityDto implements ICityDto {
+    id!: string;
     pearlCount!: number;
     pearlProduction!: number;
     coralCount!: number;
@@ -1109,6 +1109,7 @@ export class CityDto implements ICityDto {
     buildings?: BuildingDto[] | undefined;
     upgrades?: UpgradeDto[] | undefined;
     army?: ArmyDto | undefined;
+    servicePay!: number;
 
     constructor(data?: ICityDto) {
         if (data) {
@@ -1121,6 +1122,7 @@ export class CityDto implements ICityDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.pearlCount = _data["pearlCount"];
             this.pearlProduction = _data["pearlProduction"];
             this.coralCount = _data["coralCount"];
@@ -1136,6 +1138,7 @@ export class CityDto implements ICityDto {
                     this.upgrades!.push(UpgradeDto.fromJS(item));
             }
             this.army = _data["army"] ? ArmyDto.fromJS(_data["army"]) : <any>undefined;
+            this.servicePay = _data["servicePay"];
         }
     }
 
@@ -1148,6 +1151,7 @@ export class CityDto implements ICityDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["pearlCount"] = this.pearlCount;
         data["pearlProduction"] = this.pearlProduction;
         data["coralCount"] = this.coralCount;
@@ -1163,11 +1167,13 @@ export class CityDto implements ICityDto {
                 data["upgrades"].push(item.toJSON());
         }
         data["army"] = this.army ? this.army.toJSON() : <any>undefined;
+        data["servicePay"] = this.servicePay;
         return data; 
     }
 }
 
 export interface ICityDto {
+    id: string;
     pearlCount: number;
     pearlProduction: number;
     coralCount: number;
@@ -1175,12 +1181,14 @@ export interface ICityDto {
     buildings?: BuildingDto[] | undefined;
     upgrades?: UpgradeDto[] | undefined;
     army?: ArmyDto | undefined;
+    servicePay: number;
 }
 
 export class UpgradeDto implements IUpgradeDto {
-    id!: number;
+    id!: string;
     turnCount!: number;
     status!: Status;
+    cityId!: string;
 
     constructor(data?: IUpgradeDto) {
         if (data) {
@@ -1196,6 +1204,7 @@ export class UpgradeDto implements IUpgradeDto {
             this.id = _data["id"];
             this.turnCount = _data["turnCount"];
             this.status = _data["status"];
+            this.cityId = _data["cityId"];
         }
     }
 
@@ -1211,14 +1220,16 @@ export class UpgradeDto implements IUpgradeDto {
         data["id"] = this.id;
         data["turnCount"] = this.turnCount;
         data["status"] = this.status;
+        data["cityId"] = this.cityId;
         return data; 
     }
 }
 
 export interface IUpgradeDto {
-    id: number;
+    id: string;
     turnCount: number;
     status: Status;
+    cityId: string;
 }
 
 export class RankDto implements IRankDto {

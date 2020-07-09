@@ -43,7 +43,10 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UnitPurchaseDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ArmyUnitDto"
+              }
             },
             "x-nullable": false
           }
@@ -244,7 +247,7 @@
         }
       }
     },
-    "/api/City/{id}": {
+    "/api/City": {
       "get": {
         "tags": [
           "City"
@@ -254,16 +257,6 @@
           "text/plain",
           "application/json",
           "text/json"
-        ],
-        "parameters": [
-          {
-            "type": "string",
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "format": "guid",
-            "x-nullable": false
-          }
         ],
         "responses": {
           "200": {
@@ -345,6 +338,37 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Upgrades"
+        ],
+        "operationId": "Upgrades_PurchaseUpgrade",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "upgrade",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpgradeDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
       }
     }
   },
@@ -401,21 +425,6 @@
         1,
         2
       ]
-    },
-    "UnitPurchaseDto": {
-      "type": "object",
-      "properties": {
-        "purchasedUnits": {
-          "type": "object",
-          "x-dictionaryKey": {
-            "$ref": "#/definitions/UnitType"
-          },
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      }
     },
     "AttackDto": {
       "type": "object",
@@ -552,12 +561,18 @@
     "CityDto": {
       "type": "object",
       "required": [
+        "id",
         "pearlCount",
         "pearlProduction",
         "coralCount",
-        "coralProduction"
+        "coralProduction",
+        "servicePay"
       ],
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "guid"
+        },
         "pearlCount": {
           "type": "integer",
           "format": "int32"
@@ -588,6 +603,10 @@
         },
         "army": {
           "$ref": "#/definitions/ArmyDto"
+        },
+        "servicePay": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -596,12 +615,13 @@
       "required": [
         "id",
         "turnCount",
-        "status"
+        "status",
+        "cityId"
       ],
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "guid"
         },
         "turnCount": {
           "type": "integer",
@@ -609,6 +629,10 @@
         },
         "status": {
           "$ref": "#/definitions/Status"
+        },
+        "cityId": {
+          "type": "string",
+          "format": "guid"
         }
       }
     },
