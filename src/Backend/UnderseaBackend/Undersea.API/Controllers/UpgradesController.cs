@@ -21,5 +21,10 @@ namespace Undersea.API.Controllers
         {
             return Ok(await _upgradeService.GetUpgrade());
         }
+        [HttpPost]
+        public async Task<ActionResult> PurchaseUpgrade(UpgradeDto upgrade)
+        {
+            return Ok(_upgradeService.PurchaseUpgrade(upgrade));
+        }
     }
 }
