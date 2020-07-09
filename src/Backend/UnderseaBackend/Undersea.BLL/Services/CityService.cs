@@ -14,19 +14,36 @@ namespace Undersea.BLL.Services
     {
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
+        private readonly IArmyService _armyservice;
 
-        public CityService(ICityRepository cityRepository, IMapper mapper)
+        public CityService()
+        {
+
+        }
+
+        public CityService(ICityRepository cityRepository, IMapper mapper , IArmyService armyservice)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
+            _armyservice = armyservice;
         }
 
         public async Task<CityDto> GetCity(Guid id)
         {
             // identity service . id
             // Get where(userId = identity service)
-            return _mapper.Map<CityDto>(await _cityRepository.GetCityByUserId(id));
-            return null;
+            // return _mapper.Map<CityDto>(await _cityRepository.GetCityByUserId(id));
+            CityDto city = new CityDto()
+            {
+                Army = await _armyservice.GetArmy(id),
+                CoralCount = 230,
+                PearlCount = 230,
+                CoralProduction = 12,
+                
+            };
+
+            return city;
+            
         }
         public async Task AddUpgrade()
         {

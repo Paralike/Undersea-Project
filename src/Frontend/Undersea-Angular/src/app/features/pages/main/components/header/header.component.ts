@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   constructor(private featureService: FeatureService) { }
 
   ngOnInit(): void {
+    console.log('header city: ', this.city);
   }
 }
 

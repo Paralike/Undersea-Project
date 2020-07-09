@@ -19,10 +19,10 @@ namespace Undersea.API.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CityController : ControllerBase
     {
-        private readonly CityService _cityService;
+        private readonly ICityService _cityService;
         Guid id;
 
-        public CityController(CityService cityService,  IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public CityController(ICityService cityService,  IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _cityService = cityService;
             id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -30,7 +30,6 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<CityDto>> GetCity()
         {
-           
             return Ok(await _cityService.GetCity(id));
         }
     }
