@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BuildingDto, BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto,  UnitType, FileResponse, ArmyUnitDto } from 'src/app/shared';
+import { BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto, ArmyUnitDto, CityClient } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
@@ -76,9 +76,12 @@ const mock = [
 export class FeatureService {
   army: ArmyDto;
   unitToSend: ArmyUnitDto;
-  
 
-  constructor(private buildingsClient: BuildingsClient, private attackClient: AttackClient, private armyClient: ArmyClient) { }
+  constructor(private buildingsClient: BuildingsClient,
+              private attackClient: AttackClient,
+              private armyClient: ArmyClient,
+              private cityClient: CityClient
+  ) { }
 
   getBuildings(): Observable<BuildingModel[]> {
     // return this.buildingsClient.getBuilding();
@@ -94,8 +97,6 @@ export class FeatureService {
     return this.attackClient.getAttackableUsers();
   }
 
-
-
   getRanks(): Observable<any> {
     return of(mock);
   }
@@ -104,21 +105,22 @@ export class FeatureService {
     return of(FIGTHS);
   }
 
-  getArmy(): Observable<ArmyDto> {
-    return this.armyClient.getArmy();
+  getArmy(): Observable<ArmyModel[]> {
+    return of(ARMY);
 
   }
 
-  purchaseUnits(units: ArmyUnitDto[]){
+  purchaseUnits(units: ArmyUnitDto[]) {
     console.log(units);
-    return this.armyClient.purchaseUnits(units)
+    return this.armyClient.purchaseUnits(units);
   }
 
   getCityArmy() {
     return this.armyClient.getArmy();
   }
 
-  getProfile(): Observable<ProfileModel> {
+  getProfile(): Observable<any> {
+    //  return this.cityClient.getCity();
     return of(PROFILE);
   }
 

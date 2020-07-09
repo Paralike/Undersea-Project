@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,17 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        CityService _cityService;
+        private readonly CityService _cityService;
+        Guid id;
 
-        public CityController(CityService cityService)
+        public CityController(CityService cityService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _cityService = cityService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
         [HttpGet]
         public async Task<ActionResult<CityDto>> GetCity()
         {
-            var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             return Ok(await _cityService.GetCity(id));
         }
     }
