@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
 
 namespace Undersea.API.Controllers
 {
@@ -29,7 +32,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PurchaseUnits([FromBody] UnitPurchaseDto purchase)
+        public async Task<ActionResult> PurchaseUnits([FromBody] List<ArmyUnitDto> purchase)
         {
             Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             await _armyService.PurchaseUnits(id, purchase);

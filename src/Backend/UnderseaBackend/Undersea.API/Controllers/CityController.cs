@@ -18,7 +18,7 @@ namespace Undersea.API.Controllers
         {
             _cityService = cityService;
         }
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<ActionResult<CityDto>> GetCity(Guid id)
         {
             return Ok(await _cityService.GetCity(id));

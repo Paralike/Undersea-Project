@@ -5,6 +5,7 @@ import { ArmyModel } from '../model/army.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FeatureService } from '../../service/feature.service';
 import { UnitList } from '../../pages/main/model/profile.model';
+import { ArmyUnitDto, UnitType } from 'src/app/shared';
 
 @Component({
   selector: 'app-army',
@@ -13,17 +14,20 @@ import { UnitList } from '../../pages/main/model/profile.model';
 })
 export class ArmyComponent implements OnInit {
   public army: ArmyModel[];
-  public addUnit: number[];
+  public addUnit: ArmyUnitDto[];
   gyongy = 'Gyöngy';
 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
+  
     public dialogRef: MatDialogRef<ArmyComponent>
     ) {
-
-    this.addUnit = [0, 0, 0];
+    this.addUnit = [];
+    this.addUnit[0] = new ArmyUnitDto ({unitType: UnitType.Csatacsiko, unitCount: 0});
+    this.addUnit[1] = new ArmyUnitDto ({unitType: UnitType.Rohamfoka, unitCount: 0});
+    this.addUnit[2] = new ArmyUnitDto ({unitType: UnitType.Lezercapa, unitCount: 0});
   }
 
   ngOnInit(): void {
@@ -36,26 +40,24 @@ export class ArmyComponent implements OnInit {
       console.log(err);
     });
 
-    this.featureService.getCityArmy().subscribe( res => {
-      console.log(res);
-    });
   }
 
   plusUnit(unit: number) {
-    this.addUnit[unit]++;
+    this.addUnit[unit].unitCount++;
     console.log(unit);
   }
 
   minusUnit(unit: number) {
-    if (this.addUnit[unit] > 0) {
-      this.addUnit[unit]--;
+    if (this.addUnit[unit].unitCount > 0) {
+      this.addUnit[unit].unitCount--;
     }
 
   }
 
   sendData() {
     console.log(this.addUnit);
-    this.dialogRef.close();
+    this.featureService.purchaseUnits(this.addUnit).subscribe();
+
   }
   // selected(building: BuildingModel) {
   //   this.selectedBuilding = building.buildingType;

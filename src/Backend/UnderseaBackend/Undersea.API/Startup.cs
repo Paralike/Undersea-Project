@@ -48,6 +48,8 @@ namespace Undersea.API
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
             services.AddTransient<IAttackRepository, AttackRepository>();
+            services.AddTransient<ICityRepository, CityRepository>();
+
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
 
             services.AddTransient<ILogService, LoggerService>();

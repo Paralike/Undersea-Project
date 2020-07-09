@@ -44,7 +44,7 @@ namespace Undersea.API.Middlewares
 
             return context.Response.WriteAsync(new ErrorDto()
             {
-                Message = "Internal Server Error from the custom middleware."
+                Message = exception.Message
             }.ToString());
         }
     }

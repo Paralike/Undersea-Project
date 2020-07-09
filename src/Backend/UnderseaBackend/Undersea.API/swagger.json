@@ -43,7 +43,10 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UnitPurchaseDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ArmyUnitDto"
+              }
             },
             "x-nullable": false
           }
@@ -401,21 +404,6 @@
         1,
         2
       ]
-    },
-    "UnitPurchaseDto": {
-      "type": "object",
-      "properties": {
-        "purchasedUnits": {
-          "type": "object",
-          "x-dictionaryKey": {
-            "$ref": "#/definitions/UnitType"
-          },
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      }
     },
     "AttackDto": {
       "type": "object",
