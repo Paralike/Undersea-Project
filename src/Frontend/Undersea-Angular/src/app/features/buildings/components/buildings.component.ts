@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { BuildingModel } from '../model/building.model';
 import { FeatureService } from '../../service/feature.service';
 import { BUIDLDINGS } from '../model/mockBuildings';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-buildings',
@@ -14,7 +15,12 @@ export class BuildingsComponent implements OnInit {
   public selectedBuilding: number;
   public id: string;
 
-  constructor(private featureService: FeatureService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  constructor(
+    private featureService: FeatureService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<BuildingsComponent>
+    ) { }
 
   ngOnInit(): void {
     this.buildings = [];
@@ -33,5 +39,6 @@ export class BuildingsComponent implements OnInit {
   sendData(){
     console.log(this.selectedBuilding);
     console.log(this.buildings[this.selectedBuilding - 1].name);
+    this.dialogRef.close();
   }
 }

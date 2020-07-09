@@ -99,6 +99,7 @@ button {
   font-size: 18px;
   padding: 1%;
   padding-left: 4%;
+  color: #03255f;
 }
 button:disabled {
   opacity: 0.4;
@@ -106,4 +107,8 @@ button:disabled {
 }
 .flex{
   height: 80%;
+}
+
+.divider {
+  margin-top: 15%;
 }

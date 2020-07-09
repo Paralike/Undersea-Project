@@ -59,10 +59,10 @@ namespace Undersea.BLL.Services
                 return null;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(_user, user.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(_user, user.Password, true, false);
 
             if (result.Succeeded)
-                throw new Exception();
+                return _user;
 
             else
                 return null;
@@ -74,8 +74,6 @@ namespace Undersea.BLL.Services
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUser.Password);
 
             var result = await _userManager.CreateAsync(user);
-
-            throw new Exception("teszt");
 
             if (result.Succeeded)
                 return GetToken(user);

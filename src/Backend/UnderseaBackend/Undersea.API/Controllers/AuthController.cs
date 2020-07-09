@@ -12,7 +12,7 @@ namespace Undersea.API.Controllers
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        IAuthService _authService;
+        private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {
@@ -20,7 +20,6 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost("login")]
-
         public async Task<ActionResult<AuthResponseDto>> AuthenticateUser([FromBody] LoginDto login)
 
         {
