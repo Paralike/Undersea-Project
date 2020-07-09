@@ -52,7 +52,7 @@ h1 {
 }
 
 
-.infos_2 > table > tr > td > img {
+.infos-2 > table > tr > td > img {
     width: 42px;
     height: 45px;
     background: #9ffff0 0% 0% no-repeat padding-box;
@@ -64,7 +64,7 @@ h1 {
     margin: 3%;
 }
 
-.infos_2 > table > tr > td  {
+.infos-2 > table > tr > td  {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -126,9 +126,6 @@ h1 {
     font-size: 18px;
     padding: 1%;
     padding-left: 4%;
-   
-  
-    
  }
 
 
@@ -153,7 +150,7 @@ h1 {
         transform: rotate(45deg);
     }
     
-    .checkmark_circle {
+    .checkmark-circle {
         position: absolute;
         width:22px;
         height:22px;
@@ -163,7 +160,7 @@ h1 {
         top:0;
     }
     
-    .checkmark_stem {
+    .checkmark-stem {
         position: absolute;
         width:3px;
         height:9px;
@@ -172,7 +169,7 @@ h1 {
         top:6px;
     }
     
-    .checkmark_kick {
+    .checkmark-kick {
         position: absolute;
         width:3px;
         height:3px;
