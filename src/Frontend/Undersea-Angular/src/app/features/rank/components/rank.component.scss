@@ -4,6 +4,9 @@
   overflow-x: hidden;
   border-radius: 16px;
 }
+th.mat-sort-header-sorted {
+  color: black;
+}
 
 .infos {
   overflow-y: scroll;

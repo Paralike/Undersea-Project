@@ -17,6 +17,7 @@ import { AuthGuardService } from '../features/pages/auth/service/auth-guard.serv
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 
 
 
@@ -31,7 +32,8 @@ import { MatTableModule } from '@angular/material/table';
     MatSnackBarModule,
     MatSliderModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   exports: [
     MatDialogModule,
@@ -46,7 +48,8 @@ import { MatTableModule } from '@angular/material/table';
     MatDividerModule,
     MatSliderModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   providers: [
     AuthClient,
