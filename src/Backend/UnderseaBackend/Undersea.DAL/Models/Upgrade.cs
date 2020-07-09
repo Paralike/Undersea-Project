@@ -11,6 +11,6 @@ namespace Undersea.DAL.Models
         public virtual ICollection<UpgradeAttributeJoin> UpgradeAttributes { get; set; }
         public virtual City City { get; set; }
         public Guid CityId { get; set; }
-        public int CurrentTurn { get; set; }
+        public int CurrentTurn { get; set; } = 0;
     }
 }
