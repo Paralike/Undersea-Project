@@ -25,7 +25,7 @@ export class ArmyClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getArmy(): Observable<ArmyDto> {
+    getArmy(): Observable<UnitDto[]> {
         let url_ = this.baseUrl + "/api/Army";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -44,14 +44,14 @@ export class ArmyClient {
                 try {
                     return this.processGetArmy(<any>response_);
                 } catch (e) {
-                    return <Observable<ArmyDto>><any>_observableThrow(e);
+                    return <Observable<UnitDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ArmyDto>><any>_observableThrow(response_);
+                return <Observable<UnitDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetArmy(response: HttpResponseBase): Observable<ArmyDto> {
+    protected processGetArmy(response: HttpResponseBase): Observable<UnitDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -62,7 +62,11 @@ export class ArmyClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ArmyDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UnitDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -70,7 +74,7 @@ export class ArmyClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ArmyDto>(<any>null);
+        return _observableOf<UnitDto[]>(<any>null);
     }
 
     purchaseUnits(purchase: ArmyUnitDto[]): Observable<FileResponse | null> {
@@ -743,12 +747,15 @@ export class UpgradesClient {
     }
 }
 
-export class ArmyDto implements IArmyDto {
-    unitList?: ArmyUnitDto[] | undefined;
-    armyFoodNecessity!: number;
-    armyPearlNecessity!: number;
+export class UnitDto implements IUnitDto {
+    price!: number;
+    foodNecessity!: number;
+    damage!: number;
+    defense!: number;
+    unitType!: UnitType;
+    name?: string | undefined;
 
-    constructor(data?: IArmyDto) {
+    constructor(data?: IUnitDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -759,40 +766,47 @@ export class ArmyDto implements IArmyDto {
 
     init(_data?: any) {
         if (_data) {
-            if (Array.isArray(_data["unitList"])) {
-                this.unitList = [] as any;
-                for (let item of _data["unitList"])
-                    this.unitList!.push(ArmyUnitDto.fromJS(item));
-            }
-            this.armyFoodNecessity = _data["armyFoodNecessity"];
-            this.armyPearlNecessity = _data["armyPearlNecessity"];
+            this.price = _data["price"];
+            this.foodNecessity = _data["foodNecessity"];
+            this.damage = _data["damage"];
+            this.defense = _data["defense"];
+            this.unitType = _data["unitType"];
+            this.name = _data["name"];
         }
     }
 
-    static fromJS(data: any): ArmyDto {
+    static fromJS(data: any): UnitDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ArmyDto();
+        let result = new UnitDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.unitList)) {
-            data["unitList"] = [];
-            for (let item of this.unitList)
-                data["unitList"].push(item.toJSON());
-        }
-        data["armyFoodNecessity"] = this.armyFoodNecessity;
-        data["armyPearlNecessity"] = this.armyPearlNecessity;
+        data["price"] = this.price;
+        data["foodNecessity"] = this.foodNecessity;
+        data["damage"] = this.damage;
+        data["defense"] = this.defense;
+        data["unitType"] = this.unitType;
+        data["name"] = this.name;
         return data; 
     }
 }
 
-export interface IArmyDto {
-    unitList?: ArmyUnitDto[] | undefined;
-    armyFoodNecessity: number;
-    armyPearlNecessity: number;
+export interface IUnitDto {
+    price: number;
+    foodNecessity: number;
+    damage: number;
+    defense: number;
+    unitType: UnitType;
+    name?: string | undefined;
+}
+
+export enum UnitType {
+    Rohamfoka = 0,
+    Csatacsiko = 1,
+    Lezercapa = 2,
 }
 
 export class ArmyUnitDto implements IArmyUnitDto {
@@ -833,12 +847,6 @@ export class ArmyUnitDto implements IArmyUnitDto {
 export interface IArmyUnitDto {
     unitType: UnitType;
     unitCount: number;
-}
-
-export enum UnitType {
-    Rohamfoka = 0,
-    Csatacsiko = 1,
-    Lezercapa = 2,
 }
 
 export class AttackDto implements IAttackDto {
@@ -1235,6 +1243,58 @@ export enum UpgradeType {
     Szonaragyu = 3,
     VizalattiHarcmuveszetek = 4,
     Alkimia = 5,
+}
+
+export class ArmyDto implements IArmyDto {
+    unitList?: ArmyUnitDto[] | undefined;
+    armyFoodNecessity!: number;
+    armyPearlNecessity!: number;
+
+    constructor(data?: IArmyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["unitList"])) {
+                this.unitList = [] as any;
+                for (let item of _data["unitList"])
+                    this.unitList!.push(ArmyUnitDto.fromJS(item));
+            }
+            this.armyFoodNecessity = _data["armyFoodNecessity"];
+            this.armyPearlNecessity = _data["armyPearlNecessity"];
+        }
+    }
+
+    static fromJS(data: any): ArmyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ArmyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.unitList)) {
+            data["unitList"] = [];
+            for (let item of this.unitList)
+                data["unitList"].push(item.toJSON());
+        }
+        data["armyFoodNecessity"] = this.armyFoodNecessity;
+        data["armyPearlNecessity"] = this.armyPearlNecessity;
+        return data; 
+    }
+}
+
+export interface IArmyDto {
+    unitList?: ArmyUnitDto[] | undefined;
+    armyFoodNecessity: number;
+    armyPearlNecessity: number;
 }
 
 export class RankDto implements IRankDto {

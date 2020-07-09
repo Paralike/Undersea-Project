@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,6 +16,7 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CityController : ControllerBase
     {
         private readonly CityService _cityService;
@@ -27,8 +30,8 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<CityDto>> GetCity()
         {
-            return Ok();
-           // return Ok(await _cityService.GetCity(id));
+           
+            return Ok(await _cityService.GetCity(id));
         }
     }
 }

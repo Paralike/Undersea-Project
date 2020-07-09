@@ -22,7 +22,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ArmyDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UnitDto"
+              }
             }
           }
         }
@@ -373,42 +376,37 @@
     }
   },
   "definitions": {
-    "ArmyDto": {
+    "UnitDto": {
       "type": "object",
       "required": [
-        "armyFoodNecessity",
-        "armyPearlNecessity"
+        "price",
+        "foodNecessity",
+        "damage",
+        "defense",
+        "unitType"
       ],
       "properties": {
-        "unitList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ArmyUnitDto"
-          }
-        },
-        "armyFoodNecessity": {
+        "price": {
           "type": "integer",
           "format": "int32"
         },
-        "armyPearlNecessity": {
+        "foodNecessity": {
           "type": "integer",
           "format": "int32"
-        }
-      }
-    },
-    "ArmyUnitDto": {
-      "type": "object",
-      "required": [
-        "unitType",
-        "unitCount"
-      ],
-      "properties": {
+        },
+        "damage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "defense": {
+          "type": "integer",
+          "format": "int32"
+        },
         "unitType": {
           "$ref": "#/definitions/UnitType"
         },
-        "unitCount": {
-          "type": "integer",
-          "format": "int32"
+        "name": {
+          "type": "string"
         }
       }
     },
@@ -425,6 +423,22 @@
         1,
         2
       ]
+    },
+    "ArmyUnitDto": {
+      "type": "object",
+      "required": [
+        "unitType",
+        "unitCount"
+      ],
+      "properties": {
+        "unitType": {
+          "$ref": "#/definitions/UnitType"
+        },
+        "unitCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
     },
     "AttackDto": {
       "type": "object",
@@ -650,6 +664,29 @@
         4,
         5
       ]
+    },
+    "ArmyDto": {
+      "type": "object",
+      "required": [
+        "armyFoodNecessity",
+        "armyPearlNecessity"
+      ],
+      "properties": {
+        "unitList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
+          }
+        },
+        "armyFoodNecessity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "armyPearlNecessity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
     },
     "RankDto": {
       "type": "object",
