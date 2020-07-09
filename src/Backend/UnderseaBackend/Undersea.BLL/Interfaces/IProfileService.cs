@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.DAL;
@@ -10,6 +12,7 @@ namespace Undersea.BLL.Interfaces
     {
         public Task<CityDto> GetProfile(User user);
         public Task DeleteProfile(Guid id);
+        public Task<ActionResult<ICollection<RankDto>>> GetRank();
 
     }
 }

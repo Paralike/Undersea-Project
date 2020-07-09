@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
@@ -10,9 +11,9 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        ProfileService _profileService;
+        IProfileService _profileService;
 
-        public ProfileController(ProfileService profileService)
+        public ProfileController(IProfileService profileService)
         {
             _profileService = profileService;
         }
@@ -26,7 +27,7 @@ namespace Undersea.API.Controllers
         [HttpGet("ranks")]
         public async Task<ActionResult<RankDto>> GetRanks()
         {
-            return Ok();
+            return Ok(_profileService.GetRank());
         }
 
     }

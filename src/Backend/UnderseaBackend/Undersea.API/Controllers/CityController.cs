@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
@@ -14,17 +15,18 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        CityService _cityService;
+        ICityService _cityService;
 
-        public CityController(CityService cityService)
+        public CityController(ICityService cityService)
         {
             _cityService = cityService;
         }
         [HttpGet]
-        public async Task<ActionResult<CityDto>> GetCity(IHttpContextAccessor httpContextAccessor)
+        public async Task<ActionResult<CityDto>> GetCity()
         {
-            var id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            return Ok(await _cityService.GetCity(id));
+            /*var id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);*/
+            return Ok(await _cityService.GetCity());
+
         }
     }
 }

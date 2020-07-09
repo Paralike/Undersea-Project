@@ -475,18 +475,14 @@ export class CityClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getCity(httpContextAccessor: IHttpContextAccessor): Observable<CityDto> {
+    getCity(): Observable<CityDto> {
         let url_ = this.baseUrl + "/api/City";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(httpContextAccessor);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
@@ -1237,9 +1233,8 @@ export interface ICityDto {
 }
 
 export class UpgradeDto implements IUpgradeDto {
-    id!: string;
     turnCount!: number;
-    status!: Status;
+    upgradeType!: UpgradeType;
     cityId!: string;
 
     constructor(data?: IUpgradeDto) {
@@ -1253,9 +1248,8 @@ export class UpgradeDto implements IUpgradeDto {
 
     init(_data?: any) {
         if (_data) {
-            this.id = _data["id"];
             this.turnCount = _data["turnCount"];
-            this.status = _data["status"];
+            this.upgradeType = _data["upgradeType"];
             this.cityId = _data["cityId"];
         }
     }
@@ -1269,81 +1263,26 @@ export class UpgradeDto implements IUpgradeDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
         data["turnCount"] = this.turnCount;
-        data["status"] = this.status;
+        data["upgradeType"] = this.upgradeType;
         data["cityId"] = this.cityId;
         return data; 
     }
 }
 
 export interface IUpgradeDto {
-    id: string;
     turnCount: number;
-    status: Status;
+    upgradeType: UpgradeType;
     cityId: string;
 }
 
-export abstract class IHttpContextAccessor implements IIHttpContextAccessor {
-    httpContext?: HttpContext | undefined;
-
-    constructor(data?: IIHttpContextAccessor) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.httpContext = _data["httpContext"] ? HttpContext.fromJS(_data["httpContext"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): IHttpContextAccessor {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'IHttpContextAccessor' cannot be instantiated.");
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["httpContext"] = this.httpContext ? this.httpContext.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IIHttpContextAccessor {
-    httpContext?: HttpContext | undefined;
-}
-
-export abstract class HttpContext implements IHttpContext {
-
-    constructor(data?: IHttpContext) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-    }
-
-    static fromJS(data: any): HttpContext {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'HttpContext' cannot be instantiated.");
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        return data; 
-    }
-}
-
-export interface IHttpContext {
+export enum UpgradeType {
+    Iszaptraktor = 0,
+    Iszapkombajn = 1,
+    Korallfal = 2,
+    Szonaragyu = 3,
+    VizalattiHarcmuveszetek = 4,
+    Alkimia = 5,
 }
 
 export class RankDto implements IRankDto {

@@ -21,10 +21,16 @@ namespace Undersea.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<CityDto> GetCity(Guid id)
+        public async Task<CityDto> GetCity()
         {
-
-            return _mapper.Map<CityDto>(await _cityRepository.GetById(id));
+            // identity service . id
+            // Get where(userId = identity service)
+            //return _mapper.Map<CityDto>(await _cityRepository.GetById());
+            return null;
+        }
+        public async Task AddUpgrade()
+        {
+            
         }
     }
 }

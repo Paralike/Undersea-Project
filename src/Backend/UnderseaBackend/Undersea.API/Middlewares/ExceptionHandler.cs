@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs.Exception;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 
 namespace Undersea.API.Middlewares
@@ -28,17 +29,21 @@ namespace Undersea.API.Middlewares
             }
             catch (UnauthorizedAccessException ex)
             {
-                await _logger.LogError($"Unauthorized Access Happened " + ex);
+                //await _logger.LogError($"Unauthorized Access Happened " + ex);
                 await HandleUnautorizedException(httpContext, ex);
+            }
+            catch (ExistingUpgradeException ex)
+            {
+
             }
             catch(TimeoutException ex)
             {
-                await _logger.LogError($"Timeout Happened " + ex);
+                //await _logger.LogError($"Timeout Happened " + ex);
                 await HandleTimeoutException(httpContext, ex);
             }
             catch (Exception ex)
             {
-                await _logger.LogError($"Something went wrong: {ex}");
+               // await _logger.LogError($"Something went wrong: {ex}");
                 await HandleExceptionAsync(httpContext, ex);
             }
             
