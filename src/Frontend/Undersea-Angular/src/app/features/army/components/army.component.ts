@@ -2,10 +2,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ARMY } from '../model/mock-army';
 import { ArmyModel } from '../model/army.model';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import { FeatureService } from '../../service/feature.service';
 import { UnitList } from '../../pages/main/model/profile.model';
+
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { ArmyUnitDto, UnitType } from 'src/app/shared';
+
 
 @Component({
   selector: 'app-army',
@@ -21,8 +26,10 @@ export class ArmyComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
-  
-    public dialogRef: MatDialogRef<ArmyComponent>
+
+    public dialogRef: MatDialogRef<ArmyComponent>,
+    private snackbar: MatSnackBar
+
     ) {
     this.addUnit = [];
     this.addUnit[0] = new ArmyUnitDto ({unitType: UnitType.Csatacsiko, unitCount: 0});
@@ -33,12 +40,12 @@ export class ArmyComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data);
 
-    this.featureService.getArmy().subscribe( res => {
-      this.army = res;
+    this.featureService.getArmy().subscribe(res => {
+
     },
-    (err) => {
-      console.log(err);
-    });
+      (err) => {
+        console.log(err);
+      });
 
   }
 
@@ -55,8 +62,18 @@ export class ArmyComponent implements OnInit {
   }
 
   sendData() {
+
+    if (this.addUnit[0] === null && this.addUnit[1] === null && this.addUnit[2] === null){
+      this.snackbar.open('Válaszd ki mit szeretnél vásárolni!', 'Bezár');
+    }else {
+      console.log(this.addUnit);
+      this.dialogRef.close();
+      this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+    }
+
     console.log(this.addUnit);
     this.featureService.purchaseUnits(this.addUnit).subscribe();
+
 
   }
   // selected(building: BuildingModel) {

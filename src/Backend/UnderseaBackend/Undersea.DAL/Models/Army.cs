@@ -7,7 +7,7 @@ namespace Undersea.DAL.Models
     public class Army : IDbEntity
     {
         public Guid Id { get; set; }
-        public City City { get; set; }
+        public virtual City City { get; set; }
         public Guid CityId { get; set; }
         public virtual ICollection<ArmyUnitJoin> Units { get; set; }
         public virtual ICollection<Attack> Attacks { get; set; }

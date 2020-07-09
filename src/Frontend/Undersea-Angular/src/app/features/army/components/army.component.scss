@@ -119,3 +119,9 @@ div:focus {
     cursor: pointer;
     user-select: none;
 }
+
+::ng-deep .mat-snack-bar-container{
+    background-color: #03255F !important;
+    color: #9FFFF0;
+    font-weight: bold;
+  }

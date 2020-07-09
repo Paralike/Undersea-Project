@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
@@ -14,12 +16,14 @@ namespace Undersea.BLL.Services
     public class ProfileService : IProfileService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
 
-        public ProfileService(IUserRepository userRepository, IMapper mapper)
+        public ProfileService(IUserRepository userRepository, IMapper mapper, ICityRepository cityRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _cityRepository = cityRepository;
         }
 
         public async Task DeleteProfile(Guid id)
@@ -33,5 +37,11 @@ namespace Undersea.BLL.Services
             throw new NotImplementedException();
         }
 
+        public async Task<ActionResult<ICollection<RankDto>>> GetRank()
+        {
+            var cities = await _cityRepository.GetAllCityWithUser();
+
+            return  cities.Select(x => new RankDto { Point = x.Points, Username = x.User.UserName }).ToList();
+        }
     }
 }

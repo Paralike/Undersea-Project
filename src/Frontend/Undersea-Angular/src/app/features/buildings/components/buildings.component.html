@@ -10,9 +10,8 @@
   </p>
   <div class="main-content">
     <div *ngFor="let building of buildings; let i = index" (click)="selected(building)" class="content" tabindex="-1">
-
       <img src='../../../../assets/images/building_{{building.buildingType}}.png'>
-      <div class="buildingName">
+      <div class="building-name">
         {{building.name}}
       </div>
       <div class="building-desc">
@@ -20,23 +19,17 @@
           {{desc}}
         </div>
       </div>
-
       <div class="quantity">
         {{data.building[i]}} db
       </div>
       <div class="price">
         {{building.price}} Gyöngy / db
       </div>
-
     </div>
-
-
   </div>
   <mat-divider></mat-divider>
   <div class="buttons-div">
-
     <button [disabled]="!selectedBuilding" mat-button class="building-button" (click)="sendData()" id="build-button">Megveszem</button>
-
   </div>
 
 </div>

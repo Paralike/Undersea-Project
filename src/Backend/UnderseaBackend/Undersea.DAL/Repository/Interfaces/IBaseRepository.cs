@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -19,5 +20,7 @@ namespace Undersea.DAL.Repositories.Interfaces
 
         Task<int> CountAll();
         Task<int> CountWhere(Expression<Func<T, bool>> predicate);
+
+        IQueryable<T> GetAllWith();
     }
 }

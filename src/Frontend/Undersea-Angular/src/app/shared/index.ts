@@ -1185,9 +1185,8 @@ export interface ICityDto {
 }
 
 export class UpgradeDto implements IUpgradeDto {
-    id!: string;
     turnCount!: number;
-    status!: Status;
+    upgradeType!: UpgradeType;
     cityId!: string;
 
     constructor(data?: IUpgradeDto) {
@@ -1201,9 +1200,8 @@ export class UpgradeDto implements IUpgradeDto {
 
     init(_data?: any) {
         if (_data) {
-            this.id = _data["id"];
             this.turnCount = _data["turnCount"];
-            this.status = _data["status"];
+            this.upgradeType = _data["upgradeType"];
             this.cityId = _data["cityId"];
         }
     }
@@ -1217,19 +1215,26 @@ export class UpgradeDto implements IUpgradeDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
         data["turnCount"] = this.turnCount;
-        data["status"] = this.status;
+        data["upgradeType"] = this.upgradeType;
         data["cityId"] = this.cityId;
         return data; 
     }
 }
 
 export interface IUpgradeDto {
-    id: string;
     turnCount: number;
-    status: Status;
+    upgradeType: UpgradeType;
     cityId: string;
+}
+
+export enum UpgradeType {
+    Iszaptraktor = 0,
+    Iszapkombajn = 1,
+    Korallfal = 2,
+    Szonaragyu = 3,
+    VizalattiHarcmuveszetek = 4,
+    Alkimia = 5,
 }
 
 export class RankDto implements IRankDto {

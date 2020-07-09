@@ -54,16 +54,15 @@ export class AuthPageComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
-        console.log(res);
+
         if (res.token != null) {
-          console.log(res);
           localStorage.setItem('token', res.token);
           this.router.navigate(['/main']);
         }
 
       },
         (err) => {
-          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
+          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'Bezár');
           console.error('HURKAAAAA', err);
         });
 
