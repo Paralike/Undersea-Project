@@ -8,5 +8,6 @@ namespace Undersea.DAL.Repositories.Interfaces
     {
         public Task<Army> BuyUnitsAsync(Guid id);
         public Task<int> GetFoodNecessity(Guid id);
+        public Task<int> GetPearlNecessity(Guid id);
     }
 }

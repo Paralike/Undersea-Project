@@ -10,6 +10,14 @@
   cursor: pointer;
 }
 
+h2{
+  font-family: baloo;
+  font-size: 32px;
+}
+p{
+  font-family: open-sans-regular;
+  font-size: 16px;
+}
 .main-content {
   display: flex;
   flex-direction: row;
@@ -36,6 +44,11 @@
   color: white;
   border-radius: 16px;
 }
+::ng-deep .mat-snack-bar-container{
+  background-color: #03255F !important;
+  color: #9FFFF0;
+  font-weight: bold;
+}
 
 .building-modal {
   background-color: red;
@@ -61,8 +74,10 @@ button:disabled {
   color: #001234;
 }
 
-.buildingName {
+.building-name {
   font-weight: bold;
+  font-family: open-sans-regular;
+  font-size: 16px;
   margin: none;
 }
 
@@ -76,6 +91,8 @@ button:disabled {
   justify-content: flex-start;
   outline: none;
   border-radius: 16px;
+  font-family: open-sans-regular;
+  font-size: 16px;
 }
 
 div:focus {
@@ -86,8 +103,12 @@ div:focus {
 
 .quantity {
   margin: 0.5vh;
+  font-family: open-sans-regular;
+  font-size: 16px;
 }
 
 .price {
   margin-bottom: 0.5vh;
+  font-family: open-sans-regular;
+  font-size: 16px;
 }

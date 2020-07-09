@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
@@ -16,9 +17,9 @@ namespace Undersea.API.Controllers
     public class CityController : ControllerBase
     {
         private readonly CityService _cityService;
-        Guid id;
+        Giud id;
 
-        public CityController(CityService cityService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public CityController(CityService cityService,  IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _cityService = cityService;
             id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);

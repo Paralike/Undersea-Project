@@ -17,7 +17,7 @@ export class AttackComponent implements OnInit {
     private el: ElementRef,
     private snackbar: MatSnackBar,
     private service: FeatureService,
-    public dialogRef: MatDialogRef<AttackComponent>
+    public dialogRef: MatDialogRef<AttackComponent>,
     ) { }
   displayedColumns: string[] = ['target', 'choice'];
   userList: AttackModel[];
@@ -44,10 +44,15 @@ export class AttackComponent implements OnInit {
   }
 
   sendData(){
-    console.log('Slider value', this.slider.value, this.slider2.value, this.slider3.value);
-    console.log(this.selectedUserId);
-    console.log(this.userList.find(x => x.id === this.selectedUserId));
-    this.dialogRef.close();
+    if (this.selected !== false){
+      console.log('Slider value', this.slider.value, this.slider2.value, this.slider3.value);
+      console.log(this.selectedUserId);
+      console.log(this.userList.find(x => x.id === this.selectedUserId));
+      this.dialogRef.close();
+      this.snackbar.open('Sikeres támadás!', 'Bezár');
+    }else if (this.selected === false){
+      this.snackbar.open('Válaszd ki kit szeretnél támadni!', 'Bezár');
+    }
   }
 
   onInputChange(event: MatSliderChange, index: number) {

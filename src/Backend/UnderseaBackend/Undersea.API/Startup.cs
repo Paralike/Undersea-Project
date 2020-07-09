@@ -39,18 +39,23 @@ namespace Undersea.API
             .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<AppDbContext>(o =>
-                    o.UseSqlServer(Configuration["ConnectionString"]));
+            o.UseSqlServer(Configuration["ConnectionString"]));
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAttackService, AttackService>();
             services.AddTransient<IArmyService, ArmyService>();
+            services.AddTransient<IUpgradeService, UpgradeService>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
             services.AddTransient<IAttackRepository, AttackRepository>();
             services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<IUnitRepository, UnitRepository>();
 
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
+            services.AddTransient<IUpgradeRepository, UpgradeRepository>();
+            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<ICityRepository, CityRepository>();
 
             services.AddTransient<ILogService, LoggerService>();
 
@@ -110,6 +115,12 @@ namespace Undersea.API
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+                context.Database.Migrate();
+            }
 
             app.UseEndpoints(endpoints =>
             {

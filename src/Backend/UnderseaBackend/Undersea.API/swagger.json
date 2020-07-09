@@ -377,7 +377,7 @@
       "type": "object",
       "required": [
         "armyFoodNecessity",
-        "armySumCost"
+        "armyPearlNecessity"
       ],
       "properties": {
         "unitList": {
@@ -390,7 +390,7 @@
           "type": "integer",
           "format": "int32"
         },
-        "armySumCost": {
+        "armyPearlNecessity": {
           "type": "integer",
           "format": "int32"
         }
@@ -613,28 +613,43 @@
     "UpgradeDto": {
       "type": "object",
       "required": [
-        "id",
         "turnCount",
-        "status",
+        "upgradeType",
         "cityId"
       ],
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "guid"
-        },
         "turnCount": {
           "type": "integer",
           "format": "int32"
         },
-        "status": {
-          "$ref": "#/definitions/Status"
+        "upgradeType": {
+          "$ref": "#/definitions/UpgradeType"
         },
         "cityId": {
           "type": "string",
           "format": "guid"
         }
       }
+    },
+    "UpgradeType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Iszaptraktor",
+        "Iszapkombajn",
+        "Korallfal",
+        "Szonaragyu",
+        "VizalattiHarcmuveszetek",
+        "Alkimia"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     },
     "RankDto": {
       "type": "object",

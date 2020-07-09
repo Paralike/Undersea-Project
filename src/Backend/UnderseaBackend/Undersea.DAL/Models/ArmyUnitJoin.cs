@@ -5,7 +5,7 @@ namespace Undersea.DAL.Models
 {
     public class ArmyUnitJoin : IDbEntity
     {
-        public Army Army { get; set; }
+        public virtual Army Army { get; set; }
         public Guid ArmyId { get; set; }
         public UnitType UnitType { get; set; }
         public int UnitCount { get; set; }

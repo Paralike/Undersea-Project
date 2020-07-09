@@ -20,7 +20,6 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
             });
         }
-
         console.log('intercepted ');
         return next.handle(request);
     }

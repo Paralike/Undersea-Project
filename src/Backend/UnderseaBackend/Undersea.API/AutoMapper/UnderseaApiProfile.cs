@@ -10,6 +10,7 @@ namespace Undersea.API.AutoMapper
         {
             CreateMap<User, AttackableUsersDto>().ReverseMap();
             CreateMap<Army, ArmyDto>().ReverseMap();
+            CreateMap<Unit, UnitDto>().ReverseMap();
             CreateMap<Upgrade, UpgradeDto>().ReverseMap();
         }
     }

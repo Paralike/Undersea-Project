@@ -11,6 +11,7 @@ using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
+using Undersea.DAL.Repository.Interfaces;
 
 namespace Undersea.BLL.Services
 {
@@ -19,32 +20,32 @@ namespace Undersea.BLL.Services
         private readonly IArmyRepository _armyRepository;
         private readonly IArmyUnitJoinRepository _armyUnitRepository;
         private readonly ICityRepository _cityRepository;
+        private readonly IUnitRepository _unitRepository;
+        private readonly IMapper _mapper;
 
         public ArmyService()
         {
-            
+
         }
 
-        private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
-
-        public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository, UserManager<User> userManager, IMapper mapper, ICityRepository cityRepository)
+        public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository,
+            IMapper mapper, ICityRepository cityRepository, IUnitRepository unitRepository)
         {
             _armyRepository = armyRepository;
             _armyUnitRepository = armyUnitRepository;
-            _userManager = userManager;
             _mapper = mapper;
             _cityRepository = cityRepository;
+            _unitRepository = unitRepository;
         }
 
         // TODO Action result kivenni
-        public async Task<ActionResult<ArmyDto>> GetArmy(Guid id)
+        public async Task<ArmyDto> GetArmy(Guid id)
         {
-            var user = await _cityRepository.GetWhere(c => c.UserId == id);
+            var cities = await _cityRepository.GetWhere(c => c.UserId == id);
+            var firstCity = cities.First();
+            //var army = firstCity.AvailableArmy;
 
-            var army = user.FirstOrDefault().AvailableArmy;
-
-            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == army.Id);
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
             var unitList = list.Select(x => new ArmyUnitDto
             {
@@ -55,8 +56,8 @@ namespace Undersea.BLL.Services
             ArmyDto newDto = new ArmyDto()
             {
                 UnitList = unitList,
-                ArmyFoodNecessity = await _armyRepository.GetFoodNecessity(army.Id)
-                //ArmySumCost = 0                              
+                ArmyFoodNecessity = await _armyRepository.GetFoodNecessity(firstCity.AvailableArmyId),
+                ArmyPearlNecessity = await _armyRepository.GetPearlNecessity(firstCity.AvailableArmyId)
             };
 
             return newDto;
@@ -66,7 +67,7 @@ namespace Undersea.BLL.Services
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
-            var army = firstCity.AvailableArmy;
+            //var army = firstCity.AvailableArmy;
 
             // TODO átírni szebbre
             var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Csatacsiko);
@@ -82,6 +83,13 @@ namespace Undersea.BLL.Services
             await _armyUnitRepository.Update(unitCsatacsiko);
             await _armyUnitRepository.Update(unitRohamfoka);
             await _armyUnitRepository.Update(unitLezercapa);
+        }
+
+        public async Task<List<UnitDto>> GetUnitInfo()
+        {
+            var units = await _unitRepository.GetAll();
+
+            return _mapper.Map<List<UnitDto>>(units);
         }
 
     }

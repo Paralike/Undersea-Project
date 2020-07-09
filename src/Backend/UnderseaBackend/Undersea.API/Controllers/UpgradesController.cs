@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
@@ -9,9 +10,9 @@ namespace Undersea.API.Controllers
     [ApiController]
     public class UpgradesController : ControllerBase
     {
-        UpgradeService _upgradeService;
+        IUpgradeService _upgradeService;
 
-        public UpgradesController(UpgradeService upgradeService)
+        public UpgradesController(IUpgradeService upgradeService)
         {
             _upgradeService = upgradeService;
         }

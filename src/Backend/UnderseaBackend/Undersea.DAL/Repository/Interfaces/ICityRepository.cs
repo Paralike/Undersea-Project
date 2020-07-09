@@ -8,6 +8,7 @@ namespace Undersea.DAL.Repositories.Interfaces
 {
     public interface ICityRepository : IBaseRepository<City>
     {
-        public Task<City> GetCity(Guid Id);
+        Task<City> GetCityByUserId(Guid Id);
+        Task<ICollection<City>> GetAllCityWithUser();
     }
 }

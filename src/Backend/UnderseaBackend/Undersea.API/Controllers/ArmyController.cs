@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,17 +19,20 @@ namespace Undersea.API.Controllers
     public class ArmyController : ControllerBase
     {
         private readonly IArmyService _armyService;
+        Guid id;
 
-        public ArmyController(IArmyService armyService)
+        public ArmyController(IArmyService armyService, IHttpContextAccessor httpContextAccessor)
         {
             _armyService = armyService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         [HttpGet]
         public async Task<ActionResult<ArmyDto>> GetArmy()
         {
-            Guid id = Guid.Parse(User.FindFirst("Id")?.Value);
-            return Ok(await _armyService.GetArmy(id));
+            //return Ok(await _armyService.GetArmy(id));
+
+            return Ok(await _armyService.GetUnitInfo());
         }
 
         [HttpPost]

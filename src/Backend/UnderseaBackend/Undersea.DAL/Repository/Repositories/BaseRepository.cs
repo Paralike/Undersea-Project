@@ -52,6 +52,11 @@ namespace Undersea.DAL.Repositories
             return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
+        public IQueryable<T> GetAllWith()
+        {
+            return  _context.Set<T>();
+        }
+
         public Task<int> CountAll() => _context.Set<T>().CountAsync();
 
         public Task<int> CountWhere(Expression<Func<T, bool>> predicate)
