@@ -21,9 +21,9 @@ namespace Undersea.API.Controllers
             _cityService = cityService;
         }
         [HttpGet]
-        public async Task<CityDto> GetCity()
+        public async Task<ActionResult<CityDto>> GetCity()
         {
-            var id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             return Ok(await _cityService.GetCity(id));
         }
     }

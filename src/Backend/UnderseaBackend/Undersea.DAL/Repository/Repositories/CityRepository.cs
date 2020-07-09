@@ -9,7 +9,7 @@ using Undersea.DAL.Repositories.Interfaces;
 
 namespace Undersea.DAL.Repositories
 {
-    class CityRepository : BaseRepository<City>, ICityRepository
+    public class CityRepository : BaseRepository<City>, ICityRepository
     {
         public CityRepository(AppDbContext context) : base(context) {   }
 

@@ -253,26 +253,10 @@
           "City"
         ],
         "operationId": "City_GetCity",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "produces": [
           "text/plain",
           "application/json",
           "text/json"
-        ],
-        "parameters": [
-          {
-            "name": "httpContextAccessor",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/IHttpContextAccessor"
-            },
-            "x-nullable": false
-          }
         ],
         "responses": {
           "200": {
@@ -651,19 +635,6 @@
           "format": "guid"
         }
       }
-    },
-    "IHttpContextAccessor": {
-      "type": "object",
-      "x-abstract": true,
-      "properties": {
-        "httpContext": {
-          "$ref": "#/definitions/HttpContext"
-        }
-      }
-    },
-    "HttpContext": {
-      "type": "object",
-      "x-abstract": true
     },
     "RankDto": {
       "type": "object",
