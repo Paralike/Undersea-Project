@@ -19,8 +19,7 @@
                                 <div class="checkmark_stem"></div>
                                 <div class="checkmark_kick"></div>
                             </span>
-                        </div>
-
+                        </div>  
                     </td>
                 </ng-container>
 
@@ -35,10 +34,7 @@
                     <th>2. Állítsd be, kiket küldessz harcba!</th>
                 </tr>
                 <tr>
-                    <td><img src='assets/images/007-shark.svg'>Lézercápa: <span>{{matslider?.value}}</span> példány <br>
-                        <mat-slider class="matslider" #matslider class="slider" min="1" max="50" step="1" value="1">
-                        </mat-slider>
-                    </td>
+                    <td><img src='assets/images/007-shark.svg'>Lézercápa:  <span>{{matslider?.value}}</span>  példány   <br> <mat-slider class="matslider" #matslider class="slider" min="1" max="50" step="1" value="1"></mat-slider></td>
                 </tr>
                 <tr>
                     <td><img src='assets/images/025-seal.svg'>Rohamfóka: <span>{{matslider2?.value}}</span> példány <br>
@@ -54,9 +50,6 @@
             </table>
         </div>
     </div>
-
 </div>
 <mat-divider></mat-divider>
-
-
 <button mat-button style="color: #03255F ;" (click)="sendData()">Megtámadom!</button>

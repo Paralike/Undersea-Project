@@ -52,10 +52,19 @@ h1 {
     opacity: 1;
     padding: 3%;
     zoom: 0.8;
+    margin: 3%;
 }
 
+.infos_2 > table > tr > td  {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+	justify-content: space-around;
+ }
+ 
 
-
+ 
 ::ng-deep .mat-dialog-container{
     background-color: #03255F !important;
     color: white;
