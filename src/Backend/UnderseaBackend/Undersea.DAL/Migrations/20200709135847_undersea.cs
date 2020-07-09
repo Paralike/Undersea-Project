@@ -1,12 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class Init : Migration
+    public partial class undersea : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ApplicationLog",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    StackTrace = table.Column<string>(nullable: true),
+                    DateTime = table.Column<DateTime>(nullable: false),
+                    Message = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationLog", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Armies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CityId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Armies", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -61,6 +87,24 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    UnitType = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
+                    FoodNecessity = table.Column<int>(nullable: false),
+                    PearlNecessity = table.Column<int>(nullable: false),
+                    Damage = table.Column<int>(nullable: false),
+                    Defense = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.UnitType);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UpgradeAttributes",
                 columns: table => new
                 {
@@ -73,6 +117,26 @@ namespace Undersea.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UpgradeAttributes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArmyUnitJoins",
+                columns: table => new
+                {
+                    ArmyId = table.Column<Guid>(nullable: false),
+                    UnitType = table.Column<int>(nullable: false),
+                    UnitCount = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArmyUnitJoins", x => new { x.ArmyId, x.UnitType });
+                    table.ForeignKey(
+                        name: "FK_ArmyUnitJoins_Armies_ArmyId",
+                        column: x => x.ArmyId,
+                        principalTable: "Armies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,11 +256,18 @@ namespace Undersea.DAL.Migrations
                     PearlProduction = table.Column<int>(nullable: false),
                     CoralCount = table.Column<int>(nullable: false),
                     CoralProduction = table.Column<int>(nullable: false),
-                    Points = table.Column<int>(nullable: false)
+                    Points = table.Column<int>(nullable: false),
+                    AvailableArmyId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Cities_Armies_AvailableArmyId",
+                        column: x => x.AvailableArmyId,
+                        principalTable: "Armies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cities_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -206,18 +277,30 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Armies",
+                name: "Attacks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CityId = table.Column<Guid>(nullable: false)
+                    AttackerCityId = table.Column<Guid>(nullable: false),
+                    DefenderCityId = table.Column<Guid>(nullable: false),
+                    ArmyId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Armies", x => x.Id);
+                    table.PrimaryKey("PK_Attacks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Armies_Cities_CityId",
-                        column: x => x.CityId,
+                        name: "FK_Attacks_Armies_ArmyId",
+                        column: x => x.ArmyId,
+                        principalTable: "Armies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Attacks_Cities_AttackerCityId",
+                        column: x => x.AttackerCityId,
+                        principalTable: "Cities",
+                        principalColumn: "UserId");
+                    table.ForeignKey(
+                        name: "FK_Attacks_Cities_DefenderCityId",
+                        column: x => x.DefenderCityId,
                         principalTable: "Cities",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -261,58 +344,6 @@ namespace Undersea.DAL.Migrations
                         principalTable: "Cities",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Attacks",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    AttackerCityId = table.Column<Guid>(nullable: false),
-                    DefenderCityId = table.Column<Guid>(nullable: false),
-                    ArmyId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attacks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Attacks_Armies_ArmyId",
-                        column: x => x.ArmyId,
-                        principalTable: "Armies",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Attacks_Cities_AttackerCityId",
-                        column: x => x.AttackerCityId,
-                        principalTable: "Cities",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Attacks_Cities_DefenderCityId",
-                        column: x => x.DefenderCityId,
-                        principalTable: "Cities",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Units",
-                columns: table => new
-                {
-                    UnitType = table.Column<int>(nullable: false),
-                    Price = table.Column<int>(nullable: false),
-                    FoodNecessity = table.Column<int>(nullable: false),
-                    Damage = table.Column<int>(nullable: false),
-                    Defense = table.Column<int>(nullable: false),
-                    ArmyId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Units", x => x.UnitType);
-                    table.ForeignKey(
-                        name: "FK_Units_Armies_ArmyId",
-                        column: x => x.ArmyId,
-                        principalTable: "Armies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -363,10 +394,20 @@ namespace Undersea.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Armies_CityId",
-                table: "Armies",
-                column: "CityId");
+            migrationBuilder.InsertData(
+                table: "Units",
+                columns: new[] { "UnitType", "Damage", "Defense", "FoodNecessity", "Id", "Name", "PearlNecessity", "Price" },
+                values: new object[] { 1, 2, 6, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Csatacsikó", 1, 50 });
+
+            migrationBuilder.InsertData(
+                table: "Units",
+                columns: new[] { "UnitType", "Damage", "Defense", "FoodNecessity", "Id", "Name", "PearlNecessity", "Price" },
+                values: new object[] { 0, 6, 2, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Rohamfóka", 1, 50 });
+
+            migrationBuilder.InsertData(
+                table: "Units",
+                columns: new[] { "UnitType", "Damage", "Defense", "FoodNecessity", "Id", "Name", "PearlNecessity", "Price" },
+                values: new object[] { 2, 5, 5, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Lézercápa", 3, 100 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -428,6 +469,12 @@ namespace Undersea.DAL.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cities_AvailableArmyId",
+                table: "Cities",
+                column: "AvailableArmyId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CityBuildings_BuildingAttributeId",
                 table: "CityBuildings",
                 column: "BuildingAttributeId");
@@ -438,11 +485,6 @@ namespace Undersea.DAL.Migrations
                 column: "UpgradeAttributeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Units_ArmyId",
-                table: "Units",
-                column: "ArmyId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Upgrades_CityId",
                 table: "Upgrades",
                 column: "CityId");
@@ -450,6 +492,12 @@ namespace Undersea.DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApplicationLog");
+
+            migrationBuilder.DropTable(
+                name: "ArmyUnitJoins");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -493,10 +541,10 @@ namespace Undersea.DAL.Migrations
                 name: "Upgrades");
 
             migrationBuilder.DropTable(
-                name: "Armies");
+                name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "Armies");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

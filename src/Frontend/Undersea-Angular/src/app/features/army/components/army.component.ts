@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ARMY } from '../model/mock-army';
 import { ArmyModel } from '../model/army.model';
 
 import { MAT_DIALOG_DATA, MatDialogRef, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
