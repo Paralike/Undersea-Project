@@ -11,6 +11,18 @@ body{
     src: url(assets/fonts/baloo/Baloo-Regular.ttf) format("opentype");
   }
 
+  @font-face {
+    font-family: open-sans-regular;
+    src: url(assets/fonts/Open_Sans/OpenSans-Regular.ttf) format("opentype");
+  }
+
+  
+  @font-face {
+    font-family: open-sans-bold;
+    src: url(assets/fonts/Open_Sans/OpenSans-Bold.ttf) format("opentype");
+  }
+
+
 ::ng-deep .mat-dialog-container{
   background-color: #03255F !important;
 }

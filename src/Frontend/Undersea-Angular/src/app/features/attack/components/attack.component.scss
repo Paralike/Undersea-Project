@@ -9,6 +9,7 @@ html {
     flex-direction: column;
     align-items: center;
     height: 40%;
+   
 }
 
 .tables {
@@ -68,7 +69,8 @@ h1 {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-	justify-content: space-around;
+    justify-content: space-around;
+    font-family: open-sans-regular;
  }
  
 
@@ -91,7 +93,15 @@ h1 {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 350px;
+    font-family: open-sans-bold;
+    font-size: 16px;
+    
 
+}
+.infos_2 {
+    font-family: open-sans-bold;
+    font-size: 16px;
+    ;
 }
 .slider {
     width: 30px;
