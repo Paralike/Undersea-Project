@@ -21,7 +21,7 @@ export class ArmyComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<ArmyComponent>
-    ) {
+  ) {
 
     this.addUnit = [0, 0, 0];
   }
@@ -29,14 +29,14 @@ export class ArmyComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data);
 
-    this.featureService.getArmy().subscribe( res => {
-      this.army = res;
-    },
-    (err) => {
-      console.log(err);
-    });
+    this.featureService.getArmy().subscribe(res => {
 
-    this.featureService.getCityArmy().subscribe( res => {
+    },
+      (err) => {
+        console.log(err);
+      });
+
+    this.featureService.getCityArmy().subscribe(res => {
       console.log(res);
     });
   }

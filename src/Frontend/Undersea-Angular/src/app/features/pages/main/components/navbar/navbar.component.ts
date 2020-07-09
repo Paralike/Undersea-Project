@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BuildingsComponent } from '../../../../buildings/components/buildings.component';
 import { AttackComponent } from '../../../../attack/components/attack.component';
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   @Input() units: UnitList;
 
 
-  constructor(private dialog: MatDialog ) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -66,15 +66,16 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-  openDevelopments() {
-    const dialogRef = this.dialog.open(DevelopmentsComponent, {
-      width: '50vw',
-      height: '35vw',
-      data: {
-        developements: this.developements
-      }
-    });
+
+    openDevelopments() {
+      const dialogRef = this.dialog.open(DevelopmentsComponent, {
+        width: '50vw',
+        height: '35vw',
+        data: {
+          developements: this.developements
+        }
+      });
+    }
+
+
   }
-
-
-}

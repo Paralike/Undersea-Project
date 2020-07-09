@@ -102,8 +102,8 @@ export class FeatureService {
     return of(FIGTHS);
   }
 
-  getArmy(): Observable<ArmyModel[]> {
-    return of(ARMY);
+  getArmy(): Observable<ArmyDto> {
+    return this.armyClient.getArmy();
 
   }
 
