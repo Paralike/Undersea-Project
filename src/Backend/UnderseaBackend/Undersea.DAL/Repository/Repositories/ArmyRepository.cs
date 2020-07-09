@@ -28,11 +28,17 @@ namespace Undersea.DAL.Repositories
 
         public async Task<int> GetFoodNecessity(Guid id)
         {
-            var army = await _context
-                  .Armies
-                  .Include(a => a.Units).ThenInclude(au => au.UnitType)
-                  .Include(a => a.Units).ThenInclude(au => au.UnitCount)
-                  .FirstOrDefaultAsync();
+            //var army = await _context
+            //      .Armies
+            //      .Include(a => a.Units)
+            //        .ThenInclude(au => au.UnitType)
+            //      .Include(a => a.Units).
+            //        ThenInclude(au => au.UnitCount)
+
+            var query = from units in _context.Units
+                        join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
+                        where unitArmy.Id == id
+                        select new { unitArmy.UnitType, unitArmy.UnitCount, units.FoodNecessity };
 
             return 0;
         }

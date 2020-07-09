@@ -1,9 +1,9 @@
-﻿using log4net.Repository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Repository.Repositories;
 
 namespace Undersea.BLL.Services
 {
@@ -14,6 +14,11 @@ namespace Undersea.BLL.Services
         public LoggerService(ILoggerRepository loggerRepository)
         {
             _loggerRepository = loggerRepository;
+        }
+
+        public LoggerService()
+        {
+
         }
 
         public Task LogWarning(string message, Exception e = null)

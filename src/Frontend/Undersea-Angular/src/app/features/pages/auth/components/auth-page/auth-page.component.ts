@@ -62,10 +62,10 @@ export class AuthPageComponent implements OnInit {
         }
 
       },
-      (err) => {
-        this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
-        console.error('HURKAAAAA', err);
-      });
+        (err) => {
+          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
+          console.error('HURKAAAAA', err);
+        });
 
     }
 
@@ -83,16 +83,30 @@ export class AuthPageComponent implements OnInit {
           this.registerForm.value.cityName,
         ).subscribe(res => {
           if (res.token != null) {
-            console.log(res);
-            localStorage.setItem('token', res.token);
-            this.router.navigate(['/main']);
+            // tslint:disable-next-line:no-shadowed-variable
+
           }
           // tslint:disable-next-line:no-unused-expression
         }, (err) => {
           this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'kuka');
           console.error('HURKAAAAA', err);
         });
+        this.authService.login(this.registerForm.value.name, this.registerForm.value.password).subscribe(res => {
+          if (res.token != null) {
+            console.log(res);
+            localStorage.setItem('token', res.token);
+            this.router.navigate(['/main']);
+          }
+
+        },
+          (err) => {
+            this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
+            console.error('HURKAAAAA', err);
+          });
+
       }
+
+
       else {
         this.snackbar.open('A 2 jelszó nem egyezik', 'kuka', {
           duration: 5000
