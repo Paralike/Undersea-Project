@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Undersea.BLL.DTOs.GameElemens;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 
@@ -6,8 +7,7 @@ namespace Undersea.BLL.DTOs
 {
     public class ArmyDto
     {
-        public Dictionary<UnitType, int> UnitDictionary { get; set; }
-            = new Dictionary<UnitType, int>();
+        public List<ArmyUnitDto> UnitList { get; set; }
 
         public int ArmyFoodNecessity { get; set; }
         public int ArmySumCost { get; set; }

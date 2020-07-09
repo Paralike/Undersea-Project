@@ -29,8 +29,8 @@ namespace Undersea.BLL.Services
                 return null;
 
             var claims = new[] {
-                    new Claim("Id", user.Id.ToString()),
-                    new Claim("Username", user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName),
                    };
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
@@ -39,7 +39,7 @@ namespace Undersea.BLL.Services
             var tokenOptions = new JwtSecurityToken(
                 issuer: "http://localhost:5000",
                 audience: "http://localhost:5000",
-                claims: new List<Claim>(),
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: signinCredentials
             );
@@ -62,7 +62,7 @@ namespace Undersea.BLL.Services
             var result = await _signInManager.PasswordSignInAsync(_user, user.Password, false, false);
 
             if (result.Succeeded)
-                return _user;
+                throw new Exception();
 
             else
                 return null;
@@ -74,6 +74,8 @@ namespace Undersea.BLL.Services
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUser.Password);
 
             var result = await _userManager.CreateAsync(user);
+
+            throw new Exception("teszt");
 
             if (result.Succeeded)
                 return GetToken(user);

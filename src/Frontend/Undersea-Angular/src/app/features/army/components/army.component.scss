@@ -35,13 +35,14 @@
 ::ng-deep .mat-dialog-container {
     background-color: #03255f !important;
     color: white;
+    border-radius: 16px;
 }
 .imgCard {
     background: #9ffff0 0% 0% no-repeat padding-box;
     border: 2px solid #428dff;
     border-radius: 14px;
     opacity: 1;
-    cursor: pointer;
+    
 }
 
 .armyButton {

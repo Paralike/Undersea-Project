@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ARMY } from '../model/mock-army';
 import { ArmyModel } from '../model/army.model';
+
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ArmyData } from '../../pages/main/components/navbar/navbar.component';
 import { FeatureService } from '../../service/feature.service';
+import { UnitList } from '../../pages/main/model/profile.model';
 
 @Component({
   selector: 'app-army',
@@ -15,21 +16,28 @@ export class ArmyComponent implements OnInit {
   public addUnit: number[];
   gyongy = 'Gyöngy';
 
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ArmyData,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<ArmyComponent>
     ) {
+
     this.addUnit = [0, 0, 0];
   }
 
   ngOnInit(): void {
+    console.log(this.data);
 
     this.featureService.getArmy().subscribe( res => {
       this.army = res;
     },
     (err) => {
       console.log(err);
+    });
+
+    this.featureService.getCityArmy().subscribe( res => {
+      console.log(res);
     });
   }
 

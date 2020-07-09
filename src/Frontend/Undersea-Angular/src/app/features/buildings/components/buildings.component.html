@@ -9,7 +9,7 @@
     Egyszerre csak egy épület épülhet!
   </p>
   <div class="main-content">
-    <div *ngFor="let building of buildings" (click)="selected(building)" class="content" tabindex="-1">
+    <div *ngFor="let building of buildings; let i = index" (click)="selected(building)" class="content" tabindex="-1">
 
       <img src='../../../../assets/images/building_{{building.buildingType}}.png'>
       <div class="buildingName">
@@ -22,10 +22,10 @@
       </div>
 
       <div class="quantity">
-        {{data.building[building.buildingType - 1]}} db
+        {{data.building[i]}} db
       </div>
       <div class="price">
-        {{data.price[building.buildingType - 1]}} Gyöngy / db
+        {{building.price}} Gyöngy / db
       </div>
 
     </div>
