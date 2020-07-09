@@ -27,7 +27,7 @@ namespace Undersea.API.Controllers
         [HttpGet("ranks")]
         public async Task<ActionResult<RankDto>> GetRanks()
         {
-            return Ok(_profileService.GetRank());
+            return Ok(await _profileService.GetRank());
         }
 
     }

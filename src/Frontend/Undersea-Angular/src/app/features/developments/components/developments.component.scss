@@ -25,12 +25,13 @@ h2{
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin-top: 4vh;
+  margin-top: 15vh;
   background-color: #03255f;
   height: 25vh;
   margin: 5vh;
   flex-wrap: wrap;
   font-family: open-sans-regular;
+  
 }
 
 .buttons-div {
@@ -60,6 +61,7 @@ h2{
   outline: none;
   border-radius: 16px;
   font-family: open-sans-regular;
+  
 
 }
 .development-name {
@@ -100,7 +102,7 @@ button {
   height: 50px;
   font-size: 18px;
   padding: 1%;
-  padding-left: 4%;
+  padding-left: 5%;
   color: #03255f;
 }
 button:disabled {
@@ -112,7 +114,7 @@ button:disabled {
 }
 
 .divider {
-  margin-top: 15%;
+  margin-top: 23%;
 }
 
 ::ng-deep .mat-snack-bar-container{

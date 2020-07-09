@@ -82,7 +82,8 @@ export class AuthPageComponent implements OnInit {
           this.registerForm.value.cityName,
         ).subscribe(res => {
           if (res.token != null) {
-            // tslint:disable-next-line:no-shadowed-variable
+            localStorage.setItem('token', res.token);
+            this.router.navigate(['/main']);
 
           }
           // tslint:disable-next-line:no-unused-expression
@@ -90,19 +91,6 @@ export class AuthPageComponent implements OnInit {
           this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'kuka');
           console.error('HURKAAAAA', err);
         });
-        this.authService.login(this.registerForm.value.name, this.registerForm.value.password).subscribe(res => {
-          if (res.token != null) {
-            console.log(res);
-            localStorage.setItem('token', res.token);
-            this.router.navigate(['/main']);
-          }
-
-        },
-          (err) => {
-            this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
-            console.error('HURKAAAAA', err);
-          });
-
       }
 
 

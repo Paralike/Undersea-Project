@@ -5,9 +5,8 @@ namespace Undersea.BLL.DTOs
 {
     public class UpgradeDto
     {
-        public int TurnCount { get; set; }
 
-        public UpgradeType upgradeType { get; set; }
+        public UpgradeType UpgradeType { get; set; }
 
         public Guid CityId { get; set; }
 

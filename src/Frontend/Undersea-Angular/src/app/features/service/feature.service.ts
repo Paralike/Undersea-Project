@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BuildingDto, BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto,  UnitType, FileResponse, ArmyUnitDto } from 'src/app/shared';
+import { BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto, ArmyUnitDto, CityClient, UnitDto } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
 import { PeriodicElement } from '../fight/model/fight.model';
 import { ArmyModel } from '../army/model/army.model';
-import { ARMY } from '../army/model/mock-army';
 import { DevelopmentModel } from '../developments/model/development.model';
 import { DEVELOPMENTS } from '../developments/model/mockDevelopment';
 import { PROFILE, ProfileModel } from '../pages/main/model/profile.model';
@@ -76,9 +75,12 @@ const mock = [
 export class FeatureService {
   army: ArmyDto;
   unitToSend: ArmyUnitDto;
-  
 
-  constructor(private buildingsClient: BuildingsClient, private attackClient: AttackClient, private armyClient: ArmyClient) { }
+  constructor(private buildingsClient: BuildingsClient,
+              private attackClient: AttackClient,
+              private armyClient: ArmyClient,
+              private cityClient: CityClient
+  ) { }
 
   getBuildings(): Observable<BuildingModel[]> {
     // return this.buildingsClient.getBuilding();
@@ -94,8 +96,6 @@ export class FeatureService {
     return this.attackClient.getAttackableUsers();
   }
 
-
-
   getRanks(): Observable<any> {
     return of(mock);
   }
@@ -104,22 +104,23 @@ export class FeatureService {
     return of(FIGTHS);
   }
 
-  getArmy(): Observable<ArmyDto> {
+  getArmy(): Observable<UnitDto[]> {
     return this.armyClient.getArmy();
 
   }
 
-  purchaseUnits(units: ArmyUnitDto[]){
+  purchaseUnits(units: ArmyUnitDto[]) {
     console.log(units);
-    return this.armyClient.purchaseUnits(units)
+    return this.armyClient.purchaseUnits(units);
   }
 
   getCityArmy() {
     return this.armyClient.getArmy();
   }
 
-  getProfile(): Observable<ProfileModel> {
-    return of(PROFILE);
+  getProfile(): Observable<any> {
+      return this.cityClient.getCity();
+    // return of(PROFILE);
   }
 
 }

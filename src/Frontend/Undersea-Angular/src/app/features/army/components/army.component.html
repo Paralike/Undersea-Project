@@ -2,14 +2,14 @@
     <h2>
         Sereg
     </h2>
-    <p style="font-weight: bold; margin: 0">
+    <p style="font-family: open-sans-bold; margin: 0; font-size: 16px">
         Kattints rá, amelyiket szeretnéd megvenni.
     </p>
     <div class="main-content">
         <div *ngFor="let unit of army; let i = index" class="content">
             <div  class="content">
                 <mat-card class="img-card">
-                    <img src={{unit.img}}>
+                    <img src='../../../../assets/images/{{unit.name}}.svg'>
                 </mat-card>
                 <div class="unit-name">
                     {{unit.name}}
