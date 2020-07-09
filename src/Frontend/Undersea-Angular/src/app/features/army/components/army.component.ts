@@ -26,22 +26,21 @@ export class ArmyComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
-
     public dialogRef: MatDialogRef<ArmyComponent>,
     private snackbar: MatSnackBar
-
     ) {
     this.addUnit = [];
-    this.addUnit[0] = new ArmyUnitDto ({unitType: UnitType.Csatacsiko, unitCount: 0});
-    this.addUnit[1] = new ArmyUnitDto ({unitType: UnitType.Rohamfoka, unitCount: 0});
-    this.addUnit[2] = new ArmyUnitDto ({unitType: UnitType.Lezercapa, unitCount: 0});
+    this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
+    this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
+    this.addUnit[2] = new ArmyUnitDto({ unitType: UnitType.Lezercapa, unitCount: 0 });
   }
 
   ngOnInit(): void {
     console.log(this.data);
 
     this.featureService.getArmy().subscribe(res => {
-        this.army = res;
+      this.army = res;
+
     },
       (err) => {
         console.log(err);
@@ -72,7 +71,9 @@ export class ArmyComponent implements OnInit {
     }
 
     console.log(this.addUnit);
-    this.featureService.purchaseUnits(this.addUnit).subscribe();
+    this.featureService.purchaseUnits(this.addUnit).subscribe(() => {
+      this.dialogRef.close();
+    });
 
 
   }
