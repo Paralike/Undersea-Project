@@ -46,7 +46,7 @@ namespace Undersea.BLL.Services
             ArmyDto newDto = new ArmyDto()
             {
                 UnitList = unitList,
-                //ArmyFoodNecessity =  list.Sum(x => x.UnitType),
+                ArmyFoodNecessity = await _armyRepository.GetFoodNecessity(id)
                 //ArmySumCost = 0                              
             };
 

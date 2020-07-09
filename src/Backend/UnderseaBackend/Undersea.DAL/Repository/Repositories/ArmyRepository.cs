@@ -40,6 +40,8 @@ namespace Undersea.DAL.Repositories
                         where unitArmy.Id == id
                         select new { unitArmy.UnitType, unitArmy.UnitCount, units.FoodNecessity };
 
+            var list = query.ToList();
+
             return 0;
         }
     }
