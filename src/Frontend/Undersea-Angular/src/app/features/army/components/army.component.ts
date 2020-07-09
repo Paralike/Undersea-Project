@@ -2,9 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ARMY } from '../model/mock-army';
 import { ArmyModel } from '../model/army.model';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import { FeatureService } from '../../service/feature.service';
 import { UnitList } from '../../pages/main/model/profile.model';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-army',
@@ -20,7 +22,8 @@ export class ArmyComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
-    public dialogRef: MatDialogRef<ArmyComponent>
+    public dialogRef: MatDialogRef<ArmyComponent>,
+    private snackbar: MatSnackBar
     ) {
 
     this.addUnit = [0, 0, 0];
@@ -54,8 +57,13 @@ export class ArmyComponent implements OnInit {
   }
 
   sendData() {
-    console.log(this.addUnit);
-    this.dialogRef.close();
+    if (this.addUnit[0] === 0 && this.addUnit[1] === 0 && this.addUnit[2] === 0 ){
+      this.snackbar.open('Válaszd ki mit szeretnél vásárolni!', 'Bezár');
+    }else {
+      console.log(this.addUnit);
+      this.dialogRef.close();
+      this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+    }
   }
   // selected(building: BuildingModel) {
   //   this.selectedBuilding = building.buildingType;

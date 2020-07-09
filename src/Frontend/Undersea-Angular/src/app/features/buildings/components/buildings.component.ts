@@ -4,6 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { BUIDLDINGS } from '../model/mockBuildings';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-buildings',
@@ -19,7 +20,8 @@ export class BuildingsComponent implements OnInit {
   constructor(
     private featureService: FeatureService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<BuildingsComponent>
+    public dialogRef: MatDialogRef<BuildingsComponent>,
+    private snackbar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -36,9 +38,11 @@ export class BuildingsComponent implements OnInit {
 
   }
 
-  sendData(){
+  sendData() {
     console.log(this.selectedBuilding);
     console.log(this.buildings[this.selectedBuilding - 1].name);
     this.dialogRef.close();
+    this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+
   }
 }

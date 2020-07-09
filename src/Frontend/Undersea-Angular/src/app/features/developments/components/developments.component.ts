@@ -3,6 +3,7 @@ import { DevelopmentModel } from '../../developments/model/development.model';
 import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-developments',
@@ -17,7 +18,8 @@ export class DevelopmentsComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
-    public dialogRef: MatDialogRef<DevelopmentsComponent>
+    public dialogRef: MatDialogRef<DevelopmentsComponent>,
+    private snackbar: MatSnackBar
   ) { }
 
 
@@ -38,5 +40,6 @@ export class DevelopmentsComponent implements OnInit {
     console.log(this.selectedDevelopment);
     console.log(this.developments[this.selectedDevelopment - 1].name);
     this.dialogRef.close();
+    this.snackbar.open('Sikeres vásárlás!', 'Bezár');
   }
 }

@@ -63,7 +63,7 @@ export class AuthPageComponent implements OnInit {
 
       },
         (err) => {
-          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
+          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'Bezár');
           console.error('HURKAAAAA', err);
         });
 

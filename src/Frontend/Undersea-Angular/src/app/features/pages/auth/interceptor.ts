@@ -13,8 +13,6 @@ export class TokenInterceptor implements HttpInterceptor {
     constructor(public auth: AuthpageService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem('token');
-
-
         if (token != null) {
             request = request.clone({
                 setHeaders: {
@@ -22,7 +20,6 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
             });
         }
-
         console.log('intercepted ');
         return next.handle(request);
     }
