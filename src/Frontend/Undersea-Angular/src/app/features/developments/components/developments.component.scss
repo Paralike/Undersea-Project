@@ -9,7 +9,7 @@
   background-color: #03255f;
   margin-bottom: 0.4vh;
   cursor: pointer;
-  font-family: "Open Sans";
+  
 }
 .content > img {
   margin-bottom: 5%;
@@ -30,6 +30,7 @@ h2{
   height: 25vh;
   margin: 5vh;
   flex-wrap: wrap;
+  font-family: open-sans-regular;
 }
 
 .buttons-div {
@@ -58,13 +59,13 @@ h2{
   justify-content: flex-start;
   outline: none;
   border-radius: 16px;
-  font-family: "Open Sans";
+  font-family: open-sans-regular;
 
 }
 .development-name {
   font-weight: bold;
   margin-bottom: 5%;
-  font-family: "Open Sans";
+  font-family: open-sans-bold;
 
 }
 

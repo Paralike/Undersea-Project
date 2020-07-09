@@ -247,12 +247,17 @@
         }
       }
     },
-    "/api/City/{id}": {
+    "/api/City": {
       "get": {
         "tags": [
           "City"
         ],
         "operationId": "City_GetCity",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "produces": [
           "text/plain",
           "application/json",
@@ -260,11 +265,12 @@
         ],
         "parameters": [
           {
-            "type": "string",
-            "name": "id",
-            "in": "path",
+            "name": "httpContextAccessor",
+            "in": "body",
             "required": true,
-            "format": "guid",
+            "schema": {
+              "$ref": "#/definitions/IHttpContextAccessor"
+            },
             "x-nullable": false
           }
         ],
@@ -345,6 +351,37 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/UpgradeDto"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Upgrades"
+        ],
+        "operationId": "Upgrades_PurchaseUpgrade",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "upgrade",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpgradeDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
             }
           }
         }
@@ -540,12 +577,18 @@
     "CityDto": {
       "type": "object",
       "required": [
+        "id",
         "pearlCount",
         "pearlProduction",
         "coralCount",
-        "coralProduction"
+        "coralProduction",
+        "servicePay"
       ],
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "guid"
+        },
         "pearlCount": {
           "type": "integer",
           "format": "int32"
@@ -576,6 +619,10 @@
         },
         "army": {
           "$ref": "#/definitions/ArmyDto"
+        },
+        "servicePay": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -584,12 +631,13 @@
       "required": [
         "id",
         "turnCount",
-        "status"
+        "status",
+        "cityId"
       ],
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "guid"
         },
         "turnCount": {
           "type": "integer",
@@ -597,8 +645,25 @@
         },
         "status": {
           "$ref": "#/definitions/Status"
+        },
+        "cityId": {
+          "type": "string",
+          "format": "guid"
         }
       }
+    },
+    "IHttpContextAccessor": {
+      "type": "object",
+      "x-abstract": true,
+      "properties": {
+        "httpContext": {
+          "$ref": "#/definitions/HttpContext"
+        }
+      }
+    },
+    "HttpContext": {
+      "type": "object",
+      "x-abstract": true
     },
     "RankDto": {
       "type": "object",

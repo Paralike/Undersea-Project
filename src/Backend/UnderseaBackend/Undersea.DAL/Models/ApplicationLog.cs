@@ -11,5 +11,12 @@ namespace Undersea.DAL.Models
         public string StackTrace { get; set; }
         public DateTime DateTime { get; set; }
         public string Message { get; set; }
+        public ApplicationLog(string stackTrace, string message)
+        {
+            Id = new Guid();
+            StackTrace = stackTrace;
+            DateTime = DateTime.Now;
+            Message = message;
+        }
     }
 }
