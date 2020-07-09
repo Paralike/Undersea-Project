@@ -24,17 +24,16 @@ namespace Undersea.BLL.Services
             _attackRepository = attackRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers()
+        public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers(Guid id)
         {
-            // TODO saját magát ne adja vissza
-
-            var list = await _userRepository.GetAll();
+            var list = await _userRepository.GetWhere(u => u.Id != id);
 
             return _mapper.Map<List<AttackableUsersDto>>(list);
         }
 
         public Task StartAttack(Guid id, AttackDto attack)
         {
+
             Attack newAttack = new Attack()
             {
                 DefenderCityId = attack.DefenderCityId,

@@ -52,6 +52,8 @@ namespace Undersea.API
 
             services.AddTransient<ILogService, LoggerService>();
 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<UserManager<User>>();
             services.AddScoped<SignInManager<User>>();
 

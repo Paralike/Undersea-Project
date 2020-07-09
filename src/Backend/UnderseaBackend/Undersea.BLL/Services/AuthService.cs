@@ -59,7 +59,7 @@ namespace Undersea.BLL.Services
                 return null;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(_user, user.Password, true, false);
+            var result = await _signInManager.PasswordSignInAsync(_user, user.Password, false, false);
 
             if (result.Succeeded)
                 return _user;

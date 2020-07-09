@@ -9,7 +9,8 @@ namespace Undersea.DAL.Models
         public virtual ICollection<City> Cities { get; set; }
         public User(string name, string city) : base(name)
         {
-            Cities = new List<City> { new City()
+            Cities = new List<City> {
+                new City()
             {
                 Name = city
             }
