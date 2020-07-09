@@ -6,9 +6,9 @@ html {
 .container{
     display: flex;
     text-align: left;
-   flex-direction: column;
-   align-items: center;
-   height: 40%;
+    flex-direction: column;
+    align-items: center;
+    height: 40%;
 }
 
 .tables {
@@ -19,6 +19,14 @@ html {
 }
 
 
+::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+    background-color: #9FFFF0;
+  }
+::ng-deep .mat-accent .mat-slider-thumb {
+    background-color:  #9FFFF0;
+    border: solid 2px  #9FFFF0;
+    
+  }
 h1 {
     margin-left: 12%;
     font-family: baloo;

@@ -23,7 +23,7 @@
                   </ng-container>
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)" [ngClass]="{'onSelect': selectedRowIndex == row.id}"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)" [ngClass]="{'onSelect': selectedUserId == row.id}"></tr>
             </table>
         </div>
         <div class="infos_2">
