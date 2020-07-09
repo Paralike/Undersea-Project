@@ -54,8 +54,8 @@ namespace Undersea.API
 
             services.AddHttpContextAccessor();
 
-            services.AddScoped<UserManager<User>>();
-            services.AddScoped<SignInManager<User>>();
+            services.AddTransient<UserManager<User>>();
+            services.AddTransient<SignInManager<User>>();
 
             services.AddAutoMapper(typeof(Startup));
 
