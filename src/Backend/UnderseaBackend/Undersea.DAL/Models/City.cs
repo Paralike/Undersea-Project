@@ -23,6 +23,9 @@ namespace Undersea.DAL.Models
         public City()
         {
             Id = Guid.NewGuid();
+            AvailableArmy = new Army();
+            AvailableArmyId = AvailableArmy.Id;
+            AvailableArmy.CityId = Id;
         }
     }
 }

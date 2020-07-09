@@ -20,14 +20,6 @@ html {
 }
 
 
-::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-    background-color: #9FFFF0;
-  }
-::ng-deep .mat-accent .mat-slider-thumb {
-    background-color:  #9FFFF0;
-    border: solid 2px  #9FFFF0;
-    
-  }
 h1 {
     margin-left: 12%;
     font-family: baloo;
@@ -72,22 +64,7 @@ h1 {
     justify-content: space-around;
     font-family: open-sans-regular;
  }
- 
-
- 
-::ng-deep .mat-dialog-container{
-    background-color: #03255F !important;
-    color: white;
-    border-radius: 16px;
-  
-  }
-
-  .matslider {
-    .mat-slider-thumb {
-        background-color: red !important;
-    }
-  }
-  
+   
 .infos{
     
     overflow-y: auto;
@@ -98,7 +75,7 @@ h1 {
     
 
 }
-.infos_2 {
+.infos-2 {
     font-family: open-sans-bold;
     font-size: 16px;
     ;
@@ -106,9 +83,7 @@ h1 {
 .slider {
     width: 30px;
 }
-::ng-deep .mat-slide {
-    background-color: #ffe066;
-}
+
  button {
     background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #3B7DBD;
@@ -199,3 +174,23 @@ h1 {
     background: #03255F; 
   }
  
+::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+    background-color: #9FFFF0;
+  }
+::ng-deep .mat-accent .mat-slider-thumb {
+    background-color:  #9FFFF0;
+    border: solid 2px  #9FFFF0;
+    
+  }
+  ::ng-deep .mat-snack-bar-container{
+    background-color: #03255F !important;
+    color: #9FFFF0;
+    font-weight: bold;
+  }
+   
+::ng-deep .mat-dialog-container{
+    background-color: #03255F !important;
+    color: white;
+    border-radius: 16px;
+  
+  }

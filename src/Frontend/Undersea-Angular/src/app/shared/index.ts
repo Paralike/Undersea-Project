@@ -73,7 +73,7 @@ export class ArmyClient {
         return _observableOf<ArmyDto>(<any>null);
     }
 
-    purchaseUnits(purchase: UnitPurchaseDto): Observable<FileResponse | null> {
+    purchaseUnits(purchase: ArmyUnitDto[]): Observable<FileResponse | null> {
         let url_ = this.baseUrl + "/api/Army";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -839,54 +839,6 @@ export enum UnitType {
     Rohamfoka = 0,
     Csatacsiko = 1,
     Lezercapa = 2,
-}
-
-export class UnitPurchaseDto implements IUnitPurchaseDto {
-    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
-
-    constructor(data?: IUnitPurchaseDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (_data["purchasedUnits"]) {
-                this.purchasedUnits = {} as any;
-                for (let key in _data["purchasedUnits"]) {
-                    if (_data["purchasedUnits"].hasOwnProperty(key))
-                        this.purchasedUnits![key] = _data["purchasedUnits"][key];
-                }
-            }
-        }
-    }
-
-    static fromJS(data: any): UnitPurchaseDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UnitPurchaseDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.purchasedUnits) {
-            data["purchasedUnits"] = {};
-            for (let key in this.purchasedUnits) {
-                if (this.purchasedUnits.hasOwnProperty(key))
-                    data["purchasedUnits"][key] = this.purchasedUnits[key];
-            }
-        }
-        return data; 
-    }
-}
-
-export interface IUnitPurchaseDto {
-    purchasedUnits?: { [key in keyof typeof UnitType]?: number; } | undefined;
 }
 
 export class AttackDto implements IAttackDto {
