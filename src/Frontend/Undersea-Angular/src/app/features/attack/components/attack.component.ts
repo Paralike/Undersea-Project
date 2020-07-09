@@ -22,6 +22,7 @@ export class AttackComponent implements OnInit {
   displayedColumns: string[] = ['target', 'choice'];
   userList: AttackModel[];
   selected: boolean;
+  selectedRowIndex: number;
   selectedUserId: string;
   @ViewChild('matslider') slider: MatSlider;
   @ViewChild('matslider2') slider2: MatSlider;
