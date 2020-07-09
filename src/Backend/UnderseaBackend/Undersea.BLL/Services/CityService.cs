@@ -39,7 +39,8 @@ namespace Undersea.BLL.Services
                 CoralCount = 230,
                 PearlCount = 230,
                 CoralProduction = 12,
-                
+                PearlProduction = 20,
+                            
             };
 
             return city;

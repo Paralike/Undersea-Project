@@ -606,19 +606,59 @@
         "buildings": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/BuildingDto"
+            "type": "integer",
+            "format": "int32"
           }
         },
         "upgrades": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/UpgradeDto"
+            "type": "integer",
+            "format": "int32"
           }
         },
         "army": {
           "$ref": "#/definitions/ArmyDto"
         },
         "servicePay": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ArmyDto": {
+      "type": "object",
+      "required": [
+        "armyFoodNecessity",
+        "armyPearlNecessity"
+      ],
+      "properties": {
+        "unitList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
+          }
+        },
+        "armyFoodNecessity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "armyPearlNecessity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "RankDto": {
+      "type": "object",
+      "required": [
+        "point"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "point": {
           "type": "integer",
           "format": "int32"
         }
@@ -659,44 +699,6 @@
         4,
         5
       ]
-    },
-    "ArmyDto": {
-      "type": "object",
-      "required": [
-        "armyFoodNecessity",
-        "armyPearlNecessity"
-      ],
-      "properties": {
-        "unitList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ArmyUnitDto"
-          }
-        },
-        "armyFoodNecessity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "armyPearlNecessity": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "RankDto": {
-      "type": "object",
-      "required": [
-        "point"
-      ],
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "point": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProfileModel } from '../../model/profile.model';
 import { FeatureService } from 'src/app/features/service/feature.service';
+import { CityDto } from 'src/app/shared';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { FeatureService } from 'src/app/features/service/feature.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() city: ProfileModel;
+  @Input() city: CityDto;
 
   constructor(private featureService: FeatureService) { }
 

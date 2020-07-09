@@ -10,9 +10,9 @@ namespace Undersea.BLL.DTOs
         public int PearlProduction { get; set; }
         public int CoralCount { get; set; }
         public int CoralProduction { get; set; }
-        public List<BuildingDto> Buildings { get; set; } ///TODO itt ne küldjük az összeset!
+        public List<int> Buildings { get; set; } ///TODO itt ne küldjük az összeset!
         //public Dictionary<BuildingDto, int> Buildings { get; set; }
-        public List<UpgradeDto> Upgrades { get; set; }
+        public List<int> Upgrades { get; set; }
         //public Dictionary<UpgradeDto,int> Upgrades { get; set; }
         public ArmyDto Army { get; set; }
         public int ServicePay { get; set; }
