@@ -338,6 +338,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PearlNecessity")
                         .HasColumnType("int");
 
@@ -356,6 +359,7 @@ namespace Undersea.DAL.Migrations
                             Defense = 6,
                             FoodNecessity = 1,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Csatacsikó",
                             PearlNecessity = 1,
                             Price = 50
                         },
@@ -366,6 +370,7 @@ namespace Undersea.DAL.Migrations
                             Defense = 2,
                             FoodNecessity = 1,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Rohamfóka",
                             PearlNecessity = 1,
                             Price = 50
                         },
@@ -376,6 +381,7 @@ namespace Undersea.DAL.Migrations
                             Defense = 5,
                             FoodNecessity = 2,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Lézercápa",
                             PearlNecessity = 3,
                             Price = 100
                         });

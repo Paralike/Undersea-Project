@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200709085625_undersea")]
-    partial class undersea
+    [Migration("20200709131757_UnitInfo")]
+    partial class UnitInfo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -340,6 +340,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PearlNecessity")
                         .HasColumnType("int");
 
@@ -349,6 +352,41 @@ namespace Undersea.DAL.Migrations
                     b.HasKey("UnitType");
 
                     b.ToTable("Units");
+
+                    b.HasData(
+                        new
+                        {
+                            UnitType = 1,
+                            Damage = 2,
+                            Defense = 6,
+                            FoodNecessity = 1,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Csatacsikó",
+                            PearlNecessity = 1,
+                            Price = 50
+                        },
+                        new
+                        {
+                            UnitType = 0,
+                            Damage = 6,
+                            Defense = 2,
+                            FoodNecessity = 1,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Rohamfóka",
+                            PearlNecessity = 1,
+                            Price = 50
+                        },
+                        new
+                        {
+                            UnitType = 2,
+                            Damage = 5,
+                            Defense = 5,
+                            FoodNecessity = 2,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Lézercápa",
+                            PearlNecessity = 3,
+                            Price = 100
+                        });
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>

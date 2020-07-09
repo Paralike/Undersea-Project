@@ -377,7 +377,7 @@
       "type": "object",
       "required": [
         "armyFoodNecessity",
-        "armySumCost"
+        "armyPearlNecessity"
       ],
       "properties": {
         "unitList": {
@@ -390,7 +390,7 @@
           "type": "integer",
           "format": "int32"
         },
-        "armySumCost": {
+        "armyPearlNecessity": {
           "type": "integer",
           "format": "int32"
         }

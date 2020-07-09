@@ -10,30 +10,11 @@ namespace Undersea.BLL.DTOs
         public List<ArmyUnitDto> UnitList { get; set; }
 
         public int ArmyFoodNecessity { get; set; }
-        public int ArmySumCost { get; set; }
+        public int ArmyPearlNecessity { get; set; }
 
         public static ArmyDto FromModel(Army army)
         {
             ArmyDto dto = new ArmyDto();
-
-            //foreach (Unit u in dto.UnitD)
-            //{
-            //    switch (u.UnitType)
-            //    {
-            //        case UnitType.Rohamfoka:
-            //            dto.UnitDictionary[UnitType.Rohamfoka]++;
-            //            break;
-            //        case UnitType.Csatacsiko:
-            //            dto.UnitDictionary[UnitType.Csatacsiko]++;
-            //            break;
-            //        case UnitType.Lezercapa:
-            //            dto.UnitDictionary[UnitType.Lezercapa]++;
-            //            break;
-            //    }
-
-            //    dto.ArmyFoodNecessity += u.FoodNecessity;
-            //    dto.ArmyFoodNecessity += u.PearlNecessity;
-            //}
 
             return null;
         }

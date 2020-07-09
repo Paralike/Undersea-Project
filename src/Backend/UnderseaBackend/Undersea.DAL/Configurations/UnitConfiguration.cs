@@ -19,7 +19,8 @@ namespace Undersea.DAL.Configurations
                     Defense = 6,
                     Price = 50,
                     FoodNecessity = 1,
-                    PearlNecessity = 1
+                    PearlNecessity = 1,
+                    Name = "Csatacsikó"
                 },
                 new Unit
                 {
@@ -28,17 +29,19 @@ namespace Undersea.DAL.Configurations
                     Defense = 2,
                     Price = 50,
                     FoodNecessity = 1,
-                    PearlNecessity = 1
+                    PearlNecessity = 1,
+                    Name = "Rohamfóka"
                 },
                 new Unit
-                 {
-                     UnitType = UnitType.Lezercapa,
-                     Damage = 5,
-                     Defense = 5,
-                     Price = 100,
-                     FoodNecessity = 2,
-                     PearlNecessity = 3
-                 }
+                {
+                    UnitType = UnitType.Lezercapa,
+                    Damage = 5,
+                    Defense = 5,
+                    Price = 100,
+                    FoodNecessity = 2,
+                    PearlNecessity = 3,
+                    Name = "Lézercápa"
+                }
                 );
 
 

@@ -12,5 +12,6 @@ namespace Undersea.DAL.Models
         public int Damage { get; set; }
         public int Defense { get; set; }
         public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -746,7 +746,7 @@ export class UpgradesClient {
 export class ArmyDto implements IArmyDto {
     unitList?: ArmyUnitDto[] | undefined;
     armyFoodNecessity!: number;
-    armySumCost!: number;
+    armyPearlNecessity!: number;
 
     constructor(data?: IArmyDto) {
         if (data) {
@@ -765,7 +765,7 @@ export class ArmyDto implements IArmyDto {
                     this.unitList!.push(ArmyUnitDto.fromJS(item));
             }
             this.armyFoodNecessity = _data["armyFoodNecessity"];
-            this.armySumCost = _data["armySumCost"];
+            this.armyPearlNecessity = _data["armyPearlNecessity"];
         }
     }
 
@@ -784,7 +784,7 @@ export class ArmyDto implements IArmyDto {
                 data["unitList"].push(item.toJSON());
         }
         data["armyFoodNecessity"] = this.armyFoodNecessity;
-        data["armySumCost"] = this.armySumCost;
+        data["armyPearlNecessity"] = this.armyPearlNecessity;
         return data; 
     }
 }
@@ -792,7 +792,7 @@ export class ArmyDto implements IArmyDto {
 export interface IArmyDto {
     unitList?: ArmyUnitDto[] | undefined;
     armyFoodNecessity: number;
-    armySumCost: number;
+    armyPearlNecessity: number;
 }
 
 export class ArmyUnitDto implements IArmyUnitDto {

@@ -37,12 +37,24 @@ namespace Undersea.DAL.Repositories
 
             var query = from units in _context.Units
                         join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
-                        where unitArmy.Id == id
-                        select new { unitArmy.UnitType, unitArmy.UnitCount, units.FoodNecessity };
+                        where unitArmy.ArmyId == id
+                        select new { unitArmy.UnitCount, units.FoodNecessity };
 
-            var list = query.ToList();
+            var sum = await query.SumAsync(a => a.FoodNecessity * a.UnitCount);
 
-            return 0;
+            return sum;
+        }
+
+        public async Task<int> GetPearlNecessity(Guid id)
+        {
+            var query = from units in _context.Units
+                        join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
+                        where unitArmy.ArmyId == id
+                        select new { unitArmy.UnitCount, units.PearlNecessity };
+
+            var sum = await query.SumAsync(a => a.PearlNecessity * a.UnitCount);
+
+            return sum;
         }
     }
 }

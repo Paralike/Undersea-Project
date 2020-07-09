@@ -12,7 +12,7 @@ namespace Undersea.DAL
         public AppDbContext(DbContextOptions<AppDbContext> options)
           : base(options)
         {
-            //Database.Migrate();
+            
         }
 
         public DbSet<Army> Armies { get; set; }
@@ -39,6 +39,8 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());
+
+            
         }
     }
 }
