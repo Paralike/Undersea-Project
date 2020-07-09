@@ -10,6 +10,6 @@ namespace Undersea.BLL.Interfaces
     {
         public Task StartAttack(Guid id, AttackDto attack);
 
-        public Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers();
+        public Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers(Guid id);
     }
 }
