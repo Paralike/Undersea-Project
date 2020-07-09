@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DevelopmentModel } from '../../developments/model/development.model';
 import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-developments',
   templateUrl: './developments.component.html',
@@ -12,7 +13,13 @@ export class DevelopmentsComponent implements OnInit {
   public developments: DevelopmentModel[];
   public selectedDevelopment: number;
   public id: string;
-  constructor(private featureService: FeatureService, @Inject(MAT_DIALOG_DATA) public data: number[]) { }
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: number[],
+    private featureService: FeatureService,
+    public dialogRef: MatDialogRef<DevelopmentsComponent>
+  ) { }
+
 
   ngOnInit(): void {
     this.developments = [];
@@ -25,5 +32,11 @@ export class DevelopmentsComponent implements OnInit {
     this.selectedDevelopment = development.developmentType;
     document.getElementById('developmentButton').style.opacity = '1';
 
+  }
+
+  sendData() {
+    console.log(this.selectedDevelopment);
+    console.log(this.developments[this.selectedDevelopment - 1].name);
+    this.dialogRef.close();
   }
 }

@@ -14,7 +14,7 @@ html {
 .tables {
     display: flex;
     flex-direction: row;
-    border-bottom: solid 0.1px #428dff;
+   
    
 }
 
@@ -39,16 +39,19 @@ h1 {
     border-radius: 20px;
     opacity: 0.39;
     margin-right: 20%;
+    outline: none;
 }
 
 
-.infos > table > tr > td > img {
+.infos_2 > table > tr > td > img {
     width: 42px;
     height: 45px;
     background: #9ffff0 0% 0% no-repeat padding-box;
     border: 2px solid #428dff;
     border-radius: 14px;
     opacity: 1;
+    padding: 3%;
+    zoom: 0.8;
 }
 
 
