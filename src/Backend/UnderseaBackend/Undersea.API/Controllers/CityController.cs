@@ -17,7 +17,7 @@ namespace Undersea.API.Controllers
     public class CityController : ControllerBase
     {
         private readonly CityService _cityService;
-        Giud id;
+        Guid id;
 
         public CityController(CityService cityService,  IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
@@ -27,7 +27,8 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<CityDto>> GetCity()
         {
-            return Ok(await _cityService.GetCity(id));
+            return Ok();
+           // return Ok(await _cityService.GetCity(id));
         }
     }
 }

@@ -26,8 +26,8 @@ export class ArmyComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private featureService: FeatureService,
-      public dialogRef: MatDialogRef<ArmyComponent>,
-      private snackbar: MatSnackBar
+    public dialogRef: MatDialogRef<ArmyComponent>,
+    private snackbar: MatSnackBar
     ) {
     this.addUnit = [];
     this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
