@@ -18,22 +18,31 @@ namespace Undersea.BLL.Services
     {
         private readonly IArmyRepository _armyRepository;
         private readonly IArmyUnitJoinRepository _armyUnitRepository;
+        private readonly ICityRepository _cityRepository;
+
+        public ArmyService()
+        {
+            
+        }
+
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository, UserManager<User> userManager, IMapper mapper)
+        public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository, UserManager<User> userManager, IMapper mapper, ICityRepository cityRepository)
         {
             _armyRepository = armyRepository;
             _armyUnitRepository = armyUnitRepository;
             _userManager = userManager;
             _mapper = mapper;
+            _cityRepository = cityRepository;
         }
 
         // TODO Action result kivenni
         public async Task<ActionResult<ArmyDto>> GetArmy(Guid id)
         {
-            // nincs HTTP interceptor, null lesz 
-            var army = await _armyRepository.GetById(id);
+            var user = await _cityRepository.GetWhere(c => c.UserId == id);
+
+            var army = user.FirstOrDefault().AvailableArmy;
 
             var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == army.Id);
 
@@ -46,27 +55,29 @@ namespace Undersea.BLL.Services
             ArmyDto newDto = new ArmyDto()
             {
                 UnitList = unitList,
-                ArmyFoodNecessity = await _armyRepository.GetFoodNecessity(id)
+                ArmyFoodNecessity = await _armyRepository.GetFoodNecessity(army.Id)
                 //ArmySumCost = 0                              
             };
 
             return newDto;
         }
 
-        public async Task PurchaseUnits(Guid id, UnitPurchaseDto dto)
+        public async Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto)
         {
-            //var user =  await _userManager.Users
+            var cities = await _cityRepository.GetWhere(c => c.UserId == id);
+            var firstCity = cities.First();
+            var army = firstCity.AvailableArmy;
 
             // TODO átírni szebbre
-            var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == id && au.UnitType == UnitType.Csatacsiko);
-            var unitRohamfoka = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == id && au.UnitType == UnitType.Rohamfoka);
-            var unitLezercapa = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == id && au.UnitType == UnitType.Lezercapa);
+            var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Csatacsiko);
+            var unitRohamfoka = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Rohamfoka);
+            var unitLezercapa = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Lezercapa);
 
             // TODO validation logika
 
-            unitCsatacsiko.UnitCount += dto.PurchasedUnits[UnitType.Csatacsiko];
-            unitRohamfoka.UnitCount += dto.PurchasedUnits[UnitType.Rohamfoka];
-            unitLezercapa.UnitCount += dto.PurchasedUnits[UnitType.Lezercapa];
+            unitCsatacsiko.UnitCount += dto.ElementAt(0).UnitCount;
+            unitRohamfoka.UnitCount += dto.ElementAt(1).UnitCount;
+            unitLezercapa.UnitCount += dto.ElementAt(2).UnitCount;
 
             await _armyUnitRepository.Update(unitCsatacsiko);
             await _armyUnitRepository.Update(unitRohamfoka);
