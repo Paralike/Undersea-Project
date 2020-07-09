@@ -24,7 +24,7 @@ namespace Undersea.BLL.Services
 
         public async Task<ActionResult<ICollection<UpgradeDto>>> GetUpgrade()
         {
-            var list = _upgradeRepository.GetAll();
+            var list = await _upgradeRepository.GetAll();
             return _mapper.Map<List<UpgradeDto>>(list);
         }
 

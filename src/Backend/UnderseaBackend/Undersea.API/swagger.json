@@ -627,15 +627,10 @@
     "UpgradeDto": {
       "type": "object",
       "required": [
-        "turnCount",
         "upgradeType",
         "cityId"
       ],
       "properties": {
-        "turnCount": {
-          "type": "integer",
-          "format": "int32"
-        },
         "upgradeType": {
           "$ref": "#/definitions/UpgradeType"
         },

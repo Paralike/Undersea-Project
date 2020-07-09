@@ -1193,7 +1193,6 @@ export interface ICityDto {
 }
 
 export class UpgradeDto implements IUpgradeDto {
-    turnCount!: number;
     upgradeType!: UpgradeType;
     cityId!: string;
 
@@ -1208,7 +1207,6 @@ export class UpgradeDto implements IUpgradeDto {
 
     init(_data?: any) {
         if (_data) {
-            this.turnCount = _data["turnCount"];
             this.upgradeType = _data["upgradeType"];
             this.cityId = _data["cityId"];
         }
@@ -1223,7 +1221,6 @@ export class UpgradeDto implements IUpgradeDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["turnCount"] = this.turnCount;
         data["upgradeType"] = this.upgradeType;
         data["cityId"] = this.cityId;
         return data; 
@@ -1231,7 +1228,6 @@ export class UpgradeDto implements IUpgradeDto {
 }
 
 export interface IUpgradeDto {
-    turnCount: number;
     upgradeType: UpgradeType;
     cityId: string;
 }

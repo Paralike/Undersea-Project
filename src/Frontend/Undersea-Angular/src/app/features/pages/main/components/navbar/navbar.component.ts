@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit {
     openDevelopments() {
       const dialogRef = this.dialog.open(DevelopmentsComponent, {
         width: '50vw',
-        height: '35vw',
+        height: '38vw',
         data: {
           developements: this.developements
         }

@@ -39,6 +39,7 @@ export class ArmyComponent implements OnInit {
 
     this.featureService.getArmy().subscribe(res => {
       this.army = res;
+
     },
       (err) => {
         console.log(err);
