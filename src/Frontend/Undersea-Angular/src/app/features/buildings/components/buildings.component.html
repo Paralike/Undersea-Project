@@ -15,7 +15,7 @@
       <div class="buildingName">
         {{building.name}}
       </div>
-      <div class="buildingDesc">
+      <div class="building-desc">
         <div *ngFor="let desc of building.description">
           {{desc}}
         </div>
@@ -33,9 +33,9 @@
 
   </div>
   <mat-divider></mat-divider>
-  <div class="buttonsDiv">
+  <div class="buttons-div">
 
-    <button [disabled]="!selectedBuilding" mat-button class="buildingButton" (click)="sendData()" id="buildButton">Megveszem</button>
+    <button [disabled]="!selectedBuilding" mat-button class="building-button" (click)="sendData()" id="build-button">Megveszem</button>
 
   </div>
 

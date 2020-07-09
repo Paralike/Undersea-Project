@@ -6,9 +6,10 @@ html {
 .container{
     display: flex;
     text-align: left;
-   flex-direction: column;
-   align-items: center;
-   height: 40%;
+    flex-direction: column;
+    align-items: center;
+    height: 40%;
+   
 }
 
 .tables {
@@ -19,6 +20,14 @@ html {
 }
 
 
+::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+    background-color: #9FFFF0;
+  }
+::ng-deep .mat-accent .mat-slider-thumb {
+    background-color:  #9FFFF0;
+    border: solid 2px  #9FFFF0;
+    
+  }
 h1 {
     margin-left: 12%;
     font-family: baloo;
@@ -43,7 +52,7 @@ h1 {
 }
 
 
-.infos_2 > table > tr > td > img {
+.infos-2 > table > tr > td > img {
     width: 42px;
     height: 45px;
     background: #9ffff0 0% 0% no-repeat padding-box;
@@ -55,12 +64,13 @@ h1 {
     margin: 3%;
 }
 
-.infos_2 > table > tr > td  {
+.infos-2 > table > tr > td  {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-	justify-content: space-around;
+    justify-content: space-around;
+    font-family: open-sans-regular;
  }
  
 
@@ -83,7 +93,15 @@ h1 {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 350px;
+    font-family: open-sans-bold;
+    font-size: 16px;
+    
 
+}
+.infos_2 {
+    font-family: open-sans-bold;
+    font-size: 16px;
+    ;
 }
 .slider {
     width: 30px;
@@ -108,9 +126,6 @@ h1 {
     font-size: 18px;
     padding: 1%;
     padding-left: 4%;
-   
-  
-    
  }
 
 
@@ -135,7 +150,7 @@ h1 {
         transform: rotate(45deg);
     }
     
-    .checkmark_circle {
+    .checkmark-circle {
         position: absolute;
         width:22px;
         height:22px;
@@ -145,7 +160,7 @@ h1 {
         top:0;
     }
     
-    .checkmark_stem {
+    .checkmark-stem {
         position: absolute;
         width:3px;
         height:9px;
@@ -154,7 +169,7 @@ h1 {
         top:6px;
     }
     
-    .checkmark_kick {
+    .checkmark-kick {
         position: absolute;
         width:3px;
         height:3px;

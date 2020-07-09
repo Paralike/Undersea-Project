@@ -21,7 +21,7 @@
   margin: 5vh;
 }
 
-.buttonsDiv {
+.buttons-div {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -41,7 +41,7 @@
   background-color: red;
 }
 
-.buildingButton {
+.building-button {
   display: block;
   width: 10vw;
   background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
@@ -66,7 +66,7 @@ button:disabled {
   margin: none;
 }
 
-.buildingDesc {
+.building-desc {
   font-weight: bold;
   margin: none;
   min-height: 5vh;
