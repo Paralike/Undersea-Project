@@ -22,7 +22,7 @@
     font-size: 0.8vw;
 }
 
-.buttonsDiv {
+.buttons-div {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -37,7 +37,7 @@
     color: white;
     border-radius: 16px;
 }
-.imgCard {
+.img-card {
     background: #9ffff0 0% 0% no-repeat padding-box;
     border: 2px solid #428dff;
     border-radius: 14px;
@@ -45,7 +45,7 @@
     
 }
 
-.armyButton {
+.army-button {
     display: block;
     width: 10vw;
     background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
@@ -60,12 +60,12 @@
     margin-bottom: 1%;
 }
 
-.unitName {
+.unit-name {
     margin: 2vh;
     font-weight: bold;
 }
 
-.unitContent {
+.unit-content {
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -95,16 +95,13 @@ div:focus {
     margin-bottom: 0.5vh;
 }
 
-.plusminus {
+.plus-minus {
     margin: 2vh;
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: space-around;
     width: 10vw;
-}
-.plusButton {
-    cursor: pointer;
 }
 
 .plus-icon {
