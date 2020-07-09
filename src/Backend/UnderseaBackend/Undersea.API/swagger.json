@@ -272,6 +272,30 @@
         }
       }
     },
+    "/api/Game": {
+      "get": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_GetGameState",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_NextTurn",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/Profile/{id}": {
       "delete": {
         "tags": [
