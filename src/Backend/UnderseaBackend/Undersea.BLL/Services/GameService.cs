@@ -12,13 +12,15 @@ namespace Undersea.BLL.Services
 {
     public class GameService : IGameService
     {
-        public int CurrentTurn { get; set; }
+        private static IGameService _instance;
+
+        public static int CurrentTurn { get; set; }
         private readonly IUserRepository _userRepository;
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
 
-        public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository, 
+        public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
                             IAttackRepository attackRepository)
         {
             CurrentTurn = 1;
@@ -27,12 +29,27 @@ namespace Undersea.BLL.Services
             _armyRepository = armyRepository;
             _attackRepository = attackRepository;
         }
+        //public static IGameService Instance
+        //{
+        //    get
+        //    {
+        //        if (_instance == null)
+        //            _instance = new GameService();
+
+        //        return Instance;
+        //    }
+        //}
+
+        public GameService()
+        {
+
+        }
 
         public async Task NextTurn()
         {
             var cities = await _cityRepository.GetAll();
 
-            foreach(City c in cities)
+            foreach (City c in cities)
             {
                 c.PearlCount += c.PearlProduction;
                 c.CoralCount += c.CoralProduction;
@@ -46,9 +63,9 @@ namespace Undersea.BLL.Services
             {
                 //harc szimulálás
             }
-            
+
             // ranglista számolás
-               CurrentTurn++;
+            CurrentTurn++;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.DTOs.Actions;
 using Undersea.BLL.Interfaces;
 
 namespace Undersea.API.Controllers
@@ -37,6 +38,12 @@ namespace Undersea.API.Controllers
         public async Task<ActionResult<IEnumerable<AttackableUsersDto>>> GetAttackableUsers()
         {
             return Ok(await _attackService.GetAttackableUsers(id));
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<AttackResponseDto>>> GetAllAttacks()
+        {
+            return Ok(await _attackService.GetAttacks(id));
         }
 
     }

@@ -121,6 +121,31 @@
         }
       }
     },
+    "/api/Attack/all": {
+      "get": {
+        "tags": [
+          "Attack"
+        ],
+        "operationId": "Attack_GetAllAttacks",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttackResponseDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Auth/login": {
       "post": {
         "tags": [
@@ -480,14 +505,9 @@
     "AttackDto": {
       "type": "object",
       "required": [
-        "attackerArmyId",
         "defenderCityId"
       ],
       "properties": {
-        "attackerArmyId": {
-          "type": "string",
-          "format": "guid"
-        },
         "defenderCityId": {
           "type": "string",
           "format": "guid"
@@ -514,6 +534,40 @@
         "username": {
           "type": "string",
           "minLength": 1
+        }
+      }
+    },
+    "AttackResponseDto": {
+      "type": "object",
+      "properties": {
+        "cityName": {
+          "type": "string"
+        },
+        "unitList": {
+          "$ref": "#/definitions/ArmyDto"
+        }
+      }
+    },
+    "ArmyDto": {
+      "type": "object",
+      "required": [
+        "armyFoodNecessity",
+        "armyPearlNecessity"
+      ],
+      "properties": {
+        "unitList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
+          }
+        },
+        "armyFoodNecessity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "armyPearlNecessity": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -664,29 +718,6 @@
           "$ref": "#/definitions/ArmyDto"
         },
         "servicePay": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "ArmyDto": {
-      "type": "object",
-      "required": [
-        "armyFoodNecessity",
-        "armyPearlNecessity"
-      ],
-      "properties": {
-        "unitList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ArmyUnitDto"
-          }
-        },
-        "armyFoodNecessity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "armyPearlNecessity": {
           "type": "integer",
           "format": "int32"
         }

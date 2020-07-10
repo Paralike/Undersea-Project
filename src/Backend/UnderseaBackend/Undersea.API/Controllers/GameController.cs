@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
+using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
 {
@@ -20,7 +21,7 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public int GetGameState()
         {
-            return _gameService.CurrentTurn;
+            return GameService.CurrentTurn;
         }
 
         [HttpPost]
