@@ -339,7 +339,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/RankDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RankDto"
+              }
             }
           }
         }
