@@ -10,11 +10,17 @@ import { CityDto } from 'src/app/shared';
 })
 export class HeaderComponent implements OnInit {
   @Input() city: CityDto;
+  currentTurn: number;
 
   constructor(private featureService: FeatureService) { }
 
   ngOnInit(): void {
     console.log('header city: ', this.city);
+    this.featureService.getTurn().subscribe(res => this.currentTurn = res); 
+  }
+
+  endTurn() {
+    this.featureService.endTurn().subscribe(() => {}, (err) => console.error(err));
   }
 }
 
