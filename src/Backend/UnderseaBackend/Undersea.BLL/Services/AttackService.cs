@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Actions;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -40,17 +41,38 @@ namespace Undersea.BLL.Services
             return _mapper.Map<List<AttackableUsersDto>>(list);
         }
 
-        public Task StartAttack(Guid id, AttackDto attack)
-        {
+        public async Task StartAttack(Guid id, AttackDto attack)
+        { 
+            // TODO City lekérdezést kiszervezni
+            var cities = await _cityRepository.GetWhere(c => c.UserId == id);
+            var firstCity = cities.First();
+
+            var defenderCity = (await _cityRepository.GetWhere(c => c.Id == attack.DefenderCityId)).First();
+
+            int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
+            int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
+            int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
+
+            // TODO Army unit listből
+
+            Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka)
+            {
+                CityId = firstCity.Id,
+            };
+
+            await _armyRepository.Add(newArmy);
 
             Attack newAttack = new Attack()
             {
                 DefenderCityId = attack.DefenderCityId,
-                AttackerCityId = id,
-                ArmyId = attack.AttackerArmyId     
+                DefenderCity = defenderCity,
+                AttackerCityId = firstCity.Id,
+                AttackerCity = firstCity,
+                ArmyId = newArmy.Id,
+                Army = newArmy
             };
 
-            return _attackRepository.Add(newAttack);
+            await _attackRepository.Add(newAttack);
         }
 
         public async Task<List<AttackResponseDto>> GetAttacks(Guid id)
@@ -58,7 +80,7 @@ namespace Undersea.BLL.Services
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
 
-            var attacks = (await _attackRepository.GetWhere(a => a.AttackerCityId ==  firstCity.Id)).ToList();
+            var attacks = (await _attackRepository.GetWhere(a => a.AttackerCityId ==  id)).ToList();
 
             List<AttackResponseDto> attackList = new List<AttackResponseDto>();
 

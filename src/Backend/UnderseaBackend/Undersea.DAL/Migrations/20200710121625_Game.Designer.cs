@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Undersea.DAL;
 
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200710121625_Game")]
+    partial class Game
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,14 +161,7 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Game");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("369f7f0e-1120-4b41-8587-dc9236d3dd18"),
-                            CurrentTurn = 1
-                        });
+                    b.ToTable("CurrentTurn");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.ApplicationLog", b =>

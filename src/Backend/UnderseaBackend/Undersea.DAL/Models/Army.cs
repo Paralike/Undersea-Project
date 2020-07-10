@@ -35,5 +35,29 @@ namespace Undersea.DAL.Models
             },
             };
         }
+
+        public Army(int csatacsikoCount, int lezercapaCount, int rohamfokaCount)
+        {
+            Id = Guid.NewGuid();
+
+            Units = new List<ArmyUnitJoin>() {
+                new ArmyUnitJoin
+            {
+                UnitType = UnitType.Csatacsiko,
+                UnitCount = csatacsikoCount,
+            },
+
+                new ArmyUnitJoin
+            {
+                UnitType = UnitType.Lezercapa,
+                UnitCount = lezercapaCount,
+            },
+                new ArmyUnitJoin
+            {
+                UnitType = UnitType.Rohamfoka,
+                UnitCount = rohamfokaCount,
+            },
+            };
+        }
     }
 }
