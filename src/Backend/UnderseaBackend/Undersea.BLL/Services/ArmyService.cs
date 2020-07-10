@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
@@ -92,20 +93,45 @@ namespace Undersea.BLL.Services
             return _mapper.Map<List<UnitDto>>(units);
         }
 
-        public async Task<int> GetArmyPrice(List<ArmyUnitDto> dto)
+        public async Task<int> GetArmyPrice(List<ArmyUnitDto> unitList)
         {
             var units = await _unitRepository.GetAll();
 
-            var price = units.Select(u => new
+            var priceList = units.Select(u => new
             {
                 UnitType = u.UnitType,
                 Price = u.Price
             }).ToList();
 
-            //price.Join(dto,
-            //   );
+            var result = priceList.Join(unitList,
+                unit1 => unit1.UnitType,
+                unit2 => unit2.UnitType,
+                (unit1, unit2) => new 
+                {
+                    Price = unit1.Price, 
+                    Count = unit2.UnitCount
+                }
+              );
 
-            return 0;
+            return result.Sum(u => u.Count * u.Price);
+        }
+
+        public async Task<ArmyDto> GetArmyById(Guid id)
+        {
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == id);
+
+            var unitList = list.Select(x => new ArmyUnitDto
+            {
+                UnitType = x.UnitType,
+                UnitCount = x.UnitCount
+            }).ToList();
+
+            ArmyDto newDto = new ArmyDto()
+            {
+                UnitList = unitList
+            };
+
+            return newDto;
         }
 
     }

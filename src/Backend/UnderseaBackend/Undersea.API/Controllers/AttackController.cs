@@ -38,5 +38,6 @@ namespace Undersea.API.Controllers
         {
             return Ok(await _attackService.GetAttackableUsers(id));
         }
+
     }
 }

@@ -18,6 +18,9 @@ namespace Undersea.BLL.Services
             _loggerRepository = loggerRepository;
         }
 
+        public LoggerService()
+        {
+        }
 
         public async Task LogWarning(string message, Exception e = null)
         {

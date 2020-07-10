@@ -11,7 +11,7 @@ namespace Undersea.BLL.Interfaces
     {
         public Task<ArmyDto> GetArmy(Guid id);
         public Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto);
-
         public Task<List<UnitDto>> GetUnitInfo();
+        public Task<ArmyDto> GetArmyById(Guid id);
     }
 }
