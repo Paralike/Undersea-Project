@@ -38,6 +38,8 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new ArmyUnitJoinConfiguration());
             modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
+            modelBuilder.ApplyConfiguration(new UpgradeConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildingConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());            
         }
     }

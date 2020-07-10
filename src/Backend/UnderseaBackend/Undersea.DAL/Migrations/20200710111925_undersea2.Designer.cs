@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200709135847_undersea")]
-    partial class undersea
+    [Migration("20200710111925_undersea2")]
+    partial class undersea2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -406,8 +406,6 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
                     b.ToTable("Upgrades");
                 });
 
@@ -599,7 +597,7 @@ namespace Undersea.DAL.Migrations
             modelBuilder.Entity("Undersea.DAL.Models.Building", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.City", "City")
-                        .WithMany("Buildings")
+                        .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -635,15 +633,6 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>
-                {
-                    b.HasOne("Undersea.DAL.Models.City", "City")
-                        .WithMany("Upgrades")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.UpgradeAttribute", "UpgradeAttribute")
@@ -653,7 +642,7 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
-                        .WithMany("UpgradeAttributes")
+                        .WithMany()
                         .HasForeignKey("UpgradeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
