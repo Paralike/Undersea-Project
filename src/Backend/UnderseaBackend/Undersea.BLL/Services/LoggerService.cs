@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Models;
+using Undersea.DAL.Repositories;
 using Undersea.DAL.Repository.Repositories;
 
 namespace Undersea.BLL.Services
@@ -17,26 +18,20 @@ namespace Undersea.BLL.Services
             _loggerRepository = loggerRepository;
         }
 
-        public LoggerService()
-        {
 
+        public async Task LogWarning(string message, Exception e = null)
+        {
+            await _loggerRepository.Add(new ApplicationLog(e.ToString(), message));
         }
 
-        public Task LogWarning(string message, Exception e = null)
+        public async Task LogError(string message, Exception e = null)
         {
-            // TODO leszármazni baserepoból
-            _loggerRepository.Add(new ApplicationLog(e.ToString(),message));
-            return null;
+            await _loggerRepository.Add(new ApplicationLog(e.ToString(), message));
         }
 
-        public Task LogError(string message, Exception e = null)
+        public async Task LogFatal(string message, Exception e = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task LogFatal(string message, Exception e = null)
-        {
-            throw new NotImplementedException();
+            await _loggerRepository.Add(new ApplicationLog(e.ToString(), message));
         }
     }
 }

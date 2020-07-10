@@ -50,16 +50,16 @@ namespace Undersea.BLL.Services
             };
         }
 
-        public async Task<User> GetUser(LoginDto user)
+        public async Task<User> GetUser(LoginDto userDto)
         {
-            var _user = await _userManager.FindByNameAsync(user.Username);
+            var _user = await _userManager.FindByNameAsync(userDto.Username);
 
             if (_user == null)
             {
                 return null;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(_user, user.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(_user, userDto.Password, false, false);
 
             if (result.Succeeded)
                 return _user;
@@ -68,23 +68,23 @@ namespace Undersea.BLL.Services
                 return null;
         }
 
-        public async Task<AuthResponseDto> RegisterUser(RegisterDto newUser)
+        public async Task<AuthResponseDto> RegisterUser(RegisterDto newUserDto)
         {
-            var user = new User(newUser.Username, newUser.City);
-            user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUser.Password);
+            var user = new User(newUserDto.Username, newUserDto.City);
+            user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUserDto.Password);
 
             var result = await _userManager.CreateAsync(user);
 
             if (result.Succeeded)
-                return GetToken(user);
-
-            else
             {
-                foreach (IdentityError e in result.Errors)
-                    Console.WriteLine(e.Description);
-
-                return null;
+                if ((await _signInManager.PasswordSignInAsync(user, newUserDto.Password, false, false)).Succeeded)
+                {
+                    return GetToken(user);
+                }
+               
             }
+
+            return new AuthResponseDto();
 
         }
 

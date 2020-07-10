@@ -33,9 +33,9 @@ namespace Undersea.BLL.Services
         {
             _armyRepository = armyRepository;
             _armyUnitRepository = armyUnitRepository;
-            _mapper = mapper;
             _cityRepository = cityRepository;
             _unitRepository = unitRepository;
+            _mapper = mapper;
         }
 
         // TODO Action result kivenni
@@ -43,7 +43,6 @@ namespace Undersea.BLL.Services
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
-            //var army = firstCity.AvailableArmy;
 
             var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
@@ -67,7 +66,8 @@ namespace Undersea.BLL.Services
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
-            //var army = firstCity.AvailableArmy;
+
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
             // TODO átírni szebbre
             var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Csatacsiko);
@@ -90,6 +90,22 @@ namespace Undersea.BLL.Services
             var units = await _unitRepository.GetAll();
 
             return _mapper.Map<List<UnitDto>>(units);
+        }
+
+        public async Task<int> GetArmyPrice(List<ArmyUnitDto> dto)
+        {
+            var units = await _unitRepository.GetAll();
+
+            var price = units.Select(u => new
+            {
+                UnitType = u.UnitType,
+                Price = u.Price
+            }).ToList();
+
+            //price.Join(dto,
+            //   );
+
+            return 0;
         }
 
     }

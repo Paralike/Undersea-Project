@@ -278,9 +278,19 @@
           "Game"
         ],
         "operationId": "Game_GetGameState",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         }
       },

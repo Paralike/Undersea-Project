@@ -56,5 +56,17 @@ namespace Undersea.DAL.Repositories
 
             return sum;
         }
+
+        public async Task<int> GetArmyPrice(Guid id)
+        {
+            var query = from units in _context.Units
+                        join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
+                        where unitArmy.ArmyId == id
+                        select new { unitArmy.UnitCount, units.Price };
+
+            var sum = await query.SumAsync(a => a.Price * a.UnitCount);
+
+            return sum;
+        }
     }
 }

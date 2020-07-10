@@ -10,7 +10,7 @@ namespace Undersea.DAL.Models
         public virtual User User { get; set; }
         public Guid UserId { get; set; }
         public int PearlCount { get; set; } = 1000;
-        public int PearlProduction { get; set; } = 200;
+        public int PearlProduction { get; set; } = 25;
         public int CoralCount { get; set; } = 1000;
         public int CoralProduction { get; set; } = 200;
         public int Points { get; set; }

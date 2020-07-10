@@ -18,15 +18,15 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public void GetGameState()
+        public int GetGameState()
         {
-
+            return _gameService.CurrentTurn;
         }
 
         [HttpPost]
-        public void NextTurn()
+        public async Task NextTurn()
         {
-            _gameService.NextTurn();
+            await _gameService.NextTurn();
         }
     }
 }

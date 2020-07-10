@@ -35,7 +35,10 @@ namespace Undersea.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole<Guid>>()
+            services.AddIdentity<User, IdentityRole<Guid>>(options =>
+            {
+                options.User.AllowedUserNameCharacters = "aábcdeéfghijklmnoöõpqrstuüûvwxyzAÁBCDEÉFGHIJKLMNOÖÕPQRSTUÜÛVWXYZ0123456789 -._@+";
+            })
             .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<AppDbContext>(o =>
@@ -55,7 +58,7 @@ namespace Undersea.API
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<ICityService, CityService>();
 
             services.AddTransient<ILogService, LoggerService>();
 
