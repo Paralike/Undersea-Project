@@ -84,6 +84,11 @@ namespace Undersea.BLL.Services
             await _armyUnitRepository.Update(unitCsatacsiko);
             await _armyUnitRepository.Update(unitRohamfoka);
             await _armyUnitRepository.Update(unitLezercapa);
+
+            // TODO db-ből
+            firstCity.PearlCount -= dto.ElementAt(0).UnitCount * 50 + dto.ElementAt(1).UnitCount * 50+ dto.ElementAt(2).UnitCount * 100;
+
+            await _cityRepository.Update(firstCity);
         }
 
         public async Task<List<UnitDto>> GetUnitInfo()
