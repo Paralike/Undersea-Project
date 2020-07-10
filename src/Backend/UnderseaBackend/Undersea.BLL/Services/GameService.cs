@@ -70,7 +70,9 @@ namespace Undersea.BLL.Services
 
             // ranglista számolás
 
-            CurrentTurn = context.CurrentTurn.First().CurrentTurn;
+            Game game = context.Game.First();
+            game.CurrentTurn++;
+            await context.SaveChangesAsync();
         }
     }
 }
