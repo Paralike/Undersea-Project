@@ -40,7 +40,10 @@ export class NavbarComponent implements OnInit {
   openAttack() {
     const dialogRef = this.dialog.open(AttackComponent, {
       width: '50vw',
-      data: {},
+      data: {
+        // tslint:disable-next-line:max-line-length
+        units: [this.units[UnitType.Rohamfoka].unitCount, this.units[UnitType.Csatacsiko].unitCount, this.units[UnitType.Lezercapa].unitCount]
+      },
       backdropClass: 'backdropBackground'
     });
 
@@ -50,8 +53,6 @@ export class NavbarComponent implements OnInit {
     const dialogRef = this.dialog.open(FightComponent, {
       width: '50vw',
       data: {
-        // tslint:disable-next-line:max-line-length
-        units: [this.units[UnitType.Rohamfoka].unitCount, this.units[UnitType.Csatacsiko].unitCount, this.units[UnitType.Lezercapa].unitCount]
       }
     });
   }
@@ -74,15 +75,15 @@ export class NavbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
-    openDevelopments() {
-      const dialogRef = this.dialog.open(DevelopmentsComponent, {
-        width: '50vw',
-        height: '38vw',
-        data: {
-          developements: this.developements
-        }
-      });
-    }
-
-
+  openDevelopments() {
+    const dialogRef = this.dialog.open(DevelopmentsComponent, {
+      width: '50vw',
+      height: '38vw',
+      data: {
+        developements: this.developements
+      }
+    });
   }
+
+
+}

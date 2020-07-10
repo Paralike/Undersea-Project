@@ -35,7 +35,6 @@ export class ArmyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
 
     this.featureService.getArmy().subscribe(res => {
       this.army = res;
@@ -44,6 +43,8 @@ export class ArmyComponent implements OnInit {
       (err) => {
         console.log(err);
       });
+
+    console.log(this.data);
 
   }
 

@@ -10,7 +10,8 @@ import {
   CityClient,
   UnitDto,
   ProfileClient,
-  RankDto
+  RankDto,
+  GameClient
 } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
@@ -92,7 +93,8 @@ export class FeatureService {
     private attackClient: AttackClient,
     private armyClient: ArmyClient,
     private cityClient: CityClient,
-    private profileClient: ProfileClient
+    private profileClient: ProfileClient,
+    private gameClient: GameClient
   ) { }
 
   getBuildings(): Observable<BuildingModel[]> {
@@ -134,6 +136,14 @@ export class FeatureService {
   getProfile(): Observable<any> {
     return this.cityClient.getCity();
     // return of(PROFILE);
+  }
+
+  endTurn(): Observable<any> {
+    return this.gameClient.nextTurn();
+  }
+
+  getTurn(): Observable<number> {
+    return this.gameClient.getGameState();
   }
 
 }
