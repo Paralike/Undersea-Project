@@ -49,12 +49,14 @@ namespace Undersea.API
             services.AddTransient<IArmyService, ArmyService>();
             services.AddTransient<IUpgradeService, UpgradeService>();
             services.AddTransient<ICityService, CityService>();
+            services.AddTransient<ILogService, LoggerService>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
             services.AddTransient<IAttackRepository, AttackRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
             services.AddTransient<ICityRepository, CityRepository>();
+
 
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
