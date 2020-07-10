@@ -17,8 +17,8 @@ namespace Undersea.DAL.Repositories
         {
             var city = await _context
                 .Cities
-                .Include(b => b.Buildings)
-                .Include(u => u.Upgrades)
+                //.Include(b => b.Buildings)
+                //.Include(u => u.Upgrades)
                 .Where(a => a.UserId == Id)
                 .FirstOrDefaultAsync();
             return city;

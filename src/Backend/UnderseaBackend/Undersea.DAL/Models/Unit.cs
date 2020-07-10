@@ -5,7 +5,7 @@ namespace Undersea.DAL.Models
 {
     public class Unit: IDbEntity
     {
-        public virtual UnitType UnitType { get; set; }
+        public UnitType UnitType { get; set; }
         public int Price { get; set; }
         public int FoodNecessity { get; set; }
         public int PearlNecessity { get; set; }
