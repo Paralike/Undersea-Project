@@ -478,6 +478,12 @@
         "defenderCityId": {
           "type": "string",
           "format": "guid"
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
+          }
         }
       }
     },
