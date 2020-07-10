@@ -37,7 +37,7 @@ namespace Undersea.BLL.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ActionResult<ICollection<RankDto>>> GetRank()
+        public async Task<List<RankDto>> GetRank()
         {
             var cities = await _cityRepository.GetAllCityWithUser();
 

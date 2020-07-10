@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto, ArmyUnitDto, CityClient, UnitDto } from 'src/app/shared';
+import {
+  BuildingsClient,
+  AttackClient,
+  AttackableUsersDto,
+  ArmyClient,
+  ArmyDto,
+  ArmyUnitDto,
+  CityClient,
+  UnitDto,
+  ProfileClient,
+  RankDto
+} from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
@@ -76,10 +87,12 @@ export class FeatureService {
   army: ArmyDto;
   unitToSend: ArmyUnitDto;
 
-  constructor(private buildingsClient: BuildingsClient,
-              private attackClient: AttackClient,
-              private armyClient: ArmyClient,
-              private cityClient: CityClient
+  constructor(
+    private buildingsClient: BuildingsClient,
+    private attackClient: AttackClient,
+    private armyClient: ArmyClient,
+    private cityClient: CityClient,
+    private profileClient: ProfileClient
   ) { }
 
   getBuildings(): Observable<BuildingModel[]> {
@@ -96,8 +109,8 @@ export class FeatureService {
     return this.attackClient.getAttackableUsers();
   }
 
-  getRanks(): Observable<any> {
-    return of(mock);
+  getRanks(): Observable<RankDto[]> {
+    return this.profileClient.getRanks();
   }
 
   getFights(): Observable<PeriodicElement[]> {
@@ -119,7 +132,7 @@ export class FeatureService {
   }
 
   getProfile(): Observable<any> {
-      return this.cityClient.getCity();
+    return this.cityClient.getCity();
     // return of(PROFILE);
   }
 

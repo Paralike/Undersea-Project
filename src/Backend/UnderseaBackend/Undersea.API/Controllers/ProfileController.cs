@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
@@ -9,13 +13,16 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ProfileController : ControllerBase
     {
         IProfileService _profileService;
+        
 
         public ProfileController(IProfileService profileService)
         {
             _profileService = profileService;
+           
         }
 
         [HttpDelete("{id}")]
@@ -25,7 +32,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet("ranks")]
-        public async Task<ActionResult<RankDto>> GetRanks()
+        public async Task<ActionResult<List<RankDto>>> GetRanks()
         {
             return Ok(await _profileService.GetRank());
         }
