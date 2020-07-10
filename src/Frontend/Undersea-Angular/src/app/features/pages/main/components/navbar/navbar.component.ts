@@ -8,7 +8,6 @@ import { ArmyComponent } from '../../../../army/components/army.component';
 import { DevelopmentsComponent } from 'src/app/features/developments/components/developments.component';
 import { HeaderComponent } from '../header/header.component';
 import { UnitList } from '../../model/profile.model';
-import { UnitDto, ArmyUnitDto, UnitType } from 'src/app/shared';
 
 
 @Component({
@@ -19,8 +18,7 @@ import { UnitDto, ArmyUnitDto, UnitType } from 'src/app/shared';
 export class NavbarComponent implements OnInit {
   @Input() buildings: number[];
   @Input() developements: number[];
-  @Input() units: ArmyUnitDto[];
-  @Output() reload = new EventEmitter<void>();
+  @Input() units: UnitList;
 
 
   constructor(private dialog: MatDialog) { }
@@ -64,11 +62,9 @@ export class NavbarComponent implements OnInit {
     const dialogRef = this.dialog.open(ArmyComponent, {
       width: '50vw',
       data: {
-        // tslint:disable-next-line:max-line-length
-        units: [this.units[UnitType.Rohamfoka].unitCount, this.units[UnitType.Csatacsiko].unitCount, this.units[UnitType.Lezercapa].unitCount]
+        units: [this.units.sharks, this.units.seals, this.units.seahorses]
       }
     });
-    dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
     openDevelopments() {

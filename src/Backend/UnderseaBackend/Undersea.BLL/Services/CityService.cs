@@ -14,21 +14,14 @@ namespace Undersea.BLL.Services
     {
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
-        private readonly IArmyService _armyservice;
 
-        public CityService()
-        {
-
-        }
-
-        public CityService(ICityRepository cityRepository, IMapper mapper , IArmyService armyservice)
+        public CityService(ICityRepository cityRepository, IMapper mapper)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
-            _armyservice = armyservice;
         }
 
-        public async Task<CityDto> GetCity(Guid id)
+        public async Task<CityDto> GetCity()
         {
             // identity service . id
             // Get where(userId = identity service)
@@ -40,7 +33,5 @@ namespace Undersea.BLL.Services
             
 
         }
-
-        
     }
 }

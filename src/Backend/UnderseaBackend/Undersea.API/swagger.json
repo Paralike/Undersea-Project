@@ -22,10 +22,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UnitDto"
-              }
+              "$ref": "#/definitions/ArmyDto"
             }
           }
         }
@@ -272,30 +269,6 @@
         }
       }
     },
-    "/api/Game": {
-      "get": {
-        "tags": [
-          "Game"
-        ],
-        "operationId": "Game_GetGameState",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Game"
-        ],
-        "operationId": "Game_NextTurn",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/api/Profile/{id}": {
       "delete": {
         "tags": [
@@ -400,53 +373,28 @@
     }
   },
   "definitions": {
-    "UnitDto": {
+    "ArmyDto": {
       "type": "object",
       "required": [
-        "price",
-        "foodNecessity",
-        "damage",
-        "defense",
-        "unitType"
+        "armyFoodNecessity",
+        "armyPearlNecessity"
       ],
       "properties": {
-        "price": {
+        "unitList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
+          }
+        },
+        "armyFoodNecessity": {
           "type": "integer",
           "format": "int32"
         },
-        "foodNecessity": {
+        "armyPearlNecessity": {
           "type": "integer",
           "format": "int32"
-        },
-        "damage": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "defense": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "unitType": {
-          "$ref": "#/definitions/UnitType"
-        },
-        "name": {
-          "type": "string"
         }
       }
-    },
-    "UnitType": {
-      "type": "integer",
-      "description": "",
-      "x-enumNames": [
-        "Rohamfoka",
-        "Csatacsiko",
-        "Lezercapa"
-      ],
-      "enum": [
-        0,
-        1,
-        2
-      ]
     },
     "ArmyUnitDto": {
       "type": "object",
@@ -463,6 +411,20 @@
           "format": "int32"
         }
       }
+    },
+    "UnitType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Rohamfoka",
+        "Csatacsiko",
+        "Lezercapa"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
     },
     "AttackDto": {
       "type": "object",
@@ -630,59 +592,19 @@
         "buildings": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/definitions/BuildingDto"
           }
         },
         "upgrades": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/definitions/UpgradeDto"
           }
         },
         "army": {
           "$ref": "#/definitions/ArmyDto"
         },
         "servicePay": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "ArmyDto": {
-      "type": "object",
-      "required": [
-        "armyFoodNecessity",
-        "armyPearlNecessity"
-      ],
-      "properties": {
-        "unitList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ArmyUnitDto"
-          }
-        },
-        "armyFoodNecessity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "armyPearlNecessity": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "RankDto": {
-      "type": "object",
-      "required": [
-        "point"
-      ],
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "point": {
           "type": "integer",
           "format": "int32"
         }
@@ -723,6 +645,21 @@
         4,
         5
       ]
+    },
+    "RankDto": {
+      "type": "object",
+      "required": [
+        "point"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "point": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
     }
   }
 }

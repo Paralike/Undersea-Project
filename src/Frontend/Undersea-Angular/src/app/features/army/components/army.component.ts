@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { ARMY } from '../model/mock-army';
 import { ArmyModel } from '../model/army.model';
 
 import { MAT_DIALOG_DATA, MatDialogRef, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
@@ -27,10 +28,10 @@ export class ArmyComponent implements OnInit {
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<ArmyComponent>,
     private snackbar: MatSnackBar
-  ) {
+    ) {
     this.addUnit = [];
-    this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
-    this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
+    this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
+    this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
     this.addUnit[2] = new ArmyUnitDto({ unitType: UnitType.Lezercapa, unitCount: 0 });
   }
 
@@ -61,15 +62,18 @@ export class ArmyComponent implements OnInit {
 
   sendData() {
 
-    if (this.addUnit[0].unitCount === 0 && this.addUnit[1].unitCount === 0 && this.addUnit[2].unitCount === 0) {
+    if (this.addUnit[0] === null && this.addUnit[1] === null && this.addUnit[2] === null){
       this.snackbar.open('Válaszd ki mit szeretnél vásárolni!', 'Bezár');
-    } else {
+    }else {
       console.log(this.addUnit);
-      this.featureService.purchaseUnits(this.addUnit).subscribe(() => {
       this.dialogRef.close();
       this.snackbar.open('Sikeres vásárlás!', 'Bezár');
-    });
     }
+
+    console.log(this.addUnit);
+    this.featureService.purchaseUnits(this.addUnit).subscribe(() => {
+      this.dialogRef.close();
+    });
 
 
   }

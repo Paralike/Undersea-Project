@@ -45,7 +45,6 @@ namespace Undersea.API
             services.AddTransient<IAttackService, AttackService>();
             services.AddTransient<IArmyService, ArmyService>();
             services.AddTransient<IUpgradeService, UpgradeService>();
-            services.AddTransient<ICityService, CityService>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
@@ -120,7 +119,7 @@ namespace Undersea.API
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-            //    context.Database.Migrate();
+                context.Database.Migrate();
             }
 
             app.UseEndpoints(endpoints =>

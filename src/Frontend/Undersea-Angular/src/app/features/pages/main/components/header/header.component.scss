@@ -50,7 +50,7 @@
 	font-family: baloo;
 	letter-spacing: 0px;
 	font-size: 32px;
-	margin-left: 2rem;
+	margin-left: 3rem;
 	color: #1c3e76;
 }
 
@@ -86,10 +86,7 @@
 }
 
 .second-data {
-	display: flex;
-	flex-direction: row;
-	font-size: 0.9vw ;
-	width: 2.5vw;
+	font-size: 0.9vw !important;
 }
 
 button {

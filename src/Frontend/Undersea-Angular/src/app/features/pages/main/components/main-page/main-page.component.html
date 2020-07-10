@@ -1,6 +1,6 @@
-<app-header *ngIf="city" [city]="city"></app-header>
+<app-header [city]="city"></app-header>
 <div class = "left-side">
-    <app-navbar *ngIf="city" [buildings]="[0, 0, 0]" [developements] = "" [units]="city.army.unitList" (reload)="reload()"></app-navbar>
+    <app-navbar [buildings]="city.buildings" [developements] = "city.upgrades" [units]="city.army.unitList"></app-navbar>
     <app-profile-card></app-profile-card>
 </div>
 <div class="title">

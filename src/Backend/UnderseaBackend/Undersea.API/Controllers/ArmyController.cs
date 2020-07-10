@@ -28,7 +28,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UnitDto>>> GetArmy()
+        public async Task<ActionResult<ArmyDto>> GetArmy()
         {
             //return Ok(await _armyService.GetArmy(id));
 

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto, ArmyUnitDto, CityClient, UnitDto } from 'src/app/shared';
+import { BuildingsClient, AttackClient, AttackableUsersDto, ArmyClient, ArmyDto, ArmyUnitDto, CityClient } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
 import { PeriodicElement } from '../fight/model/fight.model';
 import { ArmyModel } from '../army/model/army.model';
+import { ARMY } from '../army/model/mock-army';
 import { DevelopmentModel } from '../developments/model/development.model';
 import { DEVELOPMENTS } from '../developments/model/mockDevelopment';
 import { PROFILE, ProfileModel } from '../pages/main/model/profile.model';
@@ -104,8 +105,8 @@ export class FeatureService {
     return of(FIGTHS);
   }
 
-  getArmy(): Observable<UnitDto[]> {
-    return this.armyClient.getArmy();
+  getArmy(): Observable<ArmyModel[]> {
+    return of(ARMY);
 
   }
 
@@ -119,8 +120,8 @@ export class FeatureService {
   }
 
   getProfile(): Observable<any> {
-      return this.cityClient.getCity();
-    // return of(PROFILE);
+    //  return this.cityClient.getCity();
+    return of(PROFILE);
   }
 
 }

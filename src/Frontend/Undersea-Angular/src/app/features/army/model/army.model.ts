@@ -6,6 +6,7 @@ export interface ArmyModel {
     damage: number;
     defense: number;
     unitType: UnitType;
-    name?: string;
+    name: string;
+    img: string;
 }
 
