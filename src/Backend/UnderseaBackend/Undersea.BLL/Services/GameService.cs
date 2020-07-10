@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -19,15 +21,17 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
+        private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository)
+                            IAttackRepository attackRepository, AppDbContext context)
         {
             CurrentTurn = 1;
             _userRepository = userRepository;
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
             _attackRepository = attackRepository;
+            this.context = context;
         }
         //public static IGameService Instance
         //{
@@ -65,7 +69,8 @@ namespace Undersea.BLL.Services
             }
 
             // ranglista számolás
-            CurrentTurn++;
+
+            CurrentTurn = context.CurrentTurn.First().CurrentTurn;
         }
     }
 }

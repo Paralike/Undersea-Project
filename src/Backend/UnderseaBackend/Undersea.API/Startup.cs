@@ -63,7 +63,7 @@ namespace Undersea.API
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ILogService, LoggerService>();
 
-            services.AddScoped<IGameService, GameService>();
+            services.AddSingleton<IGameService>(new GameService());
 
             services.AddHttpContextAccessor();
 

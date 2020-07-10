@@ -26,6 +26,7 @@ namespace Undersea.DAL
         public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
         public DbSet<ArmyUnitJoin> ArmyUnitJoins { get; set; }
         public DbSet<ApplicationLog> ApplicationLog { get; set; }
+        public DbSet<Game> CurrentTurn { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,7 +39,9 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new ArmyUnitJoinConfiguration());
             modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
-            modelBuilder.ApplyConfiguration(new LogConfiguration());            
+            modelBuilder.ApplyConfiguration(new LogConfiguration());
+            
+            
         }
     }
 }
