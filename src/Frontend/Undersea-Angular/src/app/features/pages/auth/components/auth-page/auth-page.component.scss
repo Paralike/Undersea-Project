@@ -19,8 +19,6 @@
   margin: 0;
   right:  5%;
   font-family: baloo;
-    text-decoration: overline wavy;
-    text-decoration-color: #9FFFF0;
 
 }
 
@@ -121,4 +119,45 @@ input {
 body {
   background-image: url('../../../../../../assets/background/undersea_game-02.png');
   background-repeat: no-repeat;
+}
+
+.wave {
+  --c:red;   /* Color */
+  --t:7px;   /* Thickness */
+  --h:50px;  /* Height  */
+  --w:100px; /* Width  */
+  --p:13px;  /* adjust this to correct the position when changing the other values*/
+  
+  margin:5px auto;
+  padding-top: 10vh !important;
+  width:calc(var(--w)*4);
+  height:calc(var(--h) + 10px);
+  overflow:hidden;
+  position:relative;
+}
+.wave:before {
+  content:"";
+  position:absolute;
+  padding-top: 10vh;;
+  top:0;
+  left:0;
+  width:200%;
+  bottom:0;
+  
+  background:
+    radial-gradient(farthest-side at 50% calc(100% + var(--p)), transparent 47%, var(--c) 50% calc(50% + var(--t)),transparent calc(52% + var(--t))),
+    radial-gradient(farthest-side at 50% calc(0%   - var(--p)), transparent 47%, var(--c) 50% calc(50% + var(--t)),transparent calc(52% + var(--t)));
+    
+  background-size:var(--w) var(--h);
+  background-position:calc(var(--w)/2) calc(-1*(var(--h)/2)),0px calc(var(--h)/2);
+  background-repeat:repeat-x;
+  background-origin:content-box;
+  
+  animation:move 5s infinite linear;
+}
+
+@keyframes move {
+  to {
+   transform:translateX(-50%);
+  }
 }

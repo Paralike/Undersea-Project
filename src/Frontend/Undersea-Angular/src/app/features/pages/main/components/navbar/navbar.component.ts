@@ -49,7 +49,10 @@ export class NavbarComponent implements OnInit {
   openFights() {
     const dialogRef = this.dialog.open(FightComponent, {
       width: '50vw',
-      data: {}
+      data: {
+        // tslint:disable-next-line:max-line-length
+        units: [this.units[UnitType.Rohamfoka].unitCount, this.units[UnitType.Csatacsiko].unitCount, this.units[UnitType.Lezercapa].unitCount]
+      }
     });
   }
 

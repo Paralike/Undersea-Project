@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FeatureService } from '../../service/feature.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { RankDto } from 'src/app/shared';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class RankComponent implements OnInit {
   constructor(private service: FeatureService) { }
 
   displayedColumns: string[] = ['place', 'name', 'points'];
-  rankList;
+  rankList: RankDto[];
   dataSource;
   selectedRowIndex: any;
   selected;
@@ -26,6 +27,7 @@ export class RankComponent implements OnInit {
 
     this.service.getRanks().subscribe(res => {
       this.rankList = res;
+      console.log(this.rankList);
       this.dataSource = new MatTableDataSource(this.rankList);
 
     });
