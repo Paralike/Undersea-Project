@@ -9,6 +9,6 @@ namespace Undersea.BLL.Interfaces
 {
     public interface ICityService
     {
-        public Task<CityDto> GetCity();
+        public Task<CityDto> GetCity(Guid id);
     }
 }
