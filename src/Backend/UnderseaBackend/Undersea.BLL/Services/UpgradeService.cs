@@ -30,15 +30,7 @@ namespace Undersea.BLL.Services
 
         public async Task PurchaseUpgrade(UpgradeDto upgrade)
         {
-            var upgradeEntity = new Upgrade {
-                //Id = Guid.NewGuid(),
-                //CityId = upgrade.CityId,
-                UpgradeType = upgrade.UpgradeType,
-                
-            };
-            // TODO city-t átnézni, már annak a lekérdezésénél error, config újranézés.
-            await _upgradeRepository.AddUpgrade(upgradeEntity);
-            await _upgradeRepository.Add(upgradeEntity);
+            await _upgradeRepository.Add(_mapper.Map<Upgrade>(upgrade));
         }
     }
 }

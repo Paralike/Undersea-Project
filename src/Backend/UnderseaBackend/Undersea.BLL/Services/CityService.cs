@@ -25,8 +25,8 @@ namespace Undersea.BLL.Services
         {
             // identity service . id
             // Get where(userId = identity service)
-            return _mapper.Map<CityDto>(await _cityRepository.GetAll());
-            //return null;
+            //return _mapper.Map<CityDto>(await _cityRepository.GetById());
+            return null;
         }
         public async Task AddUpgrade()
         {
