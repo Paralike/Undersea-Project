@@ -956,6 +956,7 @@ export interface IArmyUnitDto {
 export class AttackDto implements IAttackDto {
     attackerArmyId!: string;
     defenderCityId!: string;
+    units?: ArmyUnitDto[] | undefined;
 
     constructor(data?: IAttackDto) {
         if (data) {
@@ -970,6 +971,11 @@ export class AttackDto implements IAttackDto {
         if (_data) {
             this.attackerArmyId = _data["attackerArmyId"];
             this.defenderCityId = _data["defenderCityId"];
+            if (Array.isArray(_data["units"])) {
+                this.units = [] as any;
+                for (let item of _data["units"])
+                    this.units!.push(ArmyUnitDto.fromJS(item));
+            }
         }
     }
 
@@ -984,6 +990,11 @@ export class AttackDto implements IAttackDto {
         data = typeof data === 'object' ? data : {};
         data["attackerArmyId"] = this.attackerArmyId;
         data["defenderCityId"] = this.defenderCityId;
+        if (Array.isArray(this.units)) {
+            data["units"] = [];
+            for (let item of this.units)
+                data["units"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -991,6 +1002,7 @@ export class AttackDto implements IAttackDto {
 export interface IAttackDto {
     attackerArmyId: string;
     defenderCityId: string;
+    units?: ArmyUnitDto[] | undefined;
 }
 
 export class AttackableUsersDto implements IAttackableUsersDto {

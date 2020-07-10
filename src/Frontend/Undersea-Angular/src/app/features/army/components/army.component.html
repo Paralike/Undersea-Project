@@ -7,7 +7,7 @@
     </p>
     <div class="main-content">
         <div *ngFor="let unit of army; let i = index" class="content">
-            <div  class="content">
+            <div class="content">
                 <mat-card class="img-card">
                     <img src='../../../../assets/images/{{unit.name}}.svg'>
                 </mat-card>
@@ -46,21 +46,18 @@
 
             <div class="plus-minus">
 
-               
-                <div class="plus-icon" (click) = "minusUnit(i)">
+                <div class="plus-icon" (click)="minusUnit(i)">
                     -
                 </div>
                 <div>
                     {{this.addUnit[unit.unitType].unitCount}}
                 </div>
-                <div class="plus-icon" (click) = "plusUnit(i)">
+                <div class="plus-icon" (click)="plusUnit(i)">
                     +
                 </div>
 
-
             </div>
         </div>
-
 
     </div>
     <mat-divider></mat-divider>

@@ -69,15 +69,15 @@ namespace Undersea.BLL.Services
 
             var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
-            // TODO átírni szebbre
-            var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Csatacsiko);
+            // TODO átírni 
             var unitRohamfoka = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Rohamfoka);
+            var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Csatacsiko);
             var unitLezercapa = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Lezercapa);
 
             // TODO validation logika
 
-            unitCsatacsiko.UnitCount += dto.ElementAt(0).UnitCount;
-            unitRohamfoka.UnitCount += dto.ElementAt(1).UnitCount;
+            unitRohamfoka.UnitCount += dto.ElementAt(0).UnitCount;
+            unitCsatacsiko.UnitCount += dto.ElementAt(1).UnitCount;
             unitLezercapa.UnitCount += dto.ElementAt(2).UnitCount;
 
             await _armyUnitRepository.Update(unitCsatacsiko);

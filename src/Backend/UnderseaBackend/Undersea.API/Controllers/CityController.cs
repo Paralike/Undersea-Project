@@ -30,7 +30,9 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<CityDto>> GetCity()
         {
+
             return Ok(await _cityService.GetCity(id));
+
         }
     }
 }
