@@ -17,7 +17,6 @@ import { noWhiteSpace } from '../../../../../shared/nowhitespace';
 export class AuthPageComponent implements OnInit {
 
   public isReg = false;
-  public isWhiteSpace = false;
 
   loginForm = new FormGroup({
     name: new FormControl('', Validators.required),

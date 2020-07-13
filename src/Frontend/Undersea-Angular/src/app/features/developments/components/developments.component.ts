@@ -32,7 +32,6 @@ export class DevelopmentsComponent implements OnInit {
 
   selected(development: DevelopmentModel) {
     this.selectedDevelopment = development.developmentType;
-    document.getElementById('developmentButton').style.opacity = '1';
 
   }
 

@@ -28,7 +28,6 @@ export class AuthpageService {
     this.logind.username = name;
     this.logind.password = pwd;
     this.newUser = false;
-
     return from(this.authClient.authenticateUser(this.logind));
 
   }

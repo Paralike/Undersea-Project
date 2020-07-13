@@ -13,7 +13,11 @@ import { ArmyUnitDto } from 'src/app/shared';
   styleUrls: ['./attack.component.scss']
 })
 export class AttackComponent implements OnInit {
-
+  displayedColumns: string[] = ['target', 'choice'];
+  userList: AttackModel[];
+  selected: boolean;
+  selectedUserId: string;
+  army: ArmyUnitDto [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private el: ElementRef,
@@ -24,11 +28,7 @@ export class AttackComponent implements OnInit {
   ) {
     this.army = [new ArmyUnitDto(), new ArmyUnitDto(), new ArmyUnitDto()];
    }
-  displayedColumns: string[] = ['target', 'choice'];
-  userList: AttackModel[];
-  selected: boolean;
-  selectedUserId: string;
-  army: ArmyUnitDto [];
+
   @ViewChild('matslider') slider: MatSlider;
   @ViewChild('matslider2') slider2: MatSlider;
   @ViewChild('matslider3') slider3: MatSlider;
@@ -52,24 +52,21 @@ export class AttackComponent implements OnInit {
   }
 
   sendData() {
-    if (this.selected !== false) {
+    if (this.selected) {
 
       this.army[0].unitType = 0, this.army[0].unitCount = this.slider.value;
       this.army[1].unitType = 1, this.army[1].unitCount = this.slider2.value;
       this.army[2].unitType = 2, this.army[2].unitCount = this.slider3.value;
       console.log(this.army, this.selectedUserId);
-      this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {});
-      this.dialogRef.close();
-      this.snackbar.open('Sikeres támadás!', 'Bezár');
+      this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {
+        this.dialogRef.close();
+        this.snackbar.open('Sikeres támadás!', 'Bezár');
+      });
     } else if (this.selected === false) {
       this.snackbar.open('Válaszd ki kit szeretnél támadni!', 'Bezár');
     }
   }
 
-  onInputChange(event: MatSliderChange, index: number) {
-    console.log('index', index);
-    console.log(event.value);
-  }
 }
 
 
