@@ -4,9 +4,9 @@ using Undersea.DAL.Models;
 
 namespace Undersea.DAL.Configurations
 {
-    class ArmyUnitJoinConfiguration : IEntityTypeConfiguration<ArmyUnitJoin>
+    class ArmyUnitJoinConfiguration : IEntityTypeConfiguration<ArmyUnit>
     {
-        public void Configure(EntityTypeBuilder<ArmyUnitJoin> entity)
+        public void Configure(EntityTypeBuilder<ArmyUnit> entity)
         {
             entity.HasKey(a => new { a.ArmyId, a.UnitType });
         }

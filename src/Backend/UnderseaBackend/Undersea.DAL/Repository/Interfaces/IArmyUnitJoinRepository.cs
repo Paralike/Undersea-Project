@@ -5,8 +5,8 @@ using Undersea.DAL.Models;
 
 namespace Undersea.DAL.Repositories.Interfaces
 {
-    public interface IArmyUnitJoinRepository : IBaseRepository<ArmyUnitJoin>
+    public interface IArmyUnitJoinRepository : IBaseRepository<ArmyUnit>
     {
-        public Task<List<ArmyUnitJoin>> GetTypeCountAsync(Guid id);
+        public Task<List<ArmyUnit>> GetTypeCountAsync(Guid id);
     }
 }

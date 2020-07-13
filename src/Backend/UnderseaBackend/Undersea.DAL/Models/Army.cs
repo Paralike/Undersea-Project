@@ -9,26 +9,26 @@ namespace Undersea.DAL.Models
         public Guid Id { get; set; }
         public virtual City City { get; set; }
         public Guid CityId { get; set; }
-        public virtual ICollection<ArmyUnitJoin> Units { get; set; }
+        public virtual ICollection<ArmyUnit> Units { get; set; }
         public virtual ICollection<Attack> Attacks { get; set; }
 
         public Army()
         {
             Id = Guid.NewGuid();
 
-            Units = new List<ArmyUnitJoin>() {
-                new ArmyUnitJoin
+            Units = new List<ArmyUnit>() {
+                new ArmyUnit
             {
                 UnitType = UnitType.Csatacsiko,
                 UnitCount = 10,
             },
 
-                new ArmyUnitJoin
+                new ArmyUnit
             {
                 UnitType = UnitType.Lezercapa,
                 UnitCount = 10,
             },
-                new ArmyUnitJoin
+                new ArmyUnit
             {
                 UnitType = UnitType.Rohamfoka,
                 UnitCount = 10,
@@ -40,19 +40,19 @@ namespace Undersea.DAL.Models
         {
             Id = Guid.NewGuid();
 
-            Units = new List<ArmyUnitJoin>() {
-                new ArmyUnitJoin
+            Units = new List<ArmyUnit>() {
+                new ArmyUnit
             {
                 UnitType = UnitType.Csatacsiko,
                 UnitCount = csatacsikoCount,
             },
 
-                new ArmyUnitJoin
+                new ArmyUnit
             {
                 UnitType = UnitType.Lezercapa,
                 UnitCount = lezercapaCount,
             },
-                new ArmyUnitJoin
+                new ArmyUnit
             {
                 UnitType = UnitType.Rohamfoka,
                 UnitCount = rohamfokaCount,

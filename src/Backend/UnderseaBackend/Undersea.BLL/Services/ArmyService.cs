@@ -75,7 +75,7 @@ namespace Undersea.BLL.Services
                 throw new Exception("Not enough money");
             }
 
-            foreach (ArmyUnitJoin au in list)
+            foreach (ArmyUnit au in list)
             {
                 au.UnitCount += dto.Single(d => d.UnitType == au.UnitType).UnitCount;
                 await _armyUnitRepository.Update(au);

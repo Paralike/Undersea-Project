@@ -11,33 +11,45 @@
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 	border-radius: 16px;
-	padding-left: 30px;
-	padding-right: 10px;
+	padding-left: 2vw;
+	padding-right: 1vw;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 84px;
+	height: 10vh;
 	margin-top: 1vh;
 }
 
 .infos {
 	display: flex;
 	flex-direction: row;
-	align-items: stretch;
+	align-items: center;
 	justify-content: space-around;
 	font-family: baloo;
-	font-size: 1.2vw;
+	font-size: 1vw;
 	color: #1c3e76;
-	width: 15vw;
+	width: 20vw;
+	
+	
+}
+
+img{
+	width: 3vw;
+	height: 5vh;
 }
 
 .infos span {
-	margin: 5px;
+	margin: 0.8vw;
 }
 
 .nav-links {
 	list-style: none;
 	display: flex;
+	width: 70vw;
+}
+
+ul {
+	padding-inline-start: 2vw;
 }
 
 .nav-item span {
@@ -45,12 +57,11 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	padding: 5px 10px;
+	padding: 0.7vw 0.8vw;
 	text-decoration: none;
 	font-family: baloo;
 	letter-spacing: 0px;
-	font-size: 32px;
-	margin-left: 2rem;
+	margin-left: 0.5vw;
 	color: #1c3e76;
 }
 
@@ -80,7 +91,7 @@
 	align-items: flex-start;
 	justify-content: center;
 	margin-left: 1rem;
-	font-size: 1.3vw;
+	font-size: 1vw;
 	font-family: baloo;
 	letter-spacing: 0px;
 }
@@ -88,7 +99,7 @@
 .second-data {
 	display: flex;
 	flex-direction: row;
-	font-size: 0.9vw ;
+	font-size: 0.7vw ;
 	width: 2.5vw;
 }
 
@@ -103,5 +114,6 @@ button {
 	letter-spacing: 0px;
 	color: #001234;
 	width: 10vw;
-	margin-left: 10px;
+	height: 5vh;
+	margin-left: 1vw;
 }
