@@ -11,7 +11,9 @@ import {
   UnitDto,
   ProfileClient,
   RankDto,
-  GameClient
+  GameClient,
+  AttackResponseDto,
+  AttackDto
 } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
@@ -87,6 +89,7 @@ const mock = [
 export class FeatureService {
   army: ArmyDto;
   unitToSend: ArmyUnitDto;
+  attack: AttackDto;
 
   constructor(
     private buildingsClient: BuildingsClient,
@@ -111,12 +114,18 @@ export class FeatureService {
     return this.attackClient.getAttackableUsers();
   }
 
+  sendAttack(id: string, units: ArmyUnitDto[]): Observable<any> {
+    this.attack.defenderCityId = id;
+    this.attack.units = units;
+    return this.attackClient.startAttack(this.attack);
+  }
+
   getRanks(): Observable<RankDto[]> {
     return this.profileClient.getRanks();
   }
 
-  getFights(): Observable<PeriodicElement[]> {
-    return of(FIGTHS);
+  getFights(): Observable<AttackResponseDto[]> {
+    return this.attackClient.getAllAttacks();
   }
 
   getArmy(): Observable<UnitDto[]> {
@@ -129,7 +138,7 @@ export class FeatureService {
     return this.armyClient.purchaseUnits(units);
   }
 
-  getCityArmy() {
+  getCityArmy(): Observable<any> {
     return this.armyClient.getArmy();
   }
 
