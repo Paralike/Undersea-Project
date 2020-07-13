@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getTurnCount(){
+    console.log(this.currentTurn);
     this.featureService.getTurn().subscribe(res => this.currentTurn = res);
   }
 
