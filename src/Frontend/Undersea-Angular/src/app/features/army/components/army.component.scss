@@ -68,7 +68,7 @@ h2{
 .unit-name {
     margin: 2vh;
     font-family: open-sans-bold;
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 
 .unit-content {
@@ -77,7 +77,7 @@ h2{
     align-items: stretch;
     justify-content: space-between;
     font-family: open-sans-regular;
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 .descriptions {
     display: flex;
@@ -123,7 +123,7 @@ div:focus {
     border-radius: 13px;
     color: #03255f;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 0.8vw;
     cursor: pointer;
     user-select: none;
 }
