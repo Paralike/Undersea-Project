@@ -19,20 +19,21 @@ export class HeaderComponent implements OnInit {
     this.getTurnCount();
   }
 
-  getTurnCount(){
+  getTurnCount() {
     this.featureService.getTurn().subscribe(res => this.currentTurn = res);
   }
 
   endTurn() {
-    this.featureService.endTurn().subscribe(() => {}, (err) => console.error(err));
-    this.getTurnCount();
-    this.featureService.getProfile().subscribe(res => {
-      this.city = res;
-      console.log('SZITI', this.city);
-    },
-      err => {
-        console.error(err);
-      });
+    this.featureService.endTurn().subscribe(() => {
+      this.getTurnCount();
+      this.featureService.getProfile().subscribe(res => {
+        this.city = res;
+        console.log('SZITI', this.city);
+      },
+        err => {
+          console.error(err);
+        });
+    }, (err) => console.error(err));
   }
 }
 
