@@ -88,14 +88,14 @@ export class AuthPageComponent implements OnInit {
           }
           // tslint:disable-next-line:no-unused-expression
         }, (err) => {
-          this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'kuka');
+          this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'Bezár');
           console.error('HURKAAAAA', err);
         });
       }
 
 
       else {
-        this.snackbar.open('A 2 jelszó nem egyezik', 'kuka', {
+        this.snackbar.open('A 2 jelszó nem egyezik', 'Bezár', {
           duration: 5000
         });
       }
