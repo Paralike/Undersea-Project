@@ -60,9 +60,13 @@ export class AttackComponent implements OnInit {
       console.log(this.army, this.selectedUserId);
       this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {});
       this.dialogRef.close();
-      this.snackbar.open('Sikeres támadás!', 'Bezár');
+      this.snackbar.open('Sikeres támadás!', 'Bezár', {
+        duration: 3000
+      });
     } else if (this.selected === false) {
-      this.snackbar.open('Válaszd ki kit szeretnél támadni!', 'Bezár');
+      this.snackbar.open('Válaszd ki kit szeretnél támadni!', 'Bezár', {
+        duration: 3000
+      });
     }
   }
 

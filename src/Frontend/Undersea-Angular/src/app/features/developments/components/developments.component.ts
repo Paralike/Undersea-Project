@@ -40,6 +40,8 @@ export class DevelopmentsComponent implements OnInit {
     console.log(this.selectedDevelopment);
     console.log(this.developments[this.selectedDevelopment - 1].name);
     this.dialogRef.close();
-    this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+    this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+      duration: 3000
+    });
   }
 }
