@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
-using Undersea.DAL;
 using Undersea.DAL.Models;
 
 namespace Undersea.BLL.Interfaces

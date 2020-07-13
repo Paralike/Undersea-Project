@@ -3,7 +3,7 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public class Unit: IDbEntity
+    public class Unit : IDbEntity
     {
         public virtual UnitType UnitType { get; set; }
         public int Price { get; set; }

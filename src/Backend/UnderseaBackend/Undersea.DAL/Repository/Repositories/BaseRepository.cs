@@ -47,14 +47,14 @@ namespace Undersea.DAL.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
         public IQueryable<T> GetAllWith()
         {
-            return  _context.Set<T>();
+            return _context.Set<T>();
         }
 
         public Task<int> CountAll() => _context.Set<T>().CountAsync();

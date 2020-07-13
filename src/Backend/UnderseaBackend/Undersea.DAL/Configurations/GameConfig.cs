@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Undersea.DAL.Configurations
 {
@@ -15,7 +13,7 @@ namespace Undersea.DAL.Configurations
                 {
                     Id = Guid.NewGuid(),
                     CurrentTurn = 1
-                }); 
+                });
 
             entity.HasKey(g => g.Id);
         }

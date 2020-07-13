@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs.Exception;
@@ -36,17 +34,17 @@ namespace Undersea.API.Middlewares
             {
 
             }
-            catch(TimeoutException ex)
+            catch (TimeoutException ex)
             {
                 //await _logger.LogError($"Timeout Happened " + ex);
                 await HandleTimeoutException(httpContext, ex);
             }
             catch (Exception ex)
             {
-               // await _logger.LogError($"Something went wrong: {ex}");
+                // await _logger.LogError($"Something went wrong: {ex}");
                 await HandleExceptionAsync(httpContext, ex);
             }
-            
+
             // TODO új exception alapján lekezelni
         }
 

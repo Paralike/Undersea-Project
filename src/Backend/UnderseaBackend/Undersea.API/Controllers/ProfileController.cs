@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
-using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
 {
@@ -17,12 +13,12 @@ namespace Undersea.API.Controllers
     public class ProfileController : ControllerBase
     {
         IProfileService _profileService;
-        
+
 
         public ProfileController(IProfileService profileService)
         {
             _profileService = profileService;
-           
+
         }
 
         [HttpDelete("{id}")]

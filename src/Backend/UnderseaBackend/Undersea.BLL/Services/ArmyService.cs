@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
-using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
