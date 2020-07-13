@@ -11,17 +11,17 @@
       <form *ngIf="!isReg" [formGroup]="loginForm" class="auth" (ngSubmit)="login()">
 
           <input  id="name" name="name" type="text" formControlName="name" placeholder="Felhasználónév">
-          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+          <div *ngIf="loginForm.controls.name.invalid && (loginForm.controls.name.dirty || loginForm.controls.name.touched)"
             class="alert-danger">
-            <div *ngIf="name.errors.required">
+            <div *ngIf="loginForm.controls.name.errors.required">
               Név kitöltése költelező
             </div>
           </div>
 
           <input type="password" formControlName="password" placeholder="Jelszó">
-          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+          <div *ngIf="loginForm.controls.password.invalid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)"
             class="alert-danger">
-            <div *ngIf="name.errors.required">
+            <div *ngIf="loginForm.controls.password.errors.required">
               Jelszó kitöltése költelező
             </div>
           </div>
@@ -33,39 +33,42 @@
       <form *ngIf="isReg" [formGroup]="registerForm" class="auth" (ngSubmit)="register()">
 
           <input type="text" formControlName="name" placeholder="Felhasználónév">
-          <div *ngIf="namer.invalid && (namer.dirty || namer.touched)"
+          <div *ngIf="registerForm.controls.name.invalid && (registerForm.controls.name.dirty || registerForm.controls.name.touched)"
             class="alert-danger">
-            <div *ngIf="namer.errors.required">
-              Név kitöltése költelező
+            <div *ngIf="registerForm.controls.name.errors.required">
+              Név kitöltése kötelező
+            </div>
+            <div *ngIf="registerForm.controls.name.errors.whitespace">
+              A név nem tartalmazhat szóközt!
             </div>
           </div>
 
           <input id="password" class="form-control" type="password" formControlName="password" placeholder="Jelszó" minlength="8">
-          <div *ngIf="passwordr.invalid && (passwordr.dirty || passwordr.touched)"
+          <div *ngIf="registerForm.controls.password.invalid && (registerForm.controls.password.dirty || registerForm.controls.password.touched)"
             class="alert-danger">
-            <div *ngIf="passwordr.errors.required">
-              Jelszó kitöltése költelező
+            <div *ngIf="registerForm.controls.password.errors.required">
+              Jelszó kitöltése kötelező
             </div>
-            <div *ngIf="passwordr.errors.minlength">
+            <div *ngIf="registerForm.controls.password.errors.minlength">
               A jelszó legalább 8 karakter legyen!
             </div>
           </div>
 
           <input type="password" formControlName="password2" placeholder="Jelszó megerősítése" minlength="8">
-          <div *ngIf="passwordr2.invalid && (passwordr2.dirty || passwordr2.touched)"
+          <div *ngIf="registerForm.controls.password2.invalid && (registerForm.controls.password2.dirty || registerForm.controls.password2.touched)"
             class="alert-danger">
-            <div *ngIf="passwordr2.errors.required">
+            <div *ngIf="registerForm.controls.password2.errors.required">
               Jelszó kitöltése költelező
             </div>
-            <div *ngIf="passwordr2.errors.minlength">
+            <div *ngIf="registerForm.controls.password2.errors.minlength">
               A jelszó legalább 8 karakter legyen!
             </div>
           </div>
 
           <input type="text" formControlName="cityName" placeholder="A városod neve, amit építesz">
-          <div *ngIf="cityNamer.invalid && (cityNamer.dirty || cityNamer.touched)"
+          <div *ngIf="registerForm.controls.cityName.invalid && (registerForm.controls.cityName.dirty || registerForm.controls.cityName.touched)"
             class="alert-danger">
-            <div *ngIf="cityNamer.errors.required">
+            <div *ngIf="registerForm.controls.cityName.errors.required">
               Városnév kitöltése költelező
             </div>
           </div>
@@ -78,6 +81,6 @@
     (click) = "changeMode(true)">Regisztráció</button>
 
     <button *ngIf="isReg" class = "mode-button"
-    (click) = "changeMode(false)">Bejelentkezés</button>
+    (click) = "changeMode(false)" >Bejelentkezés</button>
   </mat-card>
 </div>
