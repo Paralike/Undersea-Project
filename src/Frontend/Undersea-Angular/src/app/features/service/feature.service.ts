@@ -115,6 +115,7 @@ export class FeatureService {
   }
 
   sendAttack(id: string, units: ArmyUnitDto[]): Observable<any> {
+    this.attack = new AttackDto();
     this.attack.defenderCityId = id;
     this.attack.units = units;
     return this.attackClient.startAttack(this.attack);
