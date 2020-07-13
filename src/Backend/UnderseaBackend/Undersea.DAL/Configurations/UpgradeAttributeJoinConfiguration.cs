@@ -9,7 +9,8 @@ namespace Undersea.DAL.Configurations
         public void Configure(EntityTypeBuilder<UpgradeAttributeJoin> entity)
         {
             entity.HasKey(ua => new { ua.UpgradeId, ua.upgradeType });
-            entity.HasOne(e => e.Upgrade).WithMany(c => c.UpgradeAttributes);
+            //entity.HasKey(e => e.UpgradeId);
+            //entity.HasOne(e => e.Upgrade).WithMany(c => c.UpgradeAttributes);
         }
     }
 }

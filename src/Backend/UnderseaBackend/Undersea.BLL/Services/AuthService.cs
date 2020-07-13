@@ -71,14 +71,14 @@ namespace Undersea.BLL.Services
         public async Task<AuthResponseDto> RegisterUser(RegisterDto newUserDto)
         {
             var user = new User(newUserDto.Username, newUserDto.City);
-            var city = new List<City> {
+            /*var city = new List<City> {
                 new City()
             {
                 Name = newUserDto.City,
                 UserId = user.Id
             }
             };
-            user.Cities = city;
+            user.Cities = city;*/
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUserDto.Password);
 
             var result = await _userManager.CreateAsync(user);
