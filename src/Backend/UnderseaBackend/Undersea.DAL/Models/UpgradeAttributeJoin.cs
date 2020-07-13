@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using Undersea.DAL.Enums;
+using System.Collections.Generic;
 
 namespace Undersea.DAL.Models
 {
-    public class UpgradeAttributeJoin
+    public class UpgradeAttributeJoin : IDbEntity
     {
         public Guid UpgradeAttributeId { get; set; }
         public virtual UpgradeAttribute UpgradeAttribute { get; set; }
@@ -11,5 +13,7 @@ namespace Undersea.DAL.Models
         public virtual Upgrade Upgrade { get; set; }
         public UpgradeType upgradeType { get; set; }
         public int CurrentTurn { get; set; }
+        public Status Status { get; set; }
+        public Guid Id { get; set; }
     }
 }

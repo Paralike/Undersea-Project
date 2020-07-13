@@ -3,7 +3,7 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public class UpgradeAttribute
+    public class UpgradeAttribute : IDbEntity
     {
         public UpgradeType upgradeType {get;set;}
         public Guid Id { get; set; }
@@ -11,5 +11,6 @@ namespace Undersea.DAL.Models
         public int DefensePoints { get; set; }
         public int AttackPoints { get; set; }
         public int TaxIncrease { get; set; }
+        public string Name { get; set; }
     }
 }

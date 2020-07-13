@@ -21,7 +21,38 @@ namespace Undersea.DAL.Models
                 new UpgradeAttributeJoin
                 {
                     upgradeType = UpgradeType.Alkimia,
-                    CurrentTurn = 15,
+                    CurrentTurn = 0,
+                    Status = Status.UnBuilt
+                },
+                new UpgradeAttributeJoin
+                {
+                    upgradeType = UpgradeType.Iszapkombajn,
+                    CurrentTurn = 0,
+                    Status = Status.UnBuilt
+                },
+                new UpgradeAttributeJoin
+                {
+                    upgradeType = UpgradeType.Iszaptraktor,
+                    CurrentTurn = 0,
+                    Status = Status.UnBuilt
+                },
+                new UpgradeAttributeJoin
+                {
+                    upgradeType = UpgradeType.Korallfal,
+                    CurrentTurn = 0,
+                    Status = Status.UnBuilt
+                },
+                new UpgradeAttributeJoin
+                {
+                    upgradeType = UpgradeType.Szonaragyu,
+                    CurrentTurn = 0,
+                    Status = Status.UnBuilt
+                },
+                new UpgradeAttributeJoin
+                {
+                    upgradeType = UpgradeType.VizalattiHarcmuveszetek,
+                    CurrentTurn = 0,
+                    Status = Status.UnBuilt
                 }
             };
         }
