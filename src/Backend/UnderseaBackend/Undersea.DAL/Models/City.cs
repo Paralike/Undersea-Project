@@ -17,6 +17,7 @@ namespace Undersea.DAL.Models
         public virtual Army AvailableArmy { get; set; } 
         public Guid AvailableArmyId { get; set; }
         public virtual Upgrade Upgrades { get; set; }
+        public Guid UpgradesId { get; set; }
         //public virtual ICollection<Building> Buildings { get; set; }
         public virtual ICollection<Attack> Attacks { get; set; }
 
@@ -27,6 +28,8 @@ namespace Undersea.DAL.Models
             AvailableArmyId = AvailableArmy.Id;
             AvailableArmy.CityId = Id;
             Upgrades = new Upgrade();
+            UpgradesId = Upgrades.Id;
+            Upgrades.CityId = Id;
         
         }
     }

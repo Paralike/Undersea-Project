@@ -9,9 +9,9 @@ namespace Undersea.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Army> entity)
         {
-            /*entity.HasOne(a => a.City)
+            entity.HasOne(a => a.City)
             .WithOne(c => c.AvailableArmy)
-            .HasForeignKey<Army>(a => a.CityId);*/
+            .HasForeignKey<Army>(a => a.CityId);
         }
     }
 }
