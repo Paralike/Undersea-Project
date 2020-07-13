@@ -34,17 +34,17 @@
                 </tr>
                 <tr>
                     <td><img src='assets/images/Lézercápa.svg'>Lézercápa:  <span style="width: 10px;">{{matslider?.value}}</span>  példány   <br>
-                         <mat-slider class="matslider" #matslider class="slider" min="0" max="{{data.units[2]}}" step="1" value="0"></mat-slider></td>
+                         <mat-slider class="matslider" #matslider class="slider" min="0" max="{{data.units[0].unitCount}}" step="1" value="0"></mat-slider></td>
                 </tr>
                 <tr>
                     <td><img src='assets/images/Rohamfóka.svg'>Rohamfóka: <span style="width: 10px;">{{matslider2?.value}}</span> példány <br>
-                        <mat-slider #matslider2 class="slider" min="0" max= "{{data.units[0]}}" step="1" value="0"></mat-slider>
+                        <mat-slider #matslider2 class="slider" min="0" max= "{{data.units[1].unitCount}}" step="1" value="0"></mat-slider>
                     </td>
                 </tr>
                 <tr>
                     <td><img src='assets/images/Csatacsikó.svg'>Csatacsikó: <span style="width: 10px;">{{matslider3?.value}}</span> példány
                         <br>
-                        <mat-slider #matslider3 class="slider" min="0" max="{{data.units[1]}}" step="1" value="0"></mat-slider>
+                        <mat-slider #matslider3 class="slider" min="0" max="{{data.units[2].unitCount}}" step="1" value="0"></mat-slider>
                     </td>
                 </tr>
             </table>

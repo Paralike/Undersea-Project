@@ -36,10 +36,7 @@ export class ArmyComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.featureService.getArmy().subscribe(res => {
-      this.army = res;
-
-    },
+    this.featureService.getArmy().subscribe(res => this.army = res,
       (err) => {
         console.log(err);
       });
@@ -57,7 +54,7 @@ export class ArmyComponent implements OnInit {
   }
 
   sendData() {
-    if (this.addUnit[0].unitCount === 0 && this.addUnit[1].unitCount === 0 && this.addUnit[2].unitCount === 0) {
+    if (!this.addUnit.some(x => x.unitCount !== 0)) {
       this.snackbar.open('Válaszd ki mit szeretnél vásárolni!', 'Bezár', {
         duration: 3000
       });
