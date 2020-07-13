@@ -9,6 +9,6 @@ namespace Undersea.DAL.Repositories.Interfaces
 {
     public interface IUpgradeRepository : IBaseRepository<Upgrade>
     {
-        public Task AddUpgrade(Guid CityId, UpgradeType UpgradeType);
+        public Task AddUpgrade(/*Guid CityId, */int UpgradeType);
     }
 }

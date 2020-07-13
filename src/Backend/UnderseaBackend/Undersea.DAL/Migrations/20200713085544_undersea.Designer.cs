@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200710111925_undersea2")]
-    partial class undersea2
+    [Migration("20200713085544_undersea")]
+    partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -395,9 +395,6 @@ namespace Undersea.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("CurrentTurn")
                         .HasColumnType("int");
 
@@ -441,8 +438,6 @@ namespace Undersea.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UpgradeId", "UpgradeAttributeId");
-
-                    b.HasIndex("UpgradeAttributeId");
 
                     b.ToTable("CityUpgrades");
                 });
@@ -635,12 +630,6 @@ namespace Undersea.DAL.Migrations
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.UpgradeAttribute", "UpgradeAttribute")
-                        .WithMany()
-                        .HasForeignKey("UpgradeAttributeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
                         .WithMany()
                         .HasForeignKey("UpgradeId")

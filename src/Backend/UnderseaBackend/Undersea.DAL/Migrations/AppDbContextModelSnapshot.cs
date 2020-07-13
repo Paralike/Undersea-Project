@@ -393,9 +393,6 @@ namespace Undersea.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("CurrentTurn")
                         .HasColumnType("int");
 
@@ -439,8 +436,6 @@ namespace Undersea.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UpgradeId", "UpgradeAttributeId");
-
-                    b.HasIndex("UpgradeAttributeId");
 
                     b.ToTable("CityUpgrades");
                 });
@@ -633,12 +628,6 @@ namespace Undersea.DAL.Migrations
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.UpgradeAttribute", "UpgradeAttribute")
-                        .WithMany()
-                        .HasForeignKey("UpgradeAttributeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
                         .WithMany()
                         .HasForeignKey("UpgradeId")

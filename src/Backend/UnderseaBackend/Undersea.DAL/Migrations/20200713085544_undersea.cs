@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class undersea2 : Migration
+    public partial class undersea : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,7 +125,6 @@ namespace Undersea.DAL.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UpgradeType = table.Column<int>(nullable: false),
-                    CityId = table.Column<Guid>(nullable: false),
                     CurrentTurn = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -301,12 +300,6 @@ namespace Undersea.DAL.Migrations
                 {
                     table.PrimaryKey("PK_CityUpgrades", x => new { x.UpgradeId, x.UpgradeAttributeId });
                     table.ForeignKey(
-                        name: "FK_CityUpgrades_UpgradeAttributes_UpgradeAttributeId",
-                        column: x => x.UpgradeAttributeId,
-                        principalTable: "UpgradeAttributes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_CityUpgrades_Upgrades_UpgradeId",
                         column: x => x.UpgradeId,
                         principalTable: "Upgrades",
@@ -472,11 +465,6 @@ namespace Undersea.DAL.Migrations
                 name: "IX_CityBuildings_BuildingAttributeId",
                 table: "CityBuildings",
                 column: "BuildingAttributeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CityUpgrades_UpgradeAttributeId",
-                table: "CityUpgrades",
-                column: "UpgradeAttributeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -515,6 +503,9 @@ namespace Undersea.DAL.Migrations
                 name: "Units");
 
             migrationBuilder.DropTable(
+                name: "UpgradeAttributes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -522,9 +513,6 @@ namespace Undersea.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Building");
-
-            migrationBuilder.DropTable(
-                name: "UpgradeAttributes");
 
             migrationBuilder.DropTable(
                 name: "Upgrades");
