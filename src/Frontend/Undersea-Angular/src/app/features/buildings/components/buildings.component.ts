@@ -26,7 +26,7 @@ export class BuildingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildings = [];
-    this.featureService.getBuildings().subscribe(res => console.log(res),
+    this.featureService.getBuildings().subscribe(res => this.buildings = res,
       (err) => {
         console.log(err);
       });
@@ -41,7 +41,9 @@ export class BuildingsComponent implements OnInit {
     console.log(this.selectedBuilding);
     console.log(this.buildings[this.selectedBuilding - 1].name);
     this.dialogRef.close();
-    this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+    this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+      duration: 3000
+    });
 
   }
 }

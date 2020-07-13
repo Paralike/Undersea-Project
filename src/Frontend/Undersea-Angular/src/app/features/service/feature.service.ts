@@ -101,9 +101,9 @@ export class FeatureService {
     private gameClient: GameClient
   ) { }
 
-  getBuildings(): Observable<BuildingDto> {
-    return this.buildingsClient.getBuilding();
-   // return of(BUIDLDINGS);
+  getBuildings(): Observable<any> {
+   // return this.buildingsClient.getBuilding();
+    return of(BUIDLDINGS);
   }
   getDevelopments(): Observable<DevelopmentModel[]> {
     return of(DEVELOPMENTS);

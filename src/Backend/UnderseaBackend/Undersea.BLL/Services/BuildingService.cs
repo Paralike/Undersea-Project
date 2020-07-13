@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
@@ -21,13 +20,15 @@ namespace Undersea.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<ICollection<BuildingDto>>> GetBuilding() {
-            var list =  _buildingRepository.GetAll();
+        public async Task<ActionResult<ICollection<BuildingDto>>> GetBuilding()
+        {
+            var list = _buildingRepository.GetAll();
             return _mapper.Map<List<BuildingDto>>(list);
         }
 
-        public async Task PurchaseBuilding(BuildingDto building) {
-            await _buildingRepository.Add(_mapper.Map< Building > (building));
+        public async Task PurchaseBuilding(BuildingDto building)
+        {
+            await _buildingRepository.Add(_mapper.Map<Building>(building));
         }
     }
 }

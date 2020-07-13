@@ -14,11 +14,15 @@ namespace Undersea.DAL.Configurations
                     .OnDelete(DeleteBehavior.NoAction);
 
             entity.HasOne(a => a.AttackerCity)
-                .WithMany(c => c.Attacks)
-                .HasForeignKey(a => a.AttackerCityId)
-                .OnDelete(DeleteBehavior.NoAction);
+                    .WithMany(c => c.Attacks)
+                    .HasForeignKey(a => a.AttackerCityId)
+                    .OnDelete(DeleteBehavior.NoAction);
 
-            // TODO defender city config
+            entity.HasOne(a => a.DefenderCity)
+                    .WithMany(c => c.Defenses)
+                    .HasForeignKey(a => a.DefenderCityId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

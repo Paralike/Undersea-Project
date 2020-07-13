@@ -12,7 +12,7 @@ namespace Undersea.DAL
         public AppDbContext(DbContextOptions<AppDbContext> options)
           : base(options)
         {
-            
+
         }
 
         public DbSet<Army> Armies { get; set; }
@@ -40,8 +40,8 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());
-            modelBuilder.ApplyConfiguration(new GameConfiguration());            
-            
+            modelBuilder.ApplyConfiguration(new GameConfiguration());
+
         }
     }
 }

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
-using Undersea.DAL.Enums;
 
 namespace Undersea.API.Controllers
 {

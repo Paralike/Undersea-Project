@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
@@ -21,7 +18,7 @@ namespace Undersea.BLL.Services
 
         }
 
-        public CityService(ICityRepository cityRepository, IMapper mapper , IArmyService armyservice)
+        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
@@ -41,18 +38,18 @@ namespace Undersea.BLL.Services
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
-                            
+
             };
 
             return city;
-            
+
         }
         public async Task AddUpgrade()
         {
-            
+
 
         }
 
-        
+
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 

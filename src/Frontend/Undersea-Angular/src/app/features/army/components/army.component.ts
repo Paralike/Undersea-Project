@@ -29,10 +29,9 @@ export class ArmyComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     this.addUnit = [];
-    this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
-    this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
-    this.addUnit[2] = new ArmyUnitDto({ unitType: UnitType.Lezercapa, unitCount: 0 });
-
+    this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Lezercapa, unitCount: 0 });
+    this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
+    this.addUnit[2] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
   }
 
   ngOnInit(): void {
@@ -41,14 +40,10 @@ export class ArmyComponent implements OnInit {
       (err) => {
         console.log(err);
       });
-
-    console.log(this.data);
-
   }
 
   plusUnit(unit: number) {
     this.addUnit[unit].unitCount++;
-    console.log(unit);
   }
 
   minusUnit(unit: number) {
@@ -59,14 +54,21 @@ export class ArmyComponent implements OnInit {
   }
 
   sendData() {
-
     if (!this.addUnit.some(x => x.unitCount !== 0)) {
-      this.snackbar.open('Válaszd ki mit szeretnél vásárolni!', 'Bezár');
+      this.snackbar.open('Válaszd ki mit szeretnél vásárolni!', 'Bezár', {
+        duration: 3000
+      });
     } else {
-      console.log(this.addUnit);
       this.featureService.purchaseUnits(this.addUnit).subscribe(() => {
         this.dialogRef.close();
-        this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+        this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+          duration: 3000
+        });
+      }, (err) => {
+        console.log('Error:', err);
+        // this.snackbar.open(err.message, 'Bezár', {
+        //   duration: 5000
+        // });
       });
     }
 

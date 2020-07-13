@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL;
@@ -73,7 +70,7 @@ namespace Undersea.BLL.Services
 
                 // TODO támadóerő +- 5%
 
-                if(attack > defense)
+                if (attack > defense)
                 {
                     a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
                     a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
@@ -81,7 +78,7 @@ namespace Undersea.BLL.Services
                     a.DefenderCity.CoralCount /= 2;
                     a.DefenderCity.PearlCount /= 2;
 
-                    foreach(ArmyUnit au in a.DefenderCity.AvailableArmy.Units)
+                    foreach (ArmyUnit au in a.DefenderCity.AvailableArmy.Units)
                     {
                         au.UnitCount = Convert.ToInt32(au.UnitCount * 0.9);
                     }
@@ -95,7 +92,7 @@ namespace Undersea.BLL.Services
                     }
                 }
 
-                foreach(ArmyUnit au in a.Army.Units) 
+                foreach (ArmyUnit au in a.Army.Units)
                 {
                     a.AttackerCity.AvailableArmy.Units.Single(a => a.UnitType == au.UnitType).UnitCount += au.UnitCount;
                 }
