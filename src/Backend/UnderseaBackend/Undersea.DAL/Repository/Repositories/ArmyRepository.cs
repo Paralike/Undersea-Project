@@ -14,30 +14,12 @@ namespace Undersea.DAL.Repositories
         {
         }
 
-        public async Task<Army> BuyUnitsAsync(Guid id)
+        public async Task<int> GetFoodNecessity(Guid armyId)
         {
-            var army = await _context
-                  .Armies
-                  .Include(a => a.Units).ThenInclude(au => au.UnitType)
-                  .Include(a => a.Units).ThenInclude(au => au.UnitCount)
-                  .Where(a => a.Id == id)
-                  .FirstOrDefaultAsync();
-
-            return army;
-        }
-
-        public async Task<int> GetFoodNecessity(Guid id)
-        {
-            //var army = await _context
-            //      .Armies
-            //      .Include(a => a.Units)
-            //        .ThenInclude(au => au.UnitType)
-            //      .Include(a => a.Units).
-            //        ThenInclude(au => au.UnitCount)
 
             var query = from units in _context.Units
                         join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
-                        where unitArmy.ArmyId == id
+                        where unitArmy.ArmyId == armyId
                         select new { unitArmy.UnitCount, units.FoodNecessity };
 
             var sum = await query.SumAsync(a => a.FoodNecessity * a.UnitCount);
@@ -45,24 +27,24 @@ namespace Undersea.DAL.Repositories
             return sum;
         }
 
-        public async Task<int> GetPearlNecessity(Guid id)
+        public async Task<int> GetPearlNecessity(Guid armyId)
         {
             var query = from units in _context.Units
-                        join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
-                        where unitArmy.ArmyId == id
-                        select new { unitArmy.UnitCount, units.PearlNecessity };
+                        join armyUnit in _context.ArmyUnitJoins on units.UnitType equals armyUnit.UnitType
+                        where armyUnit.ArmyId == armyId
+                        select new { armyUnit.UnitCount, units.PearlNecessity };
 
             var sum = await query.SumAsync(a => a.PearlNecessity * a.UnitCount);
 
             return sum;
         }
 
-        public async Task<int> GetArmyPrice(Guid id)
+        public async Task<int> GetArmyPrice(Guid armyId)
         {
             var query = from units in _context.Units
-                        join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
-                        where unitArmy.ArmyId == id
-                        select new { unitArmy.UnitCount, units.Price };
+                        join armyUnit in _context.ArmyUnitJoins on units.UnitType equals armyUnit.UnitType
+                        where armyUnit.ArmyId == armyId
+                        select new { armyUnit.UnitCount, units.Price };
 
             var sum = await query.SumAsync(a => a.Price * a.UnitCount);
 

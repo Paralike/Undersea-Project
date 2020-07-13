@@ -56,6 +56,9 @@ namespace Undersea.BLL.Services
             {
                 c.PearlCount += c.PearlProduction;
                 c.CoralCount += c.CoralProduction;
+
+                // TODO mi van a mínuszba megy át??
+
                 c.PearlCount -= await _armyRepository.GetPearlNecessity(c.AvailableArmyId);
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
                 await _cityRepository.Update(c);
@@ -67,7 +70,6 @@ namespace Undersea.BLL.Services
             {
                 int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
                 int attack = await _armyService.GetArmyAttackingPower(a.AttackerCity.AvailableArmyId);
-
 
                 // TODO támadóerő +- 5%
 
@@ -100,7 +102,7 @@ namespace Undersea.BLL.Services
 
                 await _cityRepository.Update(a.DefenderCity);
                 await _cityRepository.Update(a.AttackerCity);
-
+                await _attackRepository.Remove(a);
             }
 
             // ranglista számolás

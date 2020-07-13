@@ -45,10 +45,10 @@ namespace Undersea.BLL.Services
             return _mapper.Map<List<AttackableUsersDto>>(list);
         }
 
-        public async Task StartAttack(Guid id, AttackDto attack)
+        public async Task StartAttack(Guid userId, AttackDto attack)
         { 
             // TODO City lekérdezést kiszervezni
-            var cities = await _cityRepository.GetWhere(c => c.UserId == id);
+            var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
             var firstCity = cities.First();
 
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
@@ -67,7 +67,8 @@ namespace Undersea.BLL.Services
 
             Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka)
             {
-                CityId = firstCity.Id,
+                City = firstCity,
+                CityId = firstCity.Id,               
             };
 
             await _armyRepository.Add(newArmy);

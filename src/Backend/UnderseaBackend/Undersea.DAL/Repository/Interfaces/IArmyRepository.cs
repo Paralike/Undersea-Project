@@ -6,8 +6,7 @@ namespace Undersea.DAL.Repositories.Interfaces
 {
     public interface IArmyRepository : IBaseRepository<Army>
     {
-        public Task<Army> BuyUnitsAsync(Guid id);
-        public Task<int> GetFoodNecessity(Guid id);
-        public Task<int> GetPearlNecessity(Guid id);
+        public Task<int> GetFoodNecessity(Guid armyId);
+        public Task<int> GetPearlNecessity(Guid armyId);
     }
 }
