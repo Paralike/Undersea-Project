@@ -476,9 +476,9 @@
       "type": "integer",
       "description": "",
       "x-enumNames": [
+        "Lezercapa",
         "Rohamfoka",
-        "Csatacsiko",
-        "Lezercapa"
+        "Csatacsiko"
       ],
       "enum": [
         0,

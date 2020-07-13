@@ -964,9 +964,9 @@ export interface IUnitDto {
 }
 
 export enum UnitType {
-    Rohamfoka = 0,
-    Csatacsiko = 1,
-    Lezercapa = 2,
+    Lezercapa = 0,
+    Rohamfoka = 1,
+    Csatacsiko = 2,
 }
 
 export class ArmyUnitDto implements IArmyUnitDto {

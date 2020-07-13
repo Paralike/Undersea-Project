@@ -67,7 +67,6 @@ namespace Undersea.BLL.Services
 
             Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka)
             {
-                City = firstCity,
                 CityId = firstCity.Id,               
             };
 
