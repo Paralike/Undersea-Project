@@ -10,7 +10,7 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200713135533_undersea")]
+    [Migration("20200713143843_undersea")]
     partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

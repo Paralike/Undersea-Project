@@ -711,14 +711,33 @@
       ],
       "properties": {
         "upgradeType": {
-          "type": "integer",
-          "format": "int32"
+          "$ref": "#/definitions/UpgradeType"
         },
         "cityId": {
           "type": "string",
           "format": "guid"
         }
       }
+    },
+    "UpgradeType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Iszaptraktor",
+        "Iszapkombajn",
+        "Korallfal",
+        "Szonaragyu",
+        "VizalattiHarcmuveszetek",
+        "Alkimia"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     }
   }
 }

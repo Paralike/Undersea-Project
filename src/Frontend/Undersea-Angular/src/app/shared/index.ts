@@ -1403,7 +1403,7 @@ export interface IRankDto {
 }
 
 export class UpgradeDto implements IUpgradeDto {
-    upgradeType!: number;
+    upgradeType!: UpgradeType;
     cityId!: string;
 
     constructor(data?: IUpgradeDto) {
@@ -1438,8 +1438,17 @@ export class UpgradeDto implements IUpgradeDto {
 }
 
 export interface IUpgradeDto {
-    upgradeType: number;
+    upgradeType: UpgradeType;
     cityId: string;
+}
+
+export enum UpgradeType {
+    Iszaptraktor = 0,
+    Iszapkombajn = 1,
+    Korallfal = 2,
+    Szonaragyu = 3,
+    VizalattiHarcmuveszetek = 4,
+    Alkimia = 5,
 }
 
 export interface FileResponse {
