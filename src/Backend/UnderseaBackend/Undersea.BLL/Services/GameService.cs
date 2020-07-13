@@ -69,7 +69,7 @@ namespace Undersea.BLL.Services
             foreach (Attack a in attacks)
             {
                 int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
-                int attack = await _armyService.GetArmyAttackingPower(a.AttackerCity.AvailableArmyId);
+                int attack = await _armyService.GetArmyAttackingPower(a.ArmyId);
 
                 // TODO támadóerő +- 5%
 
