@@ -51,17 +51,17 @@ namespace Undersea.BLL.Services
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
 
-            var defenderCity = (await _cityRepository.GetWhere(c => c.Id == attack.DefenderCityId)).First();
+            var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
 
             int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
             int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
             int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
 
-            var army = firstCity.AvailableArmy.Units.ToList();
+            var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
             foreach (ArmyUnit au in army)
             {
-                au.UnitCount -= attack.Units.Single(d => d.UnitType == au.UnitType).UnitCount;
+                au.UnitCount -= attack.Units.Single(d => d.UnitType == au.UnitType && d.UnitCount <= au.UnitCount).UnitCount;
                 await _armyUnitRepository.Update(au);
             }
 
@@ -90,7 +90,7 @@ namespace Undersea.BLL.Services
             var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
             var firstCity = cities.First();
 
-            var attacks = (await _attackRepository.GetWhere(a => a.AttackerCityId == userId)).ToList();
+            var attacks = (await _attackRepository.GetWhere(a => a.AttackerCityId == firstCity.Id)).ToList();
 
             List<AttackResponseDto> attackList = new List<AttackResponseDto>();
 

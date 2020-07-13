@@ -93,7 +93,10 @@ namespace Undersea.BLL.Services
                     }
                 }
 
-                // visszaaddolni attacker cityhez, törölni az attack-et
+                foreach(ArmyUnit au in a.Army.Units) 
+                {
+                    a.AttackerCity.AvailableArmy.Units.Single(a => a.UnitType == au.UnitType).UnitCount += au.UnitCount;
+                }
 
                 await _cityRepository.Update(a.DefenderCity);
                 await _cityRepository.Update(a.AttackerCity);
