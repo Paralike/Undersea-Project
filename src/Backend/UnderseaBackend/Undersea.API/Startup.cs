@@ -50,6 +50,7 @@ namespace Undersea.API
             services.AddTransient<IUpgradeService, UpgradeService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ILogService, LoggerService>();
+            services.AddTransient<IGameService, GameService>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
@@ -57,13 +58,12 @@ namespace Undersea.API
             services.AddTransient<IUnitRepository, UnitRepository>();
             services.AddTransient<ICityRepository, CityRepository>();
 
+
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<ICityService, CityService>();
-            services.AddTransient<ILogService, LoggerService>();
 
-            services.AddScoped<IGameService, GameService>();
 
             services.AddHttpContextAccessor();
 

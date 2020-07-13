@@ -4,6 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { AttackModel } from '../model/attack.model';
 import { MatSliderChange, MatSlider } from '@angular/material/slider';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ArmyUnitDto } from 'src/app/shared';
 
 
 @Component({
@@ -19,11 +20,13 @@ export class AttackComponent implements OnInit {
     private snackbar: MatSnackBar,
     private service: FeatureService,
     public dialogRef: MatDialogRef<AttackComponent>,
+    private featureService: FeatureService
   ) { }
   displayedColumns: string[] = ['target', 'choice'];
   userList: AttackModel[];
   selected: boolean;
   selectedUserId: string;
+  army: ArmyUnitDto [];
   @ViewChild('matslider') slider: MatSlider;
   @ViewChild('matslider2') slider2: MatSlider;
   @ViewChild('matslider3') slider3: MatSlider;
@@ -48,9 +51,10 @@ export class AttackComponent implements OnInit {
 
   sendData() {
     if (this.selected !== false) {
-      console.log('Slider value', this.slider.value, this.slider2.value, this.slider3.value);
-      console.log(this.selectedUserId);
-      console.log(this.userList.find(x => x.id === this.selectedUserId));
+      // this.army[0].unitCount = this.slider.value;
+      // this.army[1].unitCount = this.slider2.value;
+      // this.army[2].unitCount = this.slider3.value;
+      // this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {});
       this.dialogRef.close();
       this.snackbar.open('Sikeres támadás!', 'Bezár');
     } else if (this.selected === false) {
