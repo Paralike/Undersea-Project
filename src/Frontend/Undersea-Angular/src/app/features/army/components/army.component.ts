@@ -32,6 +32,7 @@ export class ArmyComponent implements OnInit {
     this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
     this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
     this.addUnit[2] = new ArmyUnitDto({ unitType: UnitType.Lezercapa, unitCount: 0 });
+
   }
 
   ngOnInit(): void {
@@ -67,9 +68,9 @@ export class ArmyComponent implements OnInit {
     } else {
       console.log(this.addUnit);
       this.featureService.purchaseUnits(this.addUnit).subscribe(() => {
-      this.dialogRef.close();
-      this.snackbar.open('Sikeres vásárlás!', 'Bezár');
-    });
+        this.dialogRef.close();
+        this.snackbar.open('Sikeres vásárlás!', 'Bezár');
+      });
     }
 
 

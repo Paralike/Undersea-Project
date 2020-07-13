@@ -2,8 +2,8 @@
 {
     public enum UnitType
     {
+        Lezercapa,
         Rohamfoka,
-        Csatacsiko,
-        Lezercapa
+        Csatacsiko
     }
 }

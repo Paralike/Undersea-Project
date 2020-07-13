@@ -7,22 +7,22 @@
        
         <ng-container matColumnDef="city">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element" style="width: 20vw;"> {{element.city}} </td>
+            <td mat-cell *matCellDef="let element" style="width: 20vw;"> {{element.cityName}} </td>
         </ng-container>
         
         <ng-container matColumnDef="sharks">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element"> {{element.sharks}} Lézercápa </td>
+            <td mat-cell *matCellDef="let element"> {{element.unitList.unitList[0].unitCount}} Lézercápa </td>
         </ng-container>
         
         <ng-container matColumnDef="seals">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element"> {{element.seals}} Rohamfóka </td>
+            <td mat-cell *matCellDef="let element"> {{element.unitList.unitList[1].unitCount}} Rohamfóka </td>
         </ng-container>
         
         <ng-container matColumnDef="seahorses">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element"> {{element.seahorses}} Csatacsikó</td>
+            <td mat-cell *matCellDef="let element"> {{element.unitList.unitList[2].unitCount}} Csatacsikó</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns" style="height: 2vh;"></tr>
