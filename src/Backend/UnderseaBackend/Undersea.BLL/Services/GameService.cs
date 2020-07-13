@@ -14,35 +14,34 @@ namespace Undersea.BLL.Services
 {
     public class GameService : IGameService
     {
-        private static IGameService _instance;
+        public int CurrentTurn
+        {
+            get
+            {
+                return context.Game.First().CurrentTurn;
+            }
 
-        public static int CurrentTurn { get; set; }
-        private readonly IUserRepository _userRepository;
+            set
+            {
+            }
+        }
+
+        private readonly IArmyService _armyService;
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
         private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context)
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService)
         {
             CurrentTurn = 1;
-            _userRepository = userRepository;
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
             _attackRepository = attackRepository;
             this.context = context;
+            _armyService = armyService;
         }
-        //public static IGameService Instance
-        //{
-        //    get
-        //    {
-        //        if (_instance == null)
-        //            _instance = new GameService();
-
-        //        return Instance;
-        //    }
-        //}
 
         public GameService()
         {
@@ -59,19 +58,25 @@ namespace Undersea.BLL.Services
                 c.CoralCount += c.CoralProduction;
                 c.PearlCount -= await _armyRepository.GetPearlNecessity(c.AvailableArmyId);
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
+                await _cityRepository.Update(c);
             }
 
             var attacks = await _attackRepository.GetAll();
 
             foreach (Attack a in attacks)
             {
-                //harc szimulálás
+                int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
+                int attack = await _armyService.GetArmyAttackingPower(a.AttackerCity.AvailableArmyId);
+
+                if(attack > defense)
+                {
+
+                }
             }
 
             // ranglista számolás
 
-            Game game = context.Game.First();
-            game.CurrentTurn++;
+            context.Game.First().CurrentTurn++;
             await context.SaveChangesAsync();
         }
     }

@@ -15,7 +15,7 @@ namespace Undersea.DAL.Configurations
                 {
                     Id = Guid.NewGuid(),
                     CurrentTurn = 1
-                }); ;
+                }); 
 
             entity.HasKey(g => g.Id);
         }
