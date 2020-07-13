@@ -26,8 +26,7 @@ export class BuildingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildings = [];
-    console.log('DATA', this.data);
-    this.featureService.getBuildings().subscribe(res => this.buildings = res,
+    this.featureService.getBuildings().subscribe(res => console.log(res),
       (err) => {
         console.log(err);
       });

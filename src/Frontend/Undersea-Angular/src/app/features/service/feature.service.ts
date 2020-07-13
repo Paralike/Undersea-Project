@@ -13,7 +13,8 @@ import {
   RankDto,
   GameClient,
   AttackResponseDto,
-  AttackDto
+  AttackDto,
+  BuildingDto
 } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
@@ -100,9 +101,9 @@ export class FeatureService {
     private gameClient: GameClient
   ) { }
 
-  getBuildings(): Observable<BuildingModel[]> {
-    // return this.buildingsClient.getBuilding();
-    return of(BUIDLDINGS);
+  getBuildings(): Observable<BuildingDto> {
+    return this.buildingsClient.getBuilding();
+   // return of(BUIDLDINGS);
   }
   getDevelopments(): Observable<DevelopmentModel[]> {
     return of(DEVELOPMENTS);

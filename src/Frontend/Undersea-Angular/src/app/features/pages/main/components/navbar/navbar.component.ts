@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit {
         building: this.buildings
       }
     });
+    dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
   openAttack() {
@@ -46,7 +47,7 @@ export class NavbarComponent implements OnInit {
       },
       backdropClass: 'backdropBackground'
     });
-
+    dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
   openFights() {
@@ -55,6 +56,7 @@ export class NavbarComponent implements OnInit {
       data: {
       }
     });
+    dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
   openRanks() {
@@ -62,6 +64,7 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {}
     });
+    dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
   openArmy() {
