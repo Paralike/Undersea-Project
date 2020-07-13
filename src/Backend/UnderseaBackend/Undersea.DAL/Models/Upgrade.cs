@@ -25,10 +25,5 @@ namespace Undersea.DAL.Models
                 }
             };
         }
-        /*public async Task setType(int UT )
-        {
-            UpgradeType = UT;
-            CurrentTurn = 15;
-        }*/
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
@@ -25,7 +27,8 @@ namespace Undersea.API.Controllers
         [HttpPost]
         public async Task PurchaseUpgrade(UpgradeDto upgrade)
         {
-            await _upgradeService.PurchaseUpgrade(upgrade);
+            Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            await _upgradeService.PurchaseUpgrade(id, upgrade);
         }
     }
 }

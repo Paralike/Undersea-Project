@@ -18,7 +18,7 @@ namespace Undersea.DAL.Repositories
             {
                 CityId = CityId,
             };
-            await c.setType(UpgradeType);
+           // await c.setType(UpgradeType);
 
             await Add(c);
             

@@ -108,6 +108,7 @@ namespace Undersea.DAL.Migrations
                 name: "UpgradeAttributes",
                 columns: table => new
                 {
+                    upgradeType = table.Column<int>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
                     CoralProduction = table.Column<int>(nullable: false),
                     DefensePoints = table.Column<int>(nullable: false),
@@ -116,7 +117,7 @@ namespace Undersea.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UpgradeAttributes", x => x.Id);
+                    table.PrimaryKey("PK_UpgradeAttributes", x => x.upgradeType);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,7 +258,8 @@ namespace Undersea.DAL.Migrations
                     CoralCount = table.Column<int>(nullable: false),
                     CoralProduction = table.Column<int>(nullable: false),
                     Points = table.Column<int>(nullable: false),
-                    AvailableArmyId = table.Column<Guid>(nullable: false)
+                    AvailableArmyId = table.Column<Guid>(nullable: false),
+                    UpgradesId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -331,9 +333,7 @@ namespace Undersea.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UpgradeType = table.Column<int>(nullable: false),
-                    CityId = table.Column<Guid>(nullable: false),
-                    CurrentTurn = table.Column<int>(nullable: false)
+                    CityId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -347,7 +347,7 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CityBuildings",
+                name: "CityBuildingsJoin",
                 columns: table => new
                 {
                     BuildingAttributeId = table.Column<Guid>(nullable: false),
@@ -355,15 +355,15 @@ namespace Undersea.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityBuildings", x => new { x.BuildingId, x.BuildingAttributeId });
+                    table.PrimaryKey("PK_CityBuildingsJoin", x => new { x.BuildingId, x.BuildingAttributeId });
                     table.ForeignKey(
-                        name: "FK_CityBuildings_BuildingAttributes_BuildingAttributeId",
+                        name: "FK_CityBuildingsJoin_BuildingAttributes_BuildingAttributeId",
                         column: x => x.BuildingAttributeId,
                         principalTable: "BuildingAttributes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CityBuildings_Building_BuildingId",
+                        name: "FK_CityBuildingsJoin_Building_BuildingId",
                         column: x => x.BuildingId,
                         principalTable: "Building",
                         principalColumn: "Id",
@@ -371,17 +371,26 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CityUpgrades",
+                name: "CityUpgradesJoin",
                 columns: table => new
                 {
                     UpgradeAttributeId = table.Column<Guid>(nullable: false),
-                    UpgradeId = table.Column<Guid>(nullable: false)
+                    UpgradeId = table.Column<Guid>(nullable: false),
+                    UpgradeAttributeupgradeType = table.Column<int>(nullable: false),
+                    upgradeType = table.Column<int>(nullable: false),
+                    CurrentTurn = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityUpgrades", x => new { x.UpgradeId, x.UpgradeAttributeId });
+                    table.PrimaryKey("PK_CityUpgradesJoin", x => new { x.UpgradeId, x.UpgradeAttributeId });
                     table.ForeignKey(
-                        name: "FK_CityUpgrades_Upgrades_UpgradeId",
+                        name: "FK_CityUpgradesJoin_UpgradeAttributes_UpgradeAttributeupgradeType",
+                        column: x => x.UpgradeAttributeupgradeType,
+                        principalTable: "UpgradeAttributes",
+                        principalColumn: "upgradeType",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CityUpgradesJoin_Upgrades_UpgradeId",
                         column: x => x.UpgradeId,
                         principalTable: "Upgrades",
                         principalColumn: "Id",
@@ -391,17 +400,17 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Units",
                 columns: new[] { "UnitType", "Damage", "Defense", "FoodNecessity", "Id", "Name", "PearlNecessity", "Price" },
-                values: new object[] { 1, 2, 6, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Csatacsikó", 1, 50 });
+                values: new object[,]
+                {
+                    { 1, 2, 6, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Csatacsikó", 1, 50 },
+                    { 0, 6, 2, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Rohamfóka", 1, 50 },
+                    { 2, 5, 5, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Lézercápa", 3, 100 }
+                });
 
             migrationBuilder.InsertData(
-                table: "Units",
-                columns: new[] { "UnitType", "Damage", "Defense", "FoodNecessity", "Id", "Name", "PearlNecessity", "Price" },
-                values: new object[] { 0, 6, 2, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Rohamfóka", 1, 50 });
-
-            migrationBuilder.InsertData(
-                table: "Units",
-                columns: new[] { "UnitType", "Damage", "Defense", "FoodNecessity", "Id", "Name", "PearlNecessity", "Price" },
-                values: new object[] { 2, 5, 5, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Lézercápa", 3, 100 });
+                table: "UpgradeAttributes",
+                columns: new[] { "upgradeType", "AttackPoints", "CoralProduction", "DefensePoints", "Id", "TaxIncrease" },
+                values: new object[] { 5, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -469,14 +478,20 @@ namespace Undersea.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityBuildings_BuildingAttributeId",
-                table: "CityBuildings",
+                name: "IX_CityBuildingsJoin_BuildingAttributeId",
+                table: "CityBuildingsJoin",
                 column: "BuildingAttributeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CityUpgradesJoin_UpgradeAttributeupgradeType",
+                table: "CityUpgradesJoin",
+                column: "UpgradeAttributeupgradeType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upgrades_CityId",
                 table: "Upgrades",
-                column: "CityId");
+                column: "CityId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -506,16 +521,13 @@ namespace Undersea.DAL.Migrations
                 name: "Attacks");
 
             migrationBuilder.DropTable(
-                name: "CityBuildings");
+                name: "CityBuildingsJoin");
 
             migrationBuilder.DropTable(
-                name: "CityUpgrades");
+                name: "CityUpgradesJoin");
 
             migrationBuilder.DropTable(
                 name: "Units");
-
-            migrationBuilder.DropTable(
-                name: "UpgradeAttributes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -525,6 +537,9 @@ namespace Undersea.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Building");
+
+            migrationBuilder.DropTable(
+                name: "UpgradeAttributes");
 
             migrationBuilder.DropTable(
                 name: "Upgrades");

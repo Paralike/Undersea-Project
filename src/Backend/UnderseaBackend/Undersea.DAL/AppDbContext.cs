@@ -22,8 +22,8 @@ namespace Undersea.DAL
         public DbSet<Unit> Units { get; set; }
         public DbSet<Upgrade> Upgrades { get; set; }
         public DbSet<UpgradeAttribute> UpgradeAttributes { get; set; }
-        public DbSet<BuildingAttributeJoin> CityBuildings { get; set; }
-        public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
+        public DbSet<BuildingAttributeJoin> CityBuildingsJoin { get; set; }
+        public DbSet<UpgradeAttributeJoin> CityUpgradesJoin { get; set; }
         public DbSet<ArmyUnitJoin> ArmyUnitJoins { get; set; }
         public DbSet<ApplicationLog> ApplicationLog { get; set; }
 
@@ -39,6 +39,7 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeConfiguration());
+            modelBuilder.ApplyConfiguration(new UpgradeAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new BuildingConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());            
         }

@@ -10,7 +10,7 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200713103854_undersea")]
+    [Migration("20200713122000_undersea")]
     partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -283,7 +283,7 @@ namespace Undersea.DAL.Migrations
 
                     b.HasIndex("BuildingAttributeId");
 
-                    b.ToTable("CityBuildings");
+                    b.ToTable("CityBuildingsJoin");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.City", b =>
@@ -314,6 +314,9 @@ namespace Undersea.DAL.Migrations
 
                     b.Property<int>("Points")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("UpgradesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId");
 
@@ -398,24 +401,18 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CurrentTurn")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UpgradeType")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CityId")
+                        .IsUnique();
 
                     b.ToTable("Upgrades");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttribute", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("upgradeType")
+                        .HasColumnType("int");
 
                     b.Property<int>("AttackPoints")
                         .HasColumnType("int");
@@ -426,12 +423,26 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("DefensePoints")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TaxIncrease")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("upgradeType");
 
                     b.ToTable("UpgradeAttributes");
+
+                    b.HasData(
+                        new
+                        {
+                            upgradeType = 5,
+                            AttackPoints = 0,
+                            CoralProduction = 10,
+                            DefensePoints = 0,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            TaxIncrease = 0
+                        });
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
@@ -442,9 +453,20 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("UpgradeAttributeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CurrentTurn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UpgradeAttributeupgradeType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("upgradeType")
+                        .HasColumnType("int");
+
                     b.HasKey("UpgradeId", "UpgradeAttributeId");
 
-                    b.ToTable("CityUpgrades");
+                    b.HasIndex("UpgradeAttributeupgradeType");
+
+                    b.ToTable("CityUpgradesJoin");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.User", b =>
@@ -636,14 +658,20 @@ namespace Undersea.DAL.Migrations
             modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.City", "City")
-                        .WithMany("Upgrades")
-                        .HasForeignKey("CityId")
+                        .WithOne("Upgrades")
+                        .HasForeignKey("Undersea.DAL.Models.Upgrade", "CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
                 {
+                    b.HasOne("Undersea.DAL.Models.UpgradeAttribute", "UpgradeAttribute")
+                        .WithMany()
+                        .HasForeignKey("UpgradeAttributeupgradeType")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
                         .WithMany("UpgradeAttributes")
                         .HasForeignKey("UpgradeId")

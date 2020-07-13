@@ -18,10 +18,9 @@ namespace Undersea.DAL.Configurations
             .WithOne(a => a.City)
             .HasForeignKey<City>(c => c.AvailableArmyId);
 
-            entity
-                .HasOne(c => c.Upgrades)
+            entity.HasOne(c => c.Upgrades)
                 .WithOne(a => a.City)
-                .HasForeignKey<City>(c => c.Upgrades);
+                .HasForeignKey<City>(c => c.UpgradesId);
 
             /*entity.HasMany(c => c.Upgrades)
             .WithOne(u => u.City)

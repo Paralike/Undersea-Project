@@ -10,6 +10,6 @@ namespace Undersea.BLL.Interfaces
     public interface IUpgradeService
     {
         public Task<ActionResult<ICollection<UpgradeDto>>> GetUpgrade();
-        public Task PurchaseUpgrade(UpgradeDto upgrade);
+        public Task PurchaseUpgrade(Guid id, UpgradeDto upgrade);
     }
 }

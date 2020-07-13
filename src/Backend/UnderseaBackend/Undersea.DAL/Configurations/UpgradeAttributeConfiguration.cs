@@ -11,7 +11,7 @@ namespace Undersea.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<UpgradeAttribute> builder)
         {
-            builder.HasKey(u => u.Id);
+            builder.HasKey(u => u.upgradeType);
 
             builder.HasData(
                 new UpgradeAttribute
