@@ -804,7 +804,7 @@ export class UpgradesClient {
         return _observableOf<UpgradeDto>(<any>null);
     }
 
-    purchaseUpgrade(upgrade: UpgradeDto): Observable<FileResponse | null> {
+    purchaseUpgrade(upgrade: UpgradeDto): Observable<void> {
         let url_ = this.baseUrl + "/api/Upgrades";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -816,7 +816,6 @@ export class UpgradesClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             })
         };
 
@@ -827,31 +826,30 @@ export class UpgradesClient {
                 try {
                     return this.processPurchaseUpgrade(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                    return <Observable<void>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+                return <Observable<void>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPurchaseUpgrade(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processPurchaseUpgrade(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -1406,6 +1404,7 @@ export interface IRankDto {
 
 export class UpgradeDto implements IUpgradeDto {
     upgradeType!: number;
+    cityId!: string;
 
     constructor(data?: IUpgradeDto) {
         if (data) {
@@ -1419,6 +1418,7 @@ export class UpgradeDto implements IUpgradeDto {
     init(_data?: any) {
         if (_data) {
             this.upgradeType = _data["upgradeType"];
+            this.cityId = _data["cityId"];
         }
     }
 
@@ -1432,12 +1432,14 @@ export class UpgradeDto implements IUpgradeDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["upgradeType"] = this.upgradeType;
+        data["cityId"] = this.cityId;
         return data; 
     }
 }
 
 export interface IUpgradeDto {
     upgradeType: number;
+    cityId: string;
 }
 
 export interface FileResponse {

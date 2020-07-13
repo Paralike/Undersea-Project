@@ -12,11 +12,11 @@ namespace Undersea.DAL.Repositories
     {
         public UpgradeRepository(AppDbContext context) : base(context) { }
 
-        public async Task AddUpgrade(/*Guid CityId,*/ int UpgradeType)
+        public async Task AddUpgrade(Guid CityId, int UpgradeType)
         {
             var c = new Upgrade()
             {
-                /*CityId = CityId,*/
+                CityId = CityId,
             };
             await c.setType(UpgradeType);
 

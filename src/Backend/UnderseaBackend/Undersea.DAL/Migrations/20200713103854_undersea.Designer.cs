@@ -10,7 +10,7 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200713085544_undersea")]
+    [Migration("20200713103854_undersea")]
     partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -395,6 +395,9 @@ namespace Undersea.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("CurrentTurn")
                         .HasColumnType("int");
 
@@ -402,6 +405,8 @@ namespace Undersea.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Upgrades");
                 });
@@ -628,10 +633,19 @@ namespace Undersea.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Undersea.DAL.Models.Upgrade", b =>
+                {
+                    b.HasOne("Undersea.DAL.Models.City", "City")
+                        .WithMany("Upgrades")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttributeJoin", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
-                        .WithMany()
+                        .WithMany("UpgradeAttributes")
                         .HasForeignKey("UpgradeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

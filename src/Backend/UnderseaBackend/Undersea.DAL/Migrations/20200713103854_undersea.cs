@@ -120,19 +120,6 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Upgrades",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UpgradeType = table.Column<int>(nullable: false),
-                    CurrentTurn = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Upgrades", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ArmyUnitJoins",
                 columns: table => new
                 {
@@ -290,24 +277,6 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CityUpgrades",
-                columns: table => new
-                {
-                    UpgradeAttributeId = table.Column<Guid>(nullable: false),
-                    UpgradeId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CityUpgrades", x => new { x.UpgradeId, x.UpgradeAttributeId });
-                    table.ForeignKey(
-                        name: "FK_CityUpgrades_Upgrades_UpgradeId",
-                        column: x => x.UpgradeId,
-                        principalTable: "Upgrades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Attacks",
                 columns: table => new
                 {
@@ -358,6 +327,26 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Upgrades",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UpgradeType = table.Column<int>(nullable: false),
+                    CityId = table.Column<Guid>(nullable: false),
+                    CurrentTurn = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Upgrades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Upgrades_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CityBuildings",
                 columns: table => new
                 {
@@ -377,6 +366,24 @@ namespace Undersea.DAL.Migrations
                         name: "FK_CityBuildings_Building_BuildingId",
                         column: x => x.BuildingId,
                         principalTable: "Building",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CityUpgrades",
+                columns: table => new
+                {
+                    UpgradeAttributeId = table.Column<Guid>(nullable: false),
+                    UpgradeId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CityUpgrades", x => new { x.UpgradeId, x.UpgradeAttributeId });
+                    table.ForeignKey(
+                        name: "FK_CityUpgrades_Upgrades_UpgradeId",
+                        column: x => x.UpgradeId,
+                        principalTable: "Upgrades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -465,6 +472,11 @@ namespace Undersea.DAL.Migrations
                 name: "IX_CityBuildings_BuildingAttributeId",
                 table: "CityBuildings",
                 column: "BuildingAttributeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Upgrades_CityId",
+                table: "Upgrades",
+                column: "CityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

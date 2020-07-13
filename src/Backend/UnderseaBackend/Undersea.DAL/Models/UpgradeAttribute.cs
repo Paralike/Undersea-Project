@@ -1,9 +1,11 @@
 ﻿using System;
+using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
     public class UpgradeAttribute
     {
+        public UpgradeType upgradeType {get;set;}
         public Guid Id { get; set; }
         public int CoralProduction { get; set; }
         public int DefensePoints { get; set; }

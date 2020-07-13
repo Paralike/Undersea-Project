@@ -8,7 +8,7 @@ namespace Undersea.BLL.DTOs
 
         public int UpgradeType { get; set; }
 
-        //public Guid CityId { get; set; }
+        public Guid CityId { get; set; }
 
     }
 }

@@ -402,11 +402,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
-            "description": "",
-            "schema": {
-              "type": "file"
-            }
+            "description": ""
           }
         }
       }
@@ -710,12 +706,17 @@
     "UpgradeDto": {
       "type": "object",
       "required": [
-        "upgradeType"
+        "upgradeType",
+        "cityId"
       ],
       "properties": {
         "upgradeType": {
           "type": "integer",
           "format": "int32"
+        },
+        "cityId": {
+          "type": "string",
+          "format": "guid"
         }
       }
     }
