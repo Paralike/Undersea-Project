@@ -21,7 +21,7 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public int GetGameState()
         {
-            return GameService.CurrentTurn;
+            return _gameService.CurrentTurn;
         }
 
         [HttpPost]

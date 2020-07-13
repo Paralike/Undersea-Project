@@ -10,5 +10,10 @@ namespace Undersea.DAL.Models
         public UnitType UnitType { get; set; }
         public int UnitCount { get; set; }
         public Guid Id { get; set; }
+
+        public ArmyUnitJoin()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

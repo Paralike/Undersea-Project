@@ -39,7 +39,6 @@ namespace Undersea.BLL.Services
             _mapper = mapper;
         }
 
-        // TODO Action result kivenni
         public async Task<ArmyDto> GetArmy(Guid id)
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
@@ -70,23 +69,19 @@ namespace Undersea.BLL.Services
 
             var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
-            // TODO átírni 
-            var unitRohamfoka = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Rohamfoka);
-            var unitCsatacsiko = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Csatacsiko);
-            var unitLezercapa = await _armyUnitRepository.FirstOrDefault(au => au.ArmyId == firstCity.AvailableArmyId && au.UnitType == UnitType.Lezercapa);
+            int price = await GetArmyPrice(dto);
+            if (price > firstCity.PearlCount)
+            {
+                throw new Exception("Not enough money");
+            }
 
-            // TODO validation logika
+            foreach (ArmyUnitJoin au in list)
+            {
+                au.UnitCount += dto.Single(d => d.UnitType == au.UnitType).UnitCount;
+                await _armyUnitRepository.Update(au);
+            }
 
-            unitRohamfoka.UnitCount += dto.ElementAt(0).UnitCount;
-            unitCsatacsiko.UnitCount += dto.ElementAt(1).UnitCount;
-            unitLezercapa.UnitCount += dto.ElementAt(2).UnitCount;
-
-            await _armyUnitRepository.Update(unitCsatacsiko);
-            await _armyUnitRepository.Update(unitRohamfoka);
-            await _armyUnitRepository.Update(unitLezercapa);
-
-            // TODO db-ből
-            firstCity.PearlCount -= dto.ElementAt(0).UnitCount * 50 + dto.ElementAt(1).UnitCount * 50+ dto.ElementAt(2).UnitCount * 100;
+            firstCity.PearlCount -= price;
 
             await _cityRepository.Update(firstCity);
         }
@@ -111,9 +106,9 @@ namespace Undersea.BLL.Services
             var result = priceList.Join(unitList,
                 unit1 => unit1.UnitType,
                 unit2 => unit2.UnitType,
-                (unit1, unit2) => new 
+                (unit1, unit2) => new
                 {
-                    Price = unit1.Price, 
+                    Price = unit1.Price,
                     Count = unit2.UnitCount
                 }
               );
@@ -139,5 +134,42 @@ namespace Undersea.BLL.Services
             return newDto;
         }
 
+        public async Task<int> GetArmyAttackingPower(Guid armyId)
+        {
+            var units = await _unitRepository.GetAll();
+
+            var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == armyId);
+
+            var result = units.Join(army,
+                unit1 => unit1.UnitType,
+                unit2 => unit2.UnitType,
+                (unit1, unit2) => new
+                {
+                    unit1.Damage,
+                    Count = unit2.UnitCount
+                }
+              );
+
+            return result.Sum(u => u.Count * u.Damage);
+        }
+
+        public async Task<int> GetArmyDefensePower(Guid armyId)
+        {
+            var units = await _unitRepository.GetAll();
+
+            var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == armyId);
+
+            var result = units.Join(army,
+                unit1 => unit1.UnitType,
+                unit2 => unit2.UnitType,
+                (unit1, unit2) => new
+                {
+                    unit1.Defense,
+                    Count = unit2.UnitCount
+                }
+              );
+
+            return result.Sum(u => u.Count * u.Defense);
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Undersea.BLL.Interfaces
 {
     public interface IGameService
     {
-        public static int CurrentTurn { get; set; }
+        public int CurrentTurn { get; set; }
         public Task NextTurn();
     }
 }

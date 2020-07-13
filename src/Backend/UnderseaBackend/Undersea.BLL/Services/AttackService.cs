@@ -49,11 +49,12 @@ namespace Undersea.BLL.Services
 
             var defenderCity = (await _cityRepository.GetWhere(c => c.Id == attack.DefenderCityId)).First();
 
+
             int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
             int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
             int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
 
-            // TODO Army unit listből
+            // TODO seregből levonni
 
             Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka)
             {
