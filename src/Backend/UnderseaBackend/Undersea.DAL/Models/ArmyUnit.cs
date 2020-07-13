@@ -3,7 +3,7 @@ using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public class ArmyUnitJoin : IDbEntity
+    public class ArmyUnit : IDbEntity
     {
         public virtual Army Army { get; set; }
         public Guid ArmyId { get; set; }
@@ -11,7 +11,7 @@ namespace Undersea.DAL.Models
         public int UnitCount { get; set; }
         public Guid Id { get; set; }
 
-        public ArmyUnitJoin()
+        public ArmyUnit()
         {
             Id = Guid.NewGuid();
         }

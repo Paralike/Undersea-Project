@@ -68,10 +68,36 @@ namespace Undersea.BLL.Services
                 int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
                 int attack = await _armyService.GetArmyAttackingPower(a.AttackerCity.AvailableArmyId);
 
+
+                // TODO támadóerő +- 5%
+
                 if(attack > defense)
                 {
+                    a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
+                    a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
 
+                    a.DefenderCity.CoralCount /= 2;
+                    a.DefenderCity.PearlCount /= 2;
+
+                    foreach(ArmyUnit au in a.DefenderCity.AvailableArmy.Units)
+                    {
+                        au.UnitCount = Convert.ToInt32(au.UnitCount * 0.9);
+                    }
                 }
+
+                else
+                {
+                    foreach (ArmyUnit au in a.Army.Units)
+                    {
+                        au.UnitCount = Convert.ToInt32(au.UnitCount * 0.9);
+                    }
+                }
+
+                // visszaaddolni attacker cityhez, törölni az attack-et
+
+                await _cityRepository.Update(a.DefenderCity);
+                await _cityRepository.Update(a.AttackerCity);
+
             }
 
             // ranglista számolás

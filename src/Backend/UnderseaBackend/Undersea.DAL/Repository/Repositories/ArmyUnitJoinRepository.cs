@@ -10,20 +10,19 @@ using Undersea.DAL.Repositories.Interfaces;
 
 namespace Undersea.DAL.Repositories.Repositories
 {
-    public class ArmyUnitJoinRepository : BaseRepository<ArmyUnitJoin>, IArmyUnitJoinRepository
+    public class ArmyUnitJoinRepository : BaseRepository<ArmyUnit>, IArmyUnitJoinRepository
     {
         public ArmyUnitJoinRepository(AppDbContext context) : base(context)
         {
 
         }
 
-        public async Task<List<ArmyUnitJoin>> GetTypeCountAsync(Guid id)
+        public async Task<List<ArmyUnit>> GetTypeCountAsync(Guid id)
         {
-            // TODO ArmyUnit-ot visszaadni
             var groupBy = await _context.
                 ArmyUnitJoins
                .Where(au => au.ArmyId == id)
-               .ToListAsync();               
+               .ToListAsync();          
 
             return groupBy;
         }
