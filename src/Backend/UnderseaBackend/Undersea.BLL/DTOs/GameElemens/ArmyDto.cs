@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Undersea.BLL.DTOs.GameElemens;
-using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 
 namespace Undersea.BLL.DTOs

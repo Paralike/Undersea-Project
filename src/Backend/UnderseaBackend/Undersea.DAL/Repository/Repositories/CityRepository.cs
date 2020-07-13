@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
@@ -11,7 +10,7 @@ namespace Undersea.DAL.Repositories
 {
     public class CityRepository : BaseRepository<City>, ICityRepository
     {
-        public CityRepository(AppDbContext context) : base(context) {   }
+        public CityRepository(AppDbContext context) : base(context) { }
 
         public async Task<City> GetCityByUserId(Guid Id)
         {

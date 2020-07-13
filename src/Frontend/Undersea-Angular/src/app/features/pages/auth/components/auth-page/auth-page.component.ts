@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { error } from '@angular/compiler/src/util';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { noWhiteSpace } from '../../../../../shared/nowhitespace';
 
 @Component({
   selector: 'app-auth-page',
@@ -16,6 +17,7 @@ import { Observable } from 'rxjs';
 export class AuthPageComponent implements OnInit {
 
   public isReg = false;
+  public isWhiteSpace = false;
 
   loginForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -23,7 +25,7 @@ export class AuthPageComponent implements OnInit {
   });
 
   registerForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, noWhiteSpace]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8)]),
@@ -38,17 +40,7 @@ export class AuthPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get name() { return this.loginForm.get('name'); }
 
-  get password() { return this.loginForm.get('password'); }
-
-  get namer() { return this.registerForm.get('name'); }
-
-  get passwordr() { return this.registerForm.get('password'); }
-
-  get passwordr2() { return this.registerForm.get('password2'); }
-
-  get cityNamer() { return this.registerForm.get('cityName'); }
 
 
   login() {
@@ -99,16 +91,14 @@ export class AuthPageComponent implements OnInit {
 
 
       else {
-        this.snackbar.open('A 2 jelszó nem egyezik', 'Bezár', {
+        this.snackbar.open('A 2 jelszó nem egyezik!', 'Bezár', {
           duration: 5000
         });
       }
     }
   }
-
   changeMode(mode: boolean) {
     this.isReg = mode;
     this.ngOnInit();
   }
-
 }

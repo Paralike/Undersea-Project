@@ -1,6 +1,5 @@
 ﻿
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,18 +39,20 @@ namespace Undersea.BLL.Services
         }
         public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers(Guid userId)
         {
-            var list = await _userRepository.GetWhere(u => u.Id != userId);
+            var attackableUsers = await _userRepository.GetWhere(u => u.Id != userId);
 
-            return _mapper.Map<List<AttackableUsersDto>>(list);
+            return _mapper.Map<List<AttackableUsersDto>>(attackableUsers);
         }
 
         public async Task StartAttack(Guid userId, AttackDto attack)
-        { 
+        {
             // TODO City lekérdezést kiszervezni
             var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
             var firstCity = cities.First();
 
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
+
+
 
             int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
             int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
@@ -67,7 +68,7 @@ namespace Undersea.BLL.Services
 
             Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka)
             {
-                CityId = firstCity.Id,               
+                CityId = firstCity.Id,
             };
 
             await _armyRepository.Add(newArmy);
@@ -89,22 +90,19 @@ namespace Undersea.BLL.Services
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
             var firstCity = cities.First();
-
             var attacks = (await _attackRepository.GetWhere(a => a.AttackerCityId == firstCity.Id)).ToList();
 
             List<AttackResponseDto> attackList = new List<AttackResponseDto>();
 
-            foreach(Attack atk in attacks)
+            foreach (Attack atk in attacks)
             {
                 attackList.Add(new AttackResponseDto
                 {
-                    CityName = firstCity.Name,
+                    CityName = atk.DefenderCity.Name,
                     UnitList = await _armyService.GetArmyById(atk.ArmyId)
                 });
             }
-
             return attackList;
-
         }
     }
 }

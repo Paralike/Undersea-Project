@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
-using Undersea.DAL;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 
@@ -41,7 +38,7 @@ namespace Undersea.BLL.Services
         {
             var cities = await _cityRepository.GetAllCityWithUser();
 
-            return  cities.Select(x => new RankDto { Point = x.Points, Username = x.User.UserName }).ToList();
+            return cities.Select(x => new RankDto { Point = x.Points, Username = x.User.UserName }).ToList();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using Undersea.DAL.Models;
+﻿using Undersea.DAL.Models;
 
 namespace Undersea.DAL.Repositories.Interfaces
 {

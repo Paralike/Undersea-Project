@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-namespace Undersea.BLL.DTOs.Actions
+﻿namespace Undersea.BLL.DTOs.Actions
 {
     public class AttackResponseDto
     {

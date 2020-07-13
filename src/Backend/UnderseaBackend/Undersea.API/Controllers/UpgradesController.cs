@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
-using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
 {
