@@ -24,7 +24,7 @@ namespace Undersea.DAL
         public DbSet<UpgradeAttribute> UpgradeAttributes { get; set; }
         public DbSet<BuildingAttributeJoin> CityBuildings { get; set; }
         public DbSet<UpgradeAttributeJoin> CityUpgrades { get; set; }
-        public DbSet<ArmyUnitJoin> ArmyUnitJoins { get; set; }
+        public DbSet<ArmyUnit> ArmyUnitJoins { get; set; }
         public DbSet<ApplicationLog> ApplicationLog { get; set; }
         public DbSet<Game> Game { get; set; }
 

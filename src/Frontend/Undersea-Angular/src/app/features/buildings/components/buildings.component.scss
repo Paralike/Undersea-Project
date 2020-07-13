@@ -12,11 +12,11 @@
 
 h2{
   font-family: baloo;
-  font-size: 32px;
+  font-size: 2vw;
 }
 p{
   font-family: open-sans-regular;
-  font-size: 16px;
+  font-size: 1vw;
 }
 .main-content {
   display: flex;
@@ -77,7 +77,7 @@ button:disabled {
 .building-name {
   font-weight: bold;
   font-family: open-sans-regular;
-  font-size: 16px;
+  font-size: 1vw;
   margin: none;
 }
 
@@ -92,7 +92,7 @@ button:disabled {
   outline: none;
   border-radius: 16px;
   font-family: open-sans-regular;
-  font-size: 16px;
+  font-size: 1vw;
 }
 
 div:focus {
@@ -104,11 +104,11 @@ div:focus {
 .quantity {
   margin: 0.5vh;
   font-family: open-sans-regular;
-  font-size: 16px;
+  font-size: 1vw;
 }
 
 .price {
   margin-bottom: 0.5vh;
   font-family: open-sans-regular;
-  font-size: 16px;
+  font-size: 1vw;
 }
