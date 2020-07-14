@@ -4,6 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UpgradeAttributeDto } from 'src/app/shared';
 
 @Component({
   selector: 'app-developments',
@@ -11,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./developments.component.scss']
 })
 export class DevelopmentsComponent implements OnInit {
-  public developments: DevelopmentModel[];
+  public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
 
@@ -24,9 +25,9 @@ export class DevelopmentsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.developments = [];
+    this.upgrades = [];
     this.featureService.getDevelopments().subscribe(res => {
-      this.developments = res;
+      this.upgrades = res;
     });
   }
 
@@ -37,7 +38,7 @@ export class DevelopmentsComponent implements OnInit {
 
   sendData() {
     console.log(this.selectedDevelopment);
-    console.log(this.developments[this.selectedDevelopment - 1].name);
+    console.log(this.upgrades[this.selectedDevelopment - 1].name);
     this.dialogRef.close();
     this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
       duration: 3000
