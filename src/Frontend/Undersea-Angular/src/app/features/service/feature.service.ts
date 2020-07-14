@@ -115,8 +115,12 @@ export class FeatureService {
     return this.upgradeType.getUpgrades();
     // return of(DEVELOPMENTS);
   }
-  startUpgrades(upgrade: UpgradeDto): Observable<any> {
-    return this.upgradeClient.purchaseUpgrade(upgrade);
+  getUpgradesinfos(): Observable<any> {
+    return this.upgradeClient.getCurrentUpgradeStatuses();
+  }
+  startUpgrades(upgradeType: number): Observable<any> {
+    console.log(upgradeType);
+    return this.upgradeClient.purchaseUpgrade(upgradeType);
   }
 
   getAttack(): Observable<AttackableUsersDto[]> {

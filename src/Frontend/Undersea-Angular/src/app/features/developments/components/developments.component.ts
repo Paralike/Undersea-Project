@@ -29,6 +29,9 @@ export class DevelopmentsComponent implements OnInit {
     this.featureService.getDevelopments().subscribe(res => {
       this.upgrades = res;
     });
+    this.featureService.getUpgradesinfos().subscribe(res => {
+      console.log(res);
+    })
   }
 
   selected(upgrade: UpgradeAttributeDto) {
@@ -37,7 +40,7 @@ export class DevelopmentsComponent implements OnInit {
   }
 
   sendData() {
-    this.featureService.startUpgrades().subscribe();
+    this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
     this.dialogRef.close();
     this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
       duration: 3000

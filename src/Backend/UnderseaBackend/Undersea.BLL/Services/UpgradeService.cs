@@ -51,6 +51,7 @@ namespace Undersea.BLL.Services
             var result = await _upgradeJoin.FirstOrDefault(a => a.UpgradeId == firstCity.UpgradesId && a.UpgradeType == upgradeType);
             //TODO validitáció
             result.Status = DAL.Enums.Status.InProgress;
+            await _cityRepository.Update(firstCity);
 
 
         }
