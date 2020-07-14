@@ -37,6 +37,7 @@ namespace Undersea.BLL.Services
             //var list = await _buildingRepository.GetAll();
             var list = await _buildingJoin.GetWhere(u => u.BuildingId == BuildingId);
             return _mapper.Map<List<BuildingDto>>(list);
+
         }
 
         public async Task PurchaseBuilding(Guid id, BuildingDto building)
@@ -46,7 +47,8 @@ namespace Undersea.BLL.Services
             var result = await _buildingJoin.FirstOrDefault(a => a.BuildingId == firstCity.UpgradesId && a.BuildingType == building.BuildingType);
             //TODO validitáció
             result.Status = DAL.Enums.Status.InProgress;
- 
+            await _cityRepository.Update(firstCity);
+
         }
         public async Task<ICollection<BuildingAttributeDto>> GetGeneralBuildings()
         {

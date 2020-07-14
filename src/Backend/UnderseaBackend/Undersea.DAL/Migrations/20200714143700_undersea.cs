@@ -413,7 +413,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("a6346105-385a-47bf-99fa-89f44778b469"), 1 });
+                values: new object[] { new Guid("7b692bc3-a6e0-4f16-b058-49849b3db5be"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -431,7 +431,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("12cb0967-ec37-4597-98d7-b7b44f560f3e"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("1ed99d4a-fb96-4b0f-b215-0b2d13795410"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
