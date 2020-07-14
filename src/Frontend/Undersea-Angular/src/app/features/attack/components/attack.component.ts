@@ -27,7 +27,9 @@ export class AttackComponent implements OnInit {
     private featureService: FeatureService
   ) {
     this.army = data.units.map((x): ArmyUnitDto => ({ ...x }));
-    this.army.forEach(unit => unit.unitCount = 0);
+    console.log(this.army);
+    this.army.forEach(unit => {unit.unitCount = 0;}
+      );
   }
 
   @ViewChild('matslider') slider: MatSlider;
