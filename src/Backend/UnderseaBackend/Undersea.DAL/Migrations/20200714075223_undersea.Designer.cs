@@ -10,7 +10,7 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200714070413_undersea")]
+    [Migration("20200714075223_undersea")]
     partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -443,7 +443,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("b12c677f-3fa6-453d-a9de-e93834123444"),
+                            Id = new Guid("856ed044-5ac6-4766-a30f-9976d44637bc"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },

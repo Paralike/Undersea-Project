@@ -407,7 +407,7 @@ namespace Undersea.DAL.Migrations
                 columns: new[] { "UpgradeType", "AttackPoints", "CoralProduction", "DefensePoints", "Id", "Name", "TaxIncrease" },
                 values: new object[,]
                 {
-                    { 5, 0, 0, 0, new Guid("b12c677f-3fa6-453d-a9de-e93834123444"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("856ed044-5ac6-4766-a30f-9976d44637bc"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },

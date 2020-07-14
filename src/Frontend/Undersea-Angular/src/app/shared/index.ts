@@ -756,7 +756,7 @@ export class UpgradesClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getUpgrades(): Observable<UpgradeDto> {
+    getCurrentUpgradeStatuses(): Observable<UpgradeDto> {
         let url_ = this.baseUrl + "/api/Upgrades";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -769,11 +769,11 @@ export class UpgradesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetUpgrades(response_);
+            return this.processGetCurrentUpgradeStatuses(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetUpgrades(<any>response_);
+                    return this.processGetCurrentUpgradeStatuses(<any>response_);
                 } catch (e) {
                     return <Observable<UpgradeDto>><any>_observableThrow(e);
                 }
@@ -782,7 +782,7 @@ export class UpgradesClient {
         }));
     }
 
-    protected processGetUpgrades(response: HttpResponseBase): Observable<UpgradeDto> {
+    protected processGetCurrentUpgradeStatuses(response: HttpResponseBase): Observable<UpgradeDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -850,6 +850,70 @@ export class UpgradesClient {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class UpgradeTypeClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    getUpgrades(): Observable<UpgradeAttributeDto[]> {
+        let url_ = this.baseUrl + "/api/UpgradeType";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUpgrades(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUpgrades(<any>response_);
+                } catch (e) {
+                    return <Observable<UpgradeAttributeDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UpgradeAttributeDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetUpgrades(response: HttpResponseBase): Observable<UpgradeAttributeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UpgradeAttributeDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UpgradeAttributeDto[]>(<any>null);
     }
 }
 
@@ -1404,7 +1468,8 @@ export interface IRankDto {
 
 export class UpgradeDto implements IUpgradeDto {
     upgradeType!: UpgradeType;
-    cityId!: string;
+    currentTurn!: number;
+    status!: Status;
 
     constructor(data?: IUpgradeDto) {
         if (data) {
@@ -1418,7 +1483,8 @@ export class UpgradeDto implements IUpgradeDto {
     init(_data?: any) {
         if (_data) {
             this.upgradeType = _data["upgradeType"];
-            this.cityId = _data["cityId"];
+            this.currentTurn = _data["currentTurn"];
+            this.status = _data["status"];
         }
     }
 
@@ -1432,14 +1498,16 @@ export class UpgradeDto implements IUpgradeDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["upgradeType"] = this.upgradeType;
-        data["cityId"] = this.cityId;
+        data["currentTurn"] = this.currentTurn;
+        data["status"] = this.status;
         return data; 
     }
 }
 
 export interface IUpgradeDto {
     upgradeType: UpgradeType;
-    cityId: string;
+    currentTurn: number;
+    status: Status;
 }
 
 export enum UpgradeType {
@@ -1449,6 +1517,62 @@ export enum UpgradeType {
     Szonaragyu = 3,
     VizalattiHarcmuveszetek = 4,
     Alkimia = 5,
+}
+
+export class UpgradeAttributeDto implements IUpgradeAttributeDto {
+    upgradeType!: UpgradeType;
+    coralProduction!: number;
+    defensePoints!: number;
+    attackPoints!: number;
+    taxIncrease!: number;
+    name?: string | undefined;
+
+    constructor(data?: IUpgradeAttributeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.upgradeType = _data["upgradeType"];
+            this.coralProduction = _data["coralProduction"];
+            this.defensePoints = _data["defensePoints"];
+            this.attackPoints = _data["attackPoints"];
+            this.taxIncrease = _data["taxIncrease"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): UpgradeAttributeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpgradeAttributeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["upgradeType"] = this.upgradeType;
+        data["coralProduction"] = this.coralProduction;
+        data["defensePoints"] = this.defensePoints;
+        data["attackPoints"] = this.attackPoints;
+        data["taxIncrease"] = this.taxIncrease;
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface IUpgradeAttributeDto {
+    upgradeType: UpgradeType;
+    coralProduction: number;
+    defensePoints: number;
+    attackPoints: number;
+    taxIncrease: number;
+    name?: string | undefined;
 }
 
 export interface FileResponse {

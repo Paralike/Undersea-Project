@@ -363,7 +363,7 @@
         "tags": [
           "Upgrades"
         ],
-        "operationId": "Upgrades_GetUpgrades",
+        "operationId": "Upgrades_GetCurrentUpgradeStatuses",
         "produces": [
           "text/plain",
           "application/json",
@@ -403,6 +403,31 @@
         "responses": {
           "200": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/api/UpgradeType": {
+      "get": {
+        "tags": [
+          "UpgradeType"
+        ],
+        "operationId": "UpgradeType_GetUpgrades",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UpgradeAttributeDto"
+              }
+            }
           }
         }
       }
@@ -707,15 +732,19 @@
       "type": "object",
       "required": [
         "upgradeType",
-        "cityId"
+        "currentTurn",
+        "status"
       ],
       "properties": {
         "upgradeType": {
           "$ref": "#/definitions/UpgradeType"
         },
-        "cityId": {
-          "type": "string",
-          "format": "guid"
+        "currentTurn": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
         }
       }
     },
@@ -738,6 +767,40 @@
         4,
         5
       ]
+    },
+    "UpgradeAttributeDto": {
+      "type": "object",
+      "required": [
+        "upgradeType",
+        "coralProduction",
+        "defensePoints",
+        "attackPoints",
+        "taxIncrease"
+      ],
+      "properties": {
+        "upgradeType": {
+          "$ref": "#/definitions/UpgradeType"
+        },
+        "coralProduction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "defensePoints": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "attackPoints": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "taxIncrease": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
     }
   }
 }
