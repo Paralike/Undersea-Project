@@ -48,7 +48,6 @@ export class ArmyComponent implements OnInit {
     if (this.addUnit[unit].unitCount > 0) {
       this.addUnit[unit].unitCount--;
     }
- 
   }
 
   sendData() {

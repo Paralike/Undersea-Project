@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  ApiBaseUrl: 'http://underseateam1.webtest.encosoft.internal'
+  ApiBaseUrl: 'http://localhost:5000'
 };
 
 

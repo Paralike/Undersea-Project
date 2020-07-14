@@ -17,7 +17,7 @@ export class AttackComponent implements OnInit {
   userList: AttackModel[];
   selected: boolean;
   selectedUserId: string;
-  army: ArmyUnitDto [];
+  army: ArmyUnitDto[];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private el: ElementRef,
@@ -26,8 +26,9 @@ export class AttackComponent implements OnInit {
     public dialogRef: MatDialogRef<AttackComponent>,
     private featureService: FeatureService
   ) {
-    this.army = this.data.units.map();
-   }
+    this.army = data.units.map((x): ArmyUnitDto => ({ ...x }));
+    this.army.forEach(unit => unit.unitCount = 0);
+  }
 
   @ViewChild('matslider') slider: MatSlider;
   @ViewChild('matslider2') slider2: MatSlider;
@@ -54,9 +55,9 @@ export class AttackComponent implements OnInit {
   sendData() {
     if (this.selected) {
 
-      this.army[0].unitType = 0, this.army[0].unitCount = this.slider.value;
-      this.army[1].unitType = 1, this.army[1].unitCount = this.slider2.value;
-      this.army[2].unitType = 2, this.army[2].unitCount = this.slider3.value;
+      this.army[0].unitCount = this.slider.value;
+      this.army[1].unitCount = this.slider2.value;
+      this.army[2].unitCount = this.slider3.value;
       console.log(this.army, this.selectedUserId);
       this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {
         this.dialogRef.close();
