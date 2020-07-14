@@ -46,6 +46,8 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new UpgradeConfiguration());
             modelBuilder.ApplyConfiguration(new UpgradeAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new BuildingConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildingAttributeConfiguration());
+            modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());            
         }
     }

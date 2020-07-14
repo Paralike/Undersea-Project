@@ -76,8 +76,8 @@ namespace Undersea.DAL.Migrations
                 name: "BuildingAttributes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
                     BuildingType = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Resident = table.Column<int>(nullable: false),
                     Coral = table.Column<int>(nullable: false),
                     HostCapacity = table.Column<int>(nullable: false),
@@ -85,7 +85,7 @@ namespace Undersea.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAttributes", x => x.Id);
+                    table.PrimaryKey("PK_BuildingAttributes", x => x.BuildingType);
                 });
 
             migrationBuilder.CreateTable(
@@ -402,9 +402,18 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "BuildingAttributes",
+                columns: new[] { "BuildingType", "Coral", "HostCapacity", "Id", "Name", "Resident" },
+                values: new object[,]
+                {
+                    { 0, 200, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Áramlásírányító", 50 },
+                    { 1, 0, 200, new Guid("00000000-0000-0000-0000-000000000000"), "Zátonyvár", 0 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("866da4c3-778d-4bac-afb9-01927e532db2"), 1 });
+                values: new object[] { new Guid("a6346105-385a-47bf-99fa-89f44778b469"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -422,7 +431,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("f172bfc3-fd07-41ec-9c25-a3623cdcd65a"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("12cb0967-ec37-4597-98d7-b7b44f560f3e"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
