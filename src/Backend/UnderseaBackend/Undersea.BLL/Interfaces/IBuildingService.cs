@@ -7,7 +7,7 @@ namespace Undersea.BLL.Interfaces
 {
     public interface IBuildingService
     {
-        public Task<ActionResult<ICollection<BuildingDto>>> GetBuilding();
+        public Task<ICollection<BuildingDto>> GetBuilding();
         public Task PurchaseBuilding(BuildingDto building);
     }
 }
