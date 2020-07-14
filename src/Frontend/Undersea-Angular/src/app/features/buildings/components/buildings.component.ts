@@ -40,6 +40,8 @@ export class BuildingsComponent implements OnInit {
   sendData() {
     console.log(this.selectedBuilding);
     console.log(this.buildings[this.selectedBuilding - 1].name);
+    console.log(this.data);
+    this.data.building[this.selectedBuilding - 1] ++;
     this.dialogRef.close();
     this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
       duration: 3000

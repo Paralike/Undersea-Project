@@ -16,13 +16,15 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.reload();
-
   }
 
   reload() {
     this.featureService.getProfile().subscribe(res => {
       this.city = res;
-      this.city.buildings = [1, 0];
+      if (!this.city.buildings) {
+        this.city.buildings = [0, 0];
+      }
+
     },
       err => {
         console.error(err);
