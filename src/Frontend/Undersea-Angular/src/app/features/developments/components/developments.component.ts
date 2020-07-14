@@ -4,6 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UpgradeAttributeDto } from 'src/app/shared';
 
 @Component({
   selector: 'app-developments',
@@ -11,36 +12,42 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./developments.component.scss']
 })
 export class DevelopmentsComponent implements OnInit {
-  public developments: DevelopmentModel[];
+  public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
-
+  bought = [0];
+  already: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<DevelopmentsComponent>,
     private snackbar: MatSnackBar
-  ) { }
+  ) {
+    console.log(this.bought);
+   }
 
 
   ngOnInit(): void {
-    this.developments = [];
+    this.upgrades = [];
     this.featureService.getDevelopments().subscribe(res => {
-      this.developments = res;
+      this.upgrades = res;
     });
+    this.featureService.getUpgradesinfos().subscribe(res => {
+      console.log(res);
+    })
   }
 
-  selected(development: DevelopmentModel) {
-    this.selectedDevelopment = development.developmentType;
+  selected(upgrade: UpgradeAttributeDto) {
+    this.selectedDevelopment = upgrade.upgradeType;
 
   }
 
   sendData() {
-    console.log(this.selectedDevelopment);
-    console.log(this.developments[this.selectedDevelopment - 1].name);
+    this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
     this.dialogRef.close();
     this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
       duration: 3000
     });
   }
 }
+

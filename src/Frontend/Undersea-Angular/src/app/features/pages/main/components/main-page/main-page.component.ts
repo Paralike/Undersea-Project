@@ -11,11 +11,13 @@ import { FeatureService } from 'src/app/features/service/feature.service';
 })
 export class MainPageComponent implements OnInit {
   city: CityDto;
-
+  array: [];
   constructor(private featureService: FeatureService) { }
 
   ngOnInit(): void {
+    this.array = [];
     this.reload();
+
   }
 
   reload() {

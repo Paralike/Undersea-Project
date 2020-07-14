@@ -1,22 +1,32 @@
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 60vh !important;
+  overflow: hidden;
+}
+
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 15vw;
-  height: 28vh;
+  height: 40vh;
   background-color: #03255f;
   margin-bottom: 0.4vh;
   cursor: pointer;
 }
 
-h2{
+.title {
   font-family: baloo;
   font-size: 2vw;
 }
+
 p{
   font-family: open-sans-regular;
-  font-size: 1vw;
+  font-size: 0.8vw !important;
 }
 .main-content {
   display: flex;
@@ -25,7 +35,7 @@ p{
   align-items: center;
   margin-top: 4vh;
   background-color: #03255f;
-  height: 25vh;
+  height: 40vh;
   margin: 5vh;
 }
 

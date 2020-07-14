@@ -14,6 +14,15 @@ namespace Undersea.DAL.Configurations
             builder.HasData(
                 new UpgradeAttribute
                 {
+                    UpgradeType = Enums.UpgradeType.Iszaptraktor,
+                    CoralProduction = 10,
+                    DefensePoints = 0,
+                    AttackPoints = 10,
+                    TaxIncrease = 0,
+                    Name = "Iszaptraktor"
+                },
+                new UpgradeAttribute
+                {
                     UpgradeType = Enums.UpgradeType.Alkimia,
                     CoralProduction = 0,
                     DefensePoints = 0,
@@ -57,15 +66,6 @@ namespace Undersea.DAL.Configurations
                     AttackPoints=10,
                     TaxIncrease = 0,
                     Name = "Vízalatti Harcműveszetek"
-                },
-                new UpgradeAttribute
-                {
-                    UpgradeType = Enums.UpgradeType.Iszaptraktor,
-                    CoralProduction = 10,
-                    DefensePoints = 0,
-                    AttackPoints = 10,
-                    TaxIncrease = 0,
-                    Name = "Iszaptraktor "
                 }
                 );
         }

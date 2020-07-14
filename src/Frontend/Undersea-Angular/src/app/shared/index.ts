@@ -469,7 +469,7 @@ export class BuildingsClient {
         return _observableOf<BuildingDto>(<any>null);
     }
 
-    purchaseBuilding(building: BuildingDto): Observable<FileResponse | null> {
+    purchaseBuilding(building: BuildingDto): Observable<void> {
         let url_ = this.baseUrl + "/api/Buildings";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -481,7 +481,6 @@ export class BuildingsClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             })
         };
 
@@ -492,31 +491,30 @@ export class BuildingsClient {
                 try {
                     return this.processPurchaseBuilding(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                    return <Observable<void>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+                return <Observable<void>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPurchaseBuilding(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processPurchaseBuilding(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse | null>(<any>null);
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -912,18 +910,18 @@ export class UpgradesClient {
         return _observableOf<UpgradeDto[]>(<any>null);
     }
 
-    purchaseUpgrade(upgrade: UpgradeDto): Observable<void> {
-        let url_ = this.baseUrl + "/api/Upgrades";
+    purchaseUpgrade(upgradeType: UpgradeType | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Upgrades?";
+        if (upgradeType === null)
+            throw new Error("The parameter 'upgradeType' cannot be null.");
+        else if (upgradeType !== undefined)
+            url_ += "upgradeType=" + encodeURIComponent("" + upgradeType) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(upgrade);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
             })
         };
 
