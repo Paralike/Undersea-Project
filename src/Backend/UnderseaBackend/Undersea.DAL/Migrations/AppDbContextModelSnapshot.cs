@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f06f6cd2-b85e-43b7-b57a-1549105e8a54"),
+                            Id = new Guid("f101ead8-c33e-4ad0-b404-bfc651c3426f"),
                             CurrentTurn = 1
                         });
                 });
@@ -459,11 +459,21 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
+                            UpgradeType = 0,
+                            AttackPoints = 10,
+                            CoralProduction = 10,
+                            DefensePoints = 0,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Iszaptraktor",
+                            TaxIncrease = 0
+                        },
+                        new
+                        {
                             UpgradeType = 5,
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("67651a6c-9fdc-471a-aff1-efe9f09de1dd"),
+                            Id = new Guid("5dc1273d-d655-41d6-93b6-be98f35d48b3"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
@@ -505,16 +515,6 @@ namespace Undersea.DAL.Migrations
                             DefensePoints = 10,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Vízalatti Harcműveszetek",
-                            TaxIncrease = 0
-                        },
-                        new
-                        {
-                            UpgradeType = 0,
-                            AttackPoints = 10,
-                            CoralProduction = 10,
-                            DefensePoints = 0,
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "Iszaptraktor ",
                             TaxIncrease = 0
                         });
                 });

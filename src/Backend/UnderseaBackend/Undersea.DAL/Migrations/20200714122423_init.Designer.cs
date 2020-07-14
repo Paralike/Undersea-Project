@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200714102927_jozsi")]
-    partial class jozsi
+    [Migration("20200714122423_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("855849d9-4d10-4eca-b4dc-5bd49732ff88"),
+                            Id = new Guid("f101ead8-c33e-4ad0-b404-bfc651c3426f"),
                             CurrentTurn = 1
                         });
                 });
@@ -317,6 +317,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("CoralProduction")
                         .HasColumnType("int");
 
+                    b.Property<int>("Inhabitants")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -458,11 +461,21 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
+                            UpgradeType = 0,
+                            AttackPoints = 10,
+                            CoralProduction = 10,
+                            DefensePoints = 0,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Iszaptraktor",
+                            TaxIncrease = 0
+                        },
+                        new
+                        {
                             UpgradeType = 5,
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("1102d2de-5b15-4e74-adc6-917568586640"),
+                            Id = new Guid("5dc1273d-d655-41d6-93b6-be98f35d48b3"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
