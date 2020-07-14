@@ -82,7 +82,6 @@ export class ArmyClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(purchase);
-        console.log('Json:', content_);
 
         let options_ : any = {
             body: content_,

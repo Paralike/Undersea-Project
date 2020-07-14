@@ -29,10 +29,12 @@ h2{
   background-color: #03255f;
   height: 26vh;
   margin: 5vh;
+  font-size: 0.8vw;
   flex-wrap: wrap;
   font-family: open-sans-regular;
   
 }
+
 
 .buttons-div {
   display: flex;
@@ -87,23 +89,19 @@ div:focus {
 }
 
 button {
-  background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 6px #3B7DBD;
+  display: block;
+  width: 10vw;
+  background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #3b7dbd;
   border-radius: 90px;
-  opacity: 1;
+  border: none;
   font-family: baloo;
-  padding-top: 0.2%;
-  text-align: center;
-  margin-top: 5%;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  width: 192px;
-  height: 50px;
-  font-size: 18px;
-  padding: 1%;
-  padding-left: 5%;
-  color: #03255f;
+  font-size: 0.8vw;
+  letter-spacing: 0px;
+  color: #001234;
+  padding: 0.5%;
+  margin-bottom: 1%;
+  margin-top: 5vh;
 }
 button:disabled {
   opacity: 0.4;

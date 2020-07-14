@@ -11,7 +11,7 @@
     <div class="main-content">
       <div  *ngFor="let upgrade of upgrades" (click)="selected(upgrade)" class="content" tabindex="-1">
         <div class="images">
-          <img src='../../../../assets/images/development_{{upgrade.upgradeType}}.png'>
+          <img src='../../../../assets/images/development_{{upgrade.upgradeType + 1}}.png' style="height: 5vw">
         </div>
         <div class="development-name">
           {{upgrade.name}}
@@ -20,13 +20,13 @@
           növeli a Korall termesztést  {{upgrade.coralProduction}}%-al 
         </div>
         <div *ngIf="(upgrade.attackPoints !== 0 && !upgrade.defensePoints)" class="development-desc">
-          növeli a védelmi pontokat {{upgrade.defensePoints}}%-al
-        </div>
-        <div *ngIf="(!upgrade.attackPoints && upgrade.defensePoints !== 0)" class="development-desc">
           növeli a támadópontokat {{upgrade.attackPoints}}%-al
         </div>
+        <div *ngIf="(!upgrade.attackPoints && upgrade.defensePoints !== 0)" class="development-desc">
+          növeli a védelmi pontokat {{upgrade.defensePoints}}%-al
+        </div>
         <div *ngIf="(upgrade.attackPoints !== 0 && upgrade.defensePoints !== 0)" class="development-desc">
-          növeli a támadó és védelmi pontokat {{upgrade.defensePoints}}%-al
+          növeli a támadó és védelmi pontokat {{upgrade.attackPoints}}%-al
         </div>
         <div *ngIf="upgrade.taxIncrease !== 0" class="development-desc">
           növeli a beszedett adót {{upgrade.taxIncrease}}%-al

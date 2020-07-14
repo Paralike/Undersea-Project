@@ -31,14 +31,13 @@ export class DevelopmentsComponent implements OnInit {
     });
   }
 
-  selected(development: DevelopmentModel) {
-    this.selectedDevelopment = development.developmentType;
+  selected(upgrade: UpgradeAttributeDto) {
+    this.selectedDevelopment = upgrade.upgradeType;
 
   }
 
   sendData() {
-    console.log(this.selectedDevelopment);
-    console.log(this.upgrades[this.selectedDevelopment - 1].name);
+    this.featureService.startUpgrades().subscribe();
     this.dialogRef.close();
     this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
       duration: 3000
