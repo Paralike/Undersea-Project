@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
@@ -10,13 +14,16 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BuildingsController : ControllerBase
     {
         BuildingService _buildingService;
+        Guid id;
 
-        public BuildingsController(BuildingService buildingService)
+        public BuildingsController(BuildingService buildingService, IHttpContextAccessor httpContextAccessor)
         {
             _buildingService = buildingService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         [HttpGet]
