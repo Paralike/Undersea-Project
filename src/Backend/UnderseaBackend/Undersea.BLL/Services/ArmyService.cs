@@ -72,10 +72,14 @@ namespace Undersea.BLL.Services
                 await _armyUnitRepository.Add(new ArmyUnit()
                 {
                     ArmyId = army.Id,
+                    Army = army,
                     UnitType = type,
-                    UnitCount = 10
+                    UnitCount = 10,
                 });
             }
+
+            await _armyRepository.Update(firstCity.AvailableArmy);
+            await _cityRepository.Update(firstCity);
         }
 
         public async Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto)

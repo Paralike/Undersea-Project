@@ -961,70 +961,6 @@ export class UpgradesClient {
     }
 }
 
-@Injectable()
-export class UpgradeTypeClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    getUpgrades(): Observable<UpgradeAttributeDto[]> {
-        let url_ = this.baseUrl + "/api/UpgradeType";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetUpgrades(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetUpgrades(<any>response_);
-                } catch (e) {
-                    return <Observable<UpgradeAttributeDto[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<UpgradeAttributeDto[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetUpgrades(response: HttpResponseBase): Observable<UpgradeAttributeDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(UpgradeAttributeDto.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<UpgradeAttributeDto[]>(<any>null);
-    }
-}
-
 export class UnitDto implements IUnitDto {
     price!: number;
     foodNecessity!: number;
@@ -1571,9 +1507,11 @@ export interface ICityDto {
 }
 
 export class RankDto implements IRankDto {
+    userId!: string;
     username?: string | undefined;
     point!: number;
     cityName?: string | undefined;
+    rank!: number;
 
     constructor(data?: IRankDto) {
         if (data) {
@@ -1586,9 +1524,11 @@ export class RankDto implements IRankDto {
 
     init(_data?: any) {
         if (_data) {
+            this.userId = _data["userId"];
             this.username = _data["username"];
             this.point = _data["point"];
             this.cityName = _data["cityName"];
+            this.rank = _data["rank"];
         }
     }
 
@@ -1601,17 +1541,21 @@ export class RankDto implements IRankDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
         data["username"] = this.username;
         data["point"] = this.point;
         data["cityName"] = this.cityName;
+        data["rank"] = this.rank;
         return data; 
     }
 }
 
 export interface IRankDto {
+    userId: string;
     username?: string | undefined;
     point: number;
     cityName?: string | undefined;
+    rank: number;
 }
 
 export class UpgradeDto implements IUpgradeDto {
@@ -1665,62 +1609,6 @@ export enum UpgradeType {
     Szonaragyu = 3,
     VizalattiHarcmuveszetek = 4,
     Alkimia = 5,
-}
-
-export class UpgradeAttributeDto implements IUpgradeAttributeDto {
-    upgradeType!: UpgradeType;
-    coralProduction!: number;
-    defensePoints!: number;
-    attackPoints!: number;
-    taxIncrease!: number;
-    name?: string | undefined;
-
-    constructor(data?: IUpgradeAttributeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.upgradeType = _data["upgradeType"];
-            this.coralProduction = _data["coralProduction"];
-            this.defensePoints = _data["defensePoints"];
-            this.attackPoints = _data["attackPoints"];
-            this.taxIncrease = _data["taxIncrease"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): UpgradeAttributeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpgradeAttributeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["upgradeType"] = this.upgradeType;
-        data["coralProduction"] = this.coralProduction;
-        data["defensePoints"] = this.defensePoints;
-        data["attackPoints"] = this.attackPoints;
-        data["taxIncrease"] = this.taxIncrease;
-        data["name"] = this.name;
-        return data; 
-    }
-}
-
-export interface IUpgradeAttributeDto {
-    upgradeType: UpgradeType;
-    coralProduction: number;
-    defensePoints: number;
-    attackPoints: number;
-    taxIncrease: number;
-    name?: string | undefined;
 }
 
 export interface FileResponse {

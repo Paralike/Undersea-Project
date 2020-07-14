@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ca38823e-942a-4e20-9227-4c8fafa54d9c"),
+                            Id = new Guid("f06f6cd2-b85e-43b7-b57a-1549105e8a54"),
                             CurrentTurn = 1
                         });
                 });
@@ -315,6 +315,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("CoralProduction")
                         .HasColumnType("int");
 
+                    b.Property<int>("Inhabitants")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -460,7 +463,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("6bc7ece4-d4d0-49b6-8dfe-e6d30ae52247"),
+                            Id = new Guid("67651a6c-9fdc-471a-aff1-efe9f09de1dd"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
@@ -502,6 +505,16 @@ namespace Undersea.DAL.Migrations
                             DefensePoints = 10,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Vízalatti Harcműveszetek",
+                            TaxIncrease = 0
+                        },
+                        new
+                        {
+                            UpgradeType = 0,
+                            AttackPoints = 10,
+                            CoralProduction = 10,
+                            DefensePoints = 0,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Iszaptraktor ",
                             TaxIncrease = 0
                         });
                 });

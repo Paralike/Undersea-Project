@@ -11,6 +11,7 @@ namespace Undersea.BLL.Interfaces
         public Task<RankDto> GetProfile(Guid userId);
         public Task DeleteProfile(Guid id);
         public Task<List<RankDto>> GetRank();
+        public Task<int> GetUserRank(Guid userId);
 
     }
 }

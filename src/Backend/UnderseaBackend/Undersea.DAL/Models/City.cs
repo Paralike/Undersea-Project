@@ -10,20 +10,9 @@ namespace Undersea.DAL.Models
         public string Name { get; set; }
         public User User { get; set; }
         public Guid UserId { get; set; }
-        public int Inhabitants { get; set; } = 10;
+        public int Inhabitants { get; set; }
         public int PearlCount { get; set; } = 1000;
-        public int PearlProduction
-        {
-            get
-            {
-                return Inhabitants * 25;
-            }
-
-            set
-            {
-                PearlProduction = value;
-            }
-        }
+        public int PearlProduction { get; set; }
         public int CoralCount { get; set; } = 1000;
         public int CoralProduction { get; set; } = 200;
         public int Points { get; set; }
@@ -46,6 +35,7 @@ namespace Undersea.DAL.Models
             Upgrades.City = this;
             Upgrades.CityId = Id;
             Inhabitants = 10;
+            PearlProduction = Inhabitants * 25;
         }
     }
 }

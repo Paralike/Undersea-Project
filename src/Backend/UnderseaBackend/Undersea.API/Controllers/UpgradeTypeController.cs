@@ -20,10 +20,10 @@ namespace Undersea.API.Controllers
             _upgradeService = upgradeService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<BuildingAttributeDto>>> GetUpgrades()
-        {
-            return Ok(await _upgradeService.GetUpgrades());
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<List<BuildingAttributeDto>>> GetUpgrades()
+        //{
+        //    return Ok(await _upgradeService.GetUpgrades());
+        //}
     }
 }
