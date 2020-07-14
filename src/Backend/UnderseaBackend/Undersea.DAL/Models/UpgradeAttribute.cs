@@ -5,7 +5,7 @@ namespace Undersea.DAL.Models
 {
     public class UpgradeAttribute : IDbEntity
     {
-        public UpgradeType upgradeType {get;set;}
+        public UpgradeType UpgradeType {get;set;}
         public Guid Id { get; set; }
         public int CoralProduction { get; set; }
         public int DefensePoints { get; set; }

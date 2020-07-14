@@ -108,7 +108,7 @@ namespace Undersea.DAL.Migrations
                 name: "UpgradeAttributes",
                 columns: table => new
                 {
-                    upgradeType = table.Column<int>(nullable: false),
+                    UpgradeType = table.Column<int>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
                     CoralProduction = table.Column<int>(nullable: false),
                     DefensePoints = table.Column<int>(nullable: false),
@@ -118,7 +118,7 @@ namespace Undersea.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UpgradeAttributes", x => x.upgradeType);
+                    table.PrimaryKey("PK_UpgradeAttributes", x => x.UpgradeType);
                 });
 
             migrationBuilder.CreateTable(
@@ -395,7 +395,7 @@ namespace Undersea.DAL.Migrations
                         name: "FK_CityUpgradesJoin_UpgradeAttributes_upgradeType",
                         column: x => x.upgradeType,
                         principalTable: "UpgradeAttributes",
-                        principalColumn: "upgradeType",
+                        principalColumn: "UpgradeType",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -411,10 +411,10 @@ namespace Undersea.DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "UpgradeAttributes",
-                columns: new[] { "upgradeType", "AttackPoints", "CoralProduction", "DefensePoints", "Id", "Name", "TaxIncrease" },
+                columns: new[] { "UpgradeType", "AttackPoints", "CoralProduction", "DefensePoints", "Id", "Name", "TaxIncrease" },
                 values: new object[,]
                 {
-                    { 5, 0, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("2d8901db-d0c2-4e65-9b2d-589c2f6b9b1a"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },

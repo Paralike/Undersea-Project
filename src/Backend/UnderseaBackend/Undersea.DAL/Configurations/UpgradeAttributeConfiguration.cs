@@ -11,21 +11,22 @@ namespace Undersea.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<UpgradeAttribute> builder)
         {
-            builder.HasKey(u => u.upgradeType);
+            builder.HasKey(u => u.UpgradeType);
 
             builder.HasData(
                 new UpgradeAttribute
                 {
-                    upgradeType = Enums.UpgradeType.Alkimia,
+                    UpgradeType = Enums.UpgradeType.Alkimia,
                     CoralProduction = 0,
                     DefensePoints = 0,
                     AttackPoints = 0,
                     TaxIncrease = 30,
-                    Name = "Alkímia"
+                    Name = "Alkímia",
+                    Id = Guid.NewGuid()
                 },
                 new UpgradeAttribute
                 {
-                    upgradeType = Enums.UpgradeType.Iszapkombajn,
+                    UpgradeType = Enums.UpgradeType.Iszapkombajn,
                     CoralProduction=15,
                     DefensePoints =0,
                     AttackPoints=0,
@@ -34,7 +35,7 @@ namespace Undersea.DAL.Configurations
                 },
                 new UpgradeAttribute
                 {
-                    upgradeType = Enums.UpgradeType.Korallfal,
+                    UpgradeType = Enums.UpgradeType.Korallfal,
                     CoralProduction=0,
                     DefensePoints =20,
                     AttackPoints=0,
@@ -43,7 +44,7 @@ namespace Undersea.DAL.Configurations
                 },
                 new UpgradeAttribute
                 {
-                    upgradeType = Enums.UpgradeType.Szonaragyu,
+                    UpgradeType = Enums.UpgradeType.Szonaragyu,
                     CoralProduction=0,
                     DefensePoints =0,
                     AttackPoints=20,
@@ -52,7 +53,7 @@ namespace Undersea.DAL.Configurations
                 },
                 new UpgradeAttribute
                 {
-                    upgradeType = Enums.UpgradeType.VizalattiHarcmuveszetek,
+                    UpgradeType = Enums.UpgradeType.VizalattiHarcmuveszetek,
                     CoralProduction=0,
                     DefensePoints =10,
                     AttackPoints=10,

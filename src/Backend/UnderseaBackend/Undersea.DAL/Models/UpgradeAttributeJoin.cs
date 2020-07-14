@@ -11,7 +11,7 @@ namespace Undersea.DAL.Models
         public virtual UpgradeAttribute UpgradeAttribute { get; set; }
         public Guid UpgradeId { get; set; }
         public virtual Upgrade Upgrade { get; set; }
-        public UpgradeType upgradeType { get; set; }
+        public UpgradeType UpgradeType { get; set; }
         public int CurrentTurn { get; set; }
         public Status Status { get; set; }
         public Guid Id { get; set; }

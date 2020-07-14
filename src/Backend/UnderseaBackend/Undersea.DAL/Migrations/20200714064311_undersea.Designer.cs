@@ -10,7 +10,7 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200713143843_undersea")]
+    [Migration("20200714064311_undersea")]
     partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -411,7 +411,7 @@ namespace Undersea.DAL.Migrations
 
             modelBuilder.Entity("Undersea.DAL.Models.UpgradeAttribute", b =>
                 {
-                    b.Property<int>("upgradeType")
+                    b.Property<int>("UpgradeType")
                         .HasColumnType("int");
 
                     b.Property<int>("AttackPoints")
@@ -432,24 +432,24 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("TaxIncrease")
                         .HasColumnType("int");
 
-                    b.HasKey("upgradeType");
+                    b.HasKey("UpgradeType");
 
                     b.ToTable("UpgradeAttributes");
 
                     b.HasData(
                         new
                         {
-                            upgradeType = 5,
+                            UpgradeType = 5,
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Id = new Guid("2d8901db-d0c2-4e65-9b2d-589c2f6b9b1a"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
                         new
                         {
-                            upgradeType = 1,
+                            UpgradeType = 1,
                             AttackPoints = 0,
                             CoralProduction = 15,
                             DefensePoints = 0,
@@ -459,7 +459,7 @@ namespace Undersea.DAL.Migrations
                         },
                         new
                         {
-                            upgradeType = 2,
+                            UpgradeType = 2,
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 20,
@@ -469,7 +469,7 @@ namespace Undersea.DAL.Migrations
                         },
                         new
                         {
-                            upgradeType = 3,
+                            UpgradeType = 3,
                             AttackPoints = 20,
                             CoralProduction = 0,
                             DefensePoints = 0,
@@ -479,7 +479,7 @@ namespace Undersea.DAL.Migrations
                         },
                         new
                         {
-                            upgradeType = 4,
+                            UpgradeType = 4,
                             AttackPoints = 10,
                             CoralProduction = 0,
                             DefensePoints = 10,

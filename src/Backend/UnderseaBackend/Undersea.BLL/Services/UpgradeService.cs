@@ -41,7 +41,7 @@ namespace Undersea.BLL.Services
             //await _upgradeRepository.AddUpgrade(upgrade.CityId, upgrade.UpgradeType);
             //await _upgradeRepository.Add(_mapper.Map<Upgrade>(upgrade));
             //var list = await _upgradeJoin.GetWhere(u => u.UpgradeId == firstCity.UpgradesId);
-            var result = await _upgradeJoin.FirstOrDefault(a => a.UpgradeId == firstCity.UpgradesId && a.upgradeType == upgrade.UpgradeType);
+            var result = await _upgradeJoin.FirstOrDefault(a => a.UpgradeId == firstCity.UpgradesId && a.UpgradeType == upgrade.UpgradeType);
 
 
         }
