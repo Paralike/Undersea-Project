@@ -29,7 +29,7 @@ namespace Undersea.DAL.Models
             AvailableArmyId = AvailableArmy.Id;
             AvailableArmy.CityId = Id;
             Upgrades = new Upgrade();
-            //UpgradesId = Upgrades.Id;
+            UpgradesId = Upgrades.Id;
             Upgrades.City = this;
             Upgrades.CityId = Id;
         
