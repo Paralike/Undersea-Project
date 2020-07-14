@@ -9,15 +9,27 @@
         Minden fejlesztés 15 kört vesz igénybe, egyszerre csak egy dolog fejleszthető és minden csak egyszer fejleszthető ki (nem lehet két kombájn).
     </div>
     <div class="main-content">
-      <div  *ngFor="let development of developments" (click)="selected(development)" class="content" tabindex="-1">
+      <div  *ngFor="let upgrade of upgrades" (click)="selected(upgrade)" class="content" tabindex="-1">
         <div class="images">
-          <img src='../../../../assets/images/development_{{development.developmentType}}.png'>
+          <img src='../../../../assets/images/development_{{upgrade.upgradeType}}.png'>
         </div>
         <div class="development-name">
-          {{development.name}}
+          {{upgrade.name}}
         </div>
-        <div class="development-desc">
-          {{development.desc}}
+        <div *ngIf="upgrade.coralProduction !== 0" class="development-desc">
+          növeli a Korall termesztést  {{upgrade.coralProduction}}%-al 
+        </div>
+        <div *ngIf="(upgrade.attackPoints !== 0 && !upgrade.defensePoints)" class="development-desc">
+          növeli a védelmi pontokat {{upgrade.defensePoints}}%-al
+        </div>
+        <div *ngIf="(!upgrade.attackPoints && upgrade.defensePoints !== 0)" class="development-desc">
+          növeli a támadópontokat {{upgrade.attackPoints}}%-al
+        </div>
+        <div *ngIf="(upgrade.attackPoints !== 0 && upgrade.defensePoints !== 0)" class="development-desc">
+          növeli a támadó és védelmi pontokat {{upgrade.defensePoints}}%-al
+        </div>
+        <div *ngIf="upgrade.taxIncrease !== 0" class="development-desc">
+          növeli a beszedett adót {{upgrade.taxIncrease}}%-al
         </div>
       </div>
     </div>
