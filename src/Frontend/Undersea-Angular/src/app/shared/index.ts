@@ -795,6 +795,58 @@ export class ProfileClient {
         }
         return _observableOf<RankDto[]>(<any>null);
     }
+
+    getProfile(): Observable<RankDto[]> {
+        let url_ = this.baseUrl + "/api/Profile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProfile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProfile(<any>response_);
+                } catch (e) {
+                    return <Observable<RankDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RankDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetProfile(response: HttpResponseBase): Observable<RankDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(RankDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RankDto[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1455,6 +1507,7 @@ export interface ICityDto {
 export class RankDto implements IRankDto {
     username?: string | undefined;
     point!: number;
+    cityName?: string | undefined;
 
     constructor(data?: IRankDto) {
         if (data) {
@@ -1469,6 +1522,7 @@ export class RankDto implements IRankDto {
         if (_data) {
             this.username = _data["username"];
             this.point = _data["point"];
+            this.cityName = _data["cityName"];
         }
     }
 
@@ -1483,6 +1537,7 @@ export class RankDto implements IRankDto {
         data = typeof data === 'object' ? data : {};
         data["username"] = this.username;
         data["point"] = this.point;
+        data["cityName"] = this.cityName;
         return data; 
     }
 }
@@ -1490,6 +1545,7 @@ export class RankDto implements IRankDto {
 export interface IRankDto {
     username?: string | undefined;
     point: number;
+    cityName?: string | undefined;
 }
 
 export class UpgradeDto implements IUpgradeDto {
