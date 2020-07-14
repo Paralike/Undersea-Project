@@ -38,7 +38,7 @@ namespace Undersea.API
         {
             services.AddIdentity<User, IdentityRole<Guid>>(options =>
             {
-                options.User.AllowedUserNameCharacters = "a·bcdeÈfghijklmnoˆıpqrstu¸˚vwxyzA¡BCDE…FGHIJKLMNO÷’PQRSTU‹€VWXYZ0123456789 -._@+";
+                options.User.AllowedUserNameCharacters = "a√°bcde√©fghijklmno√∂√µpqrstu√º√ªvwxyzA√ÅBCDE√âFGHIJKLMNO√ñ√ïPQRSTU√ú√õVWXYZ0123456789 -._@+";
             })
             .AddEntityFrameworkStores<AppDbContext>();
 
@@ -52,6 +52,7 @@ namespace Undersea.API
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<ILogService, LoggerService>();
             services.AddTransient<IGameService, GameService>();
+            services.AddTransient<IBuildingService, BuildingService>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
@@ -59,7 +60,12 @@ namespace Undersea.API
             services.AddTransient<IUnitRepository, UnitRepository>();
             services.AddTransient<ICityRepository, CityRepository>();
             services.AddTransient<IUpgradeAttributeRepository, UpgradeAttributeRepository>();
+            services.AddTransient<IBuildingAttributeRepository, BuildingAttributeRepository>();
             services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
+
+            services.AddTransient<IBuildingJoinRepository, BuildingJoinRepository>();
+            services.AddTransient<IBuildingRepository, BuildingRepository>();
+
 
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();

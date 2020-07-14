@@ -238,7 +238,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/BuildingDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BuildingDto"
+              }
             }
           }
         }
@@ -267,6 +270,31 @@
         "responses": {
           "200": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/api/BuildingType": {
+      "get": {
+        "tags": [
+          "BuildingType"
+        ],
+        "operationId": "BuildingType_GetBuildings",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BuildingAttributeDto"
+              }
+            }
           }
         }
       }
@@ -713,6 +741,40 @@
         0,
         1
       ]
+    },
+    "BuildingAttributeDto": {
+      "type": "object",
+      "required": [
+        "buildingType",
+        "price",
+        "population",
+        "coralProduction",
+        "hosting"
+      ],
+      "properties": {
+        "buildingType": {
+          "$ref": "#/definitions/BuildingType"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "population": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "coralProduction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hosting": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
     },
     "CityDto": {
       "type": "object",

@@ -11,8 +11,9 @@ namespace Undersea.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Building> builder)
         {
-            //builder.HasMany(e => e.BuildingAttributes).WithOne(c => c.Building);
-            //builder.HasOne(u => u.City).WithMany(c => c.Upgrades);
+            builder.HasOne(a => a.City)
+                .WithOne(c => c.Buildings)
+                .HasForeignKey<Building>(u => u.CityId);
         }
     }
 }

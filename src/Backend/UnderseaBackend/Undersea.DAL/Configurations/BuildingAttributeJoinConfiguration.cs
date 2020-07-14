@@ -8,7 +8,7 @@ namespace Undersea.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<BuildingAttributeJoin> entity)
         {
-            entity.HasKey(ba => new { ba.BuildingId, ba.BuildingAttributeId });
+            entity.HasKey(ba => new { ba.BuildingId, ba.BuildingType });
         }
     }
 }
