@@ -22,7 +22,7 @@ namespace Undersea.BLL.Services
         }
 
         public async Task<ActionResult<ICollection<BuildingDto>>> GetBuilding() {
-            var list =  _buildingRepository.GetAll();
+            var list = await _buildingRepository.GetAll();
             return _mapper.Map<List<BuildingDto>>(list);
         }
 
