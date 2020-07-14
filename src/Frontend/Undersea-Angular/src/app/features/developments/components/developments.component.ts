@@ -31,7 +31,7 @@ export class DevelopmentsComponent implements OnInit {
     });
     this.featureService.getUpgradesinfos().subscribe(res => {
       console.log(res);
-    })
+    });
   }
 
   selected(upgrade: UpgradeAttributeDto) {
