@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {
         // tslint:disable-next-line:max-line-length
-        units: [this.units[UnitType.Rohamfoka].unitCount, this.units[UnitType.Csatacsiko].unitCount, this.units[UnitType.Lezercapa].unitCount]
+        units: this.units
       }
     });
     dialogRef.afterClosed().subscribe(() => this.reload.emit());
