@@ -28,7 +28,7 @@ export class ArmyComponent implements OnInit {
     public dialogRef: MatDialogRef<ArmyComponent>,
     private snackbar: MatSnackBar
   ) {
-    this.addUnit = data.units.map((x): ArmyUnitDto => ({ ...x }));
+    this.addUnit = data.units.map((x): ArmyUnitDto => new ArmyUnitDto({ ...x }));
     this.addUnit.forEach(unit => unit.unitCount = 0);
   }
 
