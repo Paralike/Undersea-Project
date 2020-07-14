@@ -424,7 +424,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/UpgradeDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UpgradeDto"
+              }
             }
           }
         }

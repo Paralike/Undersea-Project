@@ -21,7 +21,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UpgradeAttributeDto>>> GetUpgrades()
+        public async Task<ActionResult<List<BuildingAttributeDto>>> GetUpgrades()
         {
             return Ok(await _upgradeService.GetUpgrades());
         }
