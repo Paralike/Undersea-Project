@@ -15,6 +15,9 @@ namespace Undersea.API.AutoMapper
             CreateMap<Upgrade, UpgradeDto>().ReverseMap();
             CreateMap<UpgradeAttribute, UpgradeAttributeDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
+            CreateMap<Building, BuildingDto>().ReverseMap();
+            CreateMap<BuildingAttribute, BuildingAttributeDto>().ReverseMap();
+
         }
     }
 

@@ -19,9 +19,9 @@ namespace Undersea.API.Controllers
             _buildingService = buildingService;
         }
         [HttpGet]
-        public async Task<List<BuildingAttributeDto>> GetUpgrades()
+        public async Task<ActionResult<List<BuildingAttributeDto>>> GetBuildings()
         {
-            return await _buildingService.GetBuilding();
+            return Ok(await _buildingService.GetGeneralBuildings());
         }
     }
 }
