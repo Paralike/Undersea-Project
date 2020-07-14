@@ -217,5 +217,37 @@ namespace Undersea.BLL.Services
 
             return result.Sum(u => u.Count * u.Defense);
         }
+
+        public async Task<ArmyDto> GetAllArmy(Guid cityId)
+        {
+            var cities = await _cityRepository.GetWhere(c => c.Id == cityId);
+            var firstCity = cities.First();
+
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
+
+            var unitList = list.Select(x => new ArmyUnitDto
+            {
+                UnitType = x.UnitType,
+                UnitCount = x.UnitCount
+            }).ToList();
+
+            var attacks = firstCity.Attacks.ToList();
+
+            foreach(Attack a in attacks)
+            {
+                foreach(ArmyUnit armyUnit in a.Army.Units)
+                {
+                    unitList.Single(u => u.UnitType == armyUnit.UnitType).UnitCount += armyUnit.UnitCount;
+                }
+            }
+
+            ArmyDto newDto = new ArmyDto()
+            {
+                UnitList = unitList
+            };
+
+            return newDto;
+        }
+
     }
 }

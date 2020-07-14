@@ -14,7 +14,8 @@ namespace Undersea.BLL.DTOs
         //public Dictionary<BuildingDto, int> Buildings { get; set; }
         public List<int> Upgrades { get; set; }
         //public Dictionary<UpgradeDto,int> Upgrades { get; set; }
-        public ArmyDto Army { get; set; }
+        public ArmyDto AvailableArmy { get; set; }
+        public ArmyDto AllArmy { get; set; }
         public int ServicePay { get; set; }
         // Össz army le
         //Upgrade building hez + DTO

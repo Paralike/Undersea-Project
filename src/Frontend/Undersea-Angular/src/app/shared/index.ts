@@ -1492,7 +1492,8 @@ export class CityDto implements ICityDto {
     coralProduction!: number;
     buildings?: number[] | undefined;
     upgrades?: number[] | undefined;
-    army?: ArmyDto | undefined;
+    availableArmy?: ArmyDto | undefined;
+    allArmy?: ArmyDto | undefined;
     servicePay!: number;
 
     constructor(data?: ICityDto) {
@@ -1521,7 +1522,8 @@ export class CityDto implements ICityDto {
                 for (let item of _data["upgrades"])
                     this.upgrades!.push(item);
             }
-            this.army = _data["army"] ? ArmyDto.fromJS(_data["army"]) : <any>undefined;
+            this.availableArmy = _data["availableArmy"] ? ArmyDto.fromJS(_data["availableArmy"]) : <any>undefined;
+            this.allArmy = _data["allArmy"] ? ArmyDto.fromJS(_data["allArmy"]) : <any>undefined;
             this.servicePay = _data["servicePay"];
         }
     }
@@ -1550,7 +1552,8 @@ export class CityDto implements ICityDto {
             for (let item of this.upgrades)
                 data["upgrades"].push(item);
         }
-        data["army"] = this.army ? this.army.toJSON() : <any>undefined;
+        data["availableArmy"] = this.availableArmy ? this.availableArmy.toJSON() : <any>undefined;
+        data["allArmy"] = this.allArmy ? this.allArmy.toJSON() : <any>undefined;
         data["servicePay"] = this.servicePay;
         return data; 
     }
@@ -1564,7 +1567,8 @@ export interface ICityDto {
     coralProduction: number;
     buildings?: number[] | undefined;
     upgrades?: number[] | undefined;
-    army?: ArmyDto | undefined;
+    availableArmy?: ArmyDto | undefined;
+    allArmy?: ArmyDto | undefined;
     servicePay: number;
 }
 

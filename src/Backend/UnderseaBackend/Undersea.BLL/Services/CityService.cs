@@ -35,13 +35,15 @@ namespace Undersea.BLL.Services
             // Get where(userId = identity service)
             // return _mapper.Map<CityDto>(await _cityRepository.GetCityByUserId(id));
             var cityPre = await _cityRepository.GetCityByUserId(id);
+           
             CityDto city = new CityDto()
             {
-                Army = await _armyservice.GetArmy(id),
+                AvailableArmy = await _armyservice.GetArmy(id),
                 CoralCount = cityPre.CoralCount,
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
+                AllArmy = await _armyservice.GetAllArmy(cityPre.Id)
             };
 
             return city;

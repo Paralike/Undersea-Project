@@ -51,8 +51,10 @@ namespace Undersea.BLL.Services
             {
                 UserId = x.UserId,
                 Point = x.Points,
-                Username = x.User.UserName
-            }).OrderBy(c => c.Point).ToList();
+                Username = x.User.UserName,
+                CityName = x.Name
+                
+            }).OrderByDescending(c => c.Point).ToList();
 
             return ranks;
         }

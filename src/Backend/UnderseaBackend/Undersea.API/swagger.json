@@ -762,7 +762,10 @@
             "format": "int32"
           }
         },
-        "army": {
+        "availableArmy": {
+          "$ref": "#/definitions/ArmyDto"
+        },
+        "allArmy": {
           "$ref": "#/definitions/ArmyDto"
         },
         "servicePay": {
