@@ -60,21 +60,15 @@ namespace Undersea.API
             services.AddTransient<ICityRepository, CityRepository>();
             services.AddTransient<IUpgradeAttributeRepository, UpgradeAttributeRepository>();
             services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
-            
-
 
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<ICityService, CityService>();
-
 
             services.AddHttpContextAccessor();
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
-
-           
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -127,12 +121,6 @@ namespace Undersea.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-                //    context.Database.Migrate();
-            }
 
             app.UseEndpoints(endpoints =>
             {

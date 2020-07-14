@@ -15,18 +15,22 @@ namespace Undersea.DAL.Repositories
 
         public async Task<City> GetCityByUserId(Guid Id)
         {
-            var city = await _context
-                .Cities
-                //.Include(b => b.Buildings)
-                //.Include(u => u.Upgrades)
-                //.Where(a => a.UserId == Id)
-                .FirstOrDefaultAsync();
+            var city = await _context.Cities
+                    .Where(c => c.UserId == Id)
+                    .Include(c => c.AvailableArmy)
+                        .ThenInclude(ar => ar.Units)
+                    .SingleAsync();
+
             return city;
         }
 
         public async Task<ICollection<City>> GetAllCityWithUser()
         {
-            return await GetAllWith().Include(a => a.User).ToListAsync();
+            return await GetAllWith()
+                .Include(a => a.User)
+                .Include(c => c.AvailableArmy)
+                    .ThenInclude(ar => ar.Units)
+                .ToListAsync();
         }
 
         public override async Task<IEnumerable<City>> GetWhere(Expression<Func<City, bool>> predicate)

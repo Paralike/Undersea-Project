@@ -774,9 +774,15 @@
     "RankDto": {
       "type": "object",
       "required": [
-        "point"
+        "userId",
+        "point",
+        "rank"
       ],
       "properties": {
+        "userId": {
+          "type": "string",
+          "format": "guid"
+        },
         "username": {
           "type": "string"
         },
@@ -786,6 +792,10 @@
         },
         "cityName": {
           "type": "string"
+        },
+        "rank": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

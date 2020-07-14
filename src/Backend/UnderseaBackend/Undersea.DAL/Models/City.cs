@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Undersea.DAL.Models
 {
@@ -7,10 +8,11 @@ namespace Undersea.DAL.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public virtual User User { get; set; }
+        public User User { get; set; }
         public Guid UserId { get; set; }
+        public int Inhabitants { get; set; }
         public int PearlCount { get; set; } = 1000;
-        public int PearlProduction { get; set; } = 25;
+        public int PearlProduction { get; set; }
         public int CoralCount { get; set; } = 1000;
         public int CoralProduction { get; set; } = 200;
         public int Points { get; set; }
@@ -32,7 +34,8 @@ namespace Undersea.DAL.Models
             UpgradesId = Upgrades.Id;
             Upgrades.City = this;
             Upgrades.CityId = Id;
-        
+            Inhabitants = 10;
+            PearlProduction = Inhabitants * 25;
         }
     }
 }

@@ -15,13 +15,16 @@ export class DevelopmentsComponent implements OnInit {
   public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
-
+  bought = [0];
+  already: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<DevelopmentsComponent>,
     private snackbar: MatSnackBar
-  ) { }
+  ) {
+    console.log(this.bought);
+   }
 
 
   ngOnInit(): void {
@@ -47,3 +50,4 @@ export class DevelopmentsComponent implements OnInit {
     });
   }
 }
+

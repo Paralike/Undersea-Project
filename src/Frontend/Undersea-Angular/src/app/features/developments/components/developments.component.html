@@ -32,9 +32,19 @@
           növeli a beszedett adót {{upgrade.taxIncrease}}%-al
         </div>
       </div>
+      <div class="images">
+        <img src='../../../../assets/images/development_{{development.developmentType}}.png'>
+      </div>
+      <div class="development-name">
+        {{development.name}}
+      </div>
+      <div class="development-desc">
+        {{development.desc}}
+      </div>
     </div>
-    <mat-divider class="divider"></mat-divider>
-</div>
-  <div class="buttons-div">
-    <button mat-button class="development-button" id="developmentButton" (click)="sendData()">Megveszem</button>
   </div>
+  <mat-divider class="divider"></mat-divider>
+</div>
+<div class="buttons-div">
+  <button mat-button class="development-button" id="developmentButton" (click)="sendData()">Megveszem</button>
+</div>
