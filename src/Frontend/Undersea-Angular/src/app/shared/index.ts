@@ -861,7 +861,7 @@ export class UpgradesClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getCurrentUpgradeStatuses(): Observable<UpgradeDto> {
+    getCurrentUpgradeStatuses(): Observable<UpgradeDto[]> {
         let url_ = this.baseUrl + "/api/Upgrades";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -880,14 +880,14 @@ export class UpgradesClient {
                 try {
                     return this.processGetCurrentUpgradeStatuses(<any>response_);
                 } catch (e) {
-                    return <Observable<UpgradeDto>><any>_observableThrow(e);
+                    return <Observable<UpgradeDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UpgradeDto>><any>_observableThrow(response_);
+                return <Observable<UpgradeDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetCurrentUpgradeStatuses(response: HttpResponseBase): Observable<UpgradeDto> {
+    protected processGetCurrentUpgradeStatuses(response: HttpResponseBase): Observable<UpgradeDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -898,7 +898,11 @@ export class UpgradesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UpgradeDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UpgradeDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -906,7 +910,7 @@ export class UpgradesClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UpgradeDto>(<any>null);
+        return _observableOf<UpgradeDto[]>(<any>null);
     }
 
     purchaseUpgrade(upgrade: UpgradeDto): Observable<void> {
