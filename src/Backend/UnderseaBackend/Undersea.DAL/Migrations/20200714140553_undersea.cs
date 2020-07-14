@@ -268,6 +268,7 @@ namespace Undersea.DAL.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false),
+                    Inhabitants = table.Column<int>(nullable: false),
                     PearlCount = table.Column<int>(nullable: false),
                     PearlProduction = table.Column<int>(nullable: false),
                     CoralCount = table.Column<int>(nullable: false),
@@ -403,7 +404,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("c374f3d7-7498-4fd7-bb27-617f123fd969"), 1 });
+                values: new object[] { new Guid("866da4c3-778d-4bac-afb9-01927e532db2"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -421,7 +422,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("6337dcd9-e40f-4914-a6fa-c34665396b8e"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("f172bfc3-fd07-41ec-9c25-a3623cdcd65a"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
