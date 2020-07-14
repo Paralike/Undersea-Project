@@ -13,4 +13,56 @@
 }
 .left-side {
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: space-between;
+	width: 15vw;
+	height: 80vh;
 }
+
+.flex {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: flex-start;
+	min-height: 80vh;
+}
+
+.components {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+.main-content {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 85vw;
+}
+
+.zatony-div {
+	width: 3vw;
+	height: 3vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-right: 8vw;
+	margin-top: 8vh;
+}
+
+.aramlas-div {
+	width: 3vw;
+	height: 3vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-top: 35vh;
+	margin-right: 8vw;
+}
+

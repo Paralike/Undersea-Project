@@ -1,8 +1,22 @@
 <app-header *ngIf="city" [city]="city"></app-header>
-<div class = "left-side">
-    <app-navbar *ngIf="city" [buildings]="[0, 0, 0]" [developements] = "" [units]="city.army.unitList" (reload)="reload()"></app-navbar>
-    <app-profile-card *ngIf="city"></app-profile-card>
-</div>
-<div class="title">
-    UNDERSEA
+<div *ngIf="city" class="flex">
+    <div class="left-side">
+        <div class="components">
+            <app-navbar *ngIf="city" [buildings]="[1, 1]" [developements]="" [units]="city.army.unitList"
+                (reload)="reload()"></app-navbar>
+            <app-profile-card *ngIf="city"></app-profile-card>
+        </div>
+        <div class="title">
+            UNDERSEA
+        </div>
+
+    </div>
+    <div class="main-content">
+        <div *ngIf="city.buildings[0]" class="zatony-div">
+            <img src="../../../../../../assets/images/Zátonyvár_pic.png" alt="" class="zatony">
+        </div>
+        <div *ngIf="city.buildings[1]" class="aramlas-div">
+            <img src="../../../../../../assets/images/Áramlásirányító_pic.png" alt="" class="aramlas">
+        </div>
+    </div>
 </div>

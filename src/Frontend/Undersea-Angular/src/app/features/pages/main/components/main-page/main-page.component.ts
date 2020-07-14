@@ -22,7 +22,7 @@ export class MainPageComponent implements OnInit {
   reload() {
     this.featureService.getProfile().subscribe(res => {
       this.city = res;
-      console.log('SZITI', this.city);
+      this.city.buildings = [1, 0];
     },
       err => {
         console.error(err);
