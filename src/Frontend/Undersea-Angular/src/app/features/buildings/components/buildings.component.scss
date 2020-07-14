@@ -1,11 +1,4 @@
-.flex {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  height: 60vh !important;
-  overflow: hidden;
-}
+
 
 .content {
   display: flex;
@@ -13,7 +6,7 @@
   justify-content: center;
   align-items: center;
   width: 15vw;
-  height: 40vh;
+  height: 28h;
   background-color: #03255f;
   margin-bottom: 0.4vh;
   cursor: pointer;
@@ -35,7 +28,7 @@ p{
   align-items: center;
   margin-top: 4vh;
   background-color: #03255f;
-  height: 40vh;
+  height: 25vh;
   margin: 5vh;
 }
 

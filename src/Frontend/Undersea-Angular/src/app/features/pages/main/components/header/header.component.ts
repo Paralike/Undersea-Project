@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
     this.featureService.endTurn().pipe(
       switchMap(() => this.featureService.getProfile()),
       switchMap((city) => {
-        console.log('SZITIIIIII', city);
         this.city = city;
         return this.featureService.getTurn();
       })
