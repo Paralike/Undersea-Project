@@ -31,7 +31,7 @@ namespace Undersea.BLL.Services
             _upgradeAttributeRepository = upgradeAttributeRepository;
         }
 
-        public async Task<ActionResult<ICollection<UpgradeDto>>> GetUpgrade(Guid id)
+        public async Task<ICollection<UpgradeDto>> GetUpgrade(Guid id)
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
