@@ -38,7 +38,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<RankDto>>> GetProfile()
+        public async Task<ActionResult<RankDto>> GetProfile()
         {
             return Ok(await _profileService.GetProfile(id));
         }

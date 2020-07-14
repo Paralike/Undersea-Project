@@ -138,7 +138,7 @@ export class FeatureService {
   }
 
   getRanks(): Observable<RankDto[]> {
-    return this.profileClient.getProfile();
+    return this.profileClient.getRanks();
   }
 
   getFights(): Observable<AttackResponseDto[]> {

@@ -29,10 +29,10 @@ export class RankComponent implements OnInit {
       console.log(res);
       this.rankList = res;
       this.dataSource = new MatTableDataSource(this.rankList);
+      this.dataSource.sort = this.sort;
+      this.selected = false;
 
     });
-    this.dataSource.sort = this.sort;
-    this.selected = false;
   }
 
   onSelect(row) {
