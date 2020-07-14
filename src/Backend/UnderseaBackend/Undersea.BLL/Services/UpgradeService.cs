@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -40,14 +41,14 @@ namespace Undersea.BLL.Services
             return _mapper.Map<List<UpgradeDto>>(list);
         }
 
-        public async Task PurchaseUpgrade(Guid id, UpgradeDto upgrade)
+        public async Task PurchaseUpgrade(Guid id, UpgradeType upgradeType)
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
             //await _upgradeRepository.AddUpgrade(upgrade.CityId, upgrade.UpgradeType);
             //await _upgradeRepository.Add(_mapper.Map<Upgrade>(upgrade));
             //var list = await _upgradeJoin.GetWhere(u => u.UpgradeId == firstCity.UpgradesId);
-            var result = await _upgradeJoin.FirstOrDefault(a => a.UpgradeId == firstCity.UpgradesId && a.UpgradeType == upgrade.UpgradeType);
+            var result = await _upgradeJoin.FirstOrDefault(a => a.UpgradeId == firstCity.UpgradesId && a.UpgradeType == upgradeType);
             //TODO validitáció
             result.Status = DAL.Enums.Status.InProgress;
 
