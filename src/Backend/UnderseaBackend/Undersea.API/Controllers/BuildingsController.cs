@@ -22,9 +22,9 @@ namespace Undersea.API.Controllers
             return Ok(await _buildingService.GetBuilding());
         }
         [HttpPost]
-        public async Task<ActionResult> PurchaseBuilding(BuildingDto building)
+        public async Task PurchaseBuilding(BuildingDto building)
         {
-            return Ok(_buildingService.PurchaseBuilding(building));
+            await _buildingService.PurchaseBuilding(building);
         }
     }
 }
