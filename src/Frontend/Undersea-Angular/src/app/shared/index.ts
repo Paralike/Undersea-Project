@@ -978,18 +978,18 @@ export class UpgradesClient {
         return _observableOf<UpgradeDto[]>(<any>null);
     }
 
-    purchaseUpgrade(upgrade: UpgradeDto): Observable<void> {
-        let url_ = this.baseUrl + "/api/Upgrades";
+    purchaseUpgrade(upgradeType: UpgradeType | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Upgrades?";
+        if (upgradeType === null)
+            throw new Error("The parameter 'upgradeType' cannot be null.");
+        else if (upgradeType !== undefined)
+            url_ += "upgradeType=" + encodeURIComponent("" + upgradeType) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(upgrade);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
             })
         };
 
@@ -1693,9 +1693,11 @@ export interface ICityDto {
 }
 
 export class RankDto implements IRankDto {
+    userId!: string;
     username?: string | undefined;
     point!: number;
     cityName?: string | undefined;
+    rank!: number;
 
     constructor(data?: IRankDto) {
         if (data) {
@@ -1708,9 +1710,11 @@ export class RankDto implements IRankDto {
 
     init(_data?: any) {
         if (_data) {
+            this.userId = _data["userId"];
             this.username = _data["username"];
             this.point = _data["point"];
             this.cityName = _data["cityName"];
+            this.rank = _data["rank"];
         }
     }
 
@@ -1723,17 +1727,21 @@ export class RankDto implements IRankDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
         data["username"] = this.username;
         data["point"] = this.point;
         data["cityName"] = this.cityName;
+        data["rank"] = this.rank;
         return data; 
     }
 }
 
 export interface IRankDto {
+    userId: string;
     username?: string | undefined;
     point: number;
     cityName?: string | undefined;
+    rank: number;
 }
 
 export class UpgradeDto implements IUpgradeDto {

@@ -26,8 +26,8 @@ export class RankComponent implements OnInit {
   ngOnInit(): void {
 
     this.service.getRanks().subscribe(res => {
+      console.log(res);
       this.rankList = res;
-      console.log(this.rankList);
       this.dataSource = new MatTableDataSource(this.rankList);
 
     });

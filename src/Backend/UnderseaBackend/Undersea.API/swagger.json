@@ -461,20 +461,23 @@
           "Upgrades"
         ],
         "operationId": "Upgrades_PurchaseUpgrade",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "parameters": [
           {
-            "name": "upgrade",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UpgradeDto"
+            "type": "integer",
+            "name": "upgradeType",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/UpgradeType"
             },
-            "x-nullable": false
+            "x-nullable": false,
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
           }
         ],
         "responses": {
@@ -833,9 +836,15 @@
     "RankDto": {
       "type": "object",
       "required": [
-        "point"
+        "userId",
+        "point",
+        "rank"
       ],
       "properties": {
+        "userId": {
+          "type": "string",
+          "format": "guid"
+        },
         "username": {
           "type": "string"
         },
@@ -845,6 +854,10 @@
         },
         "cityName": {
           "type": "string"
+        },
+        "rank": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

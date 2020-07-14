@@ -1,6 +1,8 @@
-﻿namespace Undersea.BLL.Exceptions
+﻿using System;
+
+namespace Undersea.BLL.Exceptions
 {
-    class NotEnoughMoneyException
+    public class NotEnoughMoneyException : Exception
     {
     }
 }

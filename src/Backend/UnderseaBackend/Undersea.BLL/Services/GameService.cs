@@ -24,13 +24,14 @@ namespace Undersea.BLL.Services
         }
 
         private readonly IArmyService _armyService;
+        private readonly ICityService _cityService;
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
         private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService)
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService)
         {
             CurrentTurn = 1;
             _cityRepository = cityRepository;
@@ -38,6 +39,7 @@ namespace Undersea.BLL.Services
             _attackRepository = attackRepository;
             this.context = context;
             _armyService = armyService;
+            _cityService = cityService;
         }
 
         public GameService()
@@ -51,17 +53,14 @@ namespace Undersea.BLL.Services
 
             foreach (City c in cities)
             {
+                c.PearlProduction = c.Inhabitants * 25;
                 c.PearlCount += c.PearlProduction;
                 c.CoralCount += c.CoralProduction;
-
-                // TODO mi van a mínuszba megy át??
-
                 c.PearlCount -= await _armyRepository.GetPearlNecessity(c.AvailableArmyId);
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
                 await _cityRepository.Update(c);
             }
-
-                var attacks = await _attackRepository.GetAll();
+            var attacks = await _attackRepository.GetAll();
 
             foreach (Attack a in attacks)
             {
@@ -102,7 +101,13 @@ namespace Undersea.BLL.Services
                 await _attackRepository.Remove(a);
             }
 
-            // ranglista számolás
+            foreach (City c in cities)
+            {
+                c.Points = await _cityService.CalculatePoints(c.UserId);
+                await _cityRepository.Update(c);
+            }
+
+            //rank számítás
 
             context.Game.First().CurrentTurn++;
             await context.SaveChangesAsync();

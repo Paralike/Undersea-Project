@@ -38,7 +38,7 @@ namespace Undersea.API
         {
             services.AddIdentity<User, IdentityRole<Guid>>(options =>
             {
-                options.User.AllowedUserNameCharacters = "a·bcdeÈfghijklmnoˆıpqrstu¸˚vwxyzA¡BCDE…FGHIJKLMNO÷’PQRSTU‹€VWXYZ0123456789 -._@+";
+                options.User.AllowedUserNameCharacters = "a√°bcde√©fghijklmno√∂√µpqrstu√º√ªvwxyzA√ÅBCDE√âFGHIJKLMNO√ñ√ïPQRSTU√ú√õVWXYZ0123456789 -._@+";
             })
             .AddEntityFrameworkStores<AppDbContext>();
 
@@ -61,22 +61,18 @@ namespace Undersea.API
             services.AddTransient<IUpgradeAttributeRepository, UpgradeAttributeRepository>();
             services.AddTransient<IBuildingAttributeRepository, BuildingAttributeRepository>();
             services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
+
             services.AddTransient<IBuildingJoinRepository, BuildingJoinRepository>();
-            
 
 
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
-            services.AddTransient<ICityService, CityService>();
-
 
             services.AddHttpContextAccessor();
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
-
-           
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -129,12 +125,6 @@ namespace Undersea.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-                //    context.Database.Migrate();
-            }
 
             app.UseEndpoints(endpoints =>
             {

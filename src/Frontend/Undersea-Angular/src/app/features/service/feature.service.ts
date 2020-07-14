@@ -15,8 +15,10 @@ import {
   AttackResponseDto,
   AttackDto,
   BuildingDto,
+  UpgradesClient,
+  UpgradeAttributeDto,
   UpgradeTypeClient,
-  UpgradeAttributeDto
+  UpgradeDto,
 } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
@@ -93,6 +95,7 @@ export class FeatureService {
   army: ArmyDto;
   unitToSend: ArmyUnitDto;
   attack: AttackDto;
+  upgradeDto: UpgradeDto;
 
   constructor(
     private buildingsClient: BuildingsClient,
@@ -101,7 +104,8 @@ export class FeatureService {
     private cityClient: CityClient,
     private profileClient: ProfileClient,
     private gameClient: GameClient,
-    private upgradeType: UpgradeTypeClient
+    private upgradeType: UpgradeTypeClient,
+    private upgradeClient: UpgradesClient
   ) { }
 
   getBuildings(): Observable<any> {
@@ -111,6 +115,13 @@ export class FeatureService {
   getDevelopments(): Observable<UpgradeAttributeDto[]> {
     return this.upgradeType.getUpgrades();
     // return of(DEVELOPMENTS);
+  }
+  getUpgradesinfos(): Observable<any> {
+    return this.upgradeClient.getCurrentUpgradeStatuses();
+  }
+  startUpgrades(upgradeType: number): Observable<any> {
+    console.log(upgradeType);
+    return this.upgradeClient.purchaseUpgrade(upgradeType);
   }
 
   getAttack(): Observable<AttackableUsersDto[]> {
@@ -127,7 +138,7 @@ export class FeatureService {
   }
 
   getRanks(): Observable<RankDto[]> {
-    return this.profileClient.getRanks();
+    return this.profileClient.getProfile();
   }
 
   getFights(): Observable<AttackResponseDto[]> {

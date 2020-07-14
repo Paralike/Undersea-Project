@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
@@ -72,10 +73,14 @@ namespace Undersea.BLL.Services
                 await _armyUnitRepository.Add(new ArmyUnit()
                 {
                     ArmyId = army.Id,
+                    Army = army,
                     UnitType = type,
-                    UnitCount = 10
+                    UnitCount = 10,
                 });
             }
+
+            await _armyRepository.Update(firstCity.AvailableArmy);
+            await _cityRepository.Update(firstCity);
         }
 
         public async Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto)
@@ -90,7 +95,7 @@ namespace Undersea.BLL.Services
 
             if (price > firstCity.PearlCount || food > firstCity.CoralCount)
             {
-                throw new Exception("Not enough money");
+                throw new NotEnoughMoneyException();
             }
 
             foreach (ArmyUnit au in armyUnits)

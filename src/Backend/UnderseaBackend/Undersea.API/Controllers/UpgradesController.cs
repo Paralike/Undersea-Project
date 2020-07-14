@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
 
 namespace Undersea.API.Controllers
 {
@@ -18,13 +20,15 @@ namespace Undersea.API.Controllers
     public class UpgradesController : ControllerBase
     {
         IUpgradeService _upgradeService;
+        Guid id;
 
-        public UpgradesController(IUpgradeService upgradeService)
+        public UpgradesController(IUpgradeService upgradeService, IHttpContextAccessor httpContextAccessor)
         {
             _upgradeService = upgradeService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
-        [HttpGet]
+            [HttpGet]
         public async Task<ActionResult<List<UpgradeDto>>> GetCurrentUpgradeStatuses()
         {
             Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -32,10 +36,10 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost]
-        public async Task PurchaseUpgrade(UpgradeDto upgrade)
+        public async Task PurchaseUpgrade(UpgradeType upgradeType)
         {
             Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            await _upgradeService.PurchaseUpgrade(id, upgrade);
+            await _upgradeService.PurchaseUpgrade(id, upgradeType);
         }
     }
 }

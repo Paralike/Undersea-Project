@@ -15,13 +15,16 @@ export class DevelopmentsComponent implements OnInit {
   public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
-
+upgraded: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<DevelopmentsComponent>,
-    private snackbar: MatSnackBar
-  ) { }
+    private snackbar: MatSnackBar,
+    private status: boolean
+  ) {
+   // console.log(this.bought);
+   }
 
 
   ngOnInit(): void {
@@ -29,19 +32,23 @@ export class DevelopmentsComponent implements OnInit {
     this.featureService.getDevelopments().subscribe(res => {
       this.upgrades = res;
     });
+    this.featureService.getUpgradesinfos().subscribe(res => {
+      this.status = res[0].status;
+      console.log(this.status);
+    })
   }
 
-  selected(development: DevelopmentModel) {
-    this.selectedDevelopment = development.developmentType;
+  selected(upgrade: UpgradeAttributeDto) {
+    this.selectedDevelopment = upgrade.upgradeType;
 
   }
 
   sendData() {
-    console.log(this.selectedDevelopment);
-    console.log(this.upgrades[this.selectedDevelopment - 1].name);
+    this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
     this.dialogRef.close();
     this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
       duration: 3000
     });
   }
 }
+
