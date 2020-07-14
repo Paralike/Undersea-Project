@@ -9,7 +9,6 @@ namespace Undersea.DAL.Configurations
         public void Configure(EntityTypeBuilder<City> entity)
         {
             //entity.HasKey(c => c.UserId);
-            entity.HasKey(e => e.Id);
 
             entity.HasOne(c => c.User)
             .WithMany(u => u.Cities)

@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("30320220-ba48-4fed-a0fa-86de429f63c4"),
+                            Id = new Guid("ca38823e-942a-4e20-9227-4c8fafa54d9c"),
                             CurrentTurn = 1
                         });
                 });
@@ -255,14 +255,8 @@ namespace Undersea.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BuildingType")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CurrentTurn")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -336,7 +330,10 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("UpgradesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AvailableArmyId")
                         .IsUnique();
@@ -463,7 +460,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("856ed044-5ac6-4766-a30f-9976d44637bc"),
+                            Id = new Guid("6bc7ece4-d4d0-49b6-8dfe-e6d30ae52247"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
