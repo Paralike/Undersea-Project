@@ -11,6 +11,14 @@ namespace Undersea.DAL.Configurations
             entity.HasOne(a => a.City)
             .WithOne(c => c.AvailableArmy)
             .HasForeignKey<Army>(a => a.CityId);
+
+            entity.HasOne(ar => ar.Attack)
+                .WithOne(atk => atk.Army);
+
+            entity.HasMany(a => a.Units)
+                .WithOne(au => au.Army)
+                .HasForeignKey(a => a.ArmyId);
+                
         }
     }
 }

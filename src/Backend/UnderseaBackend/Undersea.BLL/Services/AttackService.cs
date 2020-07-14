@@ -52,8 +52,6 @@ namespace Undersea.BLL.Services
 
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
 
-
-
             int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
             int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
             int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
@@ -66,20 +64,18 @@ namespace Undersea.BLL.Services
                 await _armyUnitRepository.Update(au);
             }
 
-            Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka)
-            {
-                CityId = firstCity.Id,
-            };
+            Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka);
+            newArmy.CityId = firstCity.Id;
 
             await _armyRepository.Add(newArmy);
 
             Attack newAttack = new Attack()
             {
                 DefenderCityId = attack.DefenderCityId,
-                DefenderCity = defenderCity,
                 AttackerCityId = firstCity.Id,
                 AttackerCity = firstCity,
-                ArmyId = newArmy.Id,
+                DefenderCity = defenderCity,
+                ArmyId= newArmy.Id,
                 Army = newArmy
             };
 

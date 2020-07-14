@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -58,27 +59,47 @@ namespace Undersea.BLL.Services
             return newDto;
         }
 
+
+        public async Task FillArmy(Guid userId)
+        {
+            var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
+            var firstCity = cities.First();
+
+            var army = firstCity.AvailableArmy;
+
+            foreach(UnitType type in Enum.GetValues(typeof(UnitType)))
+            {
+                await _armyUnitRepository.Add(new ArmyUnit()
+                {
+                    ArmyId = army.Id,
+                    UnitType = type,
+                    UnitCount = 10
+                });
+            }
+        }
+
         public async Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto)
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
 
-            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
+            var armyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
             int price = await GetArmyPrice(dto);
-            if (price > firstCity.PearlCount)
+            int food = await GetArmyCoralNecessity(dto);
+
+            if (price > firstCity.PearlCount || food > firstCity.CoralCount)
             {
                 throw new Exception("Not enough money");
             }
 
-            foreach (ArmyUnit au in list)
+            foreach (ArmyUnit au in armyUnits)
             {
                 au.UnitCount += dto.Single(d => d.UnitType == au.UnitType).UnitCount;
                 await _armyUnitRepository.Update(au);
             }
 
             firstCity.PearlCount -= price;
-
             await _cityRepository.Update(firstCity);
         }
 
@@ -104,12 +125,36 @@ namespace Undersea.BLL.Services
                 unit2 => unit2.UnitType,
                 (unit1, unit2) => new
                 {
-                    Price = unit1.Price,
+                    unit1.Price,
                     Count = unit2.UnitCount
                 }
               );
 
+            var list = result.ToList();
             return result.Sum(u => u.Count * u.Price);
+        }
+
+        public async Task<int> GetArmyCoralNecessity(List<ArmyUnitDto> unitList)
+        {
+            var units = await _unitRepository.GetAll();
+
+            var priceList = units.Select(u => new
+            {
+                u.UnitType,
+                u.FoodNecessity
+            }).ToList();
+
+            var result = priceList.Join(unitList,
+                unit1 => unit1.UnitType,
+                unit2 => unit2.UnitType,
+                (unit1, unit2) => new
+                {
+                    unit1.FoodNecessity,
+                    unit2.UnitCount
+                }
+              );
+
+            return result.Sum(u => u.UnitCount * u.FoodNecessity);
         }
 
         public async Task<ArmyDto> GetArmyById(Guid id)
@@ -134,15 +179,15 @@ namespace Undersea.BLL.Services
         {
             var units = await _unitRepository.GetAll();
 
-            var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == armyId);
+            var armyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == armyId);
 
-            var result = units.Join(army,
-                unit1 => unit1.UnitType,
-                unit2 => unit2.UnitType,
-                (unit1, unit2) => new
+            var result = units.Join(armyUnits,
+                unit => unit.UnitType,
+                armyUnit => armyUnit.UnitType,
+                (unit, armyUnit) => new
                 {
-                    unit1.Damage,
-                    Count = unit2.UnitCount
+                    unit.Damage,
+                    Count = armyUnit.UnitCount
                 }
               );
 

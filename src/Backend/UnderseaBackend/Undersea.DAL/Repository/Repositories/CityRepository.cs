@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
@@ -28,5 +29,11 @@ namespace Undersea.DAL.Repositories
             return await GetAllWith().Include(a => a.User).ToListAsync();
         }
 
+        public override async Task<IEnumerable<City>> GetWhere(Expression<Func<City, bool>> predicate)
+        {
+            return await _context.Set<City>()
+                 .Include(c => c.AvailableArmy)
+                 .Where(predicate).ToListAsync();
+        }
     }
 }

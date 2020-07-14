@@ -9,6 +9,10 @@ namespace Undersea.DAL.Configurations
         public void Configure(EntityTypeBuilder<ArmyUnit> entity)
         {
             entity.HasKey(a => new { a.ArmyId, a.UnitType });
+
+            entity.HasOne(au => au.Army)
+                .WithMany(a => a.Units)
+                .HasForeignKey(au => au.ArmyId);
         }
     }
 }

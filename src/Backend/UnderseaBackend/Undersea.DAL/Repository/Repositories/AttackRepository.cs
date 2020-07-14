@@ -20,8 +20,14 @@ namespace Undersea.DAL.Repository.Repositories
         public async Task<IEnumerable<Attack>> GetAll()
         {
             return await _context.Set<Attack>()
-                .Include(a => a.Army)
-                .Include(a => a.DefenderCity)
+                .Include(atk => atk.Army)
+                    .ThenInclude(ar => ar.Units)
+                 .Include(atk => atk.DefenderCity)
+                    .ThenInclude(c => c.AvailableArmy)
+                        .ThenInclude(ar => ar.Units)
+                .Include(atk => atk.AttackerCity)
+                    .ThenInclude(c => c.AvailableArmy)
+                        .ThenInclude(ar => ar.Units)
                 .ToListAsync();
         }
 
@@ -29,8 +35,14 @@ namespace Undersea.DAL.Repository.Repositories
         public async Task<IEnumerable<Attack>> GetWhere(Expression<Func<Attack, bool>> predicate)
         {
             return await _context.Set<Attack>()
-                .Include(a => a.DefenderCity)
+                .Include(atk => atk.DefenderCity)
+                    .ThenInclude(c=> c.AvailableArmy)
+                        .ThenInclude(ar => ar.Units)
+                 .Include(atk => atk.AttackerCity)
+                    .ThenInclude(c => c.AvailableArmy)
+                        .ThenInclude(ar => ar.Units)
                 .Include(a => a.Army)
+                    .ThenInclude(a => a.Units)
                 .Where(predicate).ToListAsync();
         }
 
