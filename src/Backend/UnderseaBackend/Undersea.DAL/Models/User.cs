@@ -12,7 +12,8 @@ namespace Undersea.DAL.Models
             Cities = new List<City> {
                 new City()
             {
-                Name = city
+                Name = city,
+                UserId = Id
             }
             };
         }

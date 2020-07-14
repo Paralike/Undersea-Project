@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
@@ -57,6 +58,9 @@ namespace Undersea.API
             services.AddTransient<IAttackRepository, AttackRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
             services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<IUpgradeAttributeRepository, UpgradeAttributeRepository>();
+            services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
+            
 
 
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
@@ -69,6 +73,8 @@ namespace Undersea.API
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
+
+           
 
             services.AddAutoMapper(typeof(Startup));
 

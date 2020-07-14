@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
 
 namespace Undersea.API.Controllers
@@ -17,14 +20,17 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<UpgradeDto>> GetUpgrades()
+        public async Task<ActionResult<UpgradeDto>> GetCurrentUpgradeStatuses()
         {
-            return Ok(await _upgradeService.GetUpgrade());
+            Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return Ok(await _upgradeService.GetUpgrade(id));
         }
+
         [HttpPost]
-        public async Task<ActionResult> PurchaseUpgrade(UpgradeDto upgrade)
+        public async Task PurchaseUpgrade(UpgradeDto upgrade)
         {
-            return Ok(_upgradeService.PurchaseUpgrade(upgrade));
+            Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            await _upgradeService.PurchaseUpgrade(id, upgrade);
         }
     }
 }
