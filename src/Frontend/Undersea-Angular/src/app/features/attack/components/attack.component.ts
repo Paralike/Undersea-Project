@@ -26,10 +26,8 @@ export class AttackComponent implements OnInit {
     public dialogRef: MatDialogRef<AttackComponent>,
     private featureService: FeatureService
   ) {
-    this.army = data.units.map((x): ArmyUnitDto => ({ ...x }));
-    console.log(this.army);
-    this.army.forEach(unit => {unit.unitCount = 0;}
-      );
+    this.army = data.units.map((x): ArmyUnitDto => new ArmyUnitDto({ ...x }));
+    this.army.forEach(unit => unit.unitCount = 0);
   }
 
   @ViewChild('matslider') slider: MatSlider;

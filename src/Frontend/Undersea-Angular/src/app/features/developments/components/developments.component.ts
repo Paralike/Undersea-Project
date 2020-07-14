@@ -4,6 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UpgradeAttributeDto } from 'src/app/shared';
 
 @Component({
   selector: 'app-developments',
@@ -11,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./developments.component.scss']
 })
 export class DevelopmentsComponent implements OnInit {
-  public developments: DevelopmentModel[];
+  public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
   bought = [0];
@@ -27,49 +28,26 @@ export class DevelopmentsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.developments = [];
+    this.upgrades = [];
     this.featureService.getDevelopments().subscribe(res => {
-      this.developments = res;
+      this.upgrades = res;
     });
-    this.bought = JSON.parse(localStorage.getItem('bought'));
-    
+    this.featureService.getUpgradesinfos().subscribe(res => {
+      console.log(res);
+    })
   }
 
-  selected(development: DevelopmentModel) {
-    this.selectedDevelopment = development.developmentType;
-    console.log(this.bought);
-    console.log(this.selectedDevelopment);
-  }
-  boughtDevelopment(development: DevelopmentModel){
-    this.bought.forEach(element => {
-      if (element === development.developmentType){
-        console.log(element);
-        this.already = true;
-      }
-    });
-    console.log(this.bought);
+  selected(upgrade: UpgradeAttributeDto) {
+    this.selectedDevelopment = upgrade.upgradeType;
+
   }
 
   sendData() {
-    console.log(this.selectedDevelopment);
-    // tslint:disable-next-line:prefer-for-of
-    this.bought = JSON.parse(localStorage.getItem('bought'));
-    if (!this.bought.some(x => x === this.selectedDevelopment)) {
-        this.bought.push(this.selectedDevelopment);
-       
-        console.log(this.bought);
-        console.log(this.developments[this.selectedDevelopment - 1].name);
-        this.dialogRef.close();
-        this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
-          duration: 3000
-        });
-      }else{
-        this.snackbar.open('Ezt a terméket már megvásároltad!', 'Bezár', {
-          duration: 3000
-        });
-      }
-
-
-    }
+    this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
+    this.dialogRef.close();
+    this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+      duration: 3000
+    });
+  }
 }
 

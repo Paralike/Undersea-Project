@@ -266,11 +266,7 @@
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
-            "description": "",
-            "schema": {
-              "type": "file"
-            }
+            "description": ""
           }
         }
       }
@@ -383,12 +379,12 @@
         }
       }
     },
-    "/api/Upgrades": {
+    "/api/Profile": {
       "get": {
         "tags": [
-          "Upgrades"
+          "Profile"
         ],
-        "operationId": "Upgrades_GetUpgrades",
+        "operationId": "Profile_GetProfile",
         "produces": [
           "text/plain",
           "application/json",
@@ -399,7 +395,35 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/UpgradeDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RankDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Upgrades": {
+      "get": {
+        "tags": [
+          "Upgrades"
+        ],
+        "operationId": "Upgrades_GetCurrentUpgradeStatuses",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UpgradeDto"
+              }
             }
           }
         }
@@ -409,28 +433,52 @@
           "Upgrades"
         ],
         "operationId": "Upgrades_PurchaseUpgrade",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "parameters": [
           {
-            "name": "upgrade",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UpgradeDto"
+            "type": "integer",
+            "name": "upgradeType",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/UpgradeType"
             },
-            "x-nullable": false
+            "x-nullable": false,
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
           }
         ],
         "responses": {
           "200": {
-            "x-nullable": true,
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/UpgradeType": {
+      "get": {
+        "tags": [
+          "UpgradeType"
+        ],
+        "operationId": "UpgradeType_GetUpgrades",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "file"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UpgradeAttributeDto"
+              }
             }
           }
         }
@@ -735,6 +783,9 @@
         "point": {
           "type": "integer",
           "format": "int32"
+        },
+        "cityName": {
+          "type": "string"
         }
       }
     },
@@ -742,15 +793,19 @@
       "type": "object",
       "required": [
         "upgradeType",
-        "cityId"
+        "currentTurn",
+        "status"
       ],
       "properties": {
         "upgradeType": {
           "$ref": "#/definitions/UpgradeType"
         },
-        "cityId": {
-          "type": "string",
-          "format": "guid"
+        "currentTurn": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
         }
       }
     },
@@ -773,6 +828,40 @@
         4,
         5
       ]
+    },
+    "UpgradeAttributeDto": {
+      "type": "object",
+      "required": [
+        "upgradeType",
+        "coralProduction",
+        "defensePoints",
+        "attackPoints",
+        "taxIncrease"
+      ],
+      "properties": {
+        "upgradeType": {
+          "$ref": "#/definitions/UpgradeType"
+        },
+        "coralProduction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "defensePoints": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "attackPoints": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "taxIncrease": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
     }
   }
 }

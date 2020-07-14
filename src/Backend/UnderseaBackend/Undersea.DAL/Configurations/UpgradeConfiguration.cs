@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
 using Undersea.DAL.Models;
 
 namespace Undersea.DAL.Configurations
@@ -8,8 +12,9 @@ namespace Undersea.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Upgrade> builder)
         {
-            builder.HasMany(e => e.UpgradeAttributes).WithOne(c => c.Upgrade);
-            builder.HasOne(u => u.City).WithMany(c => c.Upgrades);
+            builder.HasOne(a => a.City)
+                .WithOne(c => c.Upgrades)
+                .HasForeignKey<Upgrade>(u=>u.CityId);
         }
     }
 }

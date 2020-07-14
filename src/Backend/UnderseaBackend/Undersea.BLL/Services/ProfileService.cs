@@ -29,16 +29,27 @@ namespace Undersea.BLL.Services
             await _userRepository.Remove(user);
         }
 
-        public Task<CityDto> GetProfile(User user)
+        public async Task<RankDto> GetProfile(Guid userId)
         {
-            throw new NotImplementedException();
+            var city = (await _cityRepository.GetWhere(c => c.UserId == userId)).First();
+
+            return new RankDto()
+            {
+                CityName = city.Name,
+                Username = city.User.UserName,
+                Point = city.Points
+            };
         }
 
         public async Task<List<RankDto>> GetRank()
         {
             var cities = await _cityRepository.GetAllCityWithUser();
 
-            return cities.Select(x => new RankDto { Point = x.Points, Username = x.User.UserName }).ToList();
+            return cities.Select(x => 
+            new RankDto { 
+                Point = x.Points,
+                Username = x.User.UserName 
+            }).ToList();
         }
     }
 }

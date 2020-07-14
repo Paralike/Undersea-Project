@@ -8,7 +8,7 @@ namespace Undersea.BLL.Interfaces
 {
     public interface IProfileService
     {
-        public Task<CityDto> GetProfile(User user);
+        public Task<RankDto> GetProfile(Guid userId);
         public Task DeleteProfile(Guid id);
         public Task<List<RankDto>> GetRank();
 

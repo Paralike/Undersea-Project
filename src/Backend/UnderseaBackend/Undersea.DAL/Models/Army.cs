@@ -10,7 +10,7 @@ namespace Undersea.DAL.Models
         public virtual City City { get; set; }
         public Guid CityId { get; set; }
         public virtual ICollection<ArmyUnit> Units { get; set; }
-        public Attack Attack { get; set; }
+        public virtual Attack Attack { get; set; }
 
 
         public Army()

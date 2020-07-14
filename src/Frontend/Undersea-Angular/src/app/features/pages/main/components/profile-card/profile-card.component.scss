@@ -1,6 +1,6 @@
 .card {
-    width: 192px;
-    height: 250px;
+    width: 10vw;
+    height: 20vh;
     border-radius: 16px;
     opacity: 1;
     backdrop-filter: blur(8px);
@@ -12,16 +12,16 @@
 .card span {
     display: block;
     font-family: baloo;
-    font-size: 1.6vw;
+    font-size: 1.2vw;
     opacity: 1;
     color: white;
 }
 
 .card > span > img {
     margin-top: 5%;
-    width: 70px;
-    height: 88px;
+    width: 4vw;
+    height: 5vw;
     border: 2px solid #428DFF;
-	border-radius: 14px;
+	border-radius: 2vw;
 	opacity: 1;
 }

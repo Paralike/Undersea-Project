@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.DTOs.GameElemens;
 using Undersea.DAL.Models;
 
 namespace Undersea.API.AutoMapper
@@ -11,7 +12,8 @@ namespace Undersea.API.AutoMapper
             CreateMap<User, AttackableUsersDto>().ReverseMap();
             CreateMap<Army, ArmyDto>().ReverseMap();
             CreateMap<Unit, UnitDto>().ReverseMap();
-            CreateMap<Upgrade, UpgradeDto>().ReverseMap();
+            CreateMap<UpgradeAttributeJoin, UpgradeDto>().ReverseMap();
+            CreateMap<UpgradeAttribute, UpgradeAttributeDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
         }
     }

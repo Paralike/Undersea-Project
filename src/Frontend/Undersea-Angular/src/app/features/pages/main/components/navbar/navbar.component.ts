@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
       width: '50vw',
       data: {
         // tslint:disable-next-line:max-line-length
-        units: this.units
+        units: this.units,
       },
       backdropClass: 'backdropBackground'
     });

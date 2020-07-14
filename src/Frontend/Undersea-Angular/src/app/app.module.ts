@@ -12,7 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpHandler, HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelperService, JwtInterceptor, JWT_OPTIONS, JwtModule, } from '@auth0/angular-jwt';
 import { TokenInterceptor } from './features/pages/auth/interceptor';
-import { ArmyClient, CityClient, GameClient } from './shared';
+import { ArmyClient, CityClient, GameClient, UpgradeAttributeDto, UpgradeTypeClient, UpgradesClient } from './shared';
 import { HeaderComponent } from './features/pages/main/components/header/header.component';
 
 
@@ -46,7 +46,9 @@ import { HeaderComponent } from './features/pages/main/components/header/header.
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     ArmyClient,
     CityClient,
-    GameClient
+    GameClient,
+    UpgradeTypeClient,
+    UpgradesClient
   ],
   bootstrap: [AppComponent]
 })

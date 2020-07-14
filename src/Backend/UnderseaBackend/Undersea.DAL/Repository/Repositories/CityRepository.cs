@@ -17,9 +17,9 @@ namespace Undersea.DAL.Repositories
         {
             var city = await _context
                 .Cities
-                .Include(b => b.Buildings)
-                .Include(u => u.Upgrades)
-                .Where(a => a.UserId == Id)
+                //.Include(b => b.Buildings)
+                //.Include(u => u.Upgrades)
+                //.Where(a => a.UserId == Id)
                 .FirstOrDefaultAsync();
             return city;
         }
@@ -33,7 +33,9 @@ namespace Undersea.DAL.Repositories
         {
             return await _context.Set<City>()
                  .Include(c => c.AvailableArmy)
+                 .Include(c => c.User)
                  .Where(predicate).ToListAsync();
         }
+
     }
 }
