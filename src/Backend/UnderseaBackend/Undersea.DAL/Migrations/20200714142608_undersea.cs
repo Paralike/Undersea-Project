@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class undersea : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,14 +76,16 @@ namespace Undersea.DAL.Migrations
                 name: "BuildingAttributes",
                 columns: table => new
                 {
+                    BuildingType = table.Column<int>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
                     Resident = table.Column<int>(nullable: false),
                     Coral = table.Column<int>(nullable: false),
-                    HostCapacity = table.Column<int>(nullable: false)
+                    HostCapacity = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingAttributes", x => x.Id);
+                    table.PrimaryKey("PK_BuildingAttributes", x => x.BuildingType);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,7 +275,8 @@ namespace Undersea.DAL.Migrations
                     CoralProduction = table.Column<int>(nullable: false),
                     Points = table.Column<int>(nullable: false),
                     AvailableArmyId = table.Column<Guid>(nullable: false),
-                    UpgradesId = table.Column<Guid>(nullable: false)
+                    UpgradesId = table.Column<Guid>(nullable: false),
+                    BuildingId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -361,18 +364,14 @@ namespace Undersea.DAL.Migrations
                 name: "CityBuildingsJoin",
                 columns: table => new
                 {
-                    BuildingAttributeId = table.Column<Guid>(nullable: false),
-                    BuildingId = table.Column<Guid>(nullable: false)
+                    BuildingId = table.Column<Guid>(nullable: false),
+                    BuildingType = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityBuildingsJoin", x => new { x.BuildingId, x.BuildingAttributeId });
-                    table.ForeignKey(
-                        name: "FK_CityBuildingsJoin_BuildingAttributes_BuildingAttributeId",
-                        column: x => x.BuildingAttributeId,
-                        principalTable: "BuildingAttributes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_CityBuildingsJoin", x => new { x.BuildingId, x.BuildingType });
                     table.ForeignKey(
                         name: "FK_CityBuildingsJoin_Building_BuildingId",
                         column: x => x.BuildingId,
@@ -403,9 +402,18 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "BuildingAttributes",
+                columns: new[] { "BuildingType", "Coral", "HostCapacity", "Id", "Name", "Resident" },
+                values: new object[,]
+                {
+                    { 0, 200, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Áramlásírányító", 50 },
+                    { 1, 0, 200, new Guid("00000000-0000-0000-0000-000000000000"), "Zátonyvár", 0 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("f101ead8-c33e-4ad0-b404-bfc651c3426f"), 1 });
+                values: new object[] { new Guid("a6346105-385a-47bf-99fa-89f44778b469"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -422,8 +430,8 @@ namespace Undersea.DAL.Migrations
                 columns: new[] { "UpgradeType", "AttackPoints", "CoralProduction", "DefensePoints", "Id", "Name", "TaxIncrease" },
                 values: new object[,]
                 {
-                    { 0, 10, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("5dc1273d-d655-41d6-93b6-be98f35d48b3"), "Alkímia", 30 },
+                    { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
+                    { 5, 0, 0, 0, new Guid("12cb0967-ec37-4597-98d7-b7b44f560f3e"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
@@ -488,7 +496,8 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Building_CityId",
                 table: "Building",
-                column: "CityId");
+                column: "CityId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_AvailableArmyId",
@@ -500,11 +509,6 @@ namespace Undersea.DAL.Migrations
                 name: "IX_Cities_UserId",
                 table: "Cities",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CityBuildingsJoin_BuildingAttributeId",
-                table: "CityBuildingsJoin",
-                column: "BuildingAttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upgrades_CityId",
@@ -540,6 +544,9 @@ namespace Undersea.DAL.Migrations
                 name: "Attacks");
 
             migrationBuilder.DropTable(
+                name: "BuildingAttributes");
+
+            migrationBuilder.DropTable(
                 name: "CityBuildingsJoin");
 
             migrationBuilder.DropTable(
@@ -556,9 +563,6 @@ namespace Undersea.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "BuildingAttributes");
 
             migrationBuilder.DropTable(
                 name: "Building");

@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f101ead8-c33e-4ad0-b404-bfc651c3426f"),
+                            Id = new Guid("a6346105-385a-47bf-99fa-89f44778b469"),
                             CurrentTurn = 1
                         });
                 });
@@ -260,16 +260,16 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CityId")
+                        .IsUnique();
 
                     b.ToTable("Building");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.BuildingAttribute", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("BuildingType")
+                        .HasColumnType("int");
 
                     b.Property<int>("Coral")
                         .HasColumnType("int");
@@ -277,12 +277,38 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("HostCapacity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Resident")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("BuildingType");
 
                     b.ToTable("BuildingAttributes");
+
+                    b.HasData(
+                        new
+                        {
+                            BuildingType = 0,
+                            Coral = 200,
+                            HostCapacity = 0,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Áramlásírányító",
+                            Resident = 50
+                        },
+                        new
+                        {
+                            BuildingType = 1,
+                            Coral = 0,
+                            HostCapacity = 200,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Zátonyvár",
+                            Resident = 0
+                        });
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.BuildingAttributeJoin", b =>
@@ -290,12 +316,16 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("BuildingId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BuildingAttributeId")
+                    b.Property<int>("BuildingType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("BuildingId", "BuildingAttributeId");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.HasIndex("BuildingAttributeId");
+                    b.HasKey("BuildingId", "BuildingType");
 
                     b.ToTable("CityBuildingsJoin");
                 });
@@ -307,6 +337,9 @@ namespace Undersea.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AvailableArmyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BuildingId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CoralCount")
@@ -460,7 +493,7 @@ namespace Undersea.DAL.Migrations
                         new
                         {
                             UpgradeType = 0,
-                            AttackPoints = 10,
+                            AttackPoints = 0,
                             CoralProduction = 10,
                             DefensePoints = 0,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
@@ -473,7 +506,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("5dc1273d-d655-41d6-93b6-be98f35d48b3"),
+                            Id = new Guid("12cb0967-ec37-4597-98d7-b7b44f560f3e"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
@@ -691,20 +724,14 @@ namespace Undersea.DAL.Migrations
             modelBuilder.Entity("Undersea.DAL.Models.Building", b =>
                 {
                     b.HasOne("Undersea.DAL.Models.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
+                        .WithOne("Buildings")
+                        .HasForeignKey("Undersea.DAL.Models.Building", "CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.BuildingAttributeJoin", b =>
                 {
-                    b.HasOne("Undersea.DAL.Models.BuildingAttribute", "BuildingAttribute")
-                        .WithMany("BuildingAttributes")
-                        .HasForeignKey("BuildingAttributeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Undersea.DAL.Models.Building", "Building")
                         .WithMany("BuildingAttributes")
                         .HasForeignKey("BuildingId")
