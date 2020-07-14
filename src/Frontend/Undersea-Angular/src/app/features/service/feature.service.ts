@@ -95,6 +95,7 @@ export class FeatureService {
   army: ArmyDto;
   unitToSend: ArmyUnitDto;
   attack: AttackDto;
+  upgradeDto: UpgradeDto;
 
   constructor(
     private buildingsClient: BuildingsClient,
