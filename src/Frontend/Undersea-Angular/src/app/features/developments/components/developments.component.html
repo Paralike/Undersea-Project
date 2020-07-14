@@ -10,6 +10,13 @@
     </div>
     <div class="main-content">
       <div  *ngFor="let upgrade of upgrades" (click)="selected(upgrade)" class="content" tabindex="-1">
+        <div *ngIf="upgraded">
+        <div class="checkmark">
+          <div class="checkmark-circle"></div>
+          <div class="checkmark-stem"></div>
+          <div class="checkmark-kick"></div>
+        </div>
+        </div>
         <div class="images">
           <img src='../../../../assets/images/development_{{upgrade.upgradeType + 1}}.png' style="height: 5vw">
         </div>
@@ -32,17 +39,7 @@
           növeli a beszedett adót {{upgrade.taxIncrease}}%-al
         </div>
       </div>
-      <div class="images">
-        <img src='../../../../assets/images/development_{{development.developmentType}}.png'>
-      </div>
-      <div class="development-name">
-        {{development.name}}
-      </div>
-      <div class="development-desc">
-        {{development.desc}}
-      </div>
     </div>
-  </div>
   <mat-divider class="divider"></mat-divider>
 </div>
 <div class="buttons-div">

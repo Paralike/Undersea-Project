@@ -15,15 +15,15 @@ export class DevelopmentsComponent implements OnInit {
   public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
-  bought = [0];
-  already: boolean;
+upgraded: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<DevelopmentsComponent>,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private status: boolean
   ) {
-    console.log(this.bought);
+   // console.log(this.bought);
    }
 
 
@@ -33,8 +33,9 @@ export class DevelopmentsComponent implements OnInit {
       this.upgrades = res;
     });
     this.featureService.getUpgradesinfos().subscribe(res => {
-      console.log(res);
-    });
+      this.status = res[0].status;
+      console.log(this.status);
+    })
   }
 
   selected(upgrade: UpgradeAttributeDto) {

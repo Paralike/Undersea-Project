@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
@@ -94,7 +95,7 @@ namespace Undersea.BLL.Services
 
             if (price > firstCity.PearlCount || food > firstCity.CoralCount)
             {
-                throw new Exception("Not enough money");
+                throw new NotEnoughMoneyException();
             }
 
             foreach (ArmyUnit au in armyUnits)
