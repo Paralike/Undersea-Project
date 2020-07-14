@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using System;
+using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
+using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 
 namespace Undersea.BLL.Services
@@ -38,7 +42,6 @@ namespace Undersea.BLL.Services
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
-
             };
 
             return city;
@@ -48,6 +51,19 @@ namespace Undersea.BLL.Services
         {
 
 
+        }
+
+        public async Task<int> CalculatePoints(Guid userId)
+        {
+            int points = 0;
+
+            var firstCity = await _cityRepository.GetCityByUserId(userId);
+
+            points += firstCity.Inhabitants
+                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Csatacsiko).UnitCount * 5
+                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
+                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10;
+            return points;
         }
 
 
