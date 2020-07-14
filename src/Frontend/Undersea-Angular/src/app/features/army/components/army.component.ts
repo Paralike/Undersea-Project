@@ -28,10 +28,8 @@ export class ArmyComponent implements OnInit {
     public dialogRef: MatDialogRef<ArmyComponent>,
     private snackbar: MatSnackBar
   ) {
-    this.addUnit = [];
-    this.addUnit[0] = new ArmyUnitDto({ unitType: UnitType.Lezercapa, unitCount: 0 });
-    this.addUnit[1] = new ArmyUnitDto({ unitType: UnitType.Rohamfoka, unitCount: 0 });
-    this.addUnit[2] = new ArmyUnitDto({ unitType: UnitType.Csatacsiko, unitCount: 0 });
+    this.addUnit = data.units.map((x): ArmyUnitDto => ({ ...x }));
+    this.addUnit.forEach(unit => unit.unitCount = 0);
   }
 
   ngOnInit(): void {
@@ -50,7 +48,7 @@ export class ArmyComponent implements OnInit {
     if (this.addUnit[unit].unitCount > 0) {
       this.addUnit[unit].unitCount--;
     }
-
+ 
   }
 
   sendData() {
