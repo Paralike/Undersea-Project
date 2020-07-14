@@ -376,26 +376,19 @@ namespace Undersea.DAL.Migrations
                 columns: table => new
                 {
                     UpgradeId = table.Column<Guid>(nullable: false),
-                    upgradeType = table.Column<int>(nullable: false),
-                    UpgradeAttributeId = table.Column<Guid>(nullable: false),
+                    UpgradeType = table.Column<int>(nullable: false),
                     CurrentTurn = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     Id = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CityUpgradesJoin", x => new { x.UpgradeId, x.upgradeType });
+                    table.PrimaryKey("PK_CityUpgradesJoin", x => new { x.UpgradeId, x.UpgradeType });
                     table.ForeignKey(
                         name: "FK_CityUpgradesJoin_Upgrades_UpgradeId",
                         column: x => x.UpgradeId,
                         principalTable: "Upgrades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CityUpgradesJoin_UpgradeAttributes_upgradeType",
-                        column: x => x.upgradeType,
-                        principalTable: "UpgradeAttributes",
-                        principalColumn: "UpgradeType",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -414,7 +407,7 @@ namespace Undersea.DAL.Migrations
                 columns: new[] { "UpgradeType", "AttackPoints", "CoralProduction", "DefensePoints", "Id", "Name", "TaxIncrease" },
                 values: new object[,]
                 {
-                    { 5, 0, 0, 0, new Guid("2d8901db-d0c2-4e65-9b2d-589c2f6b9b1a"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("b12c677f-3fa6-453d-a9de-e93834123444"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
@@ -492,11 +485,6 @@ namespace Undersea.DAL.Migrations
                 column: "BuildingAttributeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CityUpgradesJoin_upgradeType",
-                table: "CityUpgradesJoin",
-                column: "upgradeType");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Upgrades_CityId",
                 table: "Upgrades",
                 column: "CityId",
@@ -539,6 +527,9 @@ namespace Undersea.DAL.Migrations
                 name: "Units");
 
             migrationBuilder.DropTable(
+                name: "UpgradeAttributes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -549,9 +540,6 @@ namespace Undersea.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Upgrades");
-
-            migrationBuilder.DropTable(
-                name: "UpgradeAttributes");
 
             migrationBuilder.DropTable(
                 name: "Cities");

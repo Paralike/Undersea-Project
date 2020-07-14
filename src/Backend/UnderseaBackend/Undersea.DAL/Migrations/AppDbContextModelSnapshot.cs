@@ -441,7 +441,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("2d8901db-d0c2-4e65-9b2d-589c2f6b9b1a"),
+                            Id = new Guid("b12c677f-3fa6-453d-a9de-e93834123444"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
@@ -492,7 +492,7 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("UpgradeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("upgradeType")
+                    b.Property<int>("UpgradeType")
                         .HasColumnType("int");
 
                     b.Property<int>("CurrentTurn")
@@ -504,12 +504,7 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UpgradeAttributeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UpgradeId", "upgradeType");
-
-                    b.HasIndex("upgradeType");
+                    b.HasKey("UpgradeId", "UpgradeType");
 
                     b.ToTable("CityUpgradesJoin");
                 });
@@ -714,12 +709,6 @@ namespace Undersea.DAL.Migrations
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
                         .WithMany("UpgradeAttributes")
                         .HasForeignKey("UpgradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Undersea.DAL.Models.UpgradeAttribute", "UpgradeAttribute")
-                        .WithMany()
-                        .HasForeignKey("upgradeType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
