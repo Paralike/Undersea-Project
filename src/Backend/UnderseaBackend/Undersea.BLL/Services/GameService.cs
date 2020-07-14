@@ -61,7 +61,7 @@ namespace Undersea.BLL.Services
                 await _cityRepository.Update(c);
             }
 
-            var attacks = await _attackRepository.GetAll();
+                var attacks = await _attackRepository.GetAll();
 
             foreach (Attack a in attacks)
             {
@@ -80,7 +80,7 @@ namespace Undersea.BLL.Services
 
                     foreach (ArmyUnit au in a.DefenderCity.AvailableArmy.Units)
                     {
-                        au.UnitCount = Convert.ToInt32(au.UnitCount * 0.9);
+                        au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
                     }
                 }
 
@@ -88,13 +88,13 @@ namespace Undersea.BLL.Services
                 {
                     foreach (ArmyUnit au in a.Army.Units)
                     {
-                        au.UnitCount = Convert.ToInt32(au.UnitCount * 0.9);
+                        au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
                     }
                 }
 
                 foreach (ArmyUnit au in a.Army.Units)
                 {
-                    a.AttackerCity.AvailableArmy.Units.Single(a => a.UnitType == au.UnitType).UnitCount += au.UnitCount;
+                    a.AttackerCity.AvailableArmy.Units.First(a => a.UnitType == au.UnitType).UnitCount += au.UnitCount;
                 }
 
                 await _cityRepository.Update(a.DefenderCity);

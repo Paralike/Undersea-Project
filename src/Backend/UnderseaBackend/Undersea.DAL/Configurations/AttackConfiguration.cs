@@ -9,8 +9,8 @@ namespace Undersea.DAL.Configurations
         public void Configure(EntityTypeBuilder<Attack> entity)
         {
             entity.HasOne(a => a.Army)
-                    .WithMany(a => a.Attacks)
-                    .HasForeignKey(a => a.ArmyId)
+                    .WithOne(a => a.Attack)
+                    .HasForeignKey<Attack>(a => a.ArmyId)
                     .OnDelete(DeleteBehavior.NoAction);
 
             entity.HasOne(a => a.AttackerCity)
@@ -22,7 +22,6 @@ namespace Undersea.DAL.Configurations
                     .WithMany(c => c.Defenses)
                     .HasForeignKey(a => a.DefenderCityId)
                     .OnDelete(DeleteBehavior.NoAction);
-
         }
     }
 }

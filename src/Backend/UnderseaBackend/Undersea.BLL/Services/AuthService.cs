@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Auth;
+using Undersea.BLL.Interfaces;
 using Undersea.DAL.Models;
 
 namespace Undersea.BLL.Services
@@ -15,11 +16,13 @@ namespace Undersea.BLL.Services
     {
         private UserManager<User> _userManager;
         private SignInManager<User> _signInManager;
+        private readonly IArmyService _armyService;
 
-        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IArmyService armyService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _armyService = armyService;
         }
 
         public AuthResponseDto GetToken(User user)
@@ -74,12 +77,10 @@ namespace Undersea.BLL.Services
 
             var result = await _userManager.CreateAsync(user);
 
-            if (result.Succeeded)
+            if (result.Succeeded && (await _signInManager.PasswordSignInAsync(user, newUserDto.Password, false, false)).Succeeded)
             {
-                if ((await _signInManager.PasswordSignInAsync(user, newUserDto.Password, false, false)).Succeeded)
-                {
-                    return GetToken(user);
-                }
+                await _armyService.FillArmy(user.Id);
+                return GetToken(user);
 
             }
 
