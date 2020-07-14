@@ -3,7 +3,7 @@
 <div *ngIf="city" class="flex">
     <div class="left-side">
         <div class="components">
-            <app-navbar *ngIf="city" [buildings]="city.buildings" [developements]="" [units]="city.army.unitList"
+            <app-navbar *ngIf="city" [buildings]="city.buildings" [developements]="" [units]="city.availableArmy.unitList"
                 (reload)="reload()"></app-navbar>
             <app-profile-card *ngIf="city"></app-profile-card>
         </div>

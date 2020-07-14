@@ -23,6 +23,7 @@ export class MainPageComponent implements OnInit {
   reload() {
     this.featureService.getProfile().subscribe(res => {
       this.city = res;
+      console.log(this.city);
       if (!this.city.buildings) {
         this.city.buildings = [0, 0];
       }
