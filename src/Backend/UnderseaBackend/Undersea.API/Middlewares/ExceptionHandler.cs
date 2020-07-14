@@ -39,6 +39,12 @@ namespace Undersea.API.Middlewares
                 //await _logger.LogError($"Timeout Happened " + ex);
                 await HandleTimeoutException(httpContext, ex);
             }
+            catch (NotEnoughMoneyException ex)
+            {
+                // await _logger.LogError($"Something went wrong: {ex}");
+                await HandleNotEnoughMoneyException(httpContext, ex);
+            }
+
             catch (Exception ex)
             {
                 // await _logger.LogError($"Something went wrong: {ex}");
@@ -56,6 +62,19 @@ namespace Undersea.API.Middlewares
             return httpContext.Response.WriteAsync(new ErrorDto()
             {
                 Message = "Timeout Happened"
+            }.ToString());
+
+        }
+
+
+        private Task HandleNotEnoughMoneyException(HttpContext httpContext, NotEnoughMoneyException ex)
+        {
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+            return httpContext.Response.WriteAsync(new ErrorDto()
+            {
+                Message = "You don't have enough pearl"
             }.ToString());
 
         }
