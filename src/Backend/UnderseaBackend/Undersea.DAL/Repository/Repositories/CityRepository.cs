@@ -33,7 +33,9 @@ namespace Undersea.DAL.Repositories
         {
             return await _context.Set<City>()
                  .Include(c => c.AvailableArmy)
+                 .Include(c => c.User)
                  .Where(predicate).ToListAsync();
         }
+
     }
 }

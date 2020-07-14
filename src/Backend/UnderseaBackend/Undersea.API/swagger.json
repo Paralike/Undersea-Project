@@ -383,6 +383,31 @@
         }
       }
     },
+    "/api/Profile": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_GetProfile",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RankDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Upgrades": {
       "get": {
         "tags": [
@@ -735,6 +760,9 @@
         "point": {
           "type": "integer",
           "format": "int32"
+        },
+        "cityName": {
+          "type": "string"
         }
       }
     },
