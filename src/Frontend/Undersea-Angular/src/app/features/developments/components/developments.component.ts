@@ -4,7 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpgradeAttributeDto } from 'src/app/shared';
+import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
 
 @Component({
   selector: 'app-developments',
@@ -15,16 +15,16 @@ export class DevelopmentsComponent implements OnInit {
   public upgrades: UpgradeAttributeDto[];
   public selectedDevelopment: number;
   public id: string;
-upgraded: boolean;
+  public status: UpgradeDto[];
+  upgraded: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
     public dialogRef: MatDialogRef<DevelopmentsComponent>,
     private snackbar: MatSnackBar,
-    private status: boolean
   ) {
-   // console.log(this.bought);
-   }
+    // console.log(this.bought);
+  }
 
 
   ngOnInit(): void {
@@ -33,9 +33,9 @@ upgraded: boolean;
       this.upgrades = res;
     });
     this.featureService.getUpgradesinfos().subscribe(res => {
-      this.status = res[0].status;
+      this.status = res;
       console.log(this.status);
-    })
+    });
   }
 
   selected(upgrade: UpgradeAttributeDto) {

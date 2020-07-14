@@ -794,7 +794,7 @@ export class ProfileClient {
         return _observableOf<RankDto[]>(<any>null);
     }
 
-    getProfile(): Observable<RankDto[]> {
+    getProfile(): Observable<RankDto> {
         let url_ = this.baseUrl + "/api/Profile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -813,14 +813,14 @@ export class ProfileClient {
                 try {
                     return this.processGetProfile(<any>response_);
                 } catch (e) {
-                    return <Observable<RankDto[]>><any>_observableThrow(e);
+                    return <Observable<RankDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<RankDto[]>><any>_observableThrow(response_);
+                return <Observable<RankDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetProfile(response: HttpResponseBase): Observable<RankDto[]> {
+    protected processGetProfile(response: HttpResponseBase): Observable<RankDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -831,11 +831,7 @@ export class ProfileClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(RankDto.fromJS(item));
-            }
+            result200 = RankDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -843,7 +839,7 @@ export class ProfileClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RankDto[]>(<any>null);
+        return _observableOf<RankDto>(<any>null);
     }
 }
 

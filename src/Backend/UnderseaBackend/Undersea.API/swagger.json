@@ -395,10 +395,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/RankDto"
-              }
+              "$ref": "#/definitions/RankDto"
             }
           }
         }
