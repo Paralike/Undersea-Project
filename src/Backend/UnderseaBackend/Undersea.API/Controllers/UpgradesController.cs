@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
@@ -20,7 +21,7 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<UpgradeDto>> GetCurrentUpgradeStatuses()
+        public async Task<ActionResult<List<UpgradeDto>>> GetCurrentUpgradeStatuses()
         {
             Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             return Ok(await _upgradeService.GetUpgrade(id));
