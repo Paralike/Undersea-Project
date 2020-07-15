@@ -14,7 +14,7 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     public class ArmyController : ControllerBase
     {
         private readonly IArmyService _armyService;
@@ -29,8 +29,6 @@ namespace Undersea.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<UnitDto>>> GetArmy()
         {
-            //return Ok(await _armyService.GetArmy(id));
-
             return Ok(await _armyService.GetUnitInfo());
         }
 
