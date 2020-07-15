@@ -118,7 +118,7 @@ namespace Undersea.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs)
         {
             if (env.IsDevelopment())
             {
@@ -132,6 +132,7 @@ namespace Undersea.API
             app.UseMiddleware<ExceptionHandler>();
 
             app.UseStaticFiles();
+            app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
@@ -140,16 +141,15 @@ namespace Undersea.API
             app.UseAuthentication();
             app.UseAuthorization();
 
-            UpdateDatabase(app);
+            InitDatabase(app);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
         }
 
-        private static void UpdateDatabase(IApplicationBuilder app)
+        private static void InitDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
@@ -159,6 +159,9 @@ namespace Undersea.API
                 {
                     context.Database.Migrate();
                 }
+
+                var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
             }
         }
     }
