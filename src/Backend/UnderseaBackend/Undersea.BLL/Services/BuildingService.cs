@@ -45,7 +45,7 @@ namespace Undersea.BLL.Services
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
-            var result = await _buildingJoin.FirstOrDefault(a => a.BuildingId == firstCity.UpgradesId && a.BuildingType == building);
+            var result = await _buildingJoin.FirstOrDefault(a => a.BuildingId == firstCity.BuildingId && a.BuildingType == building);
             //TODO validitáció
             result.Status = DAL.Enums.Status.InProgress;
             await _cityRepository.Update(firstCity);

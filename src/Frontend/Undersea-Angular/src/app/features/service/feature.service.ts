@@ -178,9 +178,9 @@ export class FeatureService {
     return this.gameClient.getGameState();
   }
 
-  purchaseBuildings(building: BuildingDto){
-    console.log(building);
-    return this.buildingsClient.purchaseBuilding(building);
+  purchaseBuildings(buildingType: number){
+
+    return this.buildingsClient.purchaseBuilding(buildingType);
   }
 
 }

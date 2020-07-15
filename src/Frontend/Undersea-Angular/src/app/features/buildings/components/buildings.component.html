@@ -10,7 +10,7 @@
   </p>
   <div class="main-content">
     <div *ngFor="let building of buildings; let i = index" (click)="selected(building)" class="content" tabindex="-1">
-      <img src='../../../../assets/images/building_{{building.buildingType}}.png'>
+      <img src='../../../../assets/images/building_{{building.buildingType + 1}}.png'>
       <div class="building-name">
         {{building.name}}
       </div>
