@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DevelopmentModel } from '../../developments/model/development.model';
+import {  UpgradeAttributeModel, UpgradeModel } from '../../developments/model/development.model';
 import { FeatureService } from '../../service/feature.service';
-import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
@@ -19,10 +18,10 @@ interface Development {
 
 
 export class DevelopmentsComponent implements OnInit {
-  public upgrades: UpgradeAttributeDto[];
+  public upgrades: UpgradeAttributeModel[];
   public selectedDevelopment: number;
   public id: string;
-  public status: UpgradeDto[];
+  public status: UpgradeModel[];
   upgraded: boolean;
   array;
 
@@ -42,7 +41,7 @@ export class DevelopmentsComponent implements OnInit {
     this.array = [];
     this.status = [];
     this.featureService.getDevelopments().subscribe(res => {
-      this.upgrades = res;
+      this.upgrades = res.map((x): UpgradeAttributeModel => ({...x}));
     });
     this.featureService.getUpgradesinfos().subscribe(res => {
 
