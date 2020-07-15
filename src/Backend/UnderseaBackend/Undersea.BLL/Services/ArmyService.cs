@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
@@ -24,7 +23,6 @@ namespace Undersea.BLL.Services
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;
-        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
         public ArmyService()
@@ -33,9 +31,7 @@ namespace Undersea.BLL.Services
         }
 
         public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository,
-
-            IMapper mapper, ICityRepository cityRepository, IUnitRepository unitRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeJoinRepository upgradeJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository,IUserService userService)
-
+            IMapper mapper, ICityRepository cityRepository, IUnitRepository unitRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeJoinRepository upgradeJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository)
         {
             _armyRepository = armyRepository;
             _armyUnitRepository = armyUnitRepository;
@@ -45,39 +41,40 @@ namespace Undersea.BLL.Services
             _buildingJoinRepository = buildingJoinRepository;
             _upgradeJoinRepository = upgradeJoinRepository;
             _upgradeAttributeRepository = upgradeAttributeRepository;
-            _userService = userService;
         }
 
-        public async Task<ArmyDto> GetArmy(Guid cityId)
+        public async Task<ArmyDto> GetArmy(Guid id)
         {
-            Guid userId = _userService.GetCurrentUserId();
-            var firstCity = await _cityRepository.GetCityByUserId(userId);
+            var cities = await _cityRepository.GetWhere(c => c.UserId == id);
+            var firstCity = cities.First();
 
-            var armyUnits = (await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId))
-                            .Select(armyUnit =>
-                                new ArmyUnitDto
-                                {
-                                    UnitType = armyUnit.UnitType,
-                                    UnitCount = armyUnit.UnitCount
-                                }).ToList();
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
-            return new ArmyDto()
+            var unitList = list.Select(x => new ArmyUnitDto
             {
-                UnitList = armyUnits,
+                UnitType = x.UnitType,
+                UnitCount = x.UnitCount
+            }).ToList();
+
+            ArmyDto newDto = new ArmyDto()
+            {
+                UnitList = unitList,
                 ArmyFoodNecessity = await _armyRepository.GetFoodNecessity(firstCity.AvailableArmyId),
                 ArmyPearlNecessity = await _armyRepository.GetPearlNecessity(firstCity.AvailableArmyId)
             };
+
+            return newDto;
         }
 
 
         public async Task FillArmy(Guid userId)
         {
-            // TODO userId átadása nélkül megy-e?
+            var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
+            var firstCity = cities.First();
 
-            var firstCity = await _cityRepository.GetCityByUserId(userId);
             var army = firstCity.AvailableArmy;
 
-            foreach (UnitType type in Enum.GetValues(typeof(UnitType)))
+            foreach(UnitType type in Enum.GetValues(typeof(UnitType)))
             {
                 await _armyUnitRepository.Add(new ArmyUnit()
                 {
@@ -94,7 +91,9 @@ namespace Undersea.BLL.Services
 
         public async Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto)
         {
-            var firstCity = await _cityRepository.GetCityByUserId(id);
+            var cities = await _cityRepository.GetWhere(c => c.UserId == id);
+            var firstCity = cities.First();
+
             var armyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
             int price = await GetArmyPrice(dto);
@@ -118,6 +117,7 @@ namespace Undersea.BLL.Services
         public async Task<List<UnitDto>> GetUnitInfo()
         {
             var units = await _unitRepository.GetAll();
+
             return _mapper.Map<List<UnitDto>>(units);
         }
 
@@ -125,7 +125,13 @@ namespace Undersea.BLL.Services
         {
             var units = await _unitRepository.GetAll();
 
-            var result = units.Join(unitList,
+            var priceList = units.Select(u => new
+            {
+                UnitType = u.UnitType,
+                Price = u.Price
+            }).ToList();
+
+            var result = priceList.Join(unitList,
                 unit1 => unit1.UnitType,
                 unit2 => unit2.UnitType,
                 (unit1, unit2) => new
@@ -135,6 +141,7 @@ namespace Undersea.BLL.Services
                 }
               );
 
+            var list = result.ToList();
             return result.Sum(u => u.Count * u.Price);
         }
 
@@ -142,7 +149,13 @@ namespace Undersea.BLL.Services
         {
             var units = await _unitRepository.GetAll();
 
-            var result = units.Join(unitList,
+            var priceList = units.Select(u => new
+            {
+                u.UnitType,
+                u.FoodNecessity
+            }).ToList();
+
+            var result = priceList.Join(unitList,
                 unit1 => unit1.UnitType,
                 unit2 => unit2.UnitType,
                 (unit1, unit2) => new
@@ -157,17 +170,20 @@ namespace Undersea.BLL.Services
 
         public async Task<ArmyDto> GetArmyById(Guid id)
         {
-            var unitList = (await _armyUnitRepository.GetWhere(u => u.ArmyId == id))
-				.Select(x => new ArmyUnitDto
-				{
-					UnitType = x.UnitType,
-					UnitCount = x.UnitCount
-				}).ToList();
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == id);
 
-            return  new ArmyDto()
+            var unitList = list.Select(x => new ArmyUnitDto
+            {
+                UnitType = x.UnitType,
+                UnitCount = x.UnitCount
+            }).ToList();
+
+            ArmyDto newDto = new ArmyDto()
             {
                 UnitList = unitList
             };
+
+            return newDto;
         }
 
         public async Task<int> GetArmyAttackingPower(Guid armyId, Guid attackingCityId)
@@ -240,27 +256,30 @@ namespace Undersea.BLL.Services
             var cities = await _cityRepository.GetWhere(c => c.Id == cityId);
             var firstCity = cities.First();
 
-            var armyUnitList = await _armyUnitRepository.
-                GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
+            var list = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
-            var armyUnitDtoList = armyUnitList.Select(au => new ArmyUnitDto
+            var unitList = list.Select(x => new ArmyUnitDto
             {
-                UnitType = au.UnitType,
-                UnitCount = au.UnitCount
+                UnitType = x.UnitType,
+                UnitCount = x.UnitCount
             }).ToList();
 
-            foreach (Attack a in firstCity.Attacks.ToList())
+            var attacks = firstCity.Attacks.ToList();
+
+            foreach(Attack a in attacks)
             {
-                foreach (ArmyUnit armyUnit in a.Army.Units)
+                foreach(ArmyUnit armyUnit in a.Army.Units)
                 {
-                    armyUnitDtoList.Single(u => u.UnitType == armyUnit.UnitType).UnitCount += armyUnit.UnitCount;
+                    unitList.Single(u => u.UnitType == armyUnit.UnitType).UnitCount += armyUnit.UnitCount;
                 }
             }
 
-            return new ArmyDto()
+            ArmyDto newDto = new ArmyDto()
             {
-                UnitList = armyUnitDtoList
+                UnitList = unitList
             };
+
+            return newDto;
         }
 
     }

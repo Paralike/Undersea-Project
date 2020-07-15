@@ -19,9 +19,6 @@ namespace Undersea.DAL.Repositories
                     .Where(c => c.UserId == Id)
                     .Include(c => c.AvailableArmy)
                         .ThenInclude(ar => ar.Units)
-                    .Include(c => c.Attacks)
-                        .ThenInclude(a => a.Army)
-                            .ThenInclude(ar => ar.Units)
                     .SingleAsync();
 
             return city;
