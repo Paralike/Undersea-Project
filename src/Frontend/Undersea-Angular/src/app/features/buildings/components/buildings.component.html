@@ -14,11 +14,15 @@
       <div class="building-name">
         {{building.name}}
       </div>
-      <!-- <div class="building-desc">
-        <div *ngFor="let desc of building.">
-          {{desc}}
-        </div>
-      </div> -->
+      <div *ngIf="building.population != 0" class="building-desc">
+        {{building.population}} embert ad a népességhez
+      </div>
+      <div *ngIf="building.coralProduction != 0" class="building-desc">
+        {{building.coralProduction}} korallt termel körönként
+      </div>
+      <div *ngIf="building.hosting != 0" class="building-desc">
+        {{building.hosting}} egységnek nyújt szállást
+      </div>
       <div class="quantity">
         {{data.building[i]}} db
       </div>
