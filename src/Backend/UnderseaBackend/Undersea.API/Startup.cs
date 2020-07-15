@@ -175,17 +175,9 @@ namespace Undersea.API
                 {
                     //context.Database.Migrate();
                 }
-
-
-                RecurringJob.AddOrUpdate(() => ParentFunc(null), Cron.Hourly);
+                var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
             }
-        }
-
-        public static void ParentFunc(PerformContext context)
-        {
-            var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-            _gameService.NextTurn();
-            BackgroundJob.ContinueWith(context.BackgroundJob.Id, () => );
         }
     }
 }

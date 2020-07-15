@@ -7,3 +7,5 @@
 /src/Backend/UnderseaBackend/Undersea.API/obj
 /src/Backend/UnderseaBackend/.vs/UnderseaBackend/v16
 /.vs
+/src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200715081259_buildings.cs
+/src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200715081259_buildings.Designer.cs
