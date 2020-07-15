@@ -11,6 +11,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
   @Input() city: CityDto;
+  @Input() rank: number;
   currentTurn: number;
 
   constructor(private featureService: FeatureService) { }
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
   endTurn() {
     this.featureService.endTurn().pipe(
-      switchMap(() => this.featureService.getProfile()),
+      switchMap(() => this.featureService.getCity()),
       switchMap((city) => {
         this.city = city;
         return this.featureService.getTurn();

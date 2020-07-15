@@ -16,7 +16,7 @@
     position: absolute;
 	bottom: 0;
 	opacity: 1;
-	left: 1%;
+	margin-left: 2vw;
 }
 	
 .left-side {
@@ -83,5 +83,56 @@
 	width: 18vw;
 	height: 15vw;
 }
+
+
+// .wave {
+// 	--c: red; /* Color */
+// 	--t: 7px; /* Thickness */
+// 	--h: 3vw; /* Height  */
+// 	--w: 10vw; /* Width  */
+// 	--p: 15px; /* adjust this to correct the position when changing the other values*/
+  
+// 	margin: 5px auto;
+// 	padding-top: 2vh !important;
+// 	width: 8vw;
+// 	height: 2vw;
+// 	overflow: hidden;
+// 	position: relative;
+//   }
+//   .wave:before {
+// 	content: "";
+// 	position: absolute;
+// 	padding-top: 2vh;
+// 	top: 0;
+// 	left: 0;
+// 	width: 200%;
+// 	bottom: 0;
+  
+// 	background: radial-gradient(
+// 		farthest-side at 50% calc(100% + var(--p)),
+// 		transparent 47%,
+// 		var(--c) 50% calc(50% + var(--t)),
+// 		transparent calc(52% + var(--t))
+// 	  ),
+// 	  radial-gradient(
+// 		farthest-side at 50% calc(0% - var(--p)),
+// 		transparent 47%,
+// 		var(--c) 50% calc(50% + var(--t)),
+// 		transparent calc(52% + var(--t))
+// 	  );
+  
+// 	background-size: var(--w) var(--h);
+// 	background-position: calc(var(--w) / 2) calc(-1 * (var(--h) / 2)), 0px calc(var(--h) / 2);
+// 	background-repeat: repeat-x;
+// 	background-origin: content-box;
+  
+// 	animation: move 8s infinite linear;
+//   }
+//   @keyframes move {
+// 	to {
+// 	  transform: translateX(-50%);
+// 	}
+//   }
+  
 
 
