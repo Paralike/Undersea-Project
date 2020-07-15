@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
@@ -29,10 +30,12 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
+        private readonly IUpgradeJoinRepository _upgradeJoinRepository;
+        private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService)
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, IUpgradeJoinRepository upgradeJoinRepository)
         {
             CurrentTurn = 1;
             _cityRepository = cityRepository;
@@ -41,6 +44,7 @@ namespace Undersea.BLL.Services
             this.context = context;
             _armyService = armyService;
             _cityService = cityService;
+            _upgradeJoinRepository = upgradeJoinRepository;
         }
 
         public GameService()
@@ -59,7 +63,7 @@ namespace Undersea.BLL.Services
                 c.CoralCount += c.CoralProduction;
                 c.PearlCount -= await _armyRepository.GetPearlNecessity(c.AvailableArmyId);
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
-                foreach (UpgradeAttributeJoin u in c.Upgrades.UpgradeAttributes)
+                /*foreach (UpgradeAttributeJoin u in c.Upgrades.UpgradeAttributes)
                 {
                     if (u.Status == Status.InProgress)
                     {
@@ -83,9 +87,41 @@ namespace Undersea.BLL.Services
                             b.Quantity += 1;
                         }
                     }
-                }
+                }*/
                 await _cityRepository.Update(c);
             }
+            var upgrades = await _upgradeJoinRepository.GetAll();
+            foreach(UpgradeAttributeJoin u in upgrades)
+            {
+                if (u.Status == Status.InProgress)
+                {
+                    u.CurrentTurn += 1;
+                    if (u.CurrentTurn == 15)
+                    {
+                        u.Status = Status.Done;
+                        u.CurrentTurn = 0;
+                    }
+                }
+                await _upgradeJoinRepository.Update(u);
+            }
+            
+            var buildings = await _buildingJoinRepository.GetAll();
+            foreach(BuildingAttributeJoin b in buildings)
+            {
+                if (b.Status == Status.InProgress)
+                {
+                    b.CurrentTurn += 1;
+                    if (b.CurrentTurn == 15)
+                    {
+                        b.Status = Status.UnBuilt;
+                        b.CurrentTurn = 0;
+                        b.Quantity += 1;
+                    }
+                }
+                await _buildingJoinRepository.Update(b);
+            }
+
+
             var attacks = await _attackRepository.GetAll();
 
             foreach (Attack a in attacks)
