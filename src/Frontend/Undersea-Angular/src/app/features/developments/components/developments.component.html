@@ -10,13 +10,19 @@
     </div>
     <div class="main-content">
       <div  *ngFor="let upgrade of upgrades" (click)="selected(upgrade)" class="content" tabindex="-1">
-        <div *ngIf="upgraded">
-        <div class="checkmark">
-          <div class="checkmark-circle"></div>
-          <div class="checkmark-stem"></div>
-          <div class="checkmark-kick"></div>
+
+          <div *ngIf="array[upgrade.upgradeType].status === 2">
+            <div class="checkmark">
+              <div class="checkmark-circle"></div>
+              <div class="checkmark-stem"></div>
+              <div class="checkmark-kick"></div>
+            </div>
         </div>
-        </div>
+        <div *ngIf="array[upgrade.upgradeType].status === 1">
+          <div class="round">
+            még {{15 - array[upgrade.upgradeType].currentTurn}} kör
+          </div>
+      </div>
         <div class="images">
           <img src='../../../../assets/images/development_{{upgrade.upgradeType + 1}}.png' style="height: 5vw">
         </div>

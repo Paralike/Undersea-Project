@@ -9,3 +9,8 @@ export interface ArmyModel {
     name?: string;
 }
 
+export class ArmyUnitModel {
+    unitType: UnitType;
+    unitCount: number;
+}
+

@@ -168,7 +168,7 @@ namespace Undersea.API
             {
                 using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
                 {
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
                 }
 
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();

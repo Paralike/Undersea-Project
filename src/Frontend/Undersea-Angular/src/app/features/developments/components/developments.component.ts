@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DevelopmentModel } from '../../developments/model/development.model';
+import { UpgradeAttributeModel, UpgradeModel } from '../../developments/model/development.model';
 import { FeatureService } from '../../service/feature.service';
-import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
+import { UpgradeAttributeDto, UpgradeDto, Status } from 'src/app/shared';
 import { elementAt } from 'rxjs/operators';
 
 interface Development {
   type: any;
+  currentTurn: any;
   status: any;
 }
 @Component({
@@ -19,12 +19,13 @@ interface Development {
 
 
 export class DevelopmentsComponent implements OnInit {
-  public upgrades: UpgradeAttributeDto[];
+  public upgrades: UpgradeAttributeModel[];
   public selectedDevelopment: number;
   public id: string;
-  public status: UpgradeDto[];
+  public status: UpgradeModel[];
   upgraded: boolean;
   array;
+  canPurchase: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
@@ -41,20 +42,23 @@ export class DevelopmentsComponent implements OnInit {
     this.upgrades = [];
     this.array = [];
     this.status = [];
+    this.canPurchase = true;
     this.featureService.getDevelopments().subscribe(res => {
-      this.upgrades = res;
+      this.upgrades = res.map((x): UpgradeAttributeModel => ({ ...x }));
     });
     this.featureService.getUpgradesinfos().subscribe(res => {
-      this.status = res;
-      console.log(this.status);
+
       res.forEach(element => this.status.push(element));
       console.log(res);
 
-      const response: Development = {
-        type: res.upgradeType,
-        status: res.upgradeStatus
-      };
-      this.array.push(response);
+      res.forEach(element => {
+        const response: Development = {
+          type: element.upgradeType,
+          currentTurn: element.currentTurn,
+          status: element.status
+        };
+        this.array.push(response);
+      });
       console.log(this.array);
     });
   }
@@ -64,15 +68,32 @@ export class DevelopmentsComponent implements OnInit {
     console.log(upgrade);
   }
 
+
   sendData() {
-    this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
-    console.log(this.selectedDevelopment);
-    console.log(this.upgrades);
-    this.dialogRef.close();
-    this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
-      duration: 3000
-    });
+    console.log(this.array);
+    if (this.array[this.selectedDevelopment].status === 1 || this.array[this.selectedDevelopment].status === 2) {
+      this.snackbar.open('Ezt a fejlesztést már megvásároltad!', 'Bezár', {
+        duration: 3000
+      });
+    }
+    else {
+      this.array.forEach(element => {
+        if (element.status === 1) {
+          this.canPurchase = false;
+          this.snackbar.open('Egyszerre csak 1 fejlesztést fejleszthetsz!', 'Bezár', {
+            duration: 3000
+          });
+        }
+      });
+      if (this.canPurchase) {
+        this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
+        this.dialogRef.close();
+        this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+          duration: 3000
+        });
+      }
+
+    }
   }
 }
-
 

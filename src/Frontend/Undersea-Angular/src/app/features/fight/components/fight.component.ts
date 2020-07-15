@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PeriodicElement } from '../model/fight.model';
+import { AttackResponseModel } from '../model/fight.model';
 import { FeatureService } from '../../service/feature.service';
 import { AttackResponseDto } from 'src/app/shared';
 
@@ -15,13 +15,16 @@ import { AttackResponseDto } from 'src/app/shared';
 export class FightComponent implements OnInit {
 
   displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses'];
-  dataSource: AttackResponseDto[];
+  dataSource: AttackResponseModel[];
 
-  constructor(private featureService: FeatureService) { }
+
+  constructor(private featureService: FeatureService) {
+
+  }
 
   ngOnInit(): void {
     this.featureService.getFights().subscribe(res => {
-      this.dataSource = res;
+      this.dataSource = res.map((x): AttackResponseModel => ({...x}));
     },
       (err) => {
         console.log(err);

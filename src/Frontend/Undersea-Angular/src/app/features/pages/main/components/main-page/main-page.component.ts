@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthClient, ProfileClient, CityDto } from 'src/app/shared';
+import { AuthClient, ProfileClient, CityDto, RankDto } from 'src/app/shared';
 import { ProfileModel } from '../../model/profile.model';
 import { FeatureService } from 'src/app/features/service/feature.service';
 
@@ -11,6 +11,7 @@ import { FeatureService } from 'src/app/features/service/feature.service';
 })
 export class MainPageComponent implements OnInit {
   city: CityDto;
+  profile: RankDto;
   array: [];
   constructor(private featureService: FeatureService) { }
 
@@ -21,17 +22,16 @@ export class MainPageComponent implements OnInit {
   }
 
   reload() {
-    this.featureService.getProfile().subscribe(res => {
+    this.featureService.getCity().subscribe(res => {
       this.city = res;
-      console.log(this.city);
-      if (!this.city.buildings) {
-        this.city.buildings = [0, 0];
-      }
 
     },
       err => {
         console.error(err);
       });
+    this.featureService.getProfile().subscribe(res => {
+      this.profile = res;
+    });
   }
 
 

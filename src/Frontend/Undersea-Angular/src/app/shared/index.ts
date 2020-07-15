@@ -1494,6 +1494,8 @@ export class BuildingDto implements IBuildingDto {
     price!: number;
     turnCount!: number;
     buildingType!: BuildingType;
+    quantity!: number;
+    currentTurn!: number;
 
     constructor(data?: IBuildingDto) {
         if (data) {
@@ -1510,6 +1512,8 @@ export class BuildingDto implements IBuildingDto {
             this.price = _data["price"];
             this.turnCount = _data["turnCount"];
             this.buildingType = _data["buildingType"];
+            this.quantity = _data["quantity"];
+            this.currentTurn = _data["currentTurn"];
         }
     }
 
@@ -1526,6 +1530,8 @@ export class BuildingDto implements IBuildingDto {
         data["price"] = this.price;
         data["turnCount"] = this.turnCount;
         data["buildingType"] = this.buildingType;
+        data["quantity"] = this.quantity;
+        data["currentTurn"] = this.currentTurn;
         return data; 
     }
 }
@@ -1535,12 +1541,14 @@ export interface IBuildingDto {
     price: number;
     turnCount: number;
     buildingType: BuildingType;
+    quantity: number;
+    currentTurn: number;
 }
 
 export enum Status {
-    InProgress = 0,
-    Done = 1,
-    UnBuilt = 2,
+    UnBuilt = 0,
+    InProgress = 1,
+    Done = 2,
 }
 
 export enum BuildingType {
@@ -1610,8 +1618,8 @@ export class CityDto implements ICityDto {
     pearlProduction!: number;
     coralCount!: number;
     coralProduction!: number;
-    buildings?: number[] | undefined;
-    upgrades?: number[] | undefined;
+    buildings?: BuildingDto[] | undefined;
+    upgrades?: UpgradeDto[] | undefined;
     availableArmy?: ArmyDto | undefined;
     allArmy?: ArmyDto | undefined;
     servicePay!: number;
@@ -1635,12 +1643,12 @@ export class CityDto implements ICityDto {
             if (Array.isArray(_data["buildings"])) {
                 this.buildings = [] as any;
                 for (let item of _data["buildings"])
-                    this.buildings!.push(item);
+                    this.buildings!.push(BuildingDto.fromJS(item));
             }
             if (Array.isArray(_data["upgrades"])) {
                 this.upgrades = [] as any;
                 for (let item of _data["upgrades"])
-                    this.upgrades!.push(item);
+                    this.upgrades!.push(UpgradeDto.fromJS(item));
             }
             this.availableArmy = _data["availableArmy"] ? ArmyDto.fromJS(_data["availableArmy"]) : <any>undefined;
             this.allArmy = _data["allArmy"] ? ArmyDto.fromJS(_data["allArmy"]) : <any>undefined;
@@ -1665,12 +1673,12 @@ export class CityDto implements ICityDto {
         if (Array.isArray(this.buildings)) {
             data["buildings"] = [];
             for (let item of this.buildings)
-                data["buildings"].push(item);
+                data["buildings"].push(item.toJSON());
         }
         if (Array.isArray(this.upgrades)) {
             data["upgrades"] = [];
             for (let item of this.upgrades)
-                data["upgrades"].push(item);
+                data["upgrades"].push(item.toJSON());
         }
         data["availableArmy"] = this.availableArmy ? this.availableArmy.toJSON() : <any>undefined;
         data["allArmy"] = this.allArmy ? this.allArmy.toJSON() : <any>undefined;
@@ -1685,63 +1693,11 @@ export interface ICityDto {
     pearlProduction: number;
     coralCount: number;
     coralProduction: number;
-    buildings?: number[] | undefined;
-    upgrades?: number[] | undefined;
+    buildings?: BuildingDto[] | undefined;
+    upgrades?: UpgradeDto[] | undefined;
     availableArmy?: ArmyDto | undefined;
     allArmy?: ArmyDto | undefined;
     servicePay: number;
-}
-
-export class RankDto implements IRankDto {
-    userId!: string;
-    username?: string | undefined;
-    point!: number;
-    cityName?: string | undefined;
-    rank!: number;
-
-    constructor(data?: IRankDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.userId = _data["userId"];
-            this.username = _data["username"];
-            this.point = _data["point"];
-            this.cityName = _data["cityName"];
-            this.rank = _data["rank"];
-        }
-    }
-
-    static fromJS(data: any): RankDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new RankDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userId"] = this.userId;
-        data["username"] = this.username;
-        data["point"] = this.point;
-        data["cityName"] = this.cityName;
-        data["rank"] = this.rank;
-        return data; 
-    }
-}
-
-export interface IRankDto {
-    userId: string;
-    username?: string | undefined;
-    point: number;
-    cityName?: string | undefined;
-    rank: number;
 }
 
 export class UpgradeDto implements IUpgradeDto {
@@ -1795,6 +1751,58 @@ export enum UpgradeType {
     Szonaragyu = 3,
     VizalattiHarcmuveszetek = 4,
     Alkimia = 5,
+}
+
+export class RankDto implements IRankDto {
+    userId!: string;
+    username?: string | undefined;
+    point!: number;
+    cityName?: string | undefined;
+    rank!: number;
+
+    constructor(data?: IRankDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userId = _data["userId"];
+            this.username = _data["username"];
+            this.point = _data["point"];
+            this.cityName = _data["cityName"];
+            this.rank = _data["rank"];
+        }
+    }
+
+    static fromJS(data: any): RankDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RankDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["username"] = this.username;
+        data["point"] = this.point;
+        data["cityName"] = this.cityName;
+        data["rank"] = this.rank;
+        return data; 
+    }
+}
+
+export interface IRankDto {
+    userId: string;
+    username?: string | undefined;
+    point: number;
+    cityName?: string | undefined;
+    rank: number;
 }
 
 export class UpgradeAttributeDto implements IUpgradeAttributeDto {

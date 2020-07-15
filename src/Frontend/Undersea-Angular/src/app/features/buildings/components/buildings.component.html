@@ -14,21 +14,24 @@
       <div class="building-name">
         {{building.name}}
       </div>
-      <div *ngIf="building.resident != 0" class="building-desc">
-        {{building.resident}} embert ad a népességhez
+      <div class="building-desc">
+        <div *ngIf="building.resident != 0" class="building-data">
+          {{building.resident}} embert ad a népességhez
+        </div>
+        <div *ngIf="building.coral != 0" class="building-data">
+          {{building.coral}} korallt termel körönként
+        </div>
+        <div *ngIf="building.hostCapacity != 0" class="building-data">
+          {{building.hostCapacity}} egységnek nyújt szállást
+        </div>
       </div>
-      <div *ngIf="building.coral != 0" class="building-desc">
-        {{building.coral}} korallt termel körönként
-      </div>
-      <div *ngIf="building.hostCapacity != 0" class="building-desc">
-        {{building.hostCapacity}} egységnek nyújt szállást
-      </div>
+      
       <div class="quantity">
         {{data.building[i]}} db
       </div>
-      <!-- <div class="price">
-        {{building.}} Gyöngy / db
-      </div> -->
+      <div class="price">
+        {{building.price}} Gyöngy / db
+      </div>
     </div>
   </div>
   <mat-divider></mat-divider>

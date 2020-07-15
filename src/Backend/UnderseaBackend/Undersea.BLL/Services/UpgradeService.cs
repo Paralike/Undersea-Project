@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
@@ -34,6 +35,7 @@ namespace Undersea.BLL.Services
 
         public async Task<ICollection<UpgradeDto>> GetUpgrade(Guid id)
         {
+            
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
             var UpgradeId = firstCity.UpgradesId;
@@ -50,6 +52,16 @@ namespace Undersea.BLL.Services
             //var list = await _upgradeJoin.GetWhere(u => u.UpgradeId == firstCity.UpgradesId);
             var result = await _upgradeJoin.FirstOrDefault(a => a.UpgradeId == firstCity.UpgradesId && a.UpgradeType == upgradeType);
             //TODO validitáció
+            foreach (UpgradeAttributeJoin u in firstCity.Upgrades.UpgradeAttributes)
+            {
+                if (u.Status == Status.InProgress)
+                {
+                    throw new ExistingUpgradeException();
+                }else if(u.Status == Status.Done)
+                {
+                    throw new ExistingUpgradeException();
+                }
+            }
             result.Status = DAL.Enums.Status.InProgress;
             await _cityRepository.Update(firstCity);
 

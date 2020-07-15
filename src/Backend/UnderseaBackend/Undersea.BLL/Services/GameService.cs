@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Undersea.BLL.Hubs;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL;
+using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -25,12 +29,19 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
-        private readonly ISignalHub _signalHub;
+        private readonly IUpgradeJoinRepository _upgradeJoinRepository;
+        private readonly IBuildingJoinRepository _buildingJoinRepository;
+        private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;
 
         private readonly AppDbContext _context;
 
+        private readonly ISignalHub _signalHub;
+
+
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, ISignalHub signalHub)
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService,
+                            IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository, ISignalHub signalHub)
+
         {
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
@@ -39,6 +50,10 @@ namespace Undersea.BLL.Services
             _armyService = armyService;
             _cityService = cityService;
             _signalHub = signalHub;
+            _upgradeJoinRepository = upgradeJoinRepository;
+            _buildingJoinRepository = buildingJoinRepository;
+            _upgradeAttributeRepository = upgradeAttributeRepository;
+
         }
 
         public GameService()
@@ -59,6 +74,44 @@ namespace Undersea.BLL.Services
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
                 await _cityRepository.Update(c);
             }
+            var upgrades = await _upgradeJoinRepository.GetAll();
+            foreach(UpgradeAttributeJoin u in upgrades)
+            {
+                if (u.Status == Status.InProgress)
+                {
+                    u.CurrentTurn += 1;
+                    if (u.CurrentTurn == 15)
+                    {
+                        u.Status = Status.Done;
+                        u.CurrentTurn = 0;
+                        var city = (await _cityRepository.GetWhere(c => c.UpgradesId == u.UpgradeId)).ElementAt(0);
+                        var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
+                        city.CoralCount += city.CoralCount/upgrade.CoralProduction*100;
+                        //city.Defenses += city.Defenses / upgrade.DefensePoints * 100;
+                        
+                    }
+                }
+                await _upgradeJoinRepository.Update(u);
+            }
+            
+            var buildings = await _buildingJoinRepository.GetAll();
+            foreach(BuildingAttributeJoin b in buildings)
+            {
+                if (b.Status == Status.InProgress)
+                {
+                    b.CurrentTurn += 1;
+                    if (b.CurrentTurn == 5)
+                    {
+                        b.Status = Status.UnBuilt;
+                        b.CurrentTurn = 0;
+                        b.Quantity += 1;
+
+                    }
+                }
+                await _buildingJoinRepository.Update(b);
+            }
+
+
             var attacks = await _attackRepository.GetAll();
 
             if (attacks.Any())

@@ -1,8 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { BuildingModel } from '../model/building.model';
+import { BuildingModel, BuildingAttributeModel } from '../model/building.model';
 import { FeatureService } from '../../service/feature.service';
-import { BUIDLDINGS } from '../model/mockBuildings';
-
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BuildingDto, BuildingAttributeDto } from 'src/app/shared';
@@ -13,10 +11,11 @@ import { BuildingDto, BuildingAttributeDto } from 'src/app/shared';
   styleUrls: ['./buildings.component.scss']
 })
 export class BuildingsComponent implements OnInit {
-  public buildings: BuildingAttributeDto[];
-  public selectedBuilding: BuildingDto;
-  public addBuilding: BuildingDto[];
+  public buildings: BuildingAttributeModel[];
+  public selectedBuilding: BuildingModel;
+  public addBuilding: BuildingModel[];
   public id: string;
+  public canBuild: boolean;
 
 
   constructor(
@@ -26,12 +25,13 @@ export class BuildingsComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     console.log(data);
-    this.addBuilding = data.building.map((x): BuildingDto => new BuildingDto({ ...x }));
+    this.addBuilding = data.building.map((x): BuildingModel => ({ ...x }));
     console.log(this.addBuilding);
 
   }
 
   ngOnInit(): void {
+    this.canBuild = true;
     this.buildings = [];
     this.featureService.getBuildingTypes().subscribe(res => this.buildings = res,
       (err) => {
@@ -45,17 +45,21 @@ export class BuildingsComponent implements OnInit {
   }
 
   sendData() {
-    console.log(this.selectedBuilding);
-    this.featureService.purchaseBuildings(this.selectedBuilding.buildingType).subscribe(() => {
-     // console.log(this.buildings[this.selectedBuilding - 1].name);
-      console.log(this.data);
-     // this.data.building[this.selectedBuilding - 1]++;
-      this.dialogRef.close();
-      this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
-        duration: 3000
-      });
+    this.addBuilding.forEach(element => {
+      if (element.status === 1) {
+        this.canBuild = false;
+        this.snackbar.open('Egyszerre csak 1 épületet építhetsz!', 'Bezár', {
+          duration: 3000
+        });
+      }
     });
-
-
+    if (this.canBuild) {
+      this.featureService.purchaseBuildings(this.selectedBuilding.buildingType).subscribe(() => {
+        this.dialogRef.close();
+        this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+          duration: 3000
+        });
+      });
+    }
   }
 }

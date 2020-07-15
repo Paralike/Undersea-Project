@@ -17,19 +17,22 @@ namespace Undersea.BLL.Services
         private readonly IMapper _mapper;
         private readonly IArmyService _armyservice;
         private readonly IUserService _userService;
-
+        private readonly IUpgradeService _upgradeService;
+        private readonly IBuildingService _buildingService;
 
         public CityService()
         {
 
         }
 
-        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUserService userService)
+        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUpgradeService upgradeService, IBuildingService buildingService, IUserService userService)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
             _armyservice = armyservice;
             _userService = userService;
+            _upgradeService = upgradeService;
+            _buildingService = buildingService;
         }
 
         public async Task<CityDto> GetCity(Guid id)
@@ -45,15 +48,13 @@ namespace Undersea.BLL.Services
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
-                AllArmy = await _armyservice.GetAllArmy(cityPre.Id)
+                AllArmy = await _armyservice.GetAllArmy(cityPre.Id),
+                Buildings = await _buildingService.GetBuilding(id),
+                Upgrades = await _upgradeService.GetUpgrade(id)
+
             };
 
             return city;
-
-        }
-        public async Task AddUpgrade()
-        {
-
 
         }
 
@@ -66,7 +67,9 @@ namespace Undersea.BLL.Services
             points += firstCity.Inhabitants
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Csatacsiko).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
-                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10;
+                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10
+                    + firstCity.Buildings.BuildingAttributes.Count() * 50
+                    + firstCity.Upgrades.UpgradeAttributes.Count() * 100;
 
             
 

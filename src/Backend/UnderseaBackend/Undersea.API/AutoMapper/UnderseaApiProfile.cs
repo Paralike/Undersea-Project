@@ -17,6 +17,7 @@ namespace Undersea.API.AutoMapper
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<Building, BuildingDto>().ReverseMap();
             CreateMap<BuildingAttribute, BuildingAttributeDto>().ReverseMap();
+            CreateMap<BuildingDto, BuildingAttributeJoin>().ReverseMap();
 
         }
     }

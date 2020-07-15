@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ProfileModel } from '../../model/profile.model';
 import { FeatureService } from 'src/app/features/service/feature.service';
 import { CityDto } from 'src/app/shared';
@@ -11,7 +11,9 @@ import { switchMap } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
   @Input() city: CityDto;
+  @Input() rank: number;
   currentTurn: number;
+  @Output() reload = new EventEmitter<void>();
 
   constructor(private featureService: FeatureService) { }
 
@@ -22,13 +24,9 @@ export class HeaderComponent implements OnInit {
 
   endTurn() {
     this.featureService.endTurn().pipe(
-      switchMap(() => this.featureService.getProfile()),
-      switchMap((city) => {
-        this.city = city;
-        return this.featureService.getTurn();
-      })
+      switchMap(() => this.featureService.getTurn()),
     ).subscribe(res => {
-      console.log('Current turn', res);
+      this.reload.emit();
       this.currentTurn = res;
     });
 
