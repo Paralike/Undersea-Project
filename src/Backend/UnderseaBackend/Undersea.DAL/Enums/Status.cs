@@ -2,8 +2,9 @@
 {
     public enum Status
     {
+        UnBuilt,
         InProgress,
-        Done,
-        UnBuilt
+        Done
+        
     }
 }
