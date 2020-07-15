@@ -67,9 +67,8 @@ namespace Undersea.BLL.Services
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Csatacsiko).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10
-                    + firstCity.Buildings.BuildingAttributes.Single(u => u.BuildingType == BuildingType.Aramlasiranyito).Quantity * 50
-                    + firstCity.Buildings.BuildingAttributes.Single(u => u.BuildingType == BuildingType.Zatonyvar).Quantity * 50;
-                    //+ firstCity.Upgrades.UpgradeAttributes.Count
+                    + firstCity.Buildings.BuildingAttributes.Count() * 50
+                    + firstCity.Upgrades.UpgradeAttributes.Count() * 100;
 
             return points;
         }
