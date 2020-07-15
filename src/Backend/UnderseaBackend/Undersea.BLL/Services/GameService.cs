@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL;
@@ -32,10 +34,11 @@ namespace Undersea.BLL.Services
         private readonly IAttackRepository _attackRepository;
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
+        private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;
         private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, IUpgradeJoinRepository upgradeJoinRepository)
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository)
         {
             CurrentTurn = 1;
             _cityRepository = cityRepository;
@@ -45,6 +48,8 @@ namespace Undersea.BLL.Services
             _armyService = armyService;
             _cityService = cityService;
             _upgradeJoinRepository = upgradeJoinRepository;
+            _buildingJoinRepository = buildingJoinRepository;
+            _upgradeAttributeRepository = upgradeAttributeRepository;
         }
 
         public GameService()
@@ -63,31 +68,6 @@ namespace Undersea.BLL.Services
                 c.CoralCount += c.CoralProduction;
                 c.PearlCount -= await _armyRepository.GetPearlNecessity(c.AvailableArmyId);
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
-                /*foreach (UpgradeAttributeJoin u in c.Upgrades.UpgradeAttributes)
-                {
-                    if (u.Status == Status.InProgress)
-                    {
-                        u.CurrentTurn += 1;
-                        if (u.CurrentTurn == 15)
-                        {
-                            u.Status = Status.Done;
-                            u.CurrentTurn = 0;
-                        }
-                    }
-                }
-                foreach (BuildingAttributeJoin b in c.Buildings.BuildingAttributes)
-                {
-                    if (b.Status == Status.InProgress)
-                    {
-                        b.CurrentTurn += 1;
-                        if (b.CurrentTurn == 15)
-                        {
-                            b.Status = Status.UnBuilt;
-                            b.CurrentTurn = 0;
-                            b.Quantity += 1;
-                        }
-                    }
-                }*/
                 await _cityRepository.Update(c);
             }
             var upgrades = await _upgradeJoinRepository.GetAll();
@@ -100,6 +80,11 @@ namespace Undersea.BLL.Services
                     {
                         u.Status = Status.Done;
                         u.CurrentTurn = 0;
+                        var city = (await _cityRepository.GetWhere(c => c.UpgradesId == u.UpgradeId)).ElementAt(0);
+                        var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
+                        city.CoralCount += city.CoralCount/upgrade.CoralProduction*100;
+                        //city.Defenses += city.Defenses / upgrade.DefensePoints * 100;
+                        
                     }
                 }
                 await _upgradeJoinRepository.Update(u);
@@ -111,11 +96,12 @@ namespace Undersea.BLL.Services
                 if (b.Status == Status.InProgress)
                 {
                     b.CurrentTurn += 1;
-                    if (b.CurrentTurn == 15)
+                    if (b.CurrentTurn == 5)
                     {
                         b.Status = Status.UnBuilt;
                         b.CurrentTurn = 0;
                         b.Quantity += 1;
+
                     }
                 }
                 await _buildingJoinRepository.Update(b);
