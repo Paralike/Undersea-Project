@@ -24,12 +24,13 @@ namespace Undersea.BLL.Services
 
         }
 
-        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUpgradeService upgradeService)
+        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUpgradeService upgradeService, IBuildingService buildingService)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
             _armyservice = armyservice;
             _upgradeService = upgradeService;
+            _buildingService = buildingService;
         }
 
         public async Task<CityDto> GetCity(Guid id)

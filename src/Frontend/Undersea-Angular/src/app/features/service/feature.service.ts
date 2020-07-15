@@ -147,6 +147,7 @@ export class FeatureService {
     return this.profileClient.getRanks();
   }
 
+
   getFights(): Observable<AttackResponseDto[]> {
     return this.attackClient.getAllAttacks();
   }
@@ -166,8 +167,12 @@ export class FeatureService {
   }
 
   getProfile(): Observable<any> {
-    return this.cityClient.getCity();
+    return this.profileClient.getProfile();
     // return of(PROFILE);
+  }
+
+  getCity(): Observable<any> {
+    return this.cityClient.getCity();
   }
 
   endTurn(): Observable<any> {
