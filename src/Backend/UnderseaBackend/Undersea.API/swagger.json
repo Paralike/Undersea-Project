@@ -251,20 +251,19 @@
           "Buildings"
         ],
         "operationId": "Buildings_PurchaseBuilding",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "parameters": [
           {
-            "name": "building",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/BuildingDto"
+            "type": "integer",
+            "name": "buildingType",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/BuildingType"
             },
-            "x-nullable": false
+            "x-nullable": false,
+            "enum": [
+              0,
+              1
+            ]
           }
         ],
         "responses": {

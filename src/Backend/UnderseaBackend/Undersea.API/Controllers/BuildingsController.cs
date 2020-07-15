@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
+using Undersea.DAL.Enums;
 
 namespace Undersea.API.Controllers
 {
@@ -34,10 +35,10 @@ namespace Undersea.API.Controllers
             return Ok(await _buildingService.GetBuilding(id));
         }
         [HttpPost]
-        public async Task PurchaseBuilding(BuildingDto building)
+        public async Task PurchaseBuilding(BuildingType buildingType)
         {
             Guid id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            await _buildingService.PurchaseBuilding(id, building);
+            await _buildingService.PurchaseBuilding(id, buildingType);
         }
     }
 }
