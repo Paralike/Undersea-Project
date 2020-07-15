@@ -1550,6 +1550,7 @@ export enum BuildingType {
 
 export class BuildingAttributeDto implements IBuildingAttributeDto {
     buildingType!: BuildingType;
+    price!: number;
     resident!: number;
     coral!: number;
     hostCapacity!: number;
@@ -1567,6 +1568,7 @@ export class BuildingAttributeDto implements IBuildingAttributeDto {
     init(_data?: any) {
         if (_data) {
             this.buildingType = _data["buildingType"];
+            this.price = _data["price"];
             this.resident = _data["resident"];
             this.coral = _data["coral"];
             this.hostCapacity = _data["hostCapacity"];
@@ -1584,6 +1586,7 @@ export class BuildingAttributeDto implements IBuildingAttributeDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["buildingType"] = this.buildingType;
+        data["price"] = this.price;
         data["resident"] = this.resident;
         data["coral"] = this.coral;
         data["hostCapacity"] = this.hostCapacity;
@@ -1594,6 +1597,7 @@ export class BuildingAttributeDto implements IBuildingAttributeDto {
 
 export interface IBuildingAttributeDto {
     buildingType: BuildingType;
+    price: number;
     resident: number;
     coral: number;
     hostCapacity: number;

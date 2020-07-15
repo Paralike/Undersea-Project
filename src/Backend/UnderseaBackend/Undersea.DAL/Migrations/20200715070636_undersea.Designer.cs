@@ -10,7 +10,7 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200714143700_undersea")]
+    [Migration("20200715070636_undersea")]
     partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7b692bc3-a6e0-4f16-b058-49849b3db5be"),
+                            Id = new Guid("5cd77468-c005-4e57-86d6-c28b97049b1d"),
                             CurrentTurn = 1
                         });
                 });
@@ -285,6 +285,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<int>("Resident")
                         .HasColumnType("int");
 
@@ -300,6 +303,7 @@ namespace Undersea.DAL.Migrations
                             HostCapacity = 0,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Áramlásírányító",
+                            Price = 1000,
                             Resident = 50
                         },
                         new
@@ -309,6 +313,7 @@ namespace Undersea.DAL.Migrations
                             HostCapacity = 200,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Zátonyvár",
+                            Price = 1000,
                             Resident = 0
                         });
                 });
@@ -508,7 +513,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("1ed99d4a-fb96-4b0f-b215-0b2d13795410"),
+                            Id = new Guid("e78b513a-36ae-45f6-bacf-732172807ee2"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
