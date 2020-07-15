@@ -25,7 +25,6 @@ export class MainPageComponent implements OnInit {
     this.featureService.getCity().subscribe(res => {
       this.city = res;
       if (!this.city.buildings) {
-        this.city.buildings = [0, 0];
       }
 
     },
