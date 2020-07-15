@@ -61,7 +61,7 @@ namespace Undersea.BLL.Services
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
                 foreach (UpgradeAttributeJoin u in c.Upgrades.UpgradeAttributes)
                 {
-                    if(u.Status == Status.InProgress)
+                    if (u.Status == Status.InProgress)
                     {
                         u.CurrentTurn += 1;
                         if (u.CurrentTurn == 15)
@@ -70,18 +70,17 @@ namespace Undersea.BLL.Services
                             u.CurrentTurn = 0;
                         }
                     }
-
-                    foreach (BuildingAttributeJoin b in c.Buildings.BuildingAttributes)
+                }
+                foreach (BuildingAttributeJoin b in c.Buildings.BuildingAttributes)
+                {
+                    if (b.Status == Status.InProgress)
                     {
-                        if (b.Status == Status.InProgress)
+                        b.CurrentTurn += 1;
+                        if (b.CurrentTurn == 15)
                         {
-                            b.CurrentTurn += 1;
-                            if (b.CurrentTurn == 15)
-                            {
-                                b.Status = Status.UnBuilt;
-                                b.CurrentTurn = 0;
-                                b.Quantity += 1;
-                            }
+                            b.Status = Status.UnBuilt;
+                            b.CurrentTurn = 0;
+                            b.Quantity += 1;
                         }
                     }
                 }
