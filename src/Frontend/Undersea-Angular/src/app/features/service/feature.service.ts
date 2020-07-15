@@ -19,6 +19,7 @@ import {
   UpgradeAttributeDto,
   UpgradeTypeClient,
   UpgradeDto,
+  BuildingTypeClient,
 } from 'src/app/shared';
 import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
@@ -105,12 +106,17 @@ export class FeatureService {
     private profileClient: ProfileClient,
     private gameClient: GameClient,
     private upgradeType: UpgradeTypeClient,
-    private upgradeClient: UpgradesClient
+    private upgradeClient: UpgradesClient,
+    private buildingTypeClient: BuildingTypeClient
   ) { }
 
-  getBuildings(): Observable<any> {
-   // return this.buildingsClient.getBuilding();
-    return of(BUIDLDINGS);
+  getBuildings(): Observable<BuildingDto[]> {
+    return this.buildingsClient.getBuilding();
+    // return of(BUIDLDINGS);
+  }
+
+  getBuildingTypes(): Observable<any>{
+    return this.buildingTypeClient.getBuildings();
   }
   getDevelopments(): Observable<UpgradeAttributeDto[]> {
     return this.upgradeType.getUpgrades();

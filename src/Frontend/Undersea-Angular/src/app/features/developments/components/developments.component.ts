@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
 import { elementAt } from 'rxjs/operators';
 
-interface Development{
+interface Development {
   type: any;
   status: any;
 }
@@ -26,7 +26,6 @@ export class DevelopmentsComponent implements OnInit {
   upgraded: boolean;
   array;
 
- upgraded: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
@@ -52,20 +51,20 @@ export class DevelopmentsComponent implements OnInit {
       console.log(res);
 
       const response: Development = {
-          type: res.upgradeType,
-          status: res.upgradeStatus
-};
+        type: res.upgradeType,
+        status: res.upgradeStatus
+      };
       this.array.push(response);
       console.log(this.array);
     });
   }
 
-  selected(upgrade: UpgradeAttributeDto){
+  selected(upgrade: UpgradeAttributeDto) {
     this.selectedDevelopment = upgrade.upgradeType;
     console.log(upgrade);
   }
 
-sendData(){
+  sendData() {
     this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
     console.log(this.selectedDevelopment);
     console.log(this.upgrades);

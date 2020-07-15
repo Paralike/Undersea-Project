@@ -8,6 +8,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 
 namespace Undersea.API.Controllers
@@ -17,10 +18,10 @@ namespace Undersea.API.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BuildingsController : ControllerBase
     {
-        BuildingService _buildingService;
+        IBuildingService _buildingService;
         Guid id;
 
-        public BuildingsController(BuildingService buildingService, IHttpContextAccessor httpContextAccessor)
+        public BuildingsController(IBuildingService buildingService, IHttpContextAccessor httpContextAccessor)
         {
             _buildingService = buildingService;
             id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
