@@ -8,7 +8,7 @@ import { ArmyComponent } from '../../../../army/components/army.component';
 import { DevelopmentsComponent } from 'src/app/features/developments/components/developments.component';
 import { HeaderComponent } from '../header/header.component';
 import { UnitList } from '../../model/profile.model';
-import { UnitDto, ArmyUnitDto, UnitType } from 'src/app/shared';
+import { UnitDto, ArmyUnitDto, UnitType, BuildingDto } from 'src/app/shared';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { UnitDto, ArmyUnitDto, UnitType } from 'src/app/shared';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  @Input() buildings: number[];
+  @Input() buildings: BuildingDto[];
   @Input() developements: number[];
   @Input() units: ArmyUnitDto[];
   @Output() reload = new EventEmitter<void>();
@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     const dialogRef = this.dialog.open(BuildingsComponent, {
       width: '50vw',
       data: {
-        building: this.buildings
+        building: [this.buildings[0].quantity, this.buildings[1].quantity]
       }
     });
     dialogRef.afterClosed().subscribe(() => this.reload.emit());

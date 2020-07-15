@@ -14,10 +14,10 @@
 
     </div>
     <div class="main-content">
-        <div *ngIf="city.buildings[0]" class="zatony-div">
+        <div *ngIf="city.buildings[0].quantity != 0" class="zatony-div">
             <img src="../../../../../../assets/images/Zátonyvár_pic.png" alt="" class="zatony">
         </div>
-        <div *ngIf="city.buildings[0]" class="aramlas-div">
+        <div *ngIf="city.buildings[1].quantity != 0" class="aramlas-div">
             <img src="../../../../../../assets/images/Áramlásirányító_pic.png" alt="" class="aramlas">
         </div>
     </div>
