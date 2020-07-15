@@ -32,7 +32,11 @@ namespace Undersea.API.Middlewares
             }
             catch (ExistingUpgradeException ex)
             {
-
+                await HandleAllException(httpContext, ex, 406);
+            }
+            catch (ExistingBuildingException ex)
+            {
+                await HandleAllException(httpContext, ex, 406);
             }
             catch (TimeoutException ex)
             {
@@ -101,6 +105,15 @@ namespace Undersea.API.Middlewares
                 Message = "Unauthorized Server Access "
             }.ToString());
 
+        }
+        private Task HandleAllException(HttpContext context, Exception ex, int statuscode)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statuscode;
+            return context.Response.WriteAsync(new ErrorDto()
+            {
+                Message = ex.Message
+            }.ToString());
         }
 
     }

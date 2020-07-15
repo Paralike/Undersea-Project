@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
@@ -48,6 +49,16 @@ namespace Undersea.BLL.Services
             var firstCity = cities.First();
             var result = await _buildingJoin.FirstOrDefault(a => a.BuildingId == firstCity.BuildingId && a.BuildingType == building);
             //TODO validitáció
+            foreach(BuildingAttributeJoin u in firstCity.Buildings.BuildingAttributes)
+            {
+                if ( u.Status == Status.InProgress)
+                {
+                    throw new Exception("Nem lehet egyszerre 2-tőt építeni");
+                }else if (u.Status == Status.Done)
+                {
+                    throw new ExistingBuildingException();
+                }
+            }
             result.Status = DAL.Enums.Status.InProgress;
             await _cityRepository.Update(firstCity);
 

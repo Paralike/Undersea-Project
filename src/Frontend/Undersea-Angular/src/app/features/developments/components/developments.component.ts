@@ -3,7 +3,7 @@ import { UpgradeAttributeModel, UpgradeModel } from '../../developments/model/de
 import { FeatureService } from '../../service/feature.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
+import { UpgradeAttributeDto, UpgradeDto, Status } from 'src/app/shared';
 import { elementAt } from 'rxjs/operators';
 
 interface Development {
@@ -68,6 +68,7 @@ export class DevelopmentsComponent implements OnInit {
     console.log(upgrade);
   }
 
+
   sendData() {
     console.log(this.array);
     if (this.array[this.selectedDevelopment].status === 1 || this.array[this.selectedDevelopment].status === 2) {
@@ -94,6 +95,5 @@ export class DevelopmentsComponent implements OnInit {
 
     }
   }
-
 }
 
