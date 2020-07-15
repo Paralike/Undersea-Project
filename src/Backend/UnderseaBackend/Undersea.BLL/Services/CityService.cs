@@ -16,17 +16,20 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
         private readonly IArmyService _armyservice;
+        private readonly IUpgradeService _upgradeService;
+        private readonly IBuildingService _buildingService;
 
         public CityService()
         {
 
         }
 
-        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice)
+        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUpgradeService upgradeService)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
             _armyservice = armyservice;
+            _upgradeService = upgradeService;
         }
 
         public async Task<CityDto> GetCity(Guid id)
@@ -35,7 +38,7 @@ namespace Undersea.BLL.Services
             // Get where(userId = identity service)
             // return _mapper.Map<CityDto>(await _cityRepository.GetCityByUserId(id));
             var cityPre = await _cityRepository.GetCityByUserId(id);
-           
+
             CityDto city = new CityDto()
             {
                 AvailableArmy = await _armyservice.GetArmy(id),
@@ -43,7 +46,10 @@ namespace Undersea.BLL.Services
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
-                AllArmy = await _armyservice.GetAllArmy(cityPre.Id)
+                AllArmy = await _armyservice.GetAllArmy(cityPre.Id),
+                Buildings = await _buildingService.GetBuilding(id),
+                Upgrades = await _upgradeService.GetUpgrade(id)
+
             };
 
             return city;

@@ -12,6 +12,8 @@ namespace Undersea.DAL.Models
         public BuildingType BuildingType { get; set; }
         public Status Status { get; set; }
         public Guid Id { get; set; }
+        public int Quantity { get; set; }
+        public int CurrentTurn { get; set; }
 
     }
 }

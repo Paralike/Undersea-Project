@@ -22,13 +22,17 @@ namespace Undersea.DAL.Models
                 {
                     BuildingType = BuildingType.Aramlasiranyito,
                     Status = Status.UnBuilt,
-                    BuildingId = Id
+                    BuildingId = Id,
+                    Quantity = 0,
+                    CurrentTurn = 0
                 },
                 new BuildingAttributeJoin
                 {
                     BuildingType = BuildingType.Zatonyvar,
                     Status = Status.UnBuilt,
-                    BuildingId = Id
+                    BuildingId = Id,
+                    Quantity = 0,
+                    CurrentTurn =0
                 }
             };
         }
