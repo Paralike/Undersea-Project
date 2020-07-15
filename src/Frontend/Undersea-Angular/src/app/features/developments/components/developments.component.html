@@ -11,7 +11,7 @@
     <div class="main-content">
       <div  *ngFor="let upgrade of upgrades" (click)="selected(upgrade)" class="content" tabindex="-1">
        
-          <div *ngIf="array[upgrade.upgradeType].status === 0">
+          <div *ngIf="array[upgrade.upgradeType].status === 2">
             <div class="checkmark">
               <div class="checkmark-circle"></div>
               <div class="checkmark-stem"></div>

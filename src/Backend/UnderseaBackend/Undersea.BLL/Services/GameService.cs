@@ -35,7 +35,8 @@ namespace Undersea.BLL.Services
         private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, IUpgradeJoinRepository upgradeJoinRepository)
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, IUpgradeJoinRepository upgradeJoinRepository,
+                            IBuildingJoinRepository buildingJoinRepository)
         {
             CurrentTurn = 1;
             _cityRepository = cityRepository;
@@ -45,6 +46,7 @@ namespace Undersea.BLL.Services
             _armyService = armyService;
             _cityService = cityService;
             _upgradeJoinRepository = upgradeJoinRepository;
+            _buildingJoinRepository = buildingJoinRepository;
         }
 
         public GameService()
