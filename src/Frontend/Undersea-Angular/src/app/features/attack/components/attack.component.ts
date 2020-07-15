@@ -5,6 +5,7 @@ import { AttackModel } from '../model/attack.model';
 import { MatSliderChange, MatSlider } from '@angular/material/slider';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ArmyUnitDto } from 'src/app/shared';
+import { ArmyUnitModel } from '../../army/model/army.model';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class AttackComponent implements OnInit {
   userList: AttackModel[];
   selected: boolean;
   selectedUserId: string;
-  army: ArmyUnitDto[];
+  army: ArmyUnitModel[];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private el: ElementRef,
@@ -26,7 +27,7 @@ export class AttackComponent implements OnInit {
     public dialogRef: MatDialogRef<AttackComponent>,
     private featureService: FeatureService
   ) {
-    this.army = data.units.map((x): ArmyUnitDto => new ArmyUnitDto({ ...x }));
+    this.army = data.units.map((x): ArmyUnitDto => ({ ...x }));
     this.army.forEach(unit => unit.unitCount = 0);
   }
 

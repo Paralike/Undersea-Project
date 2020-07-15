@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { BuildingModel } from '../model/building.model';
+import { BuildingModel, BuildingAttributeModel } from '../model/building.model';
 import { FeatureService } from '../../service/feature.service';
 import { BUIDLDINGS } from '../model/mockBuildings';
 
@@ -13,9 +13,9 @@ import { BuildingDto, BuildingAttributeDto } from 'src/app/shared';
   styleUrls: ['./buildings.component.scss']
 })
 export class BuildingsComponent implements OnInit {
-  public buildings: BuildingAttributeDto[];
-  public selectedBuilding: BuildingDto;
-  public addBuilding: BuildingDto[];
+  public buildings: BuildingAttributeModel[];
+  public selectedBuilding: BuildingModel;
+  public addBuilding: BuildingModel[];
   public id: string;
 
 
@@ -26,7 +26,7 @@ export class BuildingsComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     console.log(data);
-    this.addBuilding = data.building.map((x): BuildingDto => new BuildingDto({ ...x }));
+    this.addBuilding = data.building.map((x): BuildingModel => ({ ...x }));
     console.log(this.addBuilding);
 
   }

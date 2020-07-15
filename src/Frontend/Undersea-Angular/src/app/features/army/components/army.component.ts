@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ArmyModel } from '../model/army.model';
+import { ArmyModel, ArmyUnitModel } from '../model/army.model';
 
 import { MAT_DIALOG_DATA, MatDialogRef, throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import { FeatureService } from '../../service/feature.service';
@@ -18,7 +18,7 @@ import { ArmyUnitDto, UnitType } from 'src/app/shared';
 })
 export class ArmyComponent implements OnInit {
   public army: ArmyModel[];
-  public addUnit: ArmyUnitDto[];
+  public addUnit: ArmyUnitModel[];
   gyongy = 'Gyöngy';
 
 
@@ -28,7 +28,7 @@ export class ArmyComponent implements OnInit {
     public dialogRef: MatDialogRef<ArmyComponent>,
     private snackbar: MatSnackBar
   ) {
-    this.addUnit = data.units.map((x): ArmyUnitDto => new ArmyUnitDto({ ...x }));
+    this.addUnit = data.units.map((x): ArmyUnitModel => ({ ...x }));
     this.addUnit.forEach(unit => unit.unitCount = 0);
   }
 
@@ -71,10 +71,5 @@ export class ArmyComponent implements OnInit {
 
 
   }
-  // selected(building: BuildingModel) {
-  //   this.selectedBuilding = building.buildingType;
-  //   document.getElementById('buildButton').style.opacity = '1';
-
-  // }
 
 }

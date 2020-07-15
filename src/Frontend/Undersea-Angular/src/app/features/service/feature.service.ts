@@ -25,7 +25,7 @@ import { BUIDLDINGS } from '../buildings/model/mockBuildings';
 import { BuildingModel } from '../buildings/model/building.model';
 import { FIGTHS } from '../fight/model/mock-fight';
 import { PeriodicElement } from '../fight/model/fight.model';
-import { ArmyModel } from '../army/model/army.model';
+import { ArmyModel, ArmyUnitModel } from '../army/model/army.model';
 import { DevelopmentModel } from '../developments/model/development.model';
 import { DEVELOPMENTS } from '../developments/model/mockDevelopment';
 import { PROFILE, ProfileModel } from '../pages/main/model/profile.model';
@@ -97,6 +97,7 @@ export class FeatureService {
   unitToSend: ArmyUnitDto;
   attack: AttackDto;
   upgradeDto: UpgradeDto;
+  units: ArmyUnitDto[];
 
   constructor(
     private buildingsClient: BuildingsClient,
@@ -136,10 +137,10 @@ export class FeatureService {
     return this.attackClient.getAttackableUsers();
   }
 
-  sendAttack(id: string, units: ArmyUnitDto[]): Observable<any> {
+  sendAttack(id: string, units: ArmyUnitModel[]): Observable<any> {
     this.attack = new AttackDto();
     this.attack.defenderCityId = id;
-    this.attack.units = units;
+    this.attack.units = units.map((x): ArmyUnitDto => new ArmyUnitDto({...x}));
     return this.attackClient.startAttack(this.attack);
   }
 
@@ -157,9 +158,10 @@ export class FeatureService {
 
   }
 
-  purchaseUnits(units: ArmyUnitDto[]) {
-    console.log(units);
-    return this.armyClient.purchaseUnits(units);
+  purchaseUnits(units: ArmyUnitModel[]) {
+    // tslint:disable-next-line:no-shadowed-variable
+    this.units =  units.map((x): ArmyUnitDto => new ArmyUnitDto({...x}));
+    return this.armyClient.purchaseUnits(this.units);
   }
 
   getCityArmy(): Observable<any> {

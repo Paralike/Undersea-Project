@@ -729,9 +729,9 @@
       "type": "integer",
       "description": "",
       "x-enumNames": [
+        "UnBuilt",
         "InProgress",
-        "Done",
-        "UnBuilt"
+        "Done"
       ],
       "enum": [
         0,
