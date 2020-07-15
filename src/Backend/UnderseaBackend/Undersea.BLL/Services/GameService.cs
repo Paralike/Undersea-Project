@@ -110,8 +110,6 @@ namespace Undersea.BLL.Services
                         city.Inhabitants += building.Resident;
                         city.CoralProduction += building.Coral;
                         //city. += building.Coral;
-
-
                     }
                 }
                 await _buildingJoinRepository.Update(b);
@@ -122,8 +120,8 @@ namespace Undersea.BLL.Services
 
             foreach (Attack a in attacks)
             {
-                int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
-                int attack = await _armyService.GetArmyAttackingPower(a.ArmyId);
+                int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId,a.DefenderCityId);
+                int attack = await _armyService.GetArmyAttackingPower(a.ArmyId,a.AttackerCityId);
 
                 // TODO támadóerő +- 5%
 
