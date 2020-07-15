@@ -16,5 +16,6 @@ namespace Undersea.DAL.Models
         public Status Status { get; set; }
         public Guid Id { get; set; }
 
+
     }
 }

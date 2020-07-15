@@ -32,6 +32,7 @@ namespace Undersea.BLL.Services
         }
 
         public async Task<ICollection<BuildingDto>> GetBuilding(Guid id) {
+            //building type, épül-e, mennyi van belőle
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
             var BuildingId = firstCity.BuildingId;

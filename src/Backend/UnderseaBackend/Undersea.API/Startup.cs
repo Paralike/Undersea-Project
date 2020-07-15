@@ -21,6 +21,8 @@ using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repositories.Repositories;
 using Undersea.DAL.Repository.Interfaces;
 using Undersea.DAL.Repository.Repositories;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace Undersea.API
 {
@@ -43,7 +45,7 @@ namespace Undersea.API
             .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<AppDbContext>(o =>
-            o.UseSqlServer(Configuration["ConnectionString"]));
+            o.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAttackService, AttackService>();
@@ -96,6 +98,22 @@ namespace Undersea.API
 
             });
 
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+
+            services.AddHangfireServer();
+
             services.AddCors();
 
             services.AddControllers();
@@ -105,7 +123,7 @@ namespace Undersea.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs)
         {
             if (env.IsDevelopment())
             {
@@ -119,6 +137,7 @@ namespace Undersea.API
             app.UseMiddleware<ExceptionHandler>();
 
             app.UseStaticFiles();
+            app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
@@ -127,11 +146,28 @@ namespace Undersea.API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            InitDatabase(app);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
 
+        private static void InitDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+
+                var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
+            }
         }
     }
 }
