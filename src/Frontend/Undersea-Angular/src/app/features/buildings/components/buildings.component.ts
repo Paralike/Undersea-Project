@@ -46,7 +46,7 @@ export class BuildingsComponent implements OnInit {
 
   sendData() {
     console.log(this.selectedBuilding);
-    this.featureService.purchaseBuildings(this.selectedBuilding).subscribe(() => {
+    this.featureService.purchaseBuildings(this.selectedBuilding.buildingType).subscribe(() => {
      // console.log(this.buildings[this.selectedBuilding - 1].name);
       console.log(this.data);
      // this.data.building[this.selectedBuilding - 1]++;
