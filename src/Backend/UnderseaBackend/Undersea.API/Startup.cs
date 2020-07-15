@@ -21,6 +21,8 @@ using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repositories.Repositories;
 using Undersea.DAL.Repository.Interfaces;
 using Undersea.DAL.Repository.Repositories;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace Undersea.API
 {
@@ -43,7 +45,7 @@ namespace Undersea.API
             .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<AppDbContext>(o =>
-            o.UseSqlServer(Configuration["ConnectionString"]));
+            o.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAttackService, AttackService>();
@@ -90,6 +92,22 @@ namespace Undersea.API
                 };
 
             });
+
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+
+            services.AddHangfireServer();
 
             services.AddCors();
 
