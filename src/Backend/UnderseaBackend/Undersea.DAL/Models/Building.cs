@@ -16,9 +16,21 @@ namespace Undersea.DAL.Models
         public Building()
         {
             Id = Guid.NewGuid();
-            //BuildingAttributes = new List<BuildingAttributeJoin>()
-            //{
-            //}
+            BuildingAttributes = new List<BuildingAttributeJoin>()
+            {
+                new BuildingAttributeJoin
+                {
+                    BuildingType = BuildingType.Aramlasiranyito,
+                    Status = Status.UnBuilt,
+                    BuildingId = Id
+                },
+                new BuildingAttributeJoin
+                {
+                    BuildingType = BuildingType.Zatonyvar,
+                    Status = Status.UnBuilt,
+                    BuildingId = Id
+                }
+            };
         }
     }
 }

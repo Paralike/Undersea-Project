@@ -421,7 +421,7 @@ export class BuildingsClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    getBuilding(): Observable<BuildingDto> {
+    getBuilding(): Observable<BuildingDto[]> {
         let url_ = this.baseUrl + "/api/Buildings";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -440,14 +440,14 @@ export class BuildingsClient {
                 try {
                     return this.processGetBuilding(<any>response_);
                 } catch (e) {
-                    return <Observable<BuildingDto>><any>_observableThrow(e);
+                    return <Observable<BuildingDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<BuildingDto>><any>_observableThrow(response_);
+                return <Observable<BuildingDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetBuilding(response: HttpResponseBase): Observable<BuildingDto> {
+    protected processGetBuilding(response: HttpResponseBase): Observable<BuildingDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -458,7 +458,11 @@ export class BuildingsClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = BuildingDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(BuildingDto.fromJS(item));
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -466,21 +470,21 @@ export class BuildingsClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<BuildingDto>(<any>null);
+        return _observableOf<BuildingDto[]>(<any>null);
     }
 
-    purchaseBuilding(building: BuildingDto): Observable<void> {
-        let url_ = this.baseUrl + "/api/Buildings";
+    purchaseBuilding(buildingType: BuildingType | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Buildings?";
+        if (buildingType === null)
+            throw new Error("The parameter 'buildingType' cannot be null.");
+        else if (buildingType !== undefined)
+            url_ += "buildingType=" + encodeURIComponent("" + buildingType) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(building);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
             })
         };
 
@@ -515,6 +519,70 @@ export class BuildingsClient {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
+export class BuildingTypeClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    getBuildings(): Observable<BuildingAttributeDto[]> {
+        let url_ = this.baseUrl + "/api/BuildingType";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetBuildings(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetBuildings(<any>response_);
+                } catch (e) {
+                    return <Observable<BuildingAttributeDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<BuildingAttributeDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetBuildings(response: HttpResponseBase): Observable<BuildingAttributeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(BuildingAttributeDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<BuildingAttributeDto[]>(<any>null);
     }
 }
 
@@ -1478,6 +1546,62 @@ export enum Status {
 export enum BuildingType {
     Aramlasiranyito = 0,
     Zatonyvar = 1,
+}
+
+export class BuildingAttributeDto implements IBuildingAttributeDto {
+    buildingType!: BuildingType;
+    price!: number;
+    resident!: number;
+    coral!: number;
+    hostCapacity!: number;
+    name?: string | undefined;
+
+    constructor(data?: IBuildingAttributeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.buildingType = _data["buildingType"];
+            this.price = _data["price"];
+            this.resident = _data["resident"];
+            this.coral = _data["coral"];
+            this.hostCapacity = _data["hostCapacity"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): BuildingAttributeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BuildingAttributeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["buildingType"] = this.buildingType;
+        data["price"] = this.price;
+        data["resident"] = this.resident;
+        data["coral"] = this.coral;
+        data["hostCapacity"] = this.hostCapacity;
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface IBuildingAttributeDto {
+    buildingType: BuildingType;
+    price: number;
+    resident: number;
+    coral: number;
+    hostCapacity: number;
+    name?: string | undefined;
 }
 
 export class CityDto implements ICityDto {

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Undersea.DAL.Enums;
 
-namespace Undersea.DAL.Models
+namespace Undersea.BLL.DTOs.GameElemens
 {
-    public class BuildingAttribute : IDbEntity
+    public class BuildingAttributeDto
     {
         public BuildingType BuildingType { get; set; }
-        public Guid Id { get; set; }
+        public int Price { get; set; }
         public int Resident { get; set; }
         public int Coral { get; set; }
         public int HostCapacity { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
-        //public virtual ICollection<BuildingAttributeJoin> BuildingAttributes { get; set; }
     }
 }

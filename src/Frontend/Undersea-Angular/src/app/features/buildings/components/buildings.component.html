@@ -10,21 +10,25 @@
   </p>
   <div class="main-content">
     <div *ngFor="let building of buildings; let i = index" (click)="selected(building)" class="content" tabindex="-1">
-      <img src='../../../../assets/images/building_{{building.buildingType}}.png'>
+      <img src='../../../../assets/images/building_{{building.buildingType + 1}}.png'>
       <div class="building-name">
         {{building.name}}
       </div>
-      <div class="building-desc">
-        <div *ngFor="let desc of building.description">
-          {{desc}}
-        </div>
+      <div *ngIf="building.resident != 0" class="building-desc">
+        {{building.resident}} embert ad a népességhez
+      </div>
+      <div *ngIf="building.coral != 0" class="building-desc">
+        {{building.coral}} korallt termel körönként
+      </div>
+      <div *ngIf="building.hostCapacity != 0" class="building-desc">
+        {{building.hostCapacity}} egységnek nyújt szállást
       </div>
       <div class="quantity">
         {{data.building[i]}} db
       </div>
-      <div class="price">
-        {{building.price}} Gyöngy / db
-      </div>
+      <!-- <div class="price">
+        {{building.}} Gyöngy / db
+      </div> -->
     </div>
   </div>
   <mat-divider></mat-divider>

@@ -17,7 +17,7 @@ namespace Undersea.DAL.Configurations
                     UpgradeType = Enums.UpgradeType.Iszaptraktor,
                     CoralProduction = 10,
                     DefensePoints = 0,
-                    AttackPoints = 10,
+                    AttackPoints = 0,
                     TaxIncrease = 0,
                     Name = "Iszaptraktor"
                 },
