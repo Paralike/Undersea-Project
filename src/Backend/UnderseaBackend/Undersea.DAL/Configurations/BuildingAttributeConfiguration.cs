@@ -19,7 +19,9 @@ namespace Undersea.DAL.Configurations
                     Resident = 50,
                     Coral = 200,
                     HostCapacity = 0,
-                    Name= "Áramlásírányító"
+                    Name= "Áramlásírányító",
+                    Price = 1000
+
                 },
                 new BuildingAttribute
                 {
@@ -27,7 +29,8 @@ namespace Undersea.DAL.Configurations
                     Resident = 0,
                     Coral = 0,
                     HostCapacity = 200,
-                    Name = "Zátonyvár"
+                    Name = "Zátonyvár",
+                    Price = 1000
                 }
                 );
         }

@@ -12,6 +12,7 @@ namespace Undersea.DAL.Models
         public int Coral { get; set; }
         public int HostCapacity { get; set; }
         public string Name { get; set; }
+        public int Price { get; set; }
         //public virtual ICollection<BuildingAttributeJoin> BuildingAttributes { get; set; }
     }
 }
