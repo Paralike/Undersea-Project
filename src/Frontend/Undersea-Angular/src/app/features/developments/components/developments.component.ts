@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
 import { elementAt } from 'rxjs/operators';
 
-interface Development{
+interface Development {
   type: any;
   status: any;
 }

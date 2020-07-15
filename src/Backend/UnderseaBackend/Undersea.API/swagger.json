@@ -251,20 +251,19 @@
           "Buildings"
         ],
         "operationId": "Buildings_PurchaseBuilding",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "parameters": [
           {
-            "name": "building",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/BuildingDto"
+            "type": "integer",
+            "name": "buildingType",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/BuildingType"
             },
-            "x-nullable": false
+            "x-nullable": false,
+            "enum": [
+              0,
+              1
+            ]
           }
         ],
         "responses": {
@@ -697,7 +696,9 @@
         "status",
         "price",
         "turnCount",
-        "buildingType"
+        "buildingType",
+        "quantity",
+        "currentTurn"
       ],
       "properties": {
         "status": {
@@ -713,6 +714,14 @@
         },
         "buildingType": {
           "$ref": "#/definitions/BuildingType"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "currentTurn": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -747,9 +756,9 @@
       "required": [
         "buildingType",
         "price",
-        "population",
-        "coralProduction",
-        "hosting"
+        "resident",
+        "coral",
+        "hostCapacity"
       ],
       "properties": {
         "buildingType": {
@@ -759,15 +768,15 @@
           "type": "integer",
           "format": "int32"
         },
-        "population": {
+        "resident": {
           "type": "integer",
           "format": "int32"
         },
-        "coralProduction": {
+        "coral": {
           "type": "integer",
           "format": "int32"
         },
-        "hosting": {
+        "hostCapacity": {
           "type": "integer",
           "format": "int32"
         },
@@ -810,15 +819,13 @@
         "buildings": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/definitions/BuildingDto"
           }
         },
         "upgrades": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/definitions/UpgradeDto"
           }
         },
         "availableArmy": {
@@ -828,34 +835,6 @@
           "$ref": "#/definitions/ArmyDto"
         },
         "servicePay": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "RankDto": {
-      "type": "object",
-      "required": [
-        "userId",
-        "point",
-        "rank"
-      ],
-      "properties": {
-        "userId": {
-          "type": "string",
-          "format": "guid"
-        },
-        "username": {
-          "type": "string"
-        },
-        "point": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "cityName": {
-          "type": "string"
-        },
-        "rank": {
           "type": "integer",
           "format": "int32"
         }
@@ -900,6 +879,34 @@
         4,
         5
       ]
+    },
+    "RankDto": {
+      "type": "object",
+      "required": [
+        "userId",
+        "point",
+        "rank"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "username": {
+          "type": "string"
+        },
+        "point": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "rank": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
     },
     "UpgradeAttributeDto": {
       "type": "object",

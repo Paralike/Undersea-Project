@@ -1,6 +1,6 @@
 .card {
     width: 10vw;
-    height: 20vh;
+    height: 25vh;
     border-radius: 16px;
     opacity: 1;
     backdrop-filter: blur(8px);
@@ -8,6 +8,7 @@
     font-family: baloo;
     outline: none;
     text-align: center;
+    margin-left: 1vw;
 }
 .card span {
     display: block;

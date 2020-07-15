@@ -85,17 +85,16 @@ button:disabled {
 }
 
 .building-desc {
-  font-weight: bold;
   margin: none;
-  min-height: 5vh;
   display: flex;
+  height: 4vh;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   outline: none;
   border-radius: 16px;
   font-family: open-sans-regular;
-  font-size: 1vw;
+  font-size: 0.8vw;
 }
 
 div:focus {
@@ -107,11 +106,11 @@ div:focus {
 .quantity {
   margin: 0.5vh;
   font-family: open-sans-regular;
-  font-size: 1vw;
+  font-size: 0.8vw;
 }
 
 .price {
   margin-bottom: 0.5vh;
   font-family: open-sans-regular;
-  font-size: 1vw;
+  font-size: 0.8vw;
 }

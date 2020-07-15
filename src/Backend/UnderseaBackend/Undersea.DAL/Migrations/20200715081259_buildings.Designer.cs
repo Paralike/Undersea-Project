@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200714143700_undersea")]
-    partial class undersea
+    [Migration("20200715081259_buildings")]
+    partial class buildings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7b692bc3-a6e0-4f16-b058-49849b3db5be"),
+                            Id = new Guid("8d0a91ef-7cf9-4453-b019-52670df46a3d"),
                             CurrentTurn = 1
                         });
                 });
@@ -285,6 +285,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<int>("Resident")
                         .HasColumnType("int");
 
@@ -300,6 +303,7 @@ namespace Undersea.DAL.Migrations
                             HostCapacity = 0,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Áramlásírányító",
+                            Price = 1000,
                             Resident = 50
                         },
                         new
@@ -309,6 +313,7 @@ namespace Undersea.DAL.Migrations
                             HostCapacity = 200,
                             Id = new Guid("00000000-0000-0000-0000-000000000000"),
                             Name = "Zátonyvár",
+                            Price = 1000,
                             Resident = 0
                         });
                 });
@@ -321,8 +326,14 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("BuildingType")
                         .HasColumnType("int");
 
+                    b.Property<int>("CurrentTurn")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -508,7 +519,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("1ed99d4a-fb96-4b0f-b215-0b2d13795410"),
+                            Id = new Guid("aa961561-5a44-4ae4-aaa6-308b3d91b946"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },

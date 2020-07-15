@@ -34,6 +34,7 @@ namespace Undersea.BLL.Services
 
         public async Task<ICollection<UpgradeDto>> GetUpgrade(Guid id)
         {
+            
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
             var UpgradeId = firstCity.UpgradesId;

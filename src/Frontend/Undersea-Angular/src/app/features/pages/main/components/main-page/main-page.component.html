@@ -1,22 +1,23 @@
 <div class="bg">
-    <app-header *ngIf="city" [city]="city"></app-header>
+    <app-header *ngIf="city" [city]="city" [rank]="profile.rank"></app-header>
 <div *ngIf="city" class="flex">
     <div class="left-side">
         <div class="components">
             <app-navbar *ngIf="city" [buildings]="city.buildings" [developements]="" [units]="city.availableArmy.unitList"
                 (reload)="reload()"></app-navbar>
-            <app-profile-card *ngIf="city"></app-profile-card>
+            <app-profile-card *ngIf="city" [name]="profile.username"></app-profile-card>
         </div>
+        <!-- <div class="wave" style="--w:40px;--h:10px;--p:4px; --t:3px;--c:#9FFFF0"></div> -->
         <div class="title">
             UNDERSEA
         </div>
 
     </div>
     <div class="main-content">
-        <div *ngIf="city.buildings[0]" class="zatony-div">
+        <div *ngIf="city.buildings[0].quantity != 0" class="zatony-div">
             <img src="../../../../../../assets/images/Zátonyvár_pic.png" alt="" class="zatony">
         </div>
-        <div *ngIf="city.buildings[0]" class="aramlas-div">
+        <div *ngIf="city.buildings[1].quantity != 0" class="aramlas-div">
             <img src="../../../../../../assets/images/Áramlásirányító_pic.png" alt="" class="aramlas">
         </div>
     </div>

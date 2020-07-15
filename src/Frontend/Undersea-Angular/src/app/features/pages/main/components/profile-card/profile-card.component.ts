@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthpageService } from '../../../auth/service/authpage.service';
 import { Router } from '@angular/router';
 
@@ -8,20 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-card.component.scss']
 })
 export class ProfileCardComponent implements OnInit {
+  @Input() name: string;
 
   constructor(private authPageService: AuthpageService, private router: Router) { }
 
-  name;
-  ngOnInit(): void {
-    if (this.authPageService.newUser === false) {
-      this.name = this.authPageService.logind.username;
-    } else if (this.authPageService.newUser === true) {
-      this.name = this.authPageService.registerd.username;
-    }
 
+  ngOnInit(): void {
   }
 
-  logout(){
+  logout() {
     localStorage.setItem('token', null);
     this.router.navigate(['login']);
 
