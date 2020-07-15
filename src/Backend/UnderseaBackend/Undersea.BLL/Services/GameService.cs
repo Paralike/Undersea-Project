@@ -35,6 +35,7 @@ namespace Undersea.BLL.Services
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;
+        private readonly IBuildingAttributeRepository _buildingAttributeRepository;
         private readonly AppDbContext context;
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
@@ -85,6 +86,7 @@ namespace Undersea.BLL.Services
                         var city = (await _cityRepository.GetWhere(c => c.UpgradesId == u.UpgradeId)).ElementAt(0);
                         var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
                         city.CoralCount += city.CoralCount/upgrade.CoralProduction*100;
+                        city.PearlCount += city.PearlCount/upgrade.CoralProduction*100;
                         //city.Defenses += city.Defenses / upgrade.DefensePoints * 100;
                         
                     }
@@ -103,6 +105,12 @@ namespace Undersea.BLL.Services
                         b.Status = Status.UnBuilt;
                         b.CurrentTurn = 0;
                         b.Quantity += 1;
+                        var city = (await _cityRepository.GetWhere(c => c.BuildingId == b.BuildingId)).ElementAt(0);
+                        var building = (await _buildingAttributeRepository.GetWhere(c => c.BuildingType == b.BuildingType)).ElementAt(0);
+                        city.Inhabitants += building.Resident;
+                        city.CoralProduction += building.Coral;
+                        //city. += building.Coral;
+
 
                     }
                 }
