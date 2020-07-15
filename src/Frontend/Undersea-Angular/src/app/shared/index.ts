@@ -473,18 +473,18 @@ export class BuildingsClient {
         return _observableOf<BuildingDto[]>(<any>null);
     }
 
-    purchaseBuilding(building: BuildingDto): Observable<void> {
-        let url_ = this.baseUrl + "/api/Buildings";
+    purchaseBuilding(buildingType: BuildingType | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Buildings?";
+        if (buildingType === null)
+            throw new Error("The parameter 'buildingType' cannot be null.");
+        else if (buildingType !== undefined)
+            url_ += "buildingType=" + encodeURIComponent("" + buildingType) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(building);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
             })
         };
 

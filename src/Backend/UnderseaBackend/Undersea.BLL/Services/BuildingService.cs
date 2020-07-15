@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.GameElemens;
 using Undersea.BLL.Interfaces;
+using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -40,11 +41,11 @@ namespace Undersea.BLL.Services
 
         }
 
-        public async Task PurchaseBuilding(Guid id, BuildingDto building)
+        public async Task PurchaseBuilding(Guid id, BuildingType building)
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == id);
             var firstCity = cities.First();
-            var result = await _buildingJoin.FirstOrDefault(a => a.BuildingId == firstCity.UpgradesId && a.BuildingType == building.BuildingType);
+            var result = await _buildingJoin.FirstOrDefault(a => a.BuildingId == firstCity.UpgradesId && a.BuildingType == building);
             //TODO validitáció
             result.Status = DAL.Enums.Status.InProgress;
             await _cityRepository.Update(firstCity);
