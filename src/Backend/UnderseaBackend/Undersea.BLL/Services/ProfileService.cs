@@ -56,6 +56,11 @@ namespace Undersea.BLL.Services
                 
             }).OrderByDescending(c => c.Point).ToList();
 
+            foreach(RankDto rank in ranks)
+            {
+                rank.Rank = ranks.FindIndex(r => r.UserId == rank.UserId) + 1;
+            }
+
             return ranks;
         }
 
