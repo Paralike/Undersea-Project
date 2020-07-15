@@ -248,7 +248,7 @@ namespace Undersea.BLL.Services
                 }
             }
 
-            return result.Sum(u => u.Count * u.Defense);
+            return result.Sum(u => u.Count * u.Defense)+sum;
         }
 
         public async Task<ArmyDto> GetAllArmy(Guid cityId)
