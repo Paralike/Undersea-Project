@@ -12,8 +12,8 @@ namespace Undersea.BLL.Interfaces
         public Task PurchaseUnits(Guid id, List<ArmyUnitDto> dto);
         public Task<List<UnitDto>> GetUnitInfo();
         public Task<ArmyDto> GetArmyById(Guid id);
-        public Task<int> GetArmyDefensePower(Guid armyId);
-        public Task<int> GetArmyAttackingPower(Guid armyId);
+        public Task<int> GetArmyDefensePower(Guid armyId,Guid defenderCityId);
+        public Task<int> GetArmyAttackingPower(Guid armyId, Guid attackerCityId);
         public Task FillArmy(Guid userId);
         public Task<ArmyDto> GetAllArmy(Guid cityId);
 

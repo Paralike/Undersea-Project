@@ -16,7 +16,6 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
         private readonly IArmyService _armyservice;
-        private readonly IUserService _userService;
         private readonly IUpgradeService _upgradeService;
         private readonly IBuildingService _buildingService;
 
@@ -25,32 +24,33 @@ namespace Undersea.BLL.Services
 
         }
 
-        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUpgradeService upgradeService, IBuildingService buildingService, IUserService userService)
+        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUpgradeService upgradeService, IBuildingService buildingService)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
             _armyservice = armyservice;
-            _userService = userService;
             _upgradeService = upgradeService;
             _buildingService = buildingService;
         }
 
         public async Task<CityDto> GetCity(Guid id)
         {
-            Guid userId = _userService.GetCurrentUserId();
+            // identity service . id
+            // Get where(userId = identity service)
+            // return _mapper.Map<CityDto>(await _cityRepository.GetCityByUserId(id));
+            var cityPre = await _cityRepository.GetCityByUserId(id);
 
-            var cityPre = await _cityRepository.GetCityByUserId(userId);
-           
             CityDto city = new CityDto()
             {
-                AvailableArmy = await _armyservice.GetArmy(cityPre.Id),
+                AvailableArmy = await _armyservice.GetArmy(id),
                 CoralCount = cityPre.CoralCount,
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
                 AllArmy = await _armyservice.GetAllArmy(cityPre.Id),
-                Buildings = await _buildingService.GetBuilding(userId),
-                Upgrades = await _upgradeService.GetUpgrade(userId)
+                Buildings = await _buildingService.GetBuilding(id),
+                Upgrades = await _upgradeService.GetUpgrade(id)
+
             };
 
             return city;
@@ -68,10 +68,11 @@ namespace Undersea.BLL.Services
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10
                     + firstCity.Buildings.BuildingAttributes.Count() * 50
-                    + firstCity.Upgrades.UpgradeAttributes.Count() * 100;            
+                    + firstCity.Upgrades.UpgradeAttributes.Count() * 100;
 
             return points;
         }
+
 
     }
 }

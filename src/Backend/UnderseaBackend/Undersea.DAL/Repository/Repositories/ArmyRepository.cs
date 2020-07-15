@@ -15,7 +15,6 @@ namespace Undersea.DAL.Repositories
 
         public async Task<int> GetFoodNecessity(Guid armyId)
         {
-            // TODO átírni lambdásra
 
             var query = from units in _context.Units
                         join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType

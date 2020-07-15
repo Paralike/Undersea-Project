@@ -697,7 +697,6 @@
       "required": [
         "status",
         "price",
-        "turnCount",
         "buildingType",
         "quantity",
         "currentTurn"
@@ -707,10 +706,6 @@
           "$ref": "#/definitions/Status"
         },
         "price": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "turnCount": {
           "type": "integer",
           "format": "int32"
         },

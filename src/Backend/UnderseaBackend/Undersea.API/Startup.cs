@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
@@ -47,7 +48,6 @@ namespace Undersea.API
 
             services.AddDbContext<AppDbContext>(o =>
             o.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddHttpContextAccessor();
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAttackService, AttackService>();
@@ -57,8 +57,6 @@ namespace Undersea.API
             services.AddTransient<ILogService, LoggerService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IBuildingService, BuildingService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ISignalHub, SignalHub>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
@@ -74,16 +72,14 @@ namespace Undersea.API
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
 
+            services.AddHttpContextAccessor();
+
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -161,7 +157,6 @@ namespace Undersea.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<SignalHub>("/signalHub");
             });
         }
 
@@ -176,16 +171,9 @@ namespace Undersea.API
                     //context.Database.Migrate();
                 }
 
-
-                RecurringJob.AddOrUpdate(() => ParentFunc(null), Cron.Hourly);
+                var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
             }
-        }
-
-        public static void ParentFunc(PerformContext context)
-        {
-            var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-            _gameService.NextTurn();
-            BackgroundJob.ContinueWith(context.BackgroundJob.Id, () => );
         }
     }
 }
