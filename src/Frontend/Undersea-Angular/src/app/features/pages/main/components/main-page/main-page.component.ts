@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthClient, ProfileClient, CityDto, RankDto } from 'src/app/shared';
 import { ProfileModel } from '../../model/profile.model';
 import { FeatureService } from 'src/app/features/service/feature.service';
+import { SignalViewModel } from '../../../../../core/models/signal-view-model';
+import { SignalRService } from '../../../../../core/services/signal-r.service';
 
 
 @Component({
@@ -13,11 +15,17 @@ export class MainPageComponent implements OnInit {
   city: CityDto;
   profile: RankDto;
   array: [];
-  constructor(private featureService: FeatureService) { }
+  signalList: SignalViewModel[] = [];
+  constructor(private featureService: FeatureService, private signalRService: SignalRService) { }
 
   ngOnInit(): void {
     this.array = [];
+    this.signalRService.signalReceived.subscribe((signal: SignalViewModel) => {
+      console.log('Signal:', signal);
+      this.signalList.push(signal);
+    });
     this.reload();
+
 
   }
 

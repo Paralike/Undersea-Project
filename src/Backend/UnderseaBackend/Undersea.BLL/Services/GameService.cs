@@ -98,7 +98,7 @@ namespace Undersea.BLL.Services
                 if (b.Status == Status.InProgress)
                 {
                     b.CurrentTurn += 1;
-                    if (b.CurrentTurn == 5)
+                    if (b.CurrentTurn >= 5)
                     {
                         b.Status = Status.UnBuilt;
                         b.CurrentTurn = 0;
