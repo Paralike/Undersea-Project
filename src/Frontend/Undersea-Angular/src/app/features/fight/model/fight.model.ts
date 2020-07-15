@@ -1,6 +1,6 @@
-export class PeriodicElement {
-    city: string;
-    sharks: number;
-    seals: number;
-    seahorses: number;
+import { ArmyDto } from 'src/app/shared';
+
+export class AttackResponseModel {
+  cityName?: string;
+  unitList?: ArmyDto;
   }
