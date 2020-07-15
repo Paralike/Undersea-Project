@@ -55,11 +55,6 @@ namespace Undersea.BLL.Services
             return city;
 
         }
-        public async Task AddUpgrade()
-        {
-
-
-        }
 
         public async Task<int> CalculatePoints(Guid userId)
         {
@@ -70,7 +65,10 @@ namespace Undersea.BLL.Services
             points += firstCity.Inhabitants
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Csatacsiko).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
-                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10;
+                    + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10
+                    + firstCity.Buildings.BuildingAttributes.Single(u => u.BuildingType == BuildingType.Aramlasiranyito).Quantity * 50
+                    + firstCity.Buildings.BuildingAttributes.Single(u => u.BuildingType == BuildingType.Zatonyvar).Quantity * 50;
+                    //+ firstCity.Upgrades.UpgradeAttributes.Single(u=>u.UpgradeType == UpgradeType.Alkimia);
 
             return points;
         }
