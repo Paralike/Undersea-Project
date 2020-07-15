@@ -550,12 +550,14 @@
       "x-enumNames": [
         "Lezercapa",
         "Rohamfoka",
-        "Csatacsiko"
+        "Csatacsiko",
+        "Hadvezer"
       ],
       "enum": [
         0,
         1,
-        2
+        2,
+        3
       ]
     },
     "ArmyUnitDto": {

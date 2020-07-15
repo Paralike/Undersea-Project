@@ -41,6 +41,16 @@ namespace Undersea.DAL.Configurations
                     FoodNecessity = 2,
                     PearlNecessity = 3,
                     Name = "Lézercápa"
+                },
+                new Unit
+                {
+                    UnitType = UnitType.Hadvezer,
+                    Damage = 0,
+                    Defense = 0,
+                    Price = 200,
+                    FoodNecessity = 2,
+                    PearlNecessity = 4,
+                    Name = "Hadvezér"
                 }
                 );
 

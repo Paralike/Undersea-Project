@@ -23,6 +23,7 @@ using Undersea.DAL.Repository.Repositories;
 using Hangfire;
 using Hangfire.SqlServer;
 using Undersea.BLL.Hubs;
+using Hangfire.Server;
 
 namespace Undersea.API
 {
@@ -136,7 +137,11 @@ namespace Undersea.API
             }
 
             app.UseCors(
-            options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+                 options => options
+                     .AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowCredentials()
             );
 
             app.UseMiddleware<ExceptionHandler>();
@@ -171,9 +176,16 @@ namespace Undersea.API
                     //context.Database.Migrate();
                 }
 
-                var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
+
+                RecurringJob.AddOrUpdate(() => ParentFunc(null), Cron.Hourly);
             }
+        }
+
+        public static void ParentFunc(PerformContext context)
+        {
+            var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
+            _gameService.NextTurn();
+            BackgroundJob.ContinueWith(context.BackgroundJob.Id, () => );
         }
     }
 }

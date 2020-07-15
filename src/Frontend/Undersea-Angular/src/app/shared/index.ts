@@ -1147,6 +1147,7 @@ export enum UnitType {
     Lezercapa = 0,
     Rohamfoka = 1,
     Csatacsiko = 2,
+    Hadvezer = 3,
 }
 
 export class ArmyUnitDto implements IArmyUnitDto {

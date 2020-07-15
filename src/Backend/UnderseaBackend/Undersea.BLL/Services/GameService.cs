@@ -32,6 +32,7 @@ namespace Undersea.BLL.Services
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;        
+        private readonly IBuildingAttributeRepository _buildingAttributeRepository;        
         
         private readonly AppDbContext _context;
         private readonly ISignalHub _signalHub;
@@ -39,8 +40,8 @@ namespace Undersea.BLL.Services
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
                             IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService,
-                            IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository, ISignalHub signalHub)
-
+                            IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository, 
+                            ISignalHub signalHub, IBuildingAttributeRepository buildingAttributeRepository)
         {
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
@@ -52,7 +53,7 @@ namespace Undersea.BLL.Services
             _upgradeJoinRepository = upgradeJoinRepository;
             _buildingJoinRepository = buildingJoinRepository;
             _upgradeAttributeRepository = upgradeAttributeRepository;
-
+            _buildingAttributeRepository = buildingAttributeRepository;
         }
 
         public GameService()
