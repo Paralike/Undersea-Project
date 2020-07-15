@@ -24,8 +24,6 @@ export class MainPageComponent implements OnInit {
   reload() {
     this.featureService.getCity().subscribe(res => {
       this.city = res;
-      if (!this.city.buildings) {
-      }
 
     },
       err => {
