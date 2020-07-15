@@ -26,7 +26,6 @@ export class DevelopmentsComponent implements OnInit {
   upgraded: boolean;
   array;
 
- upgraded: boolean;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: number[],
     private featureService: FeatureService,
@@ -46,34 +45,39 @@ export class DevelopmentsComponent implements OnInit {
       this.upgrades = res;
     });
     this.featureService.getUpgradesinfos().subscribe(res => {
-      this.status = res;
-      console.log(this.status);
+
       res.forEach(element => this.status.push(element));
       console.log(res);
 
-      const response: Development = {
-          type: res.upgradeType,
-          status: res.upgradeStatus
+      res.forEach(element => {
+        const response: Development = {
+          type: element.upgradeType,
+          status: element.status
 };
-      this.array.push(response);
+        this.array.push(response);
+      });
       console.log(this.array);
     });
   }
 
   selected(upgrade: UpgradeAttributeDto){
-    this.selectedDevelopment = upgrade.upgradeType;
-    console.log(upgrade);
+      this.selectedDevelopment = upgrade.upgradeType;
+      console.log(upgrade);
   }
 
 sendData(){
-    this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
-    console.log(this.selectedDevelopment);
-    console.log(this.upgrades);
-    this.dialogRef.close();
-    this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
-      duration: 3000
-    });
-  }
+  console.log(this.array);
+  if (this.array[this.selectedDevelopment].status === 0){
+    this.snackbar.open('Ezt a fejlesztést már megvásároltad!', 'Bezár', {
+      duration: 3000});
+}else {
+  this.featureService.startUpgrades(this.selectedDevelopment).subscribe();
+  this.dialogRef.close();
+  this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+    duration: 3000
+  });
+}
 }
 
+}
 
