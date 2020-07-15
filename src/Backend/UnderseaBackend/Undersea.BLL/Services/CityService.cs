@@ -43,15 +43,14 @@ namespace Undersea.BLL.Services
            
             CityDto city = new CityDto()
             {
-                AvailableArmy = await _armyservice.GetArmy(id),
+                AvailableArmy = await _armyservice.GetArmy(cityPre.Id),
                 CoralCount = cityPre.CoralCount,
                 PearlCount = cityPre.PearlCount,
                 CoralProduction = cityPre.CoralProduction,
                 PearlProduction = cityPre.PearlProduction,
                 AllArmy = await _armyservice.GetAllArmy(cityPre.Id),
-                Buildings = await _buildingService.GetBuilding(id),
-                Upgrades = await _upgradeService.GetUpgrade(id)
-
+                Buildings = await _buildingService.GetBuilding(userId),
+                Upgrades = await _upgradeService.GetUpgrade(userId)
             };
 
             return city;
@@ -69,9 +68,7 @@ namespace Undersea.BLL.Services
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10
                     + firstCity.Buildings.BuildingAttributes.Count() * 50
-                    + firstCity.Upgrades.UpgradeAttributes.Count() * 100;
-
-            
+                    + firstCity.Upgrades.UpgradeAttributes.Count() * 100;            
 
             return points;
         }

@@ -40,7 +40,7 @@ namespace Undersea.BLL.Services
             _userService = userService;
         }
 
-        public async Task<ArmyDto> GetArmy(Guid id)
+        public async Task<ArmyDto> GetArmy(Guid cityId)
         {
             Guid userId = _userService.GetCurrentUserId();
             var firstCity = await _cityRepository.GetCityByUserId(userId);

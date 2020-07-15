@@ -8,7 +8,8 @@ namespace Undersea.BLL.Hubs
     {
         public async Task SendMessage(string user, string message)
         {
-            await Clients.All.SendAsync("NextTurn", user, message);
-        }
+            if(Clients != null)
+                await Clients.All.SendAsync("NextTurn", user, message);
+        }   
     }
 }
