@@ -16,25 +16,27 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
         private readonly IArmyService _armyservice;
+        private readonly IUserService _userService;
+
 
         public CityService()
         {
 
         }
 
-        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice)
+        public CityService(ICityRepository cityRepository, IMapper mapper, IArmyService armyservice, IUserService userService)
         {
             _cityRepository = cityRepository;
             _mapper = mapper;
             _armyservice = armyservice;
+            _userService = userService;
         }
 
         public async Task<CityDto> GetCity(Guid id)
         {
-            // identity service . id
-            // Get where(userId = identity service)
-            // return _mapper.Map<CityDto>(await _cityRepository.GetCityByUserId(id));
-            var cityPre = await _cityRepository.GetCityByUserId(id);
+            Guid userId = _userService.GetCurrentUserId();
+
+            var cityPre = await _cityRepository.GetCityByUserId(userId);
            
             CityDto city = new CityDto()
             {
@@ -66,9 +68,10 @@ namespace Undersea.BLL.Services
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Rohamfoka).UnitCount * 5
                     + firstCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Lezercapa).UnitCount * 10;
 
+            
+
             return points;
         }
-
 
     }
 }

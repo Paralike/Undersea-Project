@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
@@ -23,6 +22,7 @@ using Undersea.DAL.Repository.Interfaces;
 using Undersea.DAL.Repository.Repositories;
 using Hangfire;
 using Hangfire.SqlServer;
+using Undersea.BLL.Hubs;
 
 namespace Undersea.API
 {
@@ -46,6 +46,7 @@ namespace Undersea.API
 
             services.AddDbContext<AppDbContext>(o =>
             o.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddHttpContextAccessor();
 
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAttackService, AttackService>();
@@ -55,6 +56,8 @@ namespace Undersea.API
             services.AddTransient<ILogService, LoggerService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IBuildingService, BuildingService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ISignalHub, SignalHub>();
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IArmyRepository, ArmyRepository>();
@@ -66,20 +69,20 @@ namespace Undersea.API
             services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
             services.AddTransient<IBuildingJoinRepository, BuildingJoinRepository>();
             services.AddTransient<IBuildingRepository, BuildingRepository>();
-
-
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
-
-            services.AddHttpContextAccessor();
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -120,6 +123,8 @@ namespace Undersea.API
 
             services.AddSwaggerDocument();
 
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -151,6 +156,7 @@ namespace Undersea.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalHub>("/signalHub");
             });
         }
 
@@ -162,7 +168,7 @@ namespace Undersea.API
             {
                 using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
                 {
-                    //context.Database.Migrate();
+                    context.Database.Migrate();
                 }
 
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();

@@ -15,7 +15,7 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     public class AttackController : ControllerBase
     {
         private readonly IAttackService _attackService;
