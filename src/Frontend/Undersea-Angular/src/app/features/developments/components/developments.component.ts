@@ -4,7 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { DEVELOPMENTS } from '../../developments/model/mockDevelopment';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpgradeAttributeDto, UpgradeDto } from 'src/app/shared';
+import { UpgradeAttributeDto, UpgradeDto, Status } from 'src/app/shared';
 import { elementAt } from 'rxjs/operators';
 
 interface Development {
@@ -67,7 +67,7 @@ export class DevelopmentsComponent implements OnInit {
 
 sendData(){
   console.log(this.array);
-  if (this.array[this.selectedDevelopment].status === 0){
+  if (this.array[this.selectedDevelopment].status === Status.Done){
     this.snackbar.open('Ezt a fejlesztést már megvásároltad!', 'Bezár', {
       duration: 3000});
 }else {

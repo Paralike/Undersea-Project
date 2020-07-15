@@ -1,5 +1,5 @@
 <div class="bg">
-    <app-header *ngIf="city" [city]="city" [rank]="profile.rank"></app-header>
+    <app-header *ngIf="city" [city]="city" [rank]="profile.rank" (reload)="reload()"></app-header>
 <div *ngIf="city" class="flex">
     <div class="left-side">
         <div class="components">
