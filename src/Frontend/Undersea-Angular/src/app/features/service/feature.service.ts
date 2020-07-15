@@ -22,12 +22,8 @@ import {
   BuildingTypeClient,
 } from 'src/app/shared';
 import { BuildingModel } from '../buildings/model/building.model';
-import { FIGTHS } from '../fight/model/mock-fight';
-import { PeriodicElement } from '../fight/model/fight.model';
 import { ArmyModel, ArmyUnitModel } from '../army/model/army.model';
 import { PROFILE, ProfileModel } from '../pages/main/model/profile.model';
-
-
 
 @Injectable({
   providedIn: 'root'

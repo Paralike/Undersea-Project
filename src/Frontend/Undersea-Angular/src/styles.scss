@@ -21,6 +21,10 @@ body{
     src: url(assets/fonts/Open_Sans/OpenSans-Bold.ttf) format("opentype");
   }
 
+  @font-face {
+    font-family: open-sans-semibold;
+    src: url(assets/fonts/Open_Sans/OpenSans-SemiBold.ttf) format("opentype");
+  }
 
 ::ng-deep .mat-dialog-container{
   background-color: #03255F !important;

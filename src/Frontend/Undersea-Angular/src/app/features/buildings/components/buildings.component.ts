@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { BuildingModel, BuildingAttributeModel } from '../model/building.model';
 import { FeatureService } from '../../service/feature.service';
-
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BuildingDto, BuildingAttributeDto } from 'src/app/shared';
