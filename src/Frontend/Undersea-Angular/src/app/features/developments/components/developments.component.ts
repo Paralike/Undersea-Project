@@ -9,6 +9,7 @@ import { elementAt } from 'rxjs/operators';
 
 interface Development {
   type: any;
+  currentTurn: any;
   status: any;
 }
 @Component({
@@ -52,6 +53,7 @@ export class DevelopmentsComponent implements OnInit {
       res.forEach(element => {
         const response: Development = {
           type: element.upgradeType,
+          currentTurn: element.currentTurn,
           status: element.status
 };
         this.array.push(response);
@@ -67,7 +69,7 @@ export class DevelopmentsComponent implements OnInit {
 
 sendData(){
   console.log(this.array);
-  if (this.array[this.selectedDevelopment].status === 0){
+  if (this.array[this.selectedDevelopment].status === 1 || this.array[this.selectedDevelopment].status === 2 ){
     this.snackbar.open('Ezt a fejlesztést már megvásároltad!', 'Bezár', {
       duration: 3000});
 }else {

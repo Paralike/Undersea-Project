@@ -1546,9 +1546,9 @@ export interface IBuildingDto {
 }
 
 export enum Status {
-    InProgress = 0,
-    Done = 1,
-    UnBuilt = 2,
+    UnBuilt = 0,
+    InProgress = 1,
+    Done = 2,
 }
 
 export enum BuildingType {
