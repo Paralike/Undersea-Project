@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     const dialogRef = this.dialog.open(BuildingsComponent, {
       width: '50vw',
       data: {
-        building: [this.buildings[0].quantity, this.buildings[1].quantity]
+        building: this.buildings
       }
     });
     dialogRef.afterClosed().subscribe(() => this.reload.emit());

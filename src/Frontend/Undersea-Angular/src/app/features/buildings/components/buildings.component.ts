@@ -15,6 +15,7 @@ export class BuildingsComponent implements OnInit {
   public selectedBuilding: BuildingModel;
   public addBuilding: BuildingModel[];
   public id: string;
+  public canBuild: boolean;
 
 
   constructor(
@@ -30,6 +31,7 @@ export class BuildingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.canBuild = true;
     this.buildings = [];
     this.featureService.getBuildingTypes().subscribe(res => this.buildings = res,
       (err) => {
@@ -43,14 +45,21 @@ export class BuildingsComponent implements OnInit {
   }
 
   sendData() {
-    console.log(this.selectedBuilding);
-    this.featureService.purchaseBuildings(this.selectedBuilding.buildingType).subscribe(() => {
-      this.dialogRef.close();
-      this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
-        duration: 3000
-      });
+    this.addBuilding.forEach(element => {
+      if (element.status === 1) {
+        this.canBuild = false;
+        this.snackbar.open('Egyszerre csak 1 épületet építhetsz!', 'Bezár', {
+          duration: 3000
+        });
+      }
     });
-
-
+    if (this.canBuild) {
+      this.featureService.purchaseBuildings(this.selectedBuilding.buildingType).subscribe(() => {
+        this.dialogRef.close();
+        this.snackbar.open('Sikeres vásárlás!', 'Bezár', {
+          duration: 3000
+        });
+      });
+    }
   }
 }
