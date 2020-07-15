@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL;
+using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
 using Undersea.DAL.Repositories.Interfaces;
 using Undersea.DAL.Repository.Interfaces;
@@ -58,6 +59,32 @@ namespace Undersea.BLL.Services
                 c.CoralCount += c.CoralProduction;
                 c.PearlCount -= await _armyRepository.GetPearlNecessity(c.AvailableArmyId);
                 c.CoralCount -= await _armyRepository.GetFoodNecessity(c.AvailableArmyId);
+                foreach (UpgradeAttributeJoin u in c.Upgrades.UpgradeAttributes)
+                {
+                    if(u.Status == Status.InProgress)
+                    {
+                        u.CurrentTurn += 1;
+                        if (u.CurrentTurn == 15)
+                        {
+                            u.Status = Status.Done;
+                            u.CurrentTurn = 0;
+                        }
+                    }
+
+                    foreach (BuildingAttributeJoin b in c.Buildings.BuildingAttributes)
+                    {
+                        if (b.Status == Status.InProgress)
+                        {
+                            b.CurrentTurn += 1;
+                            if (b.CurrentTurn == 15)
+                            {
+                                b.Status = Status.UnBuilt;
+                                b.CurrentTurn = 0;
+                                b.Quantity += 1;
+                            }
+                        }
+                    }
+                }
                 await _cityRepository.Update(c);
             }
             var attacks = await _attackRepository.GetAll();
