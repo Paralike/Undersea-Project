@@ -745,28 +745,23 @@
       "type": "object",
       "required": [
         "buildingType",
-        "price",
-        "population",
-        "coralProduction",
-        "hosting"
+        "resident",
+        "coral",
+        "hostCapacity"
       ],
       "properties": {
         "buildingType": {
           "$ref": "#/definitions/BuildingType"
         },
-        "price": {
+        "resident": {
           "type": "integer",
           "format": "int32"
         },
-        "population": {
+        "coral": {
           "type": "integer",
           "format": "int32"
         },
-        "coralProduction": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "hosting": {
+        "hostCapacity": {
           "type": "integer",
           "format": "int32"
         },
