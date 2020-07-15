@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200714122423_init")]
-    partial class init
+    [Migration("20200715064952_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f101ead8-c33e-4ad0-b404-bfc651c3426f"),
+                            Id = new Guid("2981af6e-94ef-4ff1-a858-631d7bfdaa61"),
                             CurrentTurn = 1
                         });
                 });
@@ -475,7 +475,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("5dc1273d-d655-41d6-93b6-be98f35d48b3"),
+                            Id = new Guid("05cf0602-37e6-44e8-8af3-ea3cb2944c29"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
