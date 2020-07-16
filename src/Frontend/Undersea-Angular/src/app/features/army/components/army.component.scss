@@ -4,6 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
     width: 15vw;
     height: 35vh;
     background-color: #03255f;
@@ -16,7 +17,7 @@
 //     flex-direction: column;
 //     align-items: flex-start;
 //     justify-content: flex-start;
-//     height: 70vh;
+//     height: 80vh;
 // }
 
 h2{
@@ -31,7 +32,7 @@ h2{
     margin: 1vw;
     margin-right: 0;
     background-color: #03255f;
-    height: 65vh;
+    height: 63vh;
     width: 45vw;
     font-size: 0.8vw;
 }
@@ -142,4 +143,25 @@ div:focus {
     background-color: #03255F !important;
     color: #9FFFF0;
     font-weight: bold;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #03255f;
+    border-radius: 2px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #3f68ae;
+    border-radius: 2px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #03255f;
   }

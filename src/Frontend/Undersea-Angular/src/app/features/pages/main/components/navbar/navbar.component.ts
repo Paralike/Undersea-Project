@@ -82,7 +82,6 @@ export class NavbarComponent implements OnInit {
   openDevelopments() {
     const dialogRef = this.dialog.open(DevelopmentsComponent, {
       width: '50vw',
-      height: '38vw',
       data: {
         developements: this.developements
       }
@@ -91,7 +90,6 @@ export class NavbarComponent implements OnInit {
   openExplorer() {
     const dialogRef = this.dialog.open(ExplorerComponent, {
       width: '50vw',
-      height: '38vw',
     });
   }
 
