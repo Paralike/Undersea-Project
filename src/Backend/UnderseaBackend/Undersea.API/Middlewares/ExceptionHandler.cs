@@ -64,7 +64,8 @@ namespace Undersea.API.Middlewares
 
             if(httpContext.Response.StatusCode == StatusCodes.Status401Unauthorized)
             {
-                Console.WriteLine("asdasd");
+                await _logger.LogError($"Unauthorized ");
+                await HandleAllException(httpContext, new UnauthorizedAccessException(), (int)HttpStatusCode.Unauthorized);
             }
 
         }
@@ -87,7 +88,7 @@ namespace Undersea.API.Middlewares
             context.Response.StatusCode = statuscode;
             return context.Response.WriteAsync(new ErrorDto()
             {
-                Message = ex.Message
+                Message = ex?.Message
             }.ToString());
         }
 
