@@ -7,8 +7,6 @@ export interface UpgradeAttributeModel {
     attackPoints: number;
     taxIncrease: number;
     name?: string;
-    currentTurn?: number;
-    status?: Status;
 }
 
 export interface UpgradeModel {

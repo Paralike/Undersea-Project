@@ -24,6 +24,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Undersea.BLL.Hubs;
 using Hangfire.Server;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Undersea.API
 {

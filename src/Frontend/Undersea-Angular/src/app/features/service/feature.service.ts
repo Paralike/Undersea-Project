@@ -59,7 +59,7 @@ export class FeatureService {
     return this.upgradeType.getUpgrades();
     // return of(DEVELOPMENTS);
   }
-  getUpgradesinfos(): Observable<UpgradeDto[]> {
+  getUpgradesinfos(): Observable<any> {
     return this.upgradeClient.getCurrentUpgradeStatuses();
   }
   startUpgrades(upgradeType: number): Observable<any> {
