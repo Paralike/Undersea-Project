@@ -9,6 +9,7 @@ import { DevelopmentsComponent } from 'src/app/features/developments/components/
 import { HeaderComponent } from '../header/header.component';
 import { UnitList } from '../../model/profile.model';
 import { UnitDto, ArmyUnitDto, UnitType, BuildingDto } from 'src/app/shared';
+import { ExplorerComponent } from '../../../../explorer/explorer.component';
 
 
 @Component({
@@ -87,6 +88,11 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-
+  openExplorer() {
+    const dialogRef = this.dialog.open(ExplorerComponent, {
+      width: '50vw',
+      height: '38vw',
+    });
+  }
 
 }
