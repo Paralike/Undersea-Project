@@ -32,13 +32,13 @@ namespace Undersea.API.Middlewares
             }
             catch (ExistingUpgradeException ex)
             {
-                await _logger.LogError($"Timeout Happened " + ex, ex);
+                await _logger.LogError($"Upgrade exception " + ex, ex);
                 await HandleAllException(httpContext, ex, 406);
             }
             catch (ExistingBuildingException ex)
             {
-                await _logger.LogError($"Timeout Happened " + ex, ex);
-                await HandleAllException(httpContext, ex, 406);
+                await _logger.LogError($"Building Exception " + ex, ex);
+                await HandleAllException(httpContext, ex, 405);
             }
             catch (TimeoutException ex)
             {
