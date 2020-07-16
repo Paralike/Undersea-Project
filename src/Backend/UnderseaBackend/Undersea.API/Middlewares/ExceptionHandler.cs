@@ -13,13 +13,13 @@ namespace Undersea.API.Middlewares
         private readonly RequestDelegate _next;
         private readonly ILogService _logger;
 
-        public ExceptionHandler(RequestDelegate next, ILogService logger)
+        public ExceptionHandler(RequestDelegate next)
         {
-            _logger = logger;
+           // _logger = logger;
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext, ILogService _logger)
         {
             try
             {
@@ -27,35 +27,42 @@ namespace Undersea.API.Middlewares
             }
             catch (UnauthorizedAccessException ex)
             {
-                //await _logger.LogError($"Unauthorized Access Happened " + ex);
+                await _logger.LogError($"Unauthorized Access Happened " + ex);
                 await HandleUnautorizedException(httpContext, ex);
             }
             catch (ExistingUpgradeException ex)
             {
+                await _logger.LogError($"Timeout Happened " + ex, ex);
                 await HandleAllException(httpContext, ex, 406);
             }
             catch (ExistingBuildingException ex)
             {
+                await _logger.LogError($"Timeout Happened " + ex, ex);
                 await HandleAllException(httpContext, ex, 406);
             }
             catch (TimeoutException ex)
             {
-                //await _logger.LogError($"Timeout Happened " + ex);
+                await _logger.LogError($"Timeout Happened " + ex, ex);
                 await HandleTimeoutException(httpContext, ex);
             }
             catch (NotEnoughMoneyException ex)
             {
-                // await _logger.LogError($"Something went wrong: {ex}");
+                await _logger.LogError($"Something went wrong: {ex}", ex);
                 await HandleNotEnoughMoneyException(httpContext, ex);
+            }
+
+            catch (HadvezerException ex)
+            {
+                await _logger.LogError($"Something went wrong: {ex}", ex);
+                await HandleHadvezerException(httpContext, ex);
             }
 
             catch (Exception ex)
             {
-                // await _logger.LogError($"Something went wrong: {ex}");
+                await _logger.LogError($"Something went wrong: {ex}", ex);
                 await HandleExceptionAsync(httpContext, ex);
             }
 
-            // TODO új exception alapján lekezelni
         }
 
         private Task HandleTimeoutException(HttpContext httpContext, TimeoutException ex)
@@ -70,7 +77,6 @@ namespace Undersea.API.Middlewares
 
         }
 
-
         private Task HandleNotEnoughMoneyException(HttpContext httpContext, NotEnoughMoneyException ex)
         {
             httpContext.Response.ContentType = "application/json";
@@ -83,9 +89,20 @@ namespace Undersea.API.Middlewares
 
         }
 
+        private Task HandleHadvezerException(HttpContext httpContext, HadvezerException ex)
+        {
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+            return httpContext.Response.WriteAsync(new ErrorDto()
+            {
+                Message = ex.Message
+            }.ToString());
+
+        }
+
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            // TODO státuszkódokat állítani
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

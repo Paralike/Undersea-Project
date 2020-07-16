@@ -1,11 +1,13 @@
 ﻿
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Actions;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
@@ -47,14 +49,27 @@ namespace Undersea.BLL.Services
         public async Task StartAttack(Guid userId, AttackDto attack)
         {
             // TODO City lekérdezést kiszervezni
-            var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
-            var firstCity = cities.First();
+            var firstCity = await _cityRepository.GetCityByUserId(userId);
+            //var firstCity = cities.First();
 
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
 
             int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
             int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
             int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
+            int hadvezer = attack.Units.Where(u => u.UnitType == UnitType.Hadvezer).Select(u => u.UnitCount).First();
+
+            var types = Enum.GetValues(typeof(UnitType)).Cast<UnitType>().ToList();
+
+            var unitDarab = attack.Units.Join(types,
+                            a => a.UnitType,
+                            u => u,
+                            (a, u) => a.UnitCount)
+                            .ToList();
+                            
+
+            if (hadvezer == 0)
+                throw new HadvezerException("Must send atleast one hadvezér");
 
             var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 
@@ -64,7 +79,7 @@ namespace Undersea.BLL.Services
                 await _armyUnitRepository.Update(au);
             }
 
-            Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka);
+            Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka, hadvezer);
             newArmy.CityId = firstCity.Id;
 
             await _armyRepository.Add(newArmy);

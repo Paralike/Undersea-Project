@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Undersea.BLL.Hubs;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL;
 using Undersea.DAL.Enums;
@@ -19,11 +20,7 @@ namespace Undersea.BLL.Services
         {
             get
             {
-                return context.Game.First().CurrentTurn;
-            }
-
-            set
-            {
+                return _context.Game.First().CurrentTurn;
             }
         }
 
@@ -32,30 +29,27 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
-
-        public AppDbContext context { get; private set; }
-
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;        
         private readonly IBuildingAttributeRepository _buildingAttributeRepository;        
         
         private readonly AppDbContext _context;
-      //  private readonly ISignalHub _signalHub;
+        private readonly ISignalHub _signalHub;
 
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
                             IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService,
                             IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository, 
-                             IBuildingAttributeRepository buildingAttributeRepository)
+                            ISignalHub signalHub, IBuildingAttributeRepository buildingAttributeRepository)
         {
-            CurrentTurn = 1;
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
             _attackRepository = attackRepository;
             _context = context;
             _armyService = armyService;
             _cityService = cityService;
+            _signalHub = signalHub;
             _upgradeJoinRepository = upgradeJoinRepository;
             _buildingJoinRepository = buildingJoinRepository;
             _upgradeAttributeRepository = upgradeAttributeRepository;
@@ -107,7 +101,7 @@ namespace Undersea.BLL.Services
                 if (b.Status == Status.InProgress)
                 {
                     b.CurrentTurn += 1;
-                    if (b.CurrentTurn >= 5)
+                    if (b.CurrentTurn == 5)
                     {
                         b.Status = Status.UnBuilt;
                         b.CurrentTurn = 0;
@@ -117,6 +111,8 @@ namespace Undersea.BLL.Services
                         city.Inhabitants += building.Resident;
                         city.CoralProduction += building.Coral;
                         //city. += building.Coral;
+
+
                     }
                 }
                 await _buildingJoinRepository.Update(b);
@@ -125,43 +121,49 @@ namespace Undersea.BLL.Services
 
             var attacks = await _attackRepository.GetAll();
 
-            foreach (Attack a in attacks)
+            if (attacks.Any())
             {
-                int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId,a.DefenderCityId);
-                int attack = await _armyService.GetArmyAttackingPower(a.ArmyId,a.AttackerCityId);
 
-                // TODO támadóerő +- 5%
-
-                if (attack > defense)
+                foreach (Attack a in attacks)
                 {
-                    a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
-                    a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
+                    int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
+                    int attack = await _armyService.GetArmyAttackingPower(a.ArmyId);
 
-                    a.DefenderCity.CoralCount /= 2;
-                    a.DefenderCity.PearlCount /= 2;
+                    double moral = new Random().NextDouble() * 0.1;
+                    double moralAttack = (0.95 + moral) * attack;
 
-                    foreach (ArmyUnit au in a.DefenderCity.AvailableArmy.Units)
+                    if (moralAttack > defense)
                     {
-                        au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
-                    }
-                }
+                        // TODO Attack-be kimenetelt eltárolni, nem törölni a régi támadásokat
 
-                else
-                {
+                        a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
+                        a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
+
+                        a.DefenderCity.CoralCount /= 2;
+                        a.DefenderCity.PearlCount /= 2;
+
+                        foreach (ArmyUnit au in a.DefenderCity.AvailableArmy.Units)
+                        {
+                            au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
+                        }
+                    }
+                    else
+                    {
+                        foreach (ArmyUnit au in a.Army.Units)
+                        {
+                            au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
+                        }
+                    }
+
                     foreach (ArmyUnit au in a.Army.Units)
                     {
-                        au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
+                        a.AttackerCity.AvailableArmy.Units.First(a => a.UnitType == au.UnitType).UnitCount += au.UnitCount;
                     }
-                }
 
-                foreach (ArmyUnit au in a.Army.Units)
-                {
-                    a.AttackerCity.AvailableArmy.Units.First(a => a.UnitType == au.UnitType).UnitCount += au.UnitCount;
+                    await _attackRepository.Remove(a);
+                    await _cityRepository.Update(a.DefenderCity);
+                    await _cityRepository.Update(a.AttackerCity);
                 }
-
-                await _cityRepository.Update(a.DefenderCity);
-                await _cityRepository.Update(a.AttackerCity);
-                await _attackRepository.Remove(a);
             }
 
             foreach (City c in cities)
@@ -173,7 +175,7 @@ namespace Undersea.BLL.Services
             _context.Game.First().CurrentTurn++;
             await _context.SaveChangesAsync();
 
-           // await _signalHub.SendMessage("Server", "Next turn");
+            await _signalHub.SendMessage("Server", "Next turn");
         }
     }
 }

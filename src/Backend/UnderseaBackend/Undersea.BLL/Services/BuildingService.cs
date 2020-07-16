@@ -59,7 +59,6 @@ namespace Undersea.BLL.Services
                     throw new ExistingBuildingException();
                 }
             }
-            firstCity.PearlCount -= 1000;
             result.Status = DAL.Enums.Status.InProgress;
             await _cityRepository.Update(firstCity);
 
