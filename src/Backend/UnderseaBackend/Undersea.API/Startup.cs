@@ -175,7 +175,7 @@ namespace Undersea.API
             {
                 using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
                 {
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
                 }
 
                 var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();

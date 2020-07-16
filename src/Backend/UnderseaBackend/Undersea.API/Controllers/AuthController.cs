@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Auth;
@@ -30,7 +31,7 @@ namespace Undersea.API.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                throw new UnauthorizedAccessException();
             }
 
             var response = _authService.GetToken(user);
@@ -41,7 +42,7 @@ namespace Undersea.API.Controllers
             }
             else
             {
-                return Unauthorized();
+                throw new UnauthorizedAccessException();
             }
 
         }

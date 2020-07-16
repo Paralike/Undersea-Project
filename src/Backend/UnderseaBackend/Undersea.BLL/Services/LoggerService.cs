@@ -21,17 +21,17 @@ namespace Undersea.BLL.Services
 
         public async Task LogWarning(string message, Exception e = null)
         {
-            await _loggerRepository.Add(new ApplicationLog(e.ToString(), message));
+            await _loggerRepository.Add(new ApplicationLog(e?.ToString(), message));
         }
 
         public async Task LogError(string message, Exception e = null)
         {
-            await _loggerRepository.Add(new ApplicationLog(e.ToString(), message));
+            await _loggerRepository.Add(new ApplicationLog(e?.ToString(), message));
         }
 
         public async Task LogFatal(string message, Exception e = null)
         {
-            await _loggerRepository.Add(new ApplicationLog(e.ToString(), message));
+            await _loggerRepository.Add(new ApplicationLog(e?.ToString(), message));
         }
     }
 }
