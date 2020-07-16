@@ -27,8 +27,8 @@ namespace Undersea.API.Middlewares
             }
             catch (UnauthorizedAccessException ex)
             {
-                await _logger.LogError($"Unauthorized Access Happened " + ex);
-                await HandleUnautorizedException(httpContext, ex);
+                await _logger.LogError($"Unauthorized Access Happened " + ex,ex);
+                await HandleAllException(httpContext, ex,401);
             }
             catch (ExistingUpgradeException ex)
             {
