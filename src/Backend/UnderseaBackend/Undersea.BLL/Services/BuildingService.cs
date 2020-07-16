@@ -63,6 +63,10 @@ namespace Undersea.BLL.Services
             {
                 firstCity.PearlCount -= 1000;
             }
+            else
+            {
+                throw new NotEnoughMoneyException();
+            }
             result.Status = DAL.Enums.Status.InProgress;
             await _cityRepository.Update(firstCity);
 
