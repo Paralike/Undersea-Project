@@ -36,7 +36,8 @@ export class SignalRService {
   }
 
   private registerSignalEvents() {
-    this.hubConnection.on('SignalMessegReceived', (data: SignalViewModel) => {
+    console.log('registered');
+    this.hubConnection.on('NextTurn', (data: SignalViewModel) => {
       this.signalReceived.emit(data);
     });
   }

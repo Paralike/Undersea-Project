@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class firstcr : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -416,7 +416,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("ad528c9c-ffb2-477b-84d8-82885cf21371"), 1 });
+                values: new object[] { new Guid("5cfac5bb-ec8b-41a9-9fdf-e4b066b168c4"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -425,7 +425,8 @@ namespace Undersea.DAL.Migrations
                 {
                     { 2, 2, 6, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Csatacsikó", 1, 50 },
                     { 1, 6, 2, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Rohamfóka", 1, 50 },
-                    { 0, 5, 5, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Lézercápa", 3, 100 }
+                    { 0, 5, 5, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Lézercápa", 3, 100 },
+                    { 3, 0, 0, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Hadvezér", 4, 200 }
                 });
 
             migrationBuilder.InsertData(
@@ -434,7 +435,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("ffcc2b21-bde5-49ad-b23f-a5f594589c28"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("2400f936-f166-4e03-831e-750446df7eb3"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
