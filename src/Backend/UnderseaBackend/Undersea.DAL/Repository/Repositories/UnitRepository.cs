@@ -8,7 +8,6 @@ namespace Undersea.DAL.Repository.Repositories
     {
         public UnitRepository(AppDbContext context) : base(context)
         {
-
         }
     }
 }

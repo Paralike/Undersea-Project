@@ -24,7 +24,7 @@ export class BuildingsComponent implements OnInit {
     public dialogRef: MatDialogRef<BuildingsComponent>,
     private snackbar: MatSnackBar
   ) {
-    console.log(data);
+    console.log('BuildingData:', data);
     this.addBuilding = data.building.map((x): BuildingModel => ({ ...x }));
     console.log(this.addBuilding);
 

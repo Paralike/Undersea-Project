@@ -11,11 +11,9 @@ namespace Undersea.API.Middlewares
     public class ExceptionHandler
     {
         private readonly RequestDelegate _next;
-        private readonly ILogService _logger;
 
         public ExceptionHandler(RequestDelegate next)
         {
-           // _logger = logger;
             _next = next;
         }
 
@@ -25,11 +23,13 @@ namespace Undersea.API.Middlewares
             {
                 await _next(httpContext);
             }
+
             catch (UnauthorizedAccessException ex)
             {
                 await _logger.LogError($"Unauthorized Access Happened " + ex,ex);
                 await HandleAllException(httpContext, ex,401);
             }
+
             catch (ExistingUpgradeException ex)
             {
                 await _logger.LogError($"Upgrade exception " + ex, ex);
@@ -60,6 +60,11 @@ namespace Undersea.API.Middlewares
             {
                 await _logger.LogError($"Something went wrong: {ex}", ex);
                 await HandleExceptionAsync(httpContext, ex);
+            }
+
+            if(httpContext.Response.StatusCode == StatusCodes.Status401Unauthorized)
+            {
+                Console.WriteLine("asdasd");
             }
 
         }

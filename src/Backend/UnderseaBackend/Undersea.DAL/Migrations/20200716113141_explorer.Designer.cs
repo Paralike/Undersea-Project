@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200716065149_change_request")]
-    partial class change_request
+    [Migration("20200716113141_explorer")]
+    partial class explorer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("30d473a0-fc57-4e07-a663-243a43d55f5a"),
+                            Id = new Guid("3ca9aca0-ba85-4eda-958c-b0eca127943f"),
                             CurrentTurn = 1
                         });
                 });
@@ -221,7 +221,7 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("ArmyId", "UnitType");
 
-                    b.ToTable("ArmyUnitJoins");
+                    b.ToTable("ArmyUnits");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Attack", b =>
@@ -466,6 +466,17 @@ namespace Undersea.DAL.Migrations
                             Name = "Hadvezér",
                             PearlNecessity = 4,
                             Price = 200
+                        },
+                        new
+                        {
+                            UnitType = 4,
+                            Damage = 0,
+                            Defense = 0,
+                            FoodNecessity = 1,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Felfedező",
+                            PearlNecessity = 1,
+                            Price = 50
                         });
                 });
 
@@ -530,7 +541,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("4b50009e-cf8b-4bec-98e8-701440ef2d16"),
+                            Id = new Guid("a8dcca94-4d82-4c8e-8e44-d09a57915c22"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },

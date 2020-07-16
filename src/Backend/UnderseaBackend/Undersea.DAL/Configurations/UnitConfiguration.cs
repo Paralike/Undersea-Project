@@ -51,10 +51,20 @@ namespace Undersea.DAL.Configurations
                     FoodNecessity = 2,
                     PearlNecessity = 4,
                     Name = "Hadvezér"
-                }
+                },
+
+                new Unit
+                {
+                    UnitType = UnitType.Felfedezo,
+                    Price = 50,
+                    PearlNecessity = 1,
+                    FoodNecessity = 1,
+                    Damage = 0,
+                    Defense = 0,
+                    Name = "Felfedező",        }
                 );
 
 
         }
-    }
+}
 }

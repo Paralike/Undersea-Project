@@ -22,10 +22,9 @@ namespace Undersea.DAL.Models
         public Guid UpgradesId { get; set; }
         public virtual Building Buildings { get; set; }
         public Guid BuildingId { get; set; }
-        //public virtual ICollection<Building> Buildings { get; set; }
         public virtual ICollection<Attack> Attacks { get; set; }
         public virtual ICollection<Attack> Defenses { get; set; }
-
+       
         public City()
         {
             Id = Guid.NewGuid();

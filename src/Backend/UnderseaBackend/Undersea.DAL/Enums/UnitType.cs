@@ -5,6 +5,7 @@
         Lezercapa,
         Rohamfoka,
         Csatacsiko,
-        Hadvezer
+        Hadvezer,
+        Felfedezo
     }
 }

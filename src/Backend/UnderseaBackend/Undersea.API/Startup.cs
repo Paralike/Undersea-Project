@@ -25,6 +25,7 @@ using Hangfire.SqlServer;
 using Undersea.BLL.Hubs;
 using Hangfire.Server;
 using Microsoft.AspNetCore.SignalR;
+using System.IO;
 
 namespace Undersea.API
 {
@@ -136,22 +137,22 @@ namespace Undersea.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseCors(
+                    options => options
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                );
             }
-
-            app.UseCors(
-                 options => options
-                     .WithOrigins("http://localhost:4200")
-                     .AllowAnyMethod()
-                     .AllowAnyHeader()
-                     .AllowCredentials()
-            );
-
             app.UseMiddleware<ExceptionHandler>();
-
             app.UseStaticFiles();
             app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
+            app.UseSpa(config => 
+                config.Options.SourcePath = @"C:\Projekt\Undersea\src\Backend\UnderseaBackend\Undersea.API\wwwroot\");
 
             app.UseRouting();
 

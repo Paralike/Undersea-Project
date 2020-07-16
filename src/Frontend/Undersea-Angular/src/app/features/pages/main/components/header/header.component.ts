@@ -3,6 +3,8 @@ import { ProfileModel } from '../../model/profile.model';
 import { FeatureService } from 'src/app/features/service/feature.service';
 import { CityDto } from 'src/app/shared';
 import { switchMap } from 'rxjs/operators';
+import { SignalRService } from 'src/app/core/services/signal-r.service';
+import { SignalViewModel } from 'src/app/core/models/signal-view-model';
 
 @Component({
   selector: 'app-header',
@@ -15,11 +17,17 @@ export class HeaderComponent implements OnInit {
   currentTurn: number;
   @Output() reload = new EventEmitter<void>();
 
-  constructor(private featureService: FeatureService) { }
+  constructor(private featureService: FeatureService, private signalRService: SignalRService) { }
 
   ngOnInit(): void {
     console.log('header city: ', this.city);
     this.featureService.getTurn().subscribe(res => this.currentTurn = res);
+    this.signalRService.signalReceived.subscribe((signal: SignalViewModel) => {
+      this.featureService.getTurn().subscribe(res => this.currentTurn = res);
+      this.reload.emit();
+      console.log('halo halo');
+
+    });
   }
 
   endTurn() {
