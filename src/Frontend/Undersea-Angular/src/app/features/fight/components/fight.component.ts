@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AttackResponseModel } from '../model/fight.model';
 import { FeatureService } from '../../service/feature.service';
 import { AttackResponseDto } from 'src/app/shared';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -18,7 +19,7 @@ export class FightComponent implements OnInit {
   dataSource: AttackResponseModel[];
 
 
-  constructor(private featureService: FeatureService) {
+  constructor(private featureService: FeatureService,  private snackbar: MatSnackBar) {
 
   }
 
@@ -27,7 +28,9 @@ export class FightComponent implements OnInit {
       this.dataSource = res.map((x): AttackResponseModel => ({...x}));
     },
       (err) => {
-        console.log(err);
+        this.snackbar.open(err.message, 'Bezár', {
+          duration: 3000
+        });
       });
   }
 
