@@ -12,6 +12,7 @@ import { FightComponent } from '../../fight/components/fight.component';
 import { ArmyComponent } from '../../army/components/army.component';
 import { RankComponent } from '../../rank/components/rank.component';
 import { DevelopmentsComponent } from '../../developments/components/developments.component';
+import { ExplorerComponent } from '../../explorer/explorer.component';
 
 
 
@@ -26,7 +27,8 @@ import { DevelopmentsComponent } from '../../developments/components/development
     FightComponent,
     ArmyComponent,
     RankComponent,
-    DevelopmentsComponent
+    DevelopmentsComponent,
+    ExplorerComponent
   ],
   // tslint:disable-next-line:max-line-length
   exports: [MainPageComponent, HeaderComponent, NavbarComponent, ProfileCardComponent, AttackComponent, FightComponent, ArmyComponent, RankComponent, DevelopmentsComponent],
