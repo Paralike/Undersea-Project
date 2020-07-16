@@ -4,7 +4,7 @@ import { FeatureService } from '../../service/feature.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpgradeAttributeDto, UpgradeDto, Status } from 'src/app/shared';
-import { elementAt, switchMap } from 'rxjs/operators';
+import { elementAt } from 'rxjs/operators';
 
 interface Development {
   type: any;
@@ -24,7 +24,7 @@ export class DevelopmentsComponent implements OnInit {
   public id: string;
   public status: UpgradeModel[];
   upgraded: boolean;
-  statusArray;
+  array;
   canPurchase: boolean;
 
   constructor(
@@ -40,44 +40,27 @@ export class DevelopmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.upgrades = [];
-    this.statusArray = [];
+    this.array = [];
     this.status = [];
     this.canPurchase = true;
-
-    this.featureService.getDevelopments().pipe(
-      switchMap((upgrades) => {
-        this.upgrades = upgrades.map((x): UpgradeAttributeModel => ({ ...x }));
-        return this.featureService.getUpgradesinfos();
-      })
-    ).subscribe(res => {
-      this.upgrades.forEach(x => {
-        res.forEach(y => {
-          if (x.upgradeType === y.upgradeType) {
-            x.status = y.status;
-            x.currentTurn = y.currentTurn;
-          }
-        });
-      });
+    this.featureService.getDevelopments().subscribe(res => {
+      this.upgrades = res.map((x): UpgradeAttributeModel => ({ ...x }));
     });
+    this.featureService.getUpgradesinfos().subscribe(res => {
 
-    // this.featureService.getDevelopments().subscribe(res => {
-    //   this.upgrades = res.map((x): UpgradeAttributeModel => ({ ...x }));
-    // });
-    // this.featureService.getUpgradesinfos().subscribe(res => {
+      res.forEach(element => this.status.push(element));
+      console.log(res);
 
-    //   res.forEach(element => this.status.push(element));
-    //   console.log(res);
-
-    //   res.forEach(element => {
-    //     const response: Development = {
-    //       type: element.upgradeType,
-    //       currentTurn: element.currentTurn,
-    //       status: element.status
-    //     };
-    //     this.statusArray.push(response);
-    //   });
-    //   console.log(this.statusArray);
-    // });
+      res.forEach(element => {
+        const response: Development = {
+          type: element.upgradeType,
+          currentTurn: element.currentTurn,
+          status: element.status
+        };
+        this.array.push(response);
+      });
+      console.log(this.array);
+    });
   }
 
   selected(upgrade: UpgradeAttributeDto) {
@@ -87,14 +70,14 @@ export class DevelopmentsComponent implements OnInit {
 
 
   sendData() {
-    console.log(this.statusArray);
-    if (this.upgrades[this.selectedDevelopment].status === 1 || this.upgrades[this.selectedDevelopment].status === 2) {
+    console.log(this.array);
+    if (this.array[this.selectedDevelopment].status === 1 || this.array[this.selectedDevelopment].status === 2) {
       this.snackbar.open('Ezt a fejlesztést már megvásároltad!', 'Bezár', {
         duration: 3000
       });
     }
     else {
-      this.upgrades.forEach(element => {
+      this.array.forEach(element => {
         if (element.status === 1) {
           this.canPurchase = false;
           this.snackbar.open('Egyszerre csak 1 fejlesztést fejleszthetsz!', 'Bezár', {

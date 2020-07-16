@@ -53,5 +53,25 @@ namespace Undersea.DAL.Models
             },
             };
         }
+
+        public Army(List<int> unitCount)
+        {
+            int i = 0;
+            Id = Guid.NewGuid();
+
+            Units = new List<ArmyUnit>();
+
+            foreach (UnitType type in Enum.GetValues(typeof(UnitType)))
+            {
+                Units.Add(new ArmyUnit()
+                {
+                    ArmyId = Id,
+                    Army = this,
+                    UnitType = type,
+                    UnitCount = unitCount[i++],
+                });
+            }
+        }
+
     }
 }
