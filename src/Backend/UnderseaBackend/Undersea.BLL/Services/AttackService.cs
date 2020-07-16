@@ -61,13 +61,6 @@ namespace Undersea.BLL.Services
                             (a, u) => a.UnitCount)
                             .ToList();                           
 
-            var unitDarab = attack.Units.Join(types,
-                            a => a.UnitType,
-                            u => u,
-                            (a, u) => a.UnitCount)
-                            .ToList();
-                            
-
             if (hadvezer == 0)
                 throw new HadvezerException("Must send atleast one hadvezér");
 
