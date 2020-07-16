@@ -20,10 +20,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.array = [];
-    this.signalRService.signalReceived.subscribe((signal: SignalViewModel) => {
-      console.log('Signal:', signal);
-      this.signalList.push(signal);
-    });
+
     this.reload();
 
 
