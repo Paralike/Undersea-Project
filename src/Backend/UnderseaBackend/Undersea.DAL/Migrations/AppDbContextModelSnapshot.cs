@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("31458f40-83f8-44ec-9b6e-81d97d479a14"),
+                            Id = new Guid("21fdd58e-a619-4e6f-934f-d38663dbb384"),
                             CurrentTurn = 1
                         });
                 });
@@ -401,6 +401,10 @@ namespace Undersea.DAL.Migrations
                     b.Property<int>("Defense")
                         .HasColumnType("int");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FoodNecessity")
                         .HasColumnType("int");
 
@@ -419,6 +423,8 @@ namespace Undersea.DAL.Migrations
                     b.HasKey("UnitType");
 
                     b.ToTable("Units");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Unit");
 
                     b.HasData(
                         new
@@ -528,7 +534,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("1f6747cd-449e-4ebd-8aa8-aff3b593ac15"),
+                            Id = new Guid("ce54572a-5444-48e8-9087-61b86ad0c345"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
@@ -662,6 +668,18 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Undersea.DAL.Models.Explorer", b =>
+                {
+                    b.HasBaseType("Undersea.DAL.Models.Unit");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("CityId");
+
+                    b.HasDiscriminator().HasValue("Explorer");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -790,6 +808,15 @@ namespace Undersea.DAL.Migrations
                     b.HasOne("Undersea.DAL.Models.Upgrade", "Upgrade")
                         .WithMany("UpgradeAttributes")
                         .HasForeignKey("UpgradeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Undersea.DAL.Models.Explorer", b =>
+                {
+                    b.HasOne("Undersea.DAL.Models.City", "City")
+                        .WithMany("Explorers")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

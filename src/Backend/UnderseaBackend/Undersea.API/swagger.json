@@ -551,13 +551,15 @@
         "Lezercapa",
         "Rohamfoka",
         "Csatacsiko",
-        "Hadvezer"
+        "Hadvezer",
+        "Felfedezo"
       ],
       "enum": [
         0,
         1,
         2,
-        3
+        3,
+        4
       ]
     },
     "ArmyUnitDto": {
