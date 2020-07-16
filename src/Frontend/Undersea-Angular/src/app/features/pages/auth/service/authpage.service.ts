@@ -23,13 +23,11 @@ export class AuthpageService {
     this.jwtHelper = new JwtHelperService();
   }
 
-
   login(name: string, pwd: string): Observable<AuthResponseDto> {
     this.logind.username = name;
     this.logind.password = pwd;
     this.newUser = false;
     return from(this.authClient.authenticateUser(this.logind));
-
   }
 
   getToken() {
