@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Actions;
+using Undersea.BLL.Exceptions;
 using Undersea.BLL.Interfaces;
 using Undersea.DAL.Enums;
 using Undersea.DAL.Models;
@@ -48,8 +49,8 @@ namespace Undersea.BLL.Services
         public async Task StartAttack(Guid userId, AttackDto attack)
         {
             // TODO City lekérdezést kiszervezni
-            var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
-            var firstCity = cities.First();
+            var firstCity = await _cityRepository.GetCityByUserId(userId);
+            //var firstCity = cities.First();
 
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
 
@@ -65,9 +66,10 @@ namespace Undersea.BLL.Services
                             u => u,
                             (a, u) => a.UnitCount)
                             .ToList();
+                            
 
             if (hadvezer == 0)
-                throw new Exception("Must send atleast one hadvezér");
+                throw new HadvezerException("Must send atleast one hadvezér");
 
             var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 

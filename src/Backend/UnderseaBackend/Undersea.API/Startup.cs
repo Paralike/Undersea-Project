@@ -58,6 +58,7 @@ namespace Undersea.API
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IBuildingService, BuildingService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<ISignalHub, SignalHub>();
 
             services.AddTransient<IUserRepository, UserRepository>();
@@ -72,7 +73,7 @@ namespace Undersea.API
             services.AddTransient<IBuildingRepository, BuildingRepository>();
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<ILoggerRepository, LoggerRepository>();
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
@@ -171,10 +172,11 @@ namespace Undersea.API
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
-                {
-                    //context.Database.Migrate();
-                }
+                //    using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
+                //    {
+                //        //context.Database.Migrate();
+                //    }
+                var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
                 RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
             }
