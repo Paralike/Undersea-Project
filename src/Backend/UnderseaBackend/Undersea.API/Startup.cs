@@ -172,10 +172,11 @@ namespace Undersea.API
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                //    using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
-                //    {
-                //        //context.Database.Migrate();
-                //    }
+                using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+
                 var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
                 RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);

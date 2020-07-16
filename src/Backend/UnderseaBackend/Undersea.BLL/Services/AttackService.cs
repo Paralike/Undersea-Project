@@ -50,23 +50,16 @@ namespace Undersea.BLL.Services
         {
             // TODO City lekérdezést kiszervezni
             var firstCity = await _cityRepository.GetCityByUserId(userId);
-            //var firstCity = cities.First();
-
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == attack.DefenderCityId)).First();
-
-            int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
-            int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
-            int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
             int hadvezer = attack.Units.Where(u => u.UnitType == UnitType.Hadvezer).Select(u => u.UnitCount).First();
 
             var types = Enum.GetValues(typeof(UnitType)).Cast<UnitType>().ToList();
 
             var unitDarab = attack.Units.Join(types,
                             a => a.UnitType,
-                            u => u,
+                            type => type,
                             (a, u) => a.UnitCount)
-                            .ToList();
-                            
+                            .ToList();                           
 
             if (hadvezer == 0)
                 throw new HadvezerException("Must send atleast one hadvezér");
@@ -79,7 +72,8 @@ namespace Undersea.BLL.Services
                 await _armyUnitRepository.Update(au);
             }
 
-            Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka);
+            //Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka, hadvezer);
+            Army newArmy = new Army(unitDarab);
             newArmy.CityId = firstCity.Id;
 
             await _armyRepository.Add(newArmy);

@@ -150,10 +150,10 @@ namespace Undersea.BLL.Services
         public async Task<ArmyDto> GetArmyById(Guid id)
         {
             var unitList = (await _armyUnitRepository.GetWhere(u => u.ArmyId == id))
-				.Select(x => new ArmyUnitDto
+				.Select(au => new ArmyUnitDto
 				{
-					UnitType = x.UnitType,
-					UnitCount = x.UnitCount
+					UnitType = au.UnitType,
+					UnitCount = au.UnitCount
 				}).ToList();
 
             return  new ArmyDto()

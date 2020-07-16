@@ -17,27 +17,10 @@ namespace Undersea.DAL.Models
         {
             Id = Guid.NewGuid();
 
-            Units = new List<ArmyUnit>() {
-            //    new ArmyUnit
-            //{
-            //    UnitType = UnitType.Csatacsiko,
-            //    UnitCount = 10,
-            //},
-
-            //    new ArmyUnit
-            //{
-            //    UnitType = UnitType.Lezercapa,
-            //    UnitCount = 10,
-            //},
-            //    new ArmyUnit
-            //{
-            //    UnitType = UnitType.Rohamfoka,
-            //    UnitCount = 10,
-            //},
-            };
+            Units = new List<ArmyUnit>();
         }
 
-        public Army(int csatacsikoCount, int lezercapaCount, int rohamfokaCount)
+        public Army(int csatacsikoCount, int lezercapaCount, int rohamfokaCount, int hadvezer)
         {
             Id = Guid.NewGuid();
 
@@ -61,7 +44,34 @@ namespace Undersea.DAL.Models
                 UnitType = UnitType.Rohamfoka,
                 UnitCount = rohamfokaCount,
             },
+
+                                new ArmyUnit
+            {
+                  ArmyId = Id,
+                UnitType = UnitType.Hadvezer,
+                UnitCount = hadvezer,
+            },
             };
         }
+
+        public Army(List<int> unitCount)
+        {
+            int i = 0;
+            Id = Guid.NewGuid();
+
+            Units = new List<ArmyUnit>();
+
+            foreach (UnitType type in Enum.GetValues(typeof(UnitType)))
+            {
+                Units.Add(new ArmyUnit()
+                {
+                    ArmyId = Id,
+                    Army = this,
+                    UnitType = type,
+                    UnitCount = unitCount[i++],
+                });
+            }
+        }
+
     }
 }
