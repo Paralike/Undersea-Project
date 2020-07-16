@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,18 @@ namespace Undersea.BLL.Services
             int csatacsiko = attack.Units.Where(u => u.UnitType == UnitType.Csatacsiko).Select(u => u.UnitCount).First();
             int rohamfoka = attack.Units.Where(u => u.UnitType == UnitType.Rohamfoka).Select(u => u.UnitCount).First();
             int lezercapa = attack.Units.Where(u => u.UnitType == UnitType.Lezercapa).Select(u => u.UnitCount).First();
+            int hadvezer = attack.Units.Where(u => u.UnitType == UnitType.Hadvezer).Select(u => u.UnitCount).First();
+
+            var types = Enum.GetValues(typeof(UnitType)).Cast<UnitType>().ToList();
+
+            var unitDarab = attack.Units.Join(types,
+                            a => a.UnitType,
+                            u => u,
+                            (a, u) => a.UnitCount)
+                            .ToList();
+
+            if (hadvezer == 0)
+                throw new Exception("Must send atleast one hadvezér");
 
             var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 

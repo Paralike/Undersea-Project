@@ -130,10 +130,12 @@ namespace Undersea.BLL.Services
                     int attack = await _armyService.GetArmyAttackingPower(a.ArmyId);
 
                     double moral = new Random().NextDouble() * 0.1;
-                    double moralAttack = (0.95 + moral) * attack; 
+                    double moralAttack = (0.95 + moral) * attack;
 
                     if (moralAttack > defense)
                     {
+                        // TODO Attack-be kimenetelt eltárolni, nem törölni a régi támadásokat
+
                         a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
                         a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
 
@@ -145,7 +147,6 @@ namespace Undersea.BLL.Services
                             au.UnitCount = Convert.ToInt32(Math.Floor(au.UnitCount * 0.9));
                         }
                     }
-
                     else
                     {
                         foreach (ArmyUnit au in a.Army.Units)

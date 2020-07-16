@@ -138,7 +138,7 @@ namespace Undersea.API
 
             app.UseCors(
                  options => options
-                     .AllowAnyOrigin()
+                     .WithOrigins("http://localhost:4200")
                      .AllowAnyMethod()
                      .AllowAnyHeader()
                      .AllowCredentials()

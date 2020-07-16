@@ -178,16 +178,19 @@ namespace Undersea.BLL.Services
                 }
               );
 
-            return result.Sum(u => u.Count * u.Damage);
+            // egy hadvezér kötelező, azon túl +1% jár mindegyikért
+            int hadvezerBonusz = 1 + ((armyUnits.Count(u => u.UnitType == UnitType.Hadvezer) - 1) / 100);
+
+            return result.Sum(u => u.Count * u.Damage) * hadvezerBonusz;
         }
 
         public async Task<int> GetArmyDefensePower(Guid armyId)
         {
             var units = await _unitRepository.GetAll();
 
-            var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == armyId);
+            var armyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == armyId);
 
-            var result = units.Join(army,
+            var result = units.Join(armyUnits,
                 unit1 => unit1.UnitType,
                 unit2 => unit2.UnitType,
                 (unit1, unit2) => new
@@ -197,7 +200,8 @@ namespace Undersea.BLL.Services
                 }
               );
 
-            return result.Sum(u => u.Count * u.Defense);
+            int hadvezerBonusz = 1 + ((armyUnits.Count(u => u.UnitType == UnitType.Hadvezer) - 1) / 100);
+            return result.Sum(u => u.Count * u.Defense) * hadvezerBonusz;
         }
 
         public async Task<ArmyDto> GetAllArmy(Guid cityId)
