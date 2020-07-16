@@ -14,7 +14,7 @@ import { AttackResponseDto } from 'src/app/shared';
 })
 export class FightComponent implements OnInit {
 
-  displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses'];
+  displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses', 'hadvezer'];
   dataSource: AttackResponseModel[];
 
 
@@ -24,6 +24,7 @@ export class FightComponent implements OnInit {
 
   ngOnInit(): void {
     this.featureService.getFights().subscribe(res => {
+      console.log(res);
       this.dataSource = res.map((x): AttackResponseModel => ({...x}));
     },
       (err) => {

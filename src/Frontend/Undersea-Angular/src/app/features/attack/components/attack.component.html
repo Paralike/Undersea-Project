@@ -47,9 +47,18 @@
                         <mat-slider #matslider3 class="slider" min="0" max="{{data.units[2].unitCount}}" step="1" value="0"></mat-slider>
                     </td>
                 </tr>
+                <tr>
+                    <td><img src='assets/images/Csatacsikó.svg'>Hadvezér: <span style="width: 10px;">{{matslider4?.value}}</span> példány
+                        <br>
+                        <mat-slider #matslider4 class="slider" min="0" max="{{data.units[3].unitCount}}" step="1" value="0"></mat-slider>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
 </div>
 <mat-divider></mat-divider>
-<button mat-button style="color: #03255F ;" (click)="sendData()">Megtámadom!</button>
+<div class="button-div">
+    <button mat-button style="color: #03255F ;" (click)="sendData()">Támadás!</button>
+</div>
+

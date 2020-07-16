@@ -32,25 +32,28 @@ namespace Undersea.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
+
+        public AppDbContext context { get; private set; }
+
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;        
         private readonly IBuildingAttributeRepository _buildingAttributeRepository;        
         
         private readonly AppDbContext _context;
-        private readonly ISignalHub _signalHub;
+      //  private readonly ISignalHub _signalHub;
 
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
                             IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService,
                             IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository, 
-                            ISignalHub signalHub, IBuildingAttributeRepository buildingAttributeRepository)
+                             IBuildingAttributeRepository buildingAttributeRepository)
         {
             CurrentTurn = 1;
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
             _attackRepository = attackRepository;
-            this.context = context;
+            _context = context;
             _armyService = armyService;
             _cityService = cityService;
             _upgradeJoinRepository = upgradeJoinRepository;
@@ -170,7 +173,7 @@ namespace Undersea.BLL.Services
             _context.Game.First().CurrentTurn++;
             await _context.SaveChangesAsync();
 
-            await _signalHub.SendMessage("Server", "Next turn");
+           // await _signalHub.SendMessage("Server", "Next turn");
         }
     }
 }

@@ -23,7 +23,7 @@ using Undersea.DAL.Repository.Interfaces;
 using Undersea.DAL.Repository.Repositories;
 using Hangfire;
 using Hangfire.SqlServer;
-using Undersea.BLL.Hubs;
+//using Undersea.BLL.Hubs;
 using Hangfire.Server;
 
 namespace Undersea.API
@@ -132,13 +132,13 @@ namespace Undersea.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(
-                 options => options
-                     .AllowAnyOrigin()
-                     .AllowAnyMethod()
-                     .AllowAnyHeader()
-                     .AllowCredentials()
-            );
+            //app.UseCors(
+            //     options => options
+            //         .AllowAnyOrigin()
+            //         .AllowAnyMethod()
+            //         .AllowAnyHeader()
+            //         .AllowCredentials()
+            //);
 
             app.UseMiddleware<ExceptionHandler>();
 

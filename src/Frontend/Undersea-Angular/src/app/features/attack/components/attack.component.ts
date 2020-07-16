@@ -34,6 +34,7 @@ export class AttackComponent implements OnInit {
   @ViewChild('matslider') slider: MatSlider;
   @ViewChild('matslider2') slider2: MatSlider;
   @ViewChild('matslider3') slider3: MatSlider;
+  @ViewChild('matslider4') slider4: MatSlider;
   ngOnInit() {
 
     this.service.getAttack().subscribe(res => {
@@ -59,6 +60,7 @@ export class AttackComponent implements OnInit {
       this.army[0].unitCount = this.slider.value;
       this.army[1].unitCount = this.slider2.value;
       this.army[2].unitCount = this.slider3.value;
+      this.army[3].unitCount = this.slider4.value;
       console.log(this.army, this.selectedUserId);
       this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {
         this.dialogRef.close();
