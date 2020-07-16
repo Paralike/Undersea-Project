@@ -23,6 +23,8 @@ using Undersea.DAL.Repository.Interfaces;
 using Undersea.DAL.Repository.Repositories;
 using Hangfire;
 using Hangfire.SqlServer;
+using Undersea.BLL.Hubs;
+using Hangfire.Server;
 
 namespace Undersea.API
 {
@@ -66,8 +68,6 @@ namespace Undersea.API
             services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
             services.AddTransient<IBuildingJoinRepository, BuildingJoinRepository>();
             services.AddTransient<IBuildingRepository, BuildingRepository>();
-
-
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<IProfileService, ProfileService>();
@@ -120,6 +120,8 @@ namespace Undersea.API
 
             services.AddSwaggerDocument();
 
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,7 +133,11 @@ namespace Undersea.API
             }
 
             app.UseCors(
-            options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+                 options => options
+                     .AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowCredentials()
             );
 
             app.UseMiddleware<ExceptionHandler>();

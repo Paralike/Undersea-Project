@@ -550,12 +550,14 @@
       "x-enumNames": [
         "Lezercapa",
         "Rohamfoka",
-        "Csatacsiko"
+        "Csatacsiko",
+        "Hadvezer"
       ],
       "enum": [
         0,
         1,
-        2
+        2,
+        3
       ]
     },
     "ArmyUnitDto": {
@@ -695,7 +697,6 @@
       "required": [
         "status",
         "price",
-        "turnCount",
         "buildingType",
         "quantity",
         "currentTurn"
@@ -705,10 +706,6 @@
           "$ref": "#/definitions/Status"
         },
         "price": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "turnCount": {
           "type": "integer",
           "format": "int32"
         },

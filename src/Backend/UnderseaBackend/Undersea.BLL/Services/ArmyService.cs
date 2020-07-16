@@ -20,6 +20,9 @@ namespace Undersea.BLL.Services
         private readonly IArmyUnitJoinRepository _armyUnitRepository;
         private readonly ICityRepository _cityRepository;
         private readonly IUnitRepository _unitRepository;
+        private readonly IUpgradeJoinRepository _upgradeJoinRepository;
+        private readonly IBuildingJoinRepository _buildingJoinRepository;
+        private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;
         private readonly IMapper _mapper;
 
         public ArmyService()
@@ -28,13 +31,16 @@ namespace Undersea.BLL.Services
         }
 
         public ArmyService(IArmyRepository armyRepository, IArmyUnitJoinRepository armyUnitRepository,
-            IMapper mapper, ICityRepository cityRepository, IUnitRepository unitRepository)
+            IMapper mapper, ICityRepository cityRepository, IUnitRepository unitRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeJoinRepository upgradeJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository)
         {
             _armyRepository = armyRepository;
             _armyUnitRepository = armyUnitRepository;
             _cityRepository = cityRepository;
             _unitRepository = unitRepository;
             _mapper = mapper;
+            _buildingJoinRepository = buildingJoinRepository;
+            _upgradeJoinRepository = upgradeJoinRepository;
+            _upgradeAttributeRepository = upgradeAttributeRepository;
         }
 
         public async Task<ArmyDto> GetArmy(Guid id)
@@ -180,7 +186,7 @@ namespace Undersea.BLL.Services
             return newDto;
         }
 
-        public async Task<int> GetArmyAttackingPower(Guid armyId)
+        public async Task<int> GetArmyAttackingPower(Guid armyId, Guid attackingCityId)
         {
             var units = await _unitRepository.GetAll();
 
@@ -195,11 +201,24 @@ namespace Undersea.BLL.Services
                     Count = armyUnit.UnitCount
                 }
               );
+            //TODO szebben átírni de szükség törvényt bont.
+            var cities = await _cityRepository.GetWhere(c => c.Id==attackingCityId);
+            var firstCity = cities.First();
+            var upgrade = firstCity.Upgrades.UpgradeAttributes;
+            int sum = 0;
+            foreach (UpgradeAttributeJoin u in upgrade)
+            {
+                if (u.Status == Status.Done)
+                {
+                    var upgrades = await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType);
+                    sum += upgrades.ElementAt(0).AttackPoints;
+                }
+            }
 
-            return result.Sum(u => u.Count * u.Damage);
+            return result.Sum(u => u.Count * u.Damage)+sum;
         }
 
-        public async Task<int> GetArmyDefensePower(Guid armyId)
+        public async Task<int> GetArmyDefensePower(Guid armyId, Guid defendingCityId)
         {
             var units = await _unitRepository.GetAll();
 
@@ -215,7 +234,21 @@ namespace Undersea.BLL.Services
                 }
               );
 
-            return result.Sum(u => u.Count * u.Defense);
+            //TODO szebben átírni
+            var cities = await _cityRepository.GetWhere(c => c.Id == defendingCityId);
+            var firstCity = cities.First();
+            var upgrade = firstCity.Upgrades.UpgradeAttributes;
+            int sum = 0;
+            foreach (UpgradeAttributeJoin u in upgrade)
+            {
+                if (u.Status == Status.Done)
+                {
+                    var upgrades = await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType);
+                    sum += upgrades.ElementAt(0).DefensePoints;
+                }
+            }
+
+            return result.Sum(u => u.Count * u.Defense)+sum;
         }
 
         public async Task<ArmyDto> GetAllArmy(Guid cityId)

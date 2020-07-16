@@ -34,12 +34,17 @@ namespace Undersea.BLL.Services
         private readonly IAttackRepository _attackRepository;
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
-        private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;
-        private readonly AppDbContext context;
+        private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;        
+        private readonly IBuildingAttributeRepository _buildingAttributeRepository;        
+        
+        private readonly AppDbContext _context;
+        private readonly ISignalHub _signalHub;
+
 
         public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
-                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService, IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository)
-
+                            IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService,
+                            IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository, 
+                            ISignalHub signalHub, IBuildingAttributeRepository buildingAttributeRepository)
         {
             CurrentTurn = 1;
             _cityRepository = cityRepository;
@@ -51,7 +56,7 @@ namespace Undersea.BLL.Services
             _upgradeJoinRepository = upgradeJoinRepository;
             _buildingJoinRepository = buildingJoinRepository;
             _upgradeAttributeRepository = upgradeAttributeRepository;
-
+            _buildingAttributeRepository = buildingAttributeRepository;
         }
 
         public GameService()
@@ -85,6 +90,7 @@ namespace Undersea.BLL.Services
                         var city = (await _cityRepository.GetWhere(c => c.UpgradesId == u.UpgradeId)).ElementAt(0);
                         var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
                         city.CoralCount += city.CoralCount/upgrade.CoralProduction*100;
+                        city.PearlCount += city.PearlCount/upgrade.CoralProduction*100;
                         //city.Defenses += city.Defenses / upgrade.DefensePoints * 100;
                         
                     }
@@ -103,7 +109,11 @@ namespace Undersea.BLL.Services
                         b.Status = Status.UnBuilt;
                         b.CurrentTurn = 0;
                         b.Quantity += 1;
-
+                        var city = (await _cityRepository.GetWhere(c => c.BuildingId == b.BuildingId)).ElementAt(0);
+                        var building = (await _buildingAttributeRepository.GetWhere(c => c.BuildingType == b.BuildingType)).ElementAt(0);
+                        city.Inhabitants += building.Resident;
+                        city.CoralProduction += building.Coral;
+                        //city. += building.Coral;
                     }
                 }
                 await _buildingJoinRepository.Update(b);
@@ -114,8 +124,8 @@ namespace Undersea.BLL.Services
 
             foreach (Attack a in attacks)
             {
-                int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
-                int attack = await _armyService.GetArmyAttackingPower(a.ArmyId);
+                int defense = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId,a.DefenderCityId);
+                int attack = await _armyService.GetArmyAttackingPower(a.ArmyId,a.AttackerCityId);
 
                 // TODO támadóerő +- 5%
 
@@ -157,10 +167,10 @@ namespace Undersea.BLL.Services
                 await _cityRepository.Update(c);
             }
 
-            //rank számítás
+            _context.Game.First().CurrentTurn++;
+            await _context.SaveChangesAsync();
 
-            context.Game.First().CurrentTurn++;
-            await context.SaveChangesAsync();
+            await _signalHub.SendMessage("Server", "Next turn");
         }
     }
 }

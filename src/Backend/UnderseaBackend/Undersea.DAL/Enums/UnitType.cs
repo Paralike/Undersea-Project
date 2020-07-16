@@ -4,6 +4,7 @@
     {
         Lezercapa,
         Rohamfoka,
-        Csatacsiko
+        Csatacsiko,
+        Hadvezer
     }
 }
