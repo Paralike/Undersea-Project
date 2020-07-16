@@ -18,7 +18,7 @@ namespace Undersea.DAL.Repositories.Repositories
         public async Task<List<ArmyUnit>> GetTypeCountAsync(Guid id)
         {
             var groupBy = await _context.
-                ArmyUnitJoins
+                ArmyUnits
                .Where(au => au.ArmyId == id)
                .ToListAsync();
 
