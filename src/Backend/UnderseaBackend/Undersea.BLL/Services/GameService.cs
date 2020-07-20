@@ -171,7 +171,7 @@ namespace Undersea.BLL.Services
             {
                 foreach (Spying s in spyings)
                 {
-                    CalculateSpying(s);
+                    await CalculateSpyingAsync(s);
 
                     await _spyRepository.Update(s);
                     await _cityRepository.Update(s.DefenderCity);
@@ -180,7 +180,7 @@ namespace Undersea.BLL.Services
             }
         }
 
-        private void CalculateSpying(Spying s)
+        private async Task CalculateSpyingAsync(Spying s)
         {
             int baseChance = 60;
             int modifiedChance = baseChance + _spyService.CalculateSpying(s);
@@ -189,10 +189,8 @@ namespace Undersea.BLL.Services
 
             if(rand < modifiedChance)
             {
-                // sikeres kémkedés
                 s.WasSpyingSuccesful = true;
-
-                //visszaadni defender city army defjét is
+                s.DefendingPower = await _armyService.GetArmyDefensePower(s.DefenderCity.AvailableArmyId);
             }
             else
             {
