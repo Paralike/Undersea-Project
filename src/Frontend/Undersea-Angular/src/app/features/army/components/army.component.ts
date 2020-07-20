@@ -38,6 +38,8 @@ export class ArmyComponent implements OnInit {
       (err) => {
         console.log(err);
       });
+
+    console.log('ARMY', this.army);
   }
 
   plusUnit(unit: number) {
@@ -62,10 +64,10 @@ export class ArmyComponent implements OnInit {
           duration: 3000
         });
       }, (err) => {
-        console.log('Error:', err);
-        // this.snackbar.open(err.message, 'Bezár', {
-        //   duration: 5000
-        // });
+        // console.log('Error:', err);
+       this.snackbar.open(err.message, 'Bezár', {
+          duration: 5000
+         });
       });
     }
 

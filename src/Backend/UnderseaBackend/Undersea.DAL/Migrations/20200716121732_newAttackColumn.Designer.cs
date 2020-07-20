@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200716102752_first-cr")]
-    partial class firstcr
+    [Migration("20200716121732_newAttackColumn")]
+    partial class newAttackColumn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5cfac5bb-ec8b-41a9-9fdf-e4b066b168c4"),
+                            Id = new Guid("bb5c5f5f-f241-4a2e-a0f1-399a1924150e"),
                             CurrentTurn = 1
                         });
                 });
@@ -221,7 +221,7 @@ namespace Undersea.DAL.Migrations
 
                     b.HasKey("ArmyId", "UnitType");
 
-                    b.ToTable("ArmyUnitJoins");
+                    b.ToTable("ArmyUnits");
                 });
 
             modelBuilder.Entity("Undersea.DAL.Models.Attack", b =>
@@ -238,6 +238,12 @@ namespace Undersea.DAL.Migrations
 
                     b.Property<Guid>("DefenderCityId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("WasAttackSuccesful")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("WasSpyingSuccesful")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -466,6 +472,17 @@ namespace Undersea.DAL.Migrations
                             Name = "Hadvezér",
                             PearlNecessity = 4,
                             Price = 200
+                        },
+                        new
+                        {
+                            UnitType = 4,
+                            Damage = 0,
+                            Defense = 0,
+                            FoodNecessity = 1,
+                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "Felfedező",
+                            PearlNecessity = 1,
+                            Price = 50
                         });
                 });
 
@@ -530,7 +547,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("2400f936-f166-4e03-831e-750446df7eb3"),
+                            Id = new Guid("eb90ec32-48a1-4d53-bc5f-2d150725342a"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },

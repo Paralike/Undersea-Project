@@ -11,5 +11,7 @@ namespace Undersea.DAL.Models
         public Guid DefenderCityId { get; set; }
         public virtual Army Army { get; set; }
         public Guid ArmyId { get; set; }
+        public bool? WasAttackSuccesful { get; set; }
+        public bool? WasSpyingSuccesful { get; set; }
     }
 }

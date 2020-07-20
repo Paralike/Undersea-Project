@@ -24,8 +24,7 @@ namespace Undersea.DAL.Models
         public Guid BuildingId { get; set; }
         public virtual ICollection<Attack> Attacks { get; set; }
         public virtual ICollection<Attack> Defenses { get; set; }
-        public virtual ICollection<Explorer> Explorers { get; set; }
-
+       
         public City()
         {
             Id = Guid.NewGuid();

@@ -72,7 +72,6 @@ namespace Undersea.BLL.Services
                 await _armyUnitRepository.Update(au);
             }
 
-            //Army newArmy = new Army(csatacsiko, lezercapa, rohamfoka, hadvezer);
             Army newArmy = new Army(unitDarab);
             newArmy.CityId = firstCity.Id;
 
@@ -89,6 +88,17 @@ namespace Undersea.BLL.Services
             };
 
             await _attackRepository.Add(newAttack);
+        }
+
+        public async Task<int> CalculateSpyingAsnyc(Attack a)
+        {
+            var attackerkArmyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == a.ArmyId);
+            var defenderArmyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == a.DefenderCity.AvailableArmyId);
+
+            int tamadoKemek = attackerkArmyUnits.Count(u => u.UnitType == UnitType.Felfedezo);
+            int vedekezoKemek = defenderArmyUnits.Count(u => u.UnitType == UnitType.Felfedezo);
+
+            return (tamadoKemek - vedekezoKemek) * 5;
         }
 
         public async Task<List<AttackResponseDto>> GetAttacks(Guid userId)

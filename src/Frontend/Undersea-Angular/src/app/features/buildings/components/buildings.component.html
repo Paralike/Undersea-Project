@@ -1,4 +1,4 @@
-<div class="flex ">
+<div class="flex" (click)="unselect()">
   <h2 >
     Épületek
   </h2>
@@ -9,7 +9,7 @@
     Egyszerre csak egy épület épülhet!
   </p>
   <div class="main-content">
-    <div *ngFor="let building of buildings; let i = index" (click)="selected(building)" class="content" tabindex="-1">
+    <div *ngFor="let building of buildings; let i = index" (click)="$event.stopPropagation(); selected(building)" class="content" tabindex="-1">
       <img src='../../../../assets/images/building_{{building.buildingType + 1}}.png'>
       <div class="building-name">
         {{building.name}}

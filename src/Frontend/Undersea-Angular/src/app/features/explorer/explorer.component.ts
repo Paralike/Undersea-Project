@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { FeatureService } from '../service/feature.service';
 
 
 @Component({
@@ -9,14 +10,18 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ExplorerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: FeatureService) { }
 
   displayedColumns: string[] = [ 'name', 'feature'];
   dataSource;
-  list: any;
+  explorerList: any;
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.list);
+    this.service.getArmy().subscribe(res => {
+      console.log(res);
+    })
+
+    this.dataSource = new MatTableDataSource(this.explorerList);
   }
 
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class firstcr : Migration
+    public partial class explorer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -137,7 +137,7 @@ namespace Undersea.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArmyUnitJoins",
+                name: "ArmyUnits",
                 columns: table => new
                 {
                     ArmyId = table.Column<Guid>(nullable: false),
@@ -147,9 +147,9 @@ namespace Undersea.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArmyUnitJoins", x => new { x.ArmyId, x.UnitType });
+                    table.PrimaryKey("PK_ArmyUnits", x => new { x.ArmyId, x.UnitType });
                     table.ForeignKey(
-                        name: "FK_ArmyUnitJoins_Armies_ArmyId",
+                        name: "FK_ArmyUnits_Armies_ArmyId",
                         column: x => x.ArmyId,
                         principalTable: "Armies",
                         principalColumn: "Id",
@@ -416,7 +416,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("5cfac5bb-ec8b-41a9-9fdf-e4b066b168c4"), 1 });
+                values: new object[] { new Guid("3ca9aca0-ba85-4eda-958c-b0eca127943f"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -426,7 +426,8 @@ namespace Undersea.DAL.Migrations
                     { 2, 2, 6, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Csatacsikó", 1, 50 },
                     { 1, 6, 2, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Rohamfóka", 1, 50 },
                     { 0, 5, 5, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Lézercápa", 3, 100 },
-                    { 3, 0, 0, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Hadvezér", 4, 200 }
+                    { 3, 0, 0, 2, new Guid("00000000-0000-0000-0000-000000000000"), "Hadvezér", 4, 200 },
+                    { 4, 0, 0, 1, new Guid("00000000-0000-0000-0000-000000000000"), "Felfedező", 1, 50 }
                 });
 
             migrationBuilder.InsertData(
@@ -435,7 +436,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("2400f936-f166-4e03-831e-750446df7eb3"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("a8dcca94-4d82-4c8e-8e44-d09a57915c22"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
@@ -527,7 +528,7 @@ namespace Undersea.DAL.Migrations
                 name: "ApplicationLog");
 
             migrationBuilder.DropTable(
-                name: "ArmyUnitJoins");
+                name: "ArmyUnits");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

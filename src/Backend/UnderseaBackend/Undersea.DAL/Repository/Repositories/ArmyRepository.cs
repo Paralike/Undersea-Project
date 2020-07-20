@@ -18,7 +18,7 @@ namespace Undersea.DAL.Repositories
             // TODO átírni lambdásra
 
             var query = from units in _context.Units
-                        join unitArmy in _context.ArmyUnitJoins on units.UnitType equals unitArmy.UnitType
+                        join unitArmy in _context.ArmyUnits on units.UnitType equals unitArmy.UnitType
                         where unitArmy.ArmyId == armyId
                         select new { unitArmy.UnitCount, units.FoodNecessity };
 
@@ -30,7 +30,7 @@ namespace Undersea.DAL.Repositories
         public async Task<int> GetPearlNecessity(Guid armyId)
         {
             var query = from units in _context.Units
-                        join armyUnit in _context.ArmyUnitJoins on units.UnitType equals armyUnit.UnitType
+                        join armyUnit in _context.ArmyUnits on units.UnitType equals armyUnit.UnitType
                         where armyUnit.ArmyId == armyId
                         select new { armyUnit.UnitCount, units.PearlNecessity };
 
@@ -42,7 +42,7 @@ namespace Undersea.DAL.Repositories
         public async Task<int> GetArmyPrice(Guid armyId)
         {
             var query = from units in _context.Units
-                        join armyUnit in _context.ArmyUnitJoins on units.UnitType equals armyUnit.UnitType
+                        join armyUnit in _context.ArmyUnits on units.UnitType equals armyUnit.UnitType
                         where armyUnit.ArmyId == armyId
                         select new { armyUnit.UnitCount, units.Price };
 
