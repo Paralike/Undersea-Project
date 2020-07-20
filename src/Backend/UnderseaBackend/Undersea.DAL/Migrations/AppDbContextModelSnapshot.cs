@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bb5c5f5f-f241-4a2e-a0f1-399a1924150e"),
+                            Id = new Guid("09e7144d-81f1-47c4-96ef-dab657fe06f3"),
                             CurrentTurn = 1
                         });
                 });
@@ -545,7 +545,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("eb90ec32-48a1-4d53-bc5f-2d150725342a"),
+                            Id = new Guid("f9a76263-8b56-4ca3-acee-736353e8b589"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },

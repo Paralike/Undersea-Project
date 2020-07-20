@@ -26,6 +26,8 @@ using Undersea.BLL.Hubs;
 using Hangfire.Server;
 using Microsoft.AspNetCore.SignalR;
 using System.IO;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.Http;
 
 namespace Undersea.API
 {
@@ -105,6 +107,10 @@ namespace Undersea.API
 
             });
 
+            services.AddSpaStaticFiles(opt => {
+                opt.RootPath = "ClientApp/dist/Undersea-Angular";
+            });
+
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -137,22 +143,23 @@ namespace Undersea.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
 
-                app.UseCors(
+            app.UseCors(
                     options => options
-                        .WithOrigins("http://localhost:4200")
+                        .WithOrigins("http://localhost:5000")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
                 );
-            }
+
             app.UseMiddleware<ExceptionHandler>();
             app.UseStaticFiles();
             app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
-            app.UseSpa(config => 
-                config.Options.SourcePath = @"C:\Projekt\Undersea\src\Backend\UnderseaBackend\Undersea.API\wwwroot\");
+            //app.UseSpa(config => 
+            //    config.Options.SourcePath = @"");
 
             app.UseRouting();
 
@@ -165,6 +172,16 @@ namespace Undersea.API
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<SignalHub>("/signalHub");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp/dist/Undersea-Angular";
+                spa.Options.DefaultPage = new PathString("/index.html");
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
 

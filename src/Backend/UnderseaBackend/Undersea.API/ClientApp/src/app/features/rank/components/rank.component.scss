@@ -1,0 +1,64 @@
+::ng-deep .mat-dialog-container {
+  background-color: #03255f !important;
+  color: white;
+  overflow-x: hidden;
+  border-radius: 16px;
+}
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.infos {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 400px;
+}
+.mat-table {
+  width: 100%;
+  text-align: left;
+  font-family: open-sans-regular;
+  background-color: #03255f !important;
+  font-size: 1vw;
+}
+h1 {
+  text-align: left;
+  font-family: baloo;
+  font-size: 32px;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+.search {
+  width: 100%;
+  height: 40px;
+  font-family: baloo;
+  border-radius: 15px;
+  color: #1c3e76;
+  font-size: 16px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 0.39;
+  margin-right: 20%;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #03255f;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3f68ae;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #03255f;
+}

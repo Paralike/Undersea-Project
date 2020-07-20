@@ -1,0 +1,28 @@
+::ng-deep .mat-dialog-container {
+  background-color: #03255f !important;
+  color: white;
+  border-radius: 16px;
+}
+
+.fightsList {
+  list-style-type: none;
+}
+
+.fightTable {
+  width: 45vw;
+  background-color: #03255f !important;
+  color: white;
+  margin-bottom: 3vh;
+  font-family: open-sans-regular;
+  font-size: 16px;
+}
+
+.fightTitle {
+  text-align: left;
+  font-family: baloo;
+  font-size: 32px;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  margin: 0;
+}
