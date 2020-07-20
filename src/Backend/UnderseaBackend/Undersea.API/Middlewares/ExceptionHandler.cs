@@ -48,7 +48,8 @@ namespace Undersea.API.Middlewares
             catch (NotEnoughMoneyException ex)
             {
                 await _logger.LogError($"Something went wrong: {ex}", ex);
-                await HandleAllException(httpContext, ex,406);
+                await HandleAllException(httpContext, ex,400);
+                
             }
             catch (HadvezerException ex)
             {
