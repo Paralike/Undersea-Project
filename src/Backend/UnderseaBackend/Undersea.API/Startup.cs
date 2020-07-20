@@ -109,10 +109,6 @@ namespace Undersea.API
 
             });
 
-            services.AddSpaStaticFiles(opt => {
-                opt.RootPath = "ClientApp/dist/Undersea-Angular";
-            });
-
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -149,26 +145,17 @@ namespace Undersea.API
 
             app.UseCors(
                     options => options
-                        .WithOrigins("http://localhost:4200")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                );
-            app.UseCors(
-                    options => options
-                        .WithOrigins("http://localhost:5000")
+                        .WithOrigins("http://localhost:4200", "http://localhost:5000")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
                 );
 
-            app.UseMiddleware<ExceptionHandler>();
+            //app.UseMiddleware<ExceptionHandler>();
             app.UseStaticFiles();
             app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
-            //app.UseSpa(config => 
-            //    config.Options.SourcePath = @"");
 
             app.UseRouting();
 
@@ -181,13 +168,6 @@ namespace Undersea.API
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<SignalHub>("/signalHub");
-            });
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp/dist/Undersea-Angular";
-                spa.Options.DefaultPage = new PathString("/index.html");
-             
             });
         }
 
