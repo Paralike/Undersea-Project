@@ -35,7 +35,7 @@ export class BuildingsComponent implements OnInit {
     this.buildings = [];
     this.featureService.getBuildingTypes().subscribe(res => this.buildings = res,
       (err) => {
-        this.snackbar.open(err.message, 'Bezár', {
+        this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
           duration: 5000
         });
       });

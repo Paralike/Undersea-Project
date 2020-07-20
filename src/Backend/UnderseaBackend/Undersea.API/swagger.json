@@ -428,30 +428,6 @@
         }
       }
     },
-    "/api/Spies": {
-      "post": {
-        "tags": [
-          "Spies"
-        ],
-        "operationId": "Spies_AddSpying",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Spies"
-        ],
-        "operationId": "Spies_GetSpyingHistory",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/api/Upgrades": {
       "get": {
         "tags": [
@@ -645,6 +621,9 @@
         },
         "unitList": {
           "$ref": "#/definitions/ArmyDto"
+        },
+        "wasSuccessful": {
+          "type": "boolean"
         }
       }
     },

@@ -64,8 +64,7 @@ export class ArmyComponent implements OnInit {
           duration: 3000
         });
       }, (err) => {
-        // console.log('Error:', err);
-       this.snackbar.open(err.message, 'Bezár', {
+       this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
           duration: 5000
          });
       });

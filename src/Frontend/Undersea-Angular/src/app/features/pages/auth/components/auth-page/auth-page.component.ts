@@ -51,7 +51,8 @@ export class AuthPageComponent implements OnInit {
         }
       },
         (err) => {
-          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'Bezár' , {
+          console.log(JSON.stringify(err));
+          this.snackbar.open(err.message, 'Bezár' , {
             duration: 3000
           });
         });
@@ -76,10 +77,9 @@ export class AuthPageComponent implements OnInit {
           }
           // tslint:disable-next-line:no-unused-expression
         }, (err) => {
-          this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'Bezár', {
+          this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
             duration: 3000
           });
-          console.error('HURKAAAAA', err);
         });
       }
 

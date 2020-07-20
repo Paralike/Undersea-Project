@@ -29,11 +29,12 @@ h2{
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: center;
+    overflow: scroll;
     margin: 1vw;
     margin-right: 0;
     background-color: #03255f;
-    height: 63vh;
-    width: 45vw;
+    height: 40vh;
+    width: 46vw;
     font-size: 0.8vw;
 }
 
