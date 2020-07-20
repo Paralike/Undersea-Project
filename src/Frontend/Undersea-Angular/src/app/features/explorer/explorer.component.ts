@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FeatureService } from '../service/feature.service';
-
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-explorer',
@@ -11,17 +11,24 @@ import { FeatureService } from '../service/feature.service';
 export class ExplorerComponent implements OnInit {
 
   constructor(private service: FeatureService) { }
-
-  displayedColumns: string[] = [ 'name', 'feature'];
-  dataSource;
+  encapsulation: ViewEncapsulation.None;
+  displayedColumns: string[] = [ 'name', 'selected'];
+  dataSource: any;
   explorerList: any;
+  selected: boolean;
+  selectedUserId: string;
 
   ngOnInit(): void {
-    this.service.getArmy().subscribe(res => {
+    this.service.getAttack().subscribe(res => {
       console.log(res);
+      this.dataSource = res;
     })
 
-    this.dataSource = new MatTableDataSource(this.explorerList);
   }
-
+  onSelect(row) {
+    console.log('ROW', row);
+    this.selected = true;
+    this.selectedUserId = row.id;
+    console.log(row.id);
+  }
 }

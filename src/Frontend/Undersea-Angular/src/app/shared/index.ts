@@ -1282,6 +1282,7 @@ export interface IAttackableUsersDto {
 export class AttackResponseDto implements IAttackResponseDto {
     cityName?: string | undefined;
     unitList?: ArmyDto | undefined;
+    wasSuccessful?: boolean | undefined;
 
     constructor(data?: IAttackResponseDto) {
         if (data) {
@@ -1296,6 +1297,7 @@ export class AttackResponseDto implements IAttackResponseDto {
         if (_data) {
             this.cityName = _data["cityName"];
             this.unitList = _data["unitList"] ? ArmyDto.fromJS(_data["unitList"]) : <any>undefined;
+            this.wasSuccessful = _data["wasSuccessful"];
         }
     }
 
@@ -1310,6 +1312,7 @@ export class AttackResponseDto implements IAttackResponseDto {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
         data["unitList"] = this.unitList ? this.unitList.toJSON() : <any>undefined;
+        data["wasSuccessful"] = this.wasSuccessful;
         return data; 
     }
 }
@@ -1317,6 +1320,7 @@ export class AttackResponseDto implements IAttackResponseDto {
 export interface IAttackResponseDto {
     cityName?: string | undefined;
     unitList?: ArmyDto | undefined;
+    wasSuccessful?: boolean | undefined;
 }
 
 export class ArmyDto implements IArmyDto {
