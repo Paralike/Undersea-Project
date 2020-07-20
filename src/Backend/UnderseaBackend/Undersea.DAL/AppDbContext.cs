@@ -27,6 +27,7 @@ namespace Undersea.DAL
         public DbSet<UpgradeAttributeJoin> CityUpgradesJoin { get; set; }        
         public DbSet<ApplicationLog> ApplicationLog { get; set; }
         public DbSet<Game> Game { get; set; }
+        public DbSet<Spying> Spyings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +47,7 @@ namespace Undersea.DAL
             modelBuilder.ApplyConfiguration(new BuildingAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new BuildingAttributeJoinConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());            
+            modelBuilder.ApplyConfiguration(new SpyingConfiguration());            
         }
     }
 }

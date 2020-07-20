@@ -52,7 +52,7 @@ namespace Undersea.API
             services.AddHttpContextAccessor();
 
             services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IAttackService, AttackService>();
+            services.AddTransient<ISpyService, SpyService>();
             services.AddTransient<IArmyService, ArmyService>();
             services.AddTransient<IUpgradeService, UpgradeService>();
             services.AddTransient<ICityService, CityService>();
@@ -76,16 +76,17 @@ namespace Undersea.API
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<ILoggerRepository, LoggerRepository>();
+            services.AddTransient<ISpyRepository, SpyRepository>();
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddAuthentication(x =>
+            services.AddAuthentication(o =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
@@ -105,6 +106,7 @@ namespace Undersea.API
 
             });
 
+
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -122,6 +124,9 @@ namespace Undersea.API
             services.AddHangfireServer();
 
             services.AddCors();
+
+            services.AddSpaStaticFiles(o =>
+                o.RootPath = "wwwroot");
 
             services.AddControllers();
 
@@ -146,16 +151,16 @@ namespace Undersea.API
                         .AllowCredentials()
                 );
             }
+
             app.UseMiddleware<ExceptionHandler>();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
+
             app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
-            app.UseSpa(config => 
-                config.Options.SourcePath = @"C:\Projekt\Undersea\src\Backend\UnderseaBackend\Undersea.API\wwwroot\");
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -166,6 +171,7 @@ namespace Undersea.API
                 endpoints.MapControllers();
                 endpoints.MapHub<SignalHub>("/signalHub");
             });
+
         }
 
         private static void InitDatabase(IApplicationBuilder app)
@@ -181,7 +187,7 @@ namespace Undersea.API
 
                 var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Minutely);
             }
         }
     }

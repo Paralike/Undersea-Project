@@ -26,10 +26,12 @@ namespace Undersea.BLL.Services
 
         private readonly IArmyService _armyService;
         private readonly ICityService _cityService;
+        private readonly IAttackService _attackService;
         private readonly ICityRepository _cityRepository;
         private readonly IArmyRepository _armyRepository;
         private readonly IAttackRepository _attackRepository;
-        private readonly IAttackService _attackService;
+        private readonly ISpyRepository _spyRepository;
+        private readonly ISpyService _spyService;
         private readonly IUpgradeJoinRepository _upgradeJoinRepository;
         private readonly IBuildingJoinRepository _buildingJoinRepository;
         private readonly IUpgradeAttributeRepository _upgradeAttributeRepository;        
@@ -39,10 +41,10 @@ namespace Undersea.BLL.Services
         private readonly ISignalHub _signalHub;
 
 
-        public GameService(IUserRepository userRepository, ICityRepository cityRepository, IArmyRepository armyRepository,
+        public GameService(ICityRepository cityRepository, IArmyRepository armyRepository,
                             IAttackRepository attackRepository, AppDbContext context, IArmyService armyService, ICityService cityService,
                             IUpgradeJoinRepository upgradeJoinRepository, IBuildingJoinRepository buildingJoinRepository, IUpgradeAttributeRepository upgradeAttributeRepository,
-                            ISignalHub signalHub, IBuildingAttributeRepository buildingAttributeRepository, IAttackService attackService)
+                            ISignalHub signalHub, IBuildingAttributeRepository buildingAttributeRepository, IAttackService attackService, ISpyRepository spyRepository, ISpyService spyService)
         {
             _cityRepository = cityRepository;
             _armyRepository = armyRepository;
@@ -56,6 +58,8 @@ namespace Undersea.BLL.Services
             _upgradeAttributeRepository = upgradeAttributeRepository;
             _buildingAttributeRepository = buildingAttributeRepository;
             _attackService = attackService;
+            _spyRepository = spyRepository;
+            _spyService = spyService;
         }
 
         public GameService()
@@ -69,6 +73,7 @@ namespace Undersea.BLL.Services
             await ApplyUpgradeEffectAsync();
             await ApplyBuildingEffectsAsync();
             await SimulateAttacksAsync();
+            await SimulateSpyingsAsync();
             await CalculatePointsForAllCityAsync();
             await IncreaseTurnCount();
 
@@ -150,7 +155,6 @@ namespace Undersea.BLL.Services
                 foreach (Attack a in attacks)
                 {
                     await CalculateSingleAttackAsync(a);
-                    await CalculateSpyingAsync(a);
 
                     await _attackRepository.Update(a);
                     await _cityRepository.Update(a.DefenderCity);
@@ -159,22 +163,38 @@ namespace Undersea.BLL.Services
             }
         }
 
-        private async Task CalculateSpyingAsync(Attack a)
+        private async Task SimulateSpyingsAsync()
+        {
+            var spyings = await _spyRepository.GetAll();
+
+            if (spyings.Any())
+            {
+                foreach (Spying s in spyings)
+                {
+                    await CalculateSpyingAsync(s);
+
+                    await _spyRepository.Update(s);
+                    await _cityRepository.Update(s.DefenderCity);
+                    await _cityRepository.Update(s.AttackerCity);
+                }
+            }
+        }
+
+        private async Task CalculateSpyingAsync(Spying s)
         {
             int baseChance = 60;
-            int modifiedChance = baseChance + await _attackService.CalculateSpyingAsnyc(a);
+            int modifiedChance = baseChance + _spyService.CalculateSpying(s);
 
             int rand = new Random().Next(100);
 
             if(rand < modifiedChance)
             {
                 // sikeres kémkedés
-                a.WasSpyingSuccesful = true;
-                var valami = await _armyService.GetArmyDefensePower(a.DefenderCity.AvailableArmyId);
+                s.WasSpyingSuccesful = true;
             }
             else
             {
-                a.AttackerCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount = 0;
+                s.AttackerCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount = 0;
             }
         }
 

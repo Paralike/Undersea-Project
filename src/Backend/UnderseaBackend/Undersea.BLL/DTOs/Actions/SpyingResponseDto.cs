@@ -1,9 +1,9 @@
 ﻿namespace Undersea.BLL.DTOs.Actions
 {
-    public class AttackResponseDto
+    public class SpyingResponseDto
     {
         public string CityName { get; set; }
-        public ArmyDto UnitList { get; set; }
+        public int SpyCount { get; set; }
         public bool? WasSuccessful { get; set; }
     }
 }
