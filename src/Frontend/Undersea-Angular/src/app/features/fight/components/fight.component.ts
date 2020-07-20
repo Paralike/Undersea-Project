@@ -14,7 +14,7 @@ import { AttackResponseDto } from 'src/app/shared';
 })
 export class FightComponent implements OnInit {
 
-  displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses'];
+  displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses', 'general'];
   dataSource: AttackResponseModel[];
 
 
