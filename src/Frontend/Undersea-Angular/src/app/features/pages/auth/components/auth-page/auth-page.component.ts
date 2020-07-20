@@ -77,7 +77,7 @@ export class AuthPageComponent implements OnInit {
           }
           // tslint:disable-next-line:no-unused-expression
         }, (err) => {
-          this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
+          this.snackbar.open('Hello hello', 'Bezár', {
             duration: 3000
           });
         });
