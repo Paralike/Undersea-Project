@@ -147,6 +147,13 @@ namespace Undersea.API
 
             app.UseCors(
                     options => options
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                );
+            app.UseCors(
+                    options => options
                         .WithOrigins("http://localhost:5000")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
@@ -178,10 +185,7 @@ namespace Undersea.API
             {
                 spa.Options.SourcePath = "ClientApp/dist/Undersea-Angular";
                 spa.Options.DefaultPage = new PathString("/index.html");
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+             
             });
         }
 
@@ -198,7 +202,7 @@ namespace Undersea.API
 
                 var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Hourly);
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "5 * * * *");
             }
         }
     }
