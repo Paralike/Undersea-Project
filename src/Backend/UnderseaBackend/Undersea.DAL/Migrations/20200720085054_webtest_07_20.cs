@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class hurka : Migration
+    public partial class webtest_07_20 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -418,7 +418,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("09e7144d-81f1-47c4-96ef-dab657fe06f3"), 1 });
+                values: new object[] { new Guid("a98f4724-4b41-4185-aa6b-867a4569b273"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -438,7 +438,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("f9a76263-8b56-4ca3-acee-736353e8b589"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("dfe8ed14-b885-4a8e-841d-627db5f5cf9d"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
