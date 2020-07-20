@@ -13,6 +13,7 @@ namespace Undersea.DAL.Models
         public Guid DefenderCityId { get; set; }
         public int SpyCount { get; set; }
         public bool? WasSpyingSuccesful { get; set; }
+        public int? DefendingPower { get; set; }
 
         public Spying()
         {

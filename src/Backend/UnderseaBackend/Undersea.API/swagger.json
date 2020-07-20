@@ -428,6 +428,62 @@
         }
       }
     },
+    "/api/Spy": {
+      "post": {
+        "tags": [
+          "Spy"
+        ],
+        "operationId": "Spy_StartSpying",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "spying",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpyingDto"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Spy"
+        ],
+        "operationId": "Spy_GetAllAttacks",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpyingResponseDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Upgrades": {
       "get": {
         "tags": [
@@ -910,6 +966,45 @@
           "type": "string"
         },
         "rank": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "SpyingDto": {
+      "type": "object",
+      "required": [
+        "defenderCityId",
+        "spyCount"
+      ],
+      "properties": {
+        "defenderCityId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "spyCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "SpyingResponseDto": {
+      "type": "object",
+      "required": [
+        "spyCount"
+      ],
+      "properties": {
+        "cityName": {
+          "type": "string"
+        },
+        "spyCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "wasSuccessful": {
+          "type": "boolean"
+        },
+        "defendingPower": {
           "type": "integer",
           "format": "int32"
         }
