@@ -24,6 +24,7 @@ import {
 import { BuildingModel } from '../buildings/model/building.model';
 import { ArmyModel, ArmyUnitModel } from '../army/model/army.model';
 import { PROFILE, ProfileModel } from '../pages/main/model/profile.model';
+import { threadId } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'
@@ -125,5 +126,7 @@ export class FeatureService {
 
     return this.buildingsClient.purchaseBuilding(buildingType);
   }
+
+
 
 }

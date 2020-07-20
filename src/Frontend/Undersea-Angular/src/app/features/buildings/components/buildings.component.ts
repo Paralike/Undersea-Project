@@ -35,13 +35,18 @@ export class BuildingsComponent implements OnInit {
     this.buildings = [];
     this.featureService.getBuildingTypes().subscribe(res => this.buildings = res,
       (err) => {
-        console.log(err);
+        this.snackbar.open(err.message, 'Bezár', {
+          duration: 5000
+        });
       });
   }
 
   selected(building: BuildingDto) {
     this.selectedBuilding = building;
+  }
 
+  unselect() {
+    this.selectedBuilding = null;
   }
 
   sendData() {
