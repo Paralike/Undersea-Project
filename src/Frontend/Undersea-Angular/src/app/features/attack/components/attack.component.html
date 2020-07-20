@@ -6,8 +6,8 @@
             <span>1. Jelöld ki, kit szeretnél megtámadni!</span>
             <table mat-table [dataSource]="userList" class="left-table">
                 <ng-container matColumnDef="target">
-                    <th mat-header-cell *matHeaderCellDef><input class="search" type="text"
-                            placeholder="Felhasználónév"></th>
+                    <th mat-header-cell *matHeaderCellDef><input class="search" type="search" 
+                        [(ngModel)]='searchValue' name='searchBar' [value]='searchValue'  placeholder="Felhasználónév" ><button (click)="search(searchValue)">Keres</button></th>
                     <td mat-cell *matCellDef="let element" style="width: 8vw;"> {{element.username}} </td>
                 </ng-container>
                 <ng-container matColumnDef="choice">
