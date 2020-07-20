@@ -29,7 +29,7 @@ namespace Undersea.BLL.Services
 
         public async Task<List<SpyingResponseDto>> GetSpyings()
         {
-            var spyings = (await _spyRepository.GetWhere(a => a.AttackerCity.UserId == _userService.GetCurrentUserId())).ToList();
+            var spyings = (await _spyRepository.GetWhere(s => s.AttackerCity.UserId == _userService.GetCurrentUserId())).ToList();
 
             List<SpyingResponseDto> spyingList = new List<SpyingResponseDto>();
 
@@ -59,7 +59,9 @@ namespace Undersea.BLL.Services
             Spying spying = new Spying()
             {
               AttackerCityId =  firstCity.Id,
+              AttackerCity = firstCity,
               DefenderCityId = s.DefenderCityId,
+              DefenderCity = defenderCity,
               SpyCount = s.SpyCount              
             };
 
@@ -68,8 +70,8 @@ namespace Undersea.BLL.Services
 
         public int CalculateSpying(Spying s)
         { 
-            int tamadoKemek = s.SpyCount; 
-            int vedekezoKemek = s.DefenderCity.AvailableArmy.Units.Count(u => u.UnitType == UnitType.Felfedezo);
+            int tamadoKemek = s.SpyCount;
+            int vedekezoKemek = s.DefenderCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount;
 
             return (tamadoKemek - vedekezoKemek) * 5;
         }

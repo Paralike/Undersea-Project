@@ -148,7 +148,7 @@ namespace Undersea.BLL.Services
 
         private async Task SimulateAttacksAsync()
         {
-            var attacks = await _attackRepository.GetAll();
+            var attacks = await _attackRepository.GetWhere(a => a.WasAttackSuccesful == null);
 
             if (attacks.Any())
             {
@@ -165,13 +165,13 @@ namespace Undersea.BLL.Services
 
         private async Task SimulateSpyingsAsync()
         {
-            var spyings = await _spyRepository.GetAll();
+            var spyings = await _spyRepository.GetWhere(s => s.WasSpyingSuccesful == null);
 
             if (spyings.Any())
             {
                 foreach (Spying s in spyings)
                 {
-                    await CalculateSpyingAsync(s);
+                    CalculateSpying(s);
 
                     await _spyRepository.Update(s);
                     await _cityRepository.Update(s.DefenderCity);
@@ -180,7 +180,7 @@ namespace Undersea.BLL.Services
             }
         }
 
-        private async Task CalculateSpyingAsync(Spying s)
+        private void CalculateSpying(Spying s)
         {
             int baseChance = 60;
             int modifiedChance = baseChance + _spyService.CalculateSpying(s);
@@ -191,6 +191,8 @@ namespace Undersea.BLL.Services
             {
                 // sikeres kémkedés
                 s.WasSpyingSuccesful = true;
+
+                //visszaadni defender city army defjét is
             }
             else
             {
@@ -208,8 +210,6 @@ namespace Undersea.BLL.Services
 
             if (moralAttack > defense)
             {
-                // TODO Attack-be kimenetelt eltárolni, nem törölni a régi támadásokat
-
                 a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
                 a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
 
