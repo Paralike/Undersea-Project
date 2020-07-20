@@ -148,7 +148,7 @@ namespace Undersea.BLL.Services
 
         private async Task SimulateAttacksAsync()
         {
-            var attacks = await _attackRepository.GetAll();
+            var attacks = await _attackRepository.GetWhere(a => a.WasAttackSuccesful == null);
 
             if (attacks.Any())
             {
@@ -210,8 +210,6 @@ namespace Undersea.BLL.Services
 
             if (moralAttack > defense)
             {
-                // TODO Attack-be kimenetelt eltárolni, nem törölni a régi támadásokat
-
                 a.AttackerCity.PearlCount += a.DefenderCity.PearlCount / 2;
                 a.AttackerCity.CoralCount += a.DefenderCity.CoralCount / 2;
 
