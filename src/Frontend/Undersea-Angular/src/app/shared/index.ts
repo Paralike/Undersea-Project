@@ -189,8 +189,10 @@ export class AttackClient {
         return _observableOf<FileResponse | null>(<any>null);
     }
 
-    getAttackableUsers(): Observable<AttackableUsersDto[]> {
-        let url_ = this.baseUrl + "/api/Attack";
+    getAttackableUsers(name: string | null | undefined): Observable<AttackableUsersDto[]> {
+        let url_ = this.baseUrl + "/api/Attack?";
+        if (name !== undefined && name !== null)
+            url_ += "name=" + encodeURIComponent("" + name) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -912,106 +914,6 @@ export class ProfileClient {
 }
 
 @Injectable()
-export class SpiesClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    addSpying(): Observable<void> {
-        let url_ = this.baseUrl + "/api/Spies";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAddSpying(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAddSpying(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processAddSpying(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    getSpyingHistory(): Observable<void> {
-        let url_ = this.baseUrl + "/api/Spies";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSpyingHistory(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSpyingHistory(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetSpyingHistory(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-}
-
-@Injectable()
 export class UpgradesClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -1382,6 +1284,7 @@ export interface IAttackableUsersDto {
 export class AttackResponseDto implements IAttackResponseDto {
     cityName?: string | undefined;
     unitList?: ArmyDto | undefined;
+    wasSuccessful?: boolean | undefined;
 
     constructor(data?: IAttackResponseDto) {
         if (data) {
@@ -1396,6 +1299,7 @@ export class AttackResponseDto implements IAttackResponseDto {
         if (_data) {
             this.cityName = _data["cityName"];
             this.unitList = _data["unitList"] ? ArmyDto.fromJS(_data["unitList"]) : <any>undefined;
+            this.wasSuccessful = _data["wasSuccessful"];
         }
     }
 
@@ -1410,6 +1314,7 @@ export class AttackResponseDto implements IAttackResponseDto {
         data = typeof data === 'object' ? data : {};
         data["cityName"] = this.cityName;
         data["unitList"] = this.unitList ? this.unitList.toJSON() : <any>undefined;
+        data["wasSuccessful"] = this.wasSuccessful;
         return data; 
     }
 }
@@ -1417,6 +1322,7 @@ export class AttackResponseDto implements IAttackResponseDto {
 export interface IAttackResponseDto {
     cityName?: string | undefined;
     unitList?: ArmyDto | undefined;
+    wasSuccessful?: boolean | undefined;
 }
 
 export class ArmyDto implements IArmyDto {

@@ -10,8 +10,8 @@ using Undersea.DAL;
 namespace Undersea.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200720085054_webtest_07_20")]
-    partial class webtest_07_20
+    [Migration("20200720123745_undersea")]
+    partial class undersea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a98f4724-4b41-4185-aa6b-867a4569b273"),
+                            Id = new Guid("6cadd4d8-79f2-4d67-a106-3683ec561722"),
                             CurrentTurn = 1
                         });
                 });
@@ -240,9 +240,6 @@ namespace Undersea.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("WasAttackSuccesful")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("WasSpyingSuccesful")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -398,6 +395,33 @@ namespace Undersea.DAL.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("Undersea.DAL.Models.Spying", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AttackerCityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DefenderCityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SpyCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("WasSpyingSuccesful")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttackerCityId");
+
+                    b.HasIndex("DefenderCityId");
+
+                    b.ToTable("Spyings");
+                });
+
             modelBuilder.Entity("Undersea.DAL.Models.Unit", b =>
                 {
                     b.Property<int>("UnitType")
@@ -547,7 +571,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("dfe8ed14-b885-4a8e-841d-627db5f5cf9d"),
+                            Id = new Guid("fa55bfd5-6bef-480f-9eda-1f48a50a913e"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
@@ -792,6 +816,21 @@ namespace Undersea.DAL.Migrations
                         .WithMany("Cities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Undersea.DAL.Models.Spying", b =>
+                {
+                    b.HasOne("Undersea.DAL.Models.City", "AttackerCity")
+                        .WithMany("SpyingsFor")
+                        .HasForeignKey("AttackerCityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Undersea.DAL.Models.City", "DefenderCity")
+                        .WithMany("SpyingsAgainst")
+                        .HasForeignKey("DefenderCityId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

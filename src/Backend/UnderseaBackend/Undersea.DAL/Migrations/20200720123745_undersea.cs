@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class webtest_07_20 : Migration
+    public partial class undersea : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -304,8 +304,7 @@ namespace Undersea.DAL.Migrations
                     AttackerCityId = table.Column<Guid>(nullable: false),
                     DefenderCityId = table.Column<Guid>(nullable: false),
                     ArmyId = table.Column<Guid>(nullable: false),
-                    WasAttackSuccesful = table.Column<bool>(nullable: true),
-                    WasSpyingSuccesful = table.Column<bool>(nullable: true)
+                    WasAttackSuccesful = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -343,6 +342,31 @@ namespace Undersea.DAL.Migrations
                         principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Spyings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AttackerCityId = table.Column<Guid>(nullable: false),
+                    DefenderCityId = table.Column<Guid>(nullable: false),
+                    SpyCount = table.Column<int>(nullable: false),
+                    WasSpyingSuccesful = table.Column<bool>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Spyings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Spyings_Cities_AttackerCityId",
+                        column: x => x.AttackerCityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Spyings_Cities_DefenderCityId",
+                        column: x => x.DefenderCityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -418,7 +442,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("a98f4724-4b41-4185-aa6b-867a4569b273"), 1 });
+                values: new object[] { new Guid("6cadd4d8-79f2-4d67-a106-3683ec561722"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -438,7 +462,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("dfe8ed14-b885-4a8e-841d-627db5f5cf9d"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("fa55bfd5-6bef-480f-9eda-1f48a50a913e"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },
@@ -518,6 +542,16 @@ namespace Undersea.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Spyings_AttackerCityId",
+                table: "Spyings",
+                column: "AttackerCityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Spyings_DefenderCityId",
+                table: "Spyings",
+                column: "DefenderCityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Upgrades_CityId",
                 table: "Upgrades",
                 column: "CityId",
@@ -561,6 +595,9 @@ namespace Undersea.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Game");
+
+            migrationBuilder.DropTable(
+                name: "Spyings");
 
             migrationBuilder.DropTable(
                 name: "Units");
