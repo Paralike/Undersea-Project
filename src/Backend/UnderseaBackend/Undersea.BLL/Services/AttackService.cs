@@ -90,17 +90,6 @@ namespace Undersea.BLL.Services
             await _attackRepository.Add(newAttack);
         }
 
-        public async Task<int> CalculateSpyingAsnyc(Attack a)
-        {
-            var attackerkArmyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == a.ArmyId);
-            var defenderArmyUnits = await _armyUnitRepository.GetWhere(u => u.ArmyId == a.DefenderCity.AvailableArmyId);
-
-            int tamadoKemek = attackerkArmyUnits.Count(u => u.UnitType == UnitType.Felfedezo);
-            int vedekezoKemek = defenderArmyUnits.Count(u => u.UnitType == UnitType.Felfedezo);
-
-            return (tamadoKemek - vedekezoKemek) * 5;
-        }
-
         public async Task<List<AttackResponseDto>> GetAttacks(Guid userId)
         {
             var cities = await _cityRepository.GetWhere(c => c.UserId == userId);
@@ -114,7 +103,8 @@ namespace Undersea.BLL.Services
                 attackList.Add(new AttackResponseDto
                 {
                     CityName = atk.DefenderCity.Name,
-                    UnitList = await _armyService.GetArmyById(atk.ArmyId)
+                    UnitList = await _armyService.GetArmyById(atk.ArmyId),
+                    WasSuccessful = atk.WasAttackSuccesful
                 });
             }
             return attackList;

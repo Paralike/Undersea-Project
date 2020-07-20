@@ -63,6 +63,7 @@ namespace Undersea.API
             services.AddTransient<IBuildingService, BuildingService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<ISpyService, SpyService>();
             services.AddTransient<ISignalHub, SignalHub>();
 
             services.AddTransient<IUserRepository, UserRepository>();
@@ -78,6 +79,7 @@ namespace Undersea.API
             services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
             services.AddTransient<IUpgradeRepository, UpgradeRepository>();
             services.AddTransient<ILoggerRepository, LoggerRepository>();
+            services.AddTransient<ISpyRepository, SpyRepository>();
 
             services.AddTransient<UserManager<User>>();
             services.AddTransient<SignInManager<User>>();

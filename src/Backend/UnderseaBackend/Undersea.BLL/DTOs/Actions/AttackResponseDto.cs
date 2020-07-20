@@ -4,5 +4,6 @@
     {
         public string CityName { get; set; }
         public ArmyDto UnitList { get; set; }
+        public bool? WasSuccessful { get; set; }
     }
 }

@@ -7,7 +7,6 @@ namespace Undersea.BLL.DTOs
     public class AttackDto
     {
         public Guid DefenderCityId { get; set; }
-
         public List<ArmyUnitDto> Units { get; set; }
     }
 }
