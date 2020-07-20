@@ -43,18 +43,17 @@ namespace Undersea.API.Middlewares
             catch (TimeoutException ex)
             {
                 await _logger.LogError($"Timeout Happened " + ex, ex);
-                await HandleTimeoutException(httpContext, ex);
+                await HandleAllException(httpContext, ex, (int)HttpStatusCode.RequestTimeout);
             }
             catch (NotEnoughMoneyException ex)
             {
                 await _logger.LogError($"Something went wrong: {ex}", ex);
-                await HandleNotEnoughMoneyException(httpContext, ex);
+                await HandleAllException(httpContext, ex,406);
             }
-
             catch (HadvezerException ex)
             {
                 await _logger.LogError($"Something went wrong: {ex}", ex);
-                await HandleHadvezerException(httpContext, ex);
+                await HandleAllException(httpContext, ex,407);
             }
 
             catch (Exception ex)
@@ -65,46 +64,12 @@ namespace Undersea.API.Middlewares
 
             if(httpContext.Response.StatusCode == StatusCodes.Status401Unauthorized)
             {
-                Console.WriteLine("asdasd");
+                await _logger.LogError($"Unauthorized ");
+                await HandleAllException(httpContext, new UnauthorizedAccessException(), (int)HttpStatusCode.Unauthorized);
             }
 
         }
 
-        private Task HandleTimeoutException(HttpContext httpContext, TimeoutException ex)
-        {
-            httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
-
-            return httpContext.Response.WriteAsync(new ErrorDto()
-            {
-                Message = "Timeout Happened"
-            }.ToString());
-
-        }
-
-        private Task HandleNotEnoughMoneyException(HttpContext httpContext, NotEnoughMoneyException ex)
-        {
-            httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-            return httpContext.Response.WriteAsync(new ErrorDto()
-            {
-                Message = "You don't have enough pearl"
-            }.ToString());
-
-        }
-
-        private Task HandleHadvezerException(HttpContext httpContext, HadvezerException ex)
-        {
-            httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
-            return httpContext.Response.WriteAsync(new ErrorDto()
-            {
-                Message = ex.Message
-            }.ToString());
-
-        }
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
@@ -117,24 +82,13 @@ namespace Undersea.API.Middlewares
                 Message = exception.Message
             }.ToString());
         }
-        private Task HandleUnautorizedException(HttpContext context, UnauthorizedAccessException ex)
-        {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-
-            return context.Response.WriteAsync(new ErrorDto()
-            {
-                Message = "Unauthorized Server Access "
-            }.ToString());
-
-        }
         private Task HandleAllException(HttpContext context, Exception ex, int statuscode)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statuscode;
             return context.Response.WriteAsync(new ErrorDto()
             {
-                Message = ex.Message
+                Message = ex?.Message
             }.ToString());
         }
 

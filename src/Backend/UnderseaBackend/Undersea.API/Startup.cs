@@ -26,6 +26,8 @@ using Undersea.BLL.Hubs;
 using Hangfire.Server;
 using Microsoft.AspNetCore.SignalR;
 using System.IO;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.Http;
 
 namespace Undersea.API
 {
@@ -52,7 +54,7 @@ namespace Undersea.API
             services.AddHttpContextAccessor();
 
             services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<ISpyService, SpyService>();
+            services.AddTransient<IAttackService, AttackService>();
             services.AddTransient<IArmyService, ArmyService>();
             services.AddTransient<IUpgradeService, UpgradeService>();
             services.AddTransient<ICityService, CityService>();
@@ -61,6 +63,7 @@ namespace Undersea.API
             services.AddTransient<IBuildingService, BuildingService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<ISpyService, SpyService>();
             services.AddTransient<ISignalHub, SignalHub>();
 
             services.AddTransient<IUserRepository, UserRepository>();
@@ -83,10 +86,10 @@ namespace Undersea.API
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddAuthentication(o =>
+            services.AddAuthentication(x =>
             {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
@@ -106,6 +109,9 @@ namespace Undersea.API
 
             });
 
+            services.AddSpaStaticFiles(opt => {
+                opt.RootPath = "ClientApp/dist/Undersea-Angular";
+            });
 
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
@@ -125,9 +131,6 @@ namespace Undersea.API
 
             services.AddCors();
 
-            services.AddSpaStaticFiles(o =>
-                o.RootPath = "wwwroot");
-
             services.AddControllers();
 
             services.AddSwaggerDocument();
@@ -142,25 +145,33 @@ namespace Undersea.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
 
-                app.UseCors(
+            app.UseCors(
                     options => options
                         .WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
                 );
-            }
+            app.UseCors(
+                    options => options
+                        .WithOrigins("http://localhost:5000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                );
 
             app.UseMiddleware<ExceptionHandler>();
-            //app.UseDefaultFiles();
             app.UseStaticFiles();
-
             app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
+            //app.UseSpa(config => 
+            //    config.Options.SourcePath = @"");
 
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -172,6 +183,12 @@ namespace Undersea.API
                 endpoints.MapHub<SignalHub>("/signalHub");
             });
 
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp/dist/Undersea-Angular";
+                spa.Options.DefaultPage = new PathString("/index.html");
+             
+            });
         }
 
         private static void InitDatabase(IApplicationBuilder app)
@@ -187,7 +204,7 @@ namespace Undersea.API
 
                 var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), Cron.Minutely);
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "5 * * * *");
             }
         }
     }
