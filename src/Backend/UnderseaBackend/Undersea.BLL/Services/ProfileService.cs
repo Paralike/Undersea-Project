@@ -42,19 +42,34 @@ namespace Undersea.BLL.Services
             };
         }
 
-        public async Task<List<RankDto>> GetRank()
+        public async Task<List<RankDto>> GetRank(string name)
         {
             var cities = await _cityRepository.GetAllCityWithUser();
-
-            var ranks = cities.Select(x =>
-            new RankDto
+            List<RankDto> ranks;
+            if (name != null)
             {
-                UserId = x.UserId,
-                Point = x.Points,
-                Username = x.User.UserName,
-                CityName = x.Name
-                
-            }).OrderByDescending(c => c.Point).ToList();
+                ranks = cities.Select(x =>
+                new RankDto
+                {
+                    UserId = x.UserId,
+                    Point = x.Points,
+                    Username = x.User.UserName,
+                    CityName = x.Name
+
+                }).Where(u => u.Username == name).OrderByDescending(c => c.Point).ToList();
+            }
+            else
+            {
+                ranks = cities.Select(x =>
+                new RankDto
+                {
+                    UserId = x.UserId,
+                    Point = x.Points,
+                    Username = x.User.UserName,
+                    CityName = x.Name
+
+                }).OrderByDescending(c => c.Point).ToList();
+            }
 
             foreach(RankDto rank in ranks)
             {
