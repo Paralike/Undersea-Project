@@ -5,6 +5,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSlider } from '@angular/material/slider';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-explorer',
@@ -12,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./explorer.component.scss']
 })
 export class ExplorerComponent implements OnInit {
+  private searchTerms = new Subject<string>();
 
   constructor(
     private service: FeatureService,
@@ -30,6 +33,7 @@ export class ExplorerComponent implements OnInit {
   explorerList: any;
   selected: boolean;
   selectedUserId: string;
+  name: string;
 
   ngOnInit(): void {
     this.service.getAllAttacks().subscribe(res => {
@@ -40,12 +44,25 @@ export class ExplorerComponent implements OnInit {
     this.service.getAttack('').subscribe(res => {
       this.dataSource1 = res;
     });
+    this.searchTerms.pipe(
+      debounceTime(300),
+
+      distinctUntilChanged(),
+
+      switchMap((term: string) => this.service.getAttack(term)),
+    ).subscribe(res => {
+      this.dataSource1 = res;
+    });
   }
   onSelect(row) {
     console.log('ROW', row);
     this.selected = true;
     this.selectedUserId = row.id;
     console.log(row.id);
+  }
+
+  search(term: string): void {
+    this.searchTerms.next(term);
   }
 
   sendData() {

@@ -125,8 +125,8 @@ namespace Undersea.BLL.Services
                         var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
                         if (upgrade.CoralProduction != 0)
                         {
-                            city.CoralProduction += city.CoralProduction / upgrade.CoralProduction * 100;
-                            city.PearlProduction += city.PearlProduction / upgrade.CoralProduction * 100;
+                            double a = city.CoralProduction * ((double)upgrade.CoralProduction / 100);
+                            city.CoralProduction += (int)a;
                         }
                         
                         

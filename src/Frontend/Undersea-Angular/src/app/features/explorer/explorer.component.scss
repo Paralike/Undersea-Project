@@ -32,7 +32,18 @@
     width: 20vw; 
     outline: none;  
 }
+.container{
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  align-items: center;
+  height: 40%;
+ 
+}
+.results{
+  outline: none;  
 
+}
 .spy {
   font-family: open-sans-bold;
   font-size: 1vw;
@@ -56,6 +67,20 @@
   padding: 3%;
   zoom: 0.8;
   margin: 3%;
+}
+
+.search {
+  width: 100%;
+  height: 40px;
+  font-family: baloo;
+  border-radius: 15px;
+  color: #1c3e76;
+  font-size: 1vw;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 0.39;
+  margin-right: 20%;
+  outline: none;
 }
 
 button {
@@ -92,17 +117,11 @@ button {
     color: #ffffff;
     opacity: 1;
   }
-
-  mat-tab .labels {
-    font-family: baloo;
-    font-size: 1vw;
-    color: red;
+  
+  .spy > table{
+    top: 10%;
   }
-  .mat-tab-label {
-    font-family: baloo;
-    font-size: 1vw;
-    color: red;
-  }
+ 
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -182,28 +201,6 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background: #03255F; 
 }
-.mat-tab-label {
-  min-width: 25px !important;
-  padding: 5px;
-  background-color: transparent;
-  color: #03255F;
-  font-weight: 700;
-}
-
-/* Styles for the active tab label */
- .mat-tab-label.mat-tab-label-active {
-  min-width: 25px !important;
-  padding: 5px;
-  background-color: transparent;
-  color: #03255F;
-  font-weight: 700;
-}
-
-/* Styles for the ink bar */
-::ng-deep  .mat-ink-bar {
-  background-color: #03255F;
-}
-
   ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background: #3F68AE;
     height: 5px;
@@ -213,4 +210,11 @@ button {
   background-color: #001234 !important;
   color: #9ffff0;
   font-weight: bold;
+}
+.tables{
+  display: flex;
+  flex-direction: row;
+}
+ .results .mat-table{
+  text-align: center;
 }
