@@ -1003,6 +1003,10 @@
         },
         "wasSuccessful": {
           "type": "boolean"
+        },
+        "defendingPower": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

@@ -4382,8 +4382,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    ApiBaseUrl: 'http://localhost:5000'
-    //ApiBaseUrl: 'http://underseateam1.webtest.encosoft.internal'
+    //ApiBaseUrl: 'http://localhost:5000'
+    ApiBaseUrl: 'http://underseateam1.webtest.encosoft.internal'
 };
 /*
  * For easier debugging in development mode, you can import the following file

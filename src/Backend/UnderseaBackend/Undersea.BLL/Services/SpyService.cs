@@ -16,15 +16,17 @@ namespace Undersea.BLL.Services
     {
         private readonly ISpyRepository _spyRepository;
         private readonly IUserService _userService;
+        private readonly IArmyService _armyService;
         private readonly ICityRepository _cityRepository;
         private readonly IArmyUnitJoinRepository _armyUnitRepository;
 
-        public SpyService(ISpyRepository spyRepository, IUserService userService, ICityRepository cityRepository, IArmyUnitJoinRepository armyUnitRepository)
+        public SpyService(ISpyRepository spyRepository, IUserService userService, ICityRepository cityRepository, IArmyUnitJoinRepository armyUnitRepository, IArmyService armyService)
         {
             _spyRepository = spyRepository;
             _userService = userService;
             _cityRepository = cityRepository;
             _armyUnitRepository = armyUnitRepository;
+            _armyService = armyService;
         }
 
         public async Task<List<SpyingResponseDto>> GetSpyings()
@@ -39,7 +41,8 @@ namespace Undersea.BLL.Services
                 {
                     CityName = s.DefenderCity.Name,
                     SpyCount = s.SpyCount,
-                    WasSuccessful = s.WasSpyingSuccesful
+                    WasSuccessful = s.WasSpyingSuccesful,
+                    DefendingPower =  s.DefendingPower
                 });
             }
 
@@ -48,7 +51,6 @@ namespace Undersea.BLL.Services
 
         public async Task StartSpying(SpyingDto s)
         {
-            // TODO City lekérdezést kiszervezni
             var firstCity = (await _cityRepository.GetWhere(c => c.UserId == _userService.GetCurrentUserId())).First();
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == s.DefenderCityId)).First();
 
