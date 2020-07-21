@@ -812,8 +812,10 @@ export class ProfileClient {
         return _observableOf<FileResponse | null>(<any>null);
     }
 
-    getRanks(): Observable<RankDto[]> {
-        let url_ = this.baseUrl + "/api/Profile/ranks";
+    getRanks(name: string | null | undefined): Observable<RankDto[]> {
+        let url_ = this.baseUrl + "/api/Profile/ranks?";
+        if (name !== undefined && name !== null)
+            url_ += "name=" + encodeURIComponent("" + name) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

@@ -400,6 +400,14 @@
           "application/json",
           "text/json"
         ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
