@@ -10,7 +10,8 @@
             <td mat-cell *matCellDef="let element"> {{element.username}} </td>
           </ng-container>
           <ng-container matColumnDef="selected">
-            <th mat-header-cell *matHeaderCellDef> </th>
+            <th mat-header-cell *matHeaderCellDef>
+              <input class="search" type="search"  name='searchBar' #searchbox (input)="search(searchbox.value)" placeholder="Felhasználónév"> </th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="selected">
                 <span class="checkmark">
