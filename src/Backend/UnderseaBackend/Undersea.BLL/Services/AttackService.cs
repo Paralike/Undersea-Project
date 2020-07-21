@@ -39,9 +39,17 @@ namespace Undersea.BLL.Services
             _mapper = mapper;
 
         }
-        public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers(Guid userId)
+        public async Task<IEnumerable<AttackableUsersDto>> GetAttackableUsers(Guid userId,string name)
         {
-            var attackableUsers = await _userRepository.GetWhere(u => u.Id != userId);
+            IEnumerable<User> attackableUsers = null;
+            if (name == null)
+            {
+                attackableUsers  = await _userRepository.GetWhere(u => u.Id != userId);
+            }else
+            {
+                attackableUsers = await _userRepository.GetWhere(u => u.Id != userId && u.UserName.Contains(name));
+            }
+            
 
             return _mapper.Map<List<AttackableUsersDto>>(attackableUsers);
         }
@@ -62,7 +70,7 @@ namespace Undersea.BLL.Services
                             .ToList();                           
 
             if (hadvezer == 0)
-                throw new HadvezerException("Must send atleast one hadvezér");
+                throw new HadvezerException();
 
             var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 

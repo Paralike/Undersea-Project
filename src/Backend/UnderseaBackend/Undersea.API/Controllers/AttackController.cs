@@ -35,9 +35,9 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AttackableUsersDto>>> GetAttackableUsers()
+        public async Task<ActionResult<IEnumerable<AttackableUsersDto>>> GetAttackableUsers(string name)
         {
-            return Ok(await _attackService.GetAttackableUsers(id));
+            return Ok(await _attackService.GetAttackableUsers(id,name));
         }
 
         [HttpGet("all")]

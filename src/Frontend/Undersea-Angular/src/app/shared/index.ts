@@ -189,8 +189,10 @@ export class AttackClient {
         return _observableOf<FileResponse | null>(<any>null);
     }
 
-    getAttackableUsers(): Observable<AttackableUsersDto[]> {
-        let url_ = this.baseUrl + "/api/Attack";
+    getAttackableUsers(name: string | null | undefined): Observable<AttackableUsersDto[]> {
+        let url_ = this.baseUrl + "/api/Attack?";
+        if (name !== undefined && name !== null)
+            url_ += "name=" + encodeURIComponent("" + name) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

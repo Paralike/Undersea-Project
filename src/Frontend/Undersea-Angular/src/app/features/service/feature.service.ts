@@ -71,10 +71,10 @@ export class FeatureService {
     return this.upgradeClient.purchaseUpgrade(upgradeType);
   }
 
-  getAttack(): Observable<AttackableUsersDto[]> {
+  getAttack(name): Observable<AttackableUsersDto[]> {
     // return of(mock);
 
-    return this.attackClient.getAttackableUsers();
+    return this.attackClient.getAttackableUsers(name);
   }
 
   sendAttack(id: string, units: ArmyUnitModel[]): Observable<any> {
