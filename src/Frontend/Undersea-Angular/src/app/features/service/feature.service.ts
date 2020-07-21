@@ -130,8 +130,13 @@ export class FeatureService {
     return this.buildingsClient.purchaseBuilding(buildingType);
   }
 
+
+  getAllAttacks(): Observable<any> {
+    return this.spyClient.getAllAttacks();
+  }
   sendSpies(id: string, spies: number): Observable<any> {
     return this.spyClient.startSpying(new SpyingDto({defenderCityId: id, spyCount: spies}));
+
   }
 
 }

@@ -92,7 +92,16 @@ button {
     opacity: 1;
   }
 
-  
+  mat-tab .labels {
+    font-family: baloo;
+    font-size: 1vw;
+    color: red;
+  }
+  .mat-tab-label {
+    font-family: baloo;
+    font-size: 1vw;
+    color: red;
+  }
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -181,7 +190,7 @@ button {
 }
 
 /* Styles for the active tab label */
-.mat-tab-label.mat-tab-label-active {
+ .mat-tab-label.mat-tab-label-active {
   min-width: 25px !important;
   padding: 5px;
   background-color: transparent;
@@ -190,6 +199,11 @@ button {
 }
 
 /* Styles for the ink bar */
-.mat-ink-bar {
+::ng-deep  .mat-ink-bar {
   background-color: #03255F;
 }
+
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+    background: #3F68AE;
+    height: 5px;
+  } 

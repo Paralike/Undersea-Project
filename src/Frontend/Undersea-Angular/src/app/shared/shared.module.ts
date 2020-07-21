@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { AuthClient, ProfileClient, BuildingsClient, AttackableUsersDto, AttackClient } from '.';
+import { AuthClient, ProfileClient, BuildingsClient, AttackableUsersDto, AttackClient, SpyClient } from '.';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 import { MatSelectModule } from '@angular/material/select';
@@ -57,7 +57,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     AuthGuardService,
     ProfileClient,
     BuildingsClient,
-    AttackClient
+    AttackClient,
+    SpyClient
   ]
 
 })
