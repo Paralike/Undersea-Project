@@ -6,6 +6,8 @@ import { MatSliderChange, MatSlider } from '@angular/material/slider';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ArmyUnitDto } from 'src/app/shared';
 import { ArmyUnitModel } from '../../army/model/army.model';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -20,13 +22,13 @@ export class AttackComponent implements OnInit {
   selected: boolean;
   selectedUserId: string;
   army: ArmyUnitModel[];
+  private searchTerms = new Subject<string>();
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private el: ElementRef,
     private snackbar: MatSnackBar,
     private service: FeatureService,
     public dialogRef: MatDialogRef<AttackComponent>,
-    private featureService: FeatureService
   ) {
     this.army = data.units.map((x): ArmyUnitDto => ({ ...x }));
     this.army.forEach(unit => unit.unitCount = 0);
@@ -37,16 +39,22 @@ export class AttackComponent implements OnInit {
   @ViewChild('matslider3') slider3: MatSlider;
   @ViewChild('matslider4') slider4: MatSlider;
   ngOnInit() {
+    this.searchUsers('');
 
     this.name = null;
-    this.service.getAttack(this.name).subscribe(res => {
+    this.searchTerms.pipe(
+      // wait 300ms after each keystroke before considering the term
+      debounceTime(300),
+
+      // ignore new term if same as previous term
+      distinctUntilChanged(),
+
+      switchMap((term: string) => this.service.getAttack(term)),
+    ).subscribe(res => {
       this.userList = res;
     });
-    this.selected = false;
-    console.log("USERS", this.userList);
 
-    // we added this so that when the backdrop is clicked the modal is closed.
-    //  this.userList =  ['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8', 'user9', 'user10'];
+    this.selected = false;
   }
 
   onSelect(row) {
@@ -64,7 +72,7 @@ export class AttackComponent implements OnInit {
       this.army[2].unitCount = this.slider3.value;
       this.army[3].unitCount = this.slider4.value;
       console.log(this.army, this.selectedUserId);
-      this.featureService.sendAttack(this.selectedUserId, this.army).subscribe(() => {
+      this.service.sendAttack(this.selectedUserId, this.army).subscribe(() => {
         this.dialogRef.close();
         this.snackbar.open('Sikeres támadás!', 'Bezár', {
           duration: 3000
@@ -77,16 +85,21 @@ export class AttackComponent implements OnInit {
     }
   }
 
-  search(name) {
+  search(term: string): void {
+    this.searchTerms.next(term);
+  }
+
+
+  searchUsers(name) {
     this.service.getAttack(name).subscribe(res => {
       this.userList = res;
     });
-    if (name == null){
+    if (name == null) {
       this.snackbar.open('A név null!', 'Bezár', {
         duration: 3000
       });
+    }
   }
-}
 
 }
 
