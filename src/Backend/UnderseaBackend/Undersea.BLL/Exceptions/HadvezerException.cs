@@ -6,8 +6,6 @@ namespace Undersea.BLL.Exceptions
 {
     public class HadvezerException : Exception
     {
-        public HadvezerException(string message) : base(message)
-        {
-        }
+            public override string Message => "Must send atleast one hadvezer";
     }
 }
