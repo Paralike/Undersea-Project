@@ -151,7 +151,8 @@ namespace Undersea.API
                         .AllowCredentials()
                 );
 
-            //app.UseMiddleware<ExceptionHandler>();
+            app.UseMiddleware<ExceptionHandler>();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseHangfireDashboard();
             app.UseOpenApi();
@@ -177,12 +178,6 @@ namespace Undersea.API
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<AppDbContext>())
-                {
-                    //context.Database.Migrate();
-                }
-
-                var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
                 RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "5 * * * *");
             }
