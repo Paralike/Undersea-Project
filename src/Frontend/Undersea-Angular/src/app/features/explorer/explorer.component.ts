@@ -19,7 +19,7 @@ export class ExplorerComponent implements OnInit {
   ngOnInit(): void {
     this.service.getArmy().subscribe(res => {
       console.log(res);
-    })
+    });
 
     this.dataSource = new MatTableDataSource(this.explorerList);
   }

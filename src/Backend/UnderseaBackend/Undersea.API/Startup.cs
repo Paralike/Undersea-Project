@@ -184,7 +184,7 @@ namespace Undersea.API
 
                 var logService = serviceScope.ServiceProvider.GetRequiredService<ILogService>();
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "5 * * * *");
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "*/5 * * * *");
             }
         }
     }
