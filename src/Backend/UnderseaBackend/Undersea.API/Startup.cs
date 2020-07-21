@@ -23,11 +23,6 @@ using Undersea.DAL.Repository.Repositories;
 using Hangfire;
 using Hangfire.SqlServer;
 using Undersea.BLL.Hubs;
-using Hangfire.Server;
-using Microsoft.AspNetCore.SignalR;
-using System.IO;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.AspNetCore.Http;
 
 namespace Undersea.API
 {
@@ -131,8 +126,9 @@ namespace Undersea.API
 
             services.AddSwaggerDocument();
 
-            services.AddSignalR();
-
+            services.AddSignalR().AddJsonProtocol(options =>
+                options.PayloadSerializerOptions.PropertyNamingPolicy = null
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
