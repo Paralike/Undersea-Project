@@ -22,6 +22,7 @@ export class ExplorerComponent implements OnInit {
   encapsulation: ViewEncapsulation.None;
   displayedColumns: string[] = ['name', 'selected'];
   dataSource: any;
+  dataSource1: any;
   explorerList: any;
   selected: boolean;
   selectedUserId: string;
@@ -30,6 +31,9 @@ export class ExplorerComponent implements OnInit {
     this.service.getAllAttacks().subscribe(res => {
       console.log(res);
       this.dataSource = res;
+    });
+    this.service.getAttack().subscribe(res => {
+      this.dataSource1 = res;
     });
 
   }
