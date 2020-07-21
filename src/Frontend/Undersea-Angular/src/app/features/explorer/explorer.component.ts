@@ -24,6 +24,7 @@ export class ExplorerComponent implements OnInit {
   @ViewChild('matslider') slider: MatSlider;
   encapsulation: ViewEncapsulation.None;
   displayedColumns: string[] = ['name', 'selected'];
+  displayedColumnsResults: string[] = ['cityname', 'spycount', 'defense'];
   dataSource: any;
   dataSource1: any;
   explorerList: any;
@@ -32,13 +33,14 @@ export class ExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAllAttacks().subscribe(res => {
-      console.log(res);
+    
       this.dataSource = res;
+      console.log(this.dataSource);
+      console.log(this.dataSource[0].cityName);
     });
     this.service.getAttack().subscribe(res => {
       this.dataSource1 = res;
     });
-
   }
   onSelect(row) {
     console.log('ROW', row);

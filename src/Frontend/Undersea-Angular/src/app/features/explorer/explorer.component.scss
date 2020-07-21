@@ -207,3 +207,9 @@ button {
     background: #3F68AE;
     height: 5px;
   } 
+  
+::ng-deep .mat-snack-bar-container {
+  background-color: #001234 !important;
+  color: #9ffff0;
+  font-weight: bold;
+}
