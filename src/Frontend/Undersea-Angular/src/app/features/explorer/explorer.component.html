@@ -68,7 +68,14 @@
             </ng-container>
             <ng-container matColumnDef="wassuccessful">
               <th mat-header-cell *matHeaderCellDef >Sikeresség</th>
-              <td mat-cell *matCellDef="let element">{{element.wasSuccessful}}</td>
+              <td mat-cell *matCellDef="let element"> 
+                <div *ngIf="element.wasSuccessful">
+                <span class="checkmark2">
+                  <div class="checkmark-circle2"></div>
+                  <div class="checkmark-stem2"></div>
+                  <div class="checkmark-kick2"></div>
+                </span>
+              </div></td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumnsResults"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsResults;"></tr>

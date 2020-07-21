@@ -218,3 +218,40 @@ button {
  .results .mat-table{
   text-align: center;
 }
+
+.checkmark2 {
+  display:inline-block;
+  width: 22px;
+  height:22px;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+}
+
+.checkmark-circle2 {
+  position: absolute;
+  width:22px;
+  height:22px;
+  background-color: #9FFFF0;
+  border-radius:11px;
+  left:0;
+  top:0;
+}
+
+.checkmark-stem2 {
+  position: absolute;
+  width:3px;
+  height:9px;
+  background-color:#03255F;
+  left:11px;
+  top:6px;
+}
+
+.checkmark-kick2 {
+  position: absolute;
+  width:3px;
+  height:3px;
+  background-color:#03255F;
+  left:8px;
+  top:12px;
+}

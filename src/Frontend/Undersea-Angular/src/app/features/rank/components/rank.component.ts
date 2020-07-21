@@ -60,19 +60,31 @@ export class RankComponent implements OnInit {
   }
 
   search(term: string): void {
-    this.searchTerms.next(term);
+    if (term == null){
+      this.snackbar.open('A név null!', 'Bezár', {
+        duration: 3000
+      });
+    }else {
+      this.sendData(term);
+    }
+ //   this.searchTerms.next(term);
   }
   searchUsers(name) {
+    this.sendData(name);
+    if (name == null) {
+      this.snackbar.open('A név null!', 'Bezár', {
+        duration: 3000
+      });
+    }
+  }
+
+  sendData(name){
     this.service.getRanks(name).subscribe(res => {
       this.rankList = res.map((x): RankModel => ({ ...x }));
       this.dataSource = new MatTableDataSource(this.rankList);
       this.dataSource.sort = this.sort;
       console.log(this.rankList);
     });
-    if (name == null) {
-      this.snackbar.open('A név null!', 'Bezár', {
-        duration: 3000
-      });
-    }
+    
   }
 }

@@ -15,7 +15,7 @@
             <div *ngIf="loginForm.controls.name.invalid && (loginForm.controls.name.dirty || loginForm.controls.name.touched)"
               class="alert-danger">
               <div *ngIf="loginForm.controls.name.errors.required">
-                Név kitöltése költelező
+                Név kitöltése kötelező
               </div>
             </div>
   
@@ -23,7 +23,7 @@
             <div *ngIf="loginForm.controls.password.invalid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)"
               class="alert-danger">
               <div *ngIf="loginForm.controls.password.errors.required">
-                Jelszó kitöltése költelező
+                Jelszó kitöltése kötelező
               </div>
             </div>
   
