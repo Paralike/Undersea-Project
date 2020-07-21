@@ -62,7 +62,7 @@ namespace Undersea.BLL.Services
                             .ToList();                           
 
             if (hadvezer == 0)
-                throw new HadvezerException("Must send atleast one hadvezér");
+                throw new HadvezerException("Legalább egy hadvezért kell küldened a harcba!");
 
             var army = await _armyUnitRepository.GetWhere(u => u.ArmyId == firstCity.AvailableArmyId);
 

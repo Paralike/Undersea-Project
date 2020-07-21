@@ -191,10 +191,7 @@ namespace Undersea.BLL.Services
             {
                 s.WasSpyingSuccesful = true;
                 s.DefendingPower = await _armyService.GetArmyDefensePower(s.DefenderCity.AvailableArmyId);
-            }
-            else
-            {
-                s.AttackerCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount = 0;
+                s.AttackerCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount += s.SpyCount;
             }
         }
 
