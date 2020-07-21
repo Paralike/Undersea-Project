@@ -198,6 +198,10 @@ namespace Undersea.BLL.Services
                 s.DefendingPower = await _armyService.GetArmyDefensePower(s.DefenderCity.AvailableArmyId);
                 s.AttackerCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount += s.SpyCount;
             }
+            else
+            {
+                s.WasSpyingSuccesful = false;
+            }
         }
 
         private async Task CalculateSingleAttackAsync(Attack a)
