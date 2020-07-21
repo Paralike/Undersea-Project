@@ -26,10 +26,9 @@ namespace Undersea.API.Middlewares
 
             catch (UnauthorizedAccessException ex)
             {
-                await _logger.LogError($"Unauthorized Access Happened " + ex,ex);
-                await HandleAllException(httpContext, ex,401);
+                await _logger.LogError($"Unauthorized Access Happened " + ex, ex);
+                await HandleAllException(httpContext, ex, 401);
             }
-
             catch (ExistingUpgradeException ex)
             {
                 await _logger.LogError($"Upgrade exception " + ex, ex);
@@ -48,13 +47,13 @@ namespace Undersea.API.Middlewares
             catch (NotEnoughMoneyException ex)
             {
                 await _logger.LogError($"Something went wrong: {ex}", ex);
-                await HandleAllException(httpContext, ex,400);
-                
+                await HandleAllException(httpContext, ex, 400);
+
             }
             catch (HadvezerException ex)
             {
                 await _logger.LogError($"Something went wrong: {ex}", ex);
-                await HandleAllException(httpContext, ex,407);
+                await HandleAllException(httpContext, ex, 400);
             }
 
             catch (Exception ex)
@@ -62,15 +61,7 @@ namespace Undersea.API.Middlewares
                 await _logger.LogError($"Something went wrong: {ex}", ex);
                 await HandleExceptionAsync(httpContext, ex);
             }
-
-            if(httpContext.Response.StatusCode == StatusCodes.Status401Unauthorized)
-            {
-                await _logger.LogError($"Unauthorized ");
-                await HandleAllException(httpContext, new UnauthorizedAccessException(), (int)HttpStatusCode.Unauthorized);
-            }
-
         }
-
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
