@@ -7,12 +7,75 @@
   th.mat-sort-header-sorted {
     color: black;
   }
-  
-  .infos {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    max-height: 400px;
+
+  .title {
+    font-size: bold;
+    margin-left: 2vw;
+    margin-top: 2vh;
+    margin-bottom: 0;
   }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .infos{
+    
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 35vh;
+    font-family: open-sans-bold;
+    font-size: 1vw;
+    width: 20vw; 
+    outline: none;  
+}
+
+.spy {
+  font-family: open-sans-bold;
+  font-size: 1vw;
+}
+
+.spy > table > tr > td  {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  font-family: open-sans-regular;
+}
+.spy > table > tr > td > img {
+  width: 2.625vw;
+  height: 45px;
+  background: #9ffff0 0% 0% no-repeat padding-box;
+  border: 2px solid #428dff;
+  border-radius: 14px;
+  opacity: 1;
+  padding: 3%;
+  zoom: 0.8;
+  margin: 3%;
+}
+
+button {
+  background: transparent linear-gradient(258deg, #9FFFF0 0%, #6BEEE9 36%, #0FCFDE 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #3B7DBD;
+  border-radius: 90px;
+  opacity: 1;
+  font-family: baloo;
+  padding-top: 0.2%;
+  text-align: center;
+  margin-top: 5%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 192px;
+  height: 50px;
+  font-size: 1vw;
+  padding: 1%;
+  padding-left: 4%;
+}
   .mat-table {
     width: 100%;
     text-align: left;
@@ -29,7 +92,16 @@
     opacity: 1;
   }
 
-  
+  mat-tab .labels {
+    font-family: baloo;
+    font-size: 1vw;
+    color: red;
+  }
+  .mat-tab-label {
+    font-family: baloo;
+    font-size: 1vw;
+    color: red;
+  }
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -51,3 +123,87 @@
     background: #03255f;
   }
   
+  .onSelect{
+    .checkmark {
+        display:inline-block;
+        width: 22px;
+        height:22px;
+        -ms-transform: rotate(45deg); /* IE 9 */
+        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+        transform: rotate(45deg);
+    }
+    
+    .checkmark-circle {
+        position: absolute;
+        width:22px;
+        height:22px;
+        background-color: #9FFFF0;
+        border-radius:11px;
+        left:0;
+        top:0;
+    }
+    
+    .checkmark-stem {
+        position: absolute;
+        width:3px;
+        height:9px;
+        background-color:#03255F;
+        left:11px;
+        top:6px;
+    }
+    
+    .checkmark-kick {
+        position: absolute;
+        width:3px;
+        height:3px;
+        background-color:#03255F;
+        left:8px;
+        top:12px;
+    }
+ }
+ ::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #03255F; 
+  border-radius: 2px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3F68AE; 
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #03255F; 
+}
+.mat-tab-label {
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: #03255F;
+  font-weight: 700;
+}
+
+/* Styles for the active tab label */
+ .mat-tab-label.mat-tab-label-active {
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: #03255F;
+  font-weight: 700;
+}
+
+/* Styles for the ink bar */
+::ng-deep  .mat-ink-bar {
+  background-color: #03255F;
+}
+
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+    background: #3F68AE;
+    height: 5px;
+  } 

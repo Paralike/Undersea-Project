@@ -179,7 +179,7 @@ namespace Undersea.API
                 .CreateScope())
             {
                 var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
-                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "5 * * * *");
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "*/5 * * * *");
             }
         }
     }

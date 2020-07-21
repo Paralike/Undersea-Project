@@ -11,15 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { AuthClient, ProfileClient, BuildingsClient, AttackableUsersDto, AttackClient } from '.';
+import { AuthClient, ProfileClient, BuildingsClient, AttackableUsersDto, AttackClient, SpyClient } from '.';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthGuardService } from '../features/pages/auth/service/auth-guard.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-
-
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [],
@@ -33,7 +32,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatSliderModule,
     MatSelectModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatTabsModule
   ],
   exports: [
     MatDialogModule,
@@ -49,14 +49,16 @@ import {MatSortModule} from '@angular/material/sort';
     MatSliderModule,
     MatSelectModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatTabsModule
   ],
   providers: [
     AuthClient,
     AuthGuardService,
     ProfileClient,
     BuildingsClient,
-    AttackClient
+    AttackClient,
+    SpyClient
   ]
 
 })

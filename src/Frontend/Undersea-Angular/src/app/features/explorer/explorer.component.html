@@ -1,19 +1,72 @@
 <h1>Felderítő</h1>
-<div class="infos">
-    <table mat-table [dataSource]="dataSource" class="left-table" class="mat-elevation-z8">
-        <ng-container matColumnDef="name" >
-            <th mat-header-cell *matHeaderCellDef ></th>
-            <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+<mat-tab-group>
+  <mat-tab label="Felderítő">
+    <div class="content">
+      <div class="infos">
+        <div class="title">Jelöld ki, kit szeretnél támadni!</div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> {{element.username}} </td>
           </ng-container>
-          <ng-container matColumnDef="feature">
-            <th  mat-header-cell *matHeaderCellDef mat-sort-header ></th>
-            <td mat-cell *matCellDef="let element"> {{element.feature}} </td>
+          <ng-container matColumnDef="selected">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="selected">
+                <span class="checkmark">
+                  <div class="checkmark-circle"></div>
+                  <div class="checkmark-stem"></div>
+                  <div class="checkmark-kick"></div>
+                </span>
+              </div>
+            </td>
           </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns" style="height: 2vh;"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)"
+            [ngClass]="{'onSelect': selectedUserId == row.id}"></tr>
+        </table>
+      </div>
+      <div class="spy">
+        <table>
+          <tr>
+            <th style="margin-bottom: 5vh;">2. Állítsd be, kiket küldessz harcba!</th>
+          </tr>
+          <tr>
+            <td><img src='../../../assets/images/Felfedező.svg'>Felderítő: <span
+                style="width: 10px;">{{matslider?.value}}</span>
+              példány <br>
+              <mat-slider class="matslider" #matslider class="slider" min="0" max="{{data.spies}}" step="1" value="0">
+              </mat-slider>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-button style="color: #03255F ;" (click)="sendData()">Megtámadom!</button>
 
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  </mat-tab>
+
+  <mat-tab label="Eredmények">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        <div *ngIf="selected">
+          <span class="checkmark">
+            <div class="checkmark-circle"></div>
+            <div class="checkmark-stem"></div>
+            <div class="checkmark-kick"></div>
+          </span>
+        </div>
+      </ng-container>
+      <ng-container matColumnDef="selected">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element"></td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelect(row)"
+        [ngClass]="{'onSelect': selectedUserId == row.id}"></tr>
     </table>
-</div>
-
-
+  </mat-tab>
+</mat-tab-group>
