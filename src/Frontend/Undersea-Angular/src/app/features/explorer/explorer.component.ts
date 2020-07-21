@@ -19,10 +19,6 @@ export class ExplorerComponent implements OnInit {
   selectedUserId: string;
 
   ngOnInit(): void {
-    this.service.getAttack().subscribe(res => {
-      console.log(res);
-      this.dataSource = res;
-    });
 
   }
   onSelect(row) {
