@@ -20,6 +20,7 @@ import {
   UpgradeTypeClient,
   UpgradeDto,
   BuildingTypeClient,
+  SpyClient,
 } from 'src/app/shared';
 import { BuildingModel } from '../buildings/model/building.model';
 import { ArmyModel, ArmyUnitModel } from '../army/model/army.model';
@@ -45,7 +46,8 @@ export class FeatureService {
     private gameClient: GameClient,
     private upgradeType: UpgradeTypeClient,
     private upgradeClient: UpgradesClient,
-    private buildingTypeClient: BuildingTypeClient
+    private buildingTypeClient: BuildingTypeClient,
+    private spyClient: SpyClient
   ) { }
 
   getBuildings(): Observable<BuildingDto[]> {
@@ -127,6 +129,8 @@ export class FeatureService {
     return this.buildingsClient.purchaseBuilding(buildingType);
   }
 
-
+  getAllAttacks(): Observable<any> {
+    return this.spyClient.getAllAttacks();
+  }
 
 }

@@ -1,6 +1,6 @@
 <h1>Felderítő</h1>
 <mat-tab-group>
-  <mat-tab label="Felderítő">
+  <mat-tab class = "labels" label="Felderítő">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef></th>
@@ -24,7 +24,7 @@
     </table>
 </mat-tab>
   
-  <mat-tab label="Eredmények"> 
+  <mat-tab class = "labels" label="Eredmények"> 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef></th>

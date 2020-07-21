@@ -19,7 +19,7 @@ export class ExplorerComponent implements OnInit {
   selectedUserId: string;
 
   ngOnInit(): void {
-    this.service.getAttack().subscribe(res => {
+    this.service.getAllAttacks().subscribe(res => {
       console.log(res);
       this.dataSource = res;
     })
