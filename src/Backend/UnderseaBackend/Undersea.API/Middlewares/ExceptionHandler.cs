@@ -32,12 +32,12 @@ namespace Undersea.API.Middlewares
             catch (ExistingUpgradeException ex)
             {
                 await _logger.LogError($"Upgrade exception " + ex, ex);
-                await HandleAllException(httpContext, ex, 406);
+                await HandleAllException(httpContext, ex, 400);
             }
             catch (ExistingBuildingException ex)
             {
                 await _logger.LogError($"Building Exception " + ex, ex);
-                await HandleAllException(httpContext, ex, 405);
+                await HandleAllException(httpContext, ex, 400);
             }
             catch (TimeoutException ex)
             {

@@ -7,7 +7,7 @@
               <div class="title">1. Jelöld ki, kit szeretnél támadni!</div>
               <table mat-table [dataSource]="dataSource1" class="left-table">
                 <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef></th>
+                  <th mat-header-cell *matHeaderCellDef><input class="search" type="search"  name='searchBar' #searchbox (input)="search(searchbox.value)" placeholder="Felhasználónév"> </th>
                   <td mat-cell *matCellDef="let element"> {{element.username}} </td>
                 </ng-container>
                 <ng-container matColumnDef="selected">
@@ -71,9 +71,5 @@
           </table>
         </mat-tab>
       </div>
-      
-    
-  
- 
  
 </mat-tab-group>
