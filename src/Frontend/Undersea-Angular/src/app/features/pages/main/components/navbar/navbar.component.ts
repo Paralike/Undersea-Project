@@ -90,6 +90,9 @@ export class NavbarComponent implements OnInit {
   openExplorer() {
     const dialogRef = this.dialog.open(ExplorerComponent, {
       width: '50vw',
+      data: {
+        spies: this.units[UnitType.Felfedezo].unitCount
+      }
     });
   }
 
