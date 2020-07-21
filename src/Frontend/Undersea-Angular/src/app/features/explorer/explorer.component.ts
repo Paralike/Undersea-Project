@@ -33,6 +33,7 @@ export class ExplorerComponent implements OnInit {
   explorerList: any;
   selected: boolean;
   selectedUserId: string;
+  name: string;
 
   ngOnInit(): void {
     this.service.getAllAttacks().subscribe(res => {
