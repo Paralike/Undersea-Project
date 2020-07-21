@@ -21,6 +21,7 @@ import {
   UpgradeDto,
   BuildingTypeClient,
   SpyClient,
+  SpyingDto
 } from 'src/app/shared';
 import { BuildingModel } from '../buildings/model/building.model';
 import { ArmyModel, ArmyUnitModel } from '../army/model/army.model';
@@ -129,8 +130,13 @@ export class FeatureService {
     return this.buildingsClient.purchaseBuilding(buildingType);
   }
 
+
   getAllAttacks(): Observable<any> {
     return this.spyClient.getAllAttacks();
+  }
+  sendSpies(id: string, spies: number): Observable<any> {
+    return this.spyClient.startSpying(new SpyingDto({defenderCityId: id, spyCount: spies}));
+
   }
 
 }
