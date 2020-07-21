@@ -6,6 +6,6 @@ namespace Undersea.BLL.Exceptions
 {
     public class HadvezerException : Exception
     {
-            public override string Message => "Must send atleast one hadvezer";
+            public override string Message => "Legalább egy hadvezért kell küldened a harcba!";
     }
 }
