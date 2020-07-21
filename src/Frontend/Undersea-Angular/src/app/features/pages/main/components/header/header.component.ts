@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit {
     this.signalRService.signalReceived.subscribe((signal: SignalViewModel) => {
       this.featureService.getTurn().subscribe(res => this.currentTurn = res);
       this.reload.emit();
-      console.log('halo halo');
 
     });
   }

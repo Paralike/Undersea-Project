@@ -71,9 +71,7 @@ export class FeatureService {
     return this.upgradeClient.purchaseUpgrade(upgradeType);
   }
 
-  getAttack(name): Observable<AttackableUsersDto[]> {
-    // return of(mock);
-
+  getAttack(name: string): Observable<AttackableUsersDto[]> {
     return this.attackClient.getAttackableUsers(name);
   }
 

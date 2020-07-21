@@ -33,12 +33,11 @@ export class ExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAllAttacks().subscribe(res => {
-    
       this.dataSource = res;
       console.log(this.dataSource);
       console.log(this.dataSource[0].cityName);
     });
-    this.service.getAttack().subscribe(res => {
+    this.service.getAttack('').subscribe(res => {
       this.dataSource1 = res;
     });
   }
