@@ -30,6 +30,7 @@ export class ExplorerComponent implements OnInit {
   explorerList: any;
   selected: boolean;
   selectedUserId: string;
+  name: string;
 
   ngOnInit(): void {
     this.service.getAllAttacks().subscribe(res => {
@@ -38,7 +39,7 @@ export class ExplorerComponent implements OnInit {
       console.log(this.dataSource);
       console.log(this.dataSource[0].cityName);
     });
-    this.service.getAttack().subscribe(res => {
+    this.service.getAttack(name).subscribe(res => {
       this.dataSource1 = res;
     });
   }

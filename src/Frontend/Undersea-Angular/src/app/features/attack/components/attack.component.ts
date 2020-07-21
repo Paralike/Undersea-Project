@@ -69,7 +69,11 @@ export class AttackComponent implements OnInit {
         this.snackbar.open('Sikeres támadás!', 'Bezár', {
           duration: 3000
         });
-      });
+      }, (err) => {
+        this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
+           duration: 5000
+          });
+       });
     } else if (this.selected === false) {
       this.snackbar.open('Válaszd ki kit szeretnél támadni!', 'Bezár', {
         duration: 3000
