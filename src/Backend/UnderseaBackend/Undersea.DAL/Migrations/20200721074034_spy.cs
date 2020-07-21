@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class spy : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -352,7 +352,8 @@ namespace Undersea.DAL.Migrations
                     AttackerCityId = table.Column<Guid>(nullable: false),
                     DefenderCityId = table.Column<Guid>(nullable: false),
                     SpyCount = table.Column<int>(nullable: false),
-                    WasSpyingSuccesful = table.Column<bool>(nullable: true)
+                    WasSpyingSuccesful = table.Column<bool>(nullable: true),
+                    DefendingPower = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -442,7 +443,7 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
-                values: new object[] { new Guid("d2a134ee-a68c-4574-8a75-2ac09a48ebac"), 1 });
+                values: new object[] { new Guid("878d7164-a630-45f0-acf2-3b9d2b54bdca"), 1 });
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -462,7 +463,7 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
-                    { 5, 0, 0, 0, new Guid("ed7c9965-377b-4cb3-a0e4-46d8053930f9"), "Alkímia", 30 },
+                    { 5, 0, 0, 0, new Guid("04c23259-a19f-40b0-a706-6cee35504c0c"), "Alkímia", 30 },
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },

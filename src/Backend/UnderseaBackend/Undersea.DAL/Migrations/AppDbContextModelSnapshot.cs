@@ -164,7 +164,7 @@ namespace Undersea.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d2a134ee-a68c-4574-8a75-2ac09a48ebac"),
+                            Id = new Guid("878d7164-a630-45f0-acf2-3b9d2b54bdca"),
                             CurrentTurn = 1
                         });
                 });
@@ -405,6 +405,9 @@ namespace Undersea.DAL.Migrations
                     b.Property<Guid>("DefenderCityId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("DefendingPower")
+                        .HasColumnType("int");
+
                     b.Property<int>("SpyCount")
                         .HasColumnType("int");
 
@@ -569,7 +572,7 @@ namespace Undersea.DAL.Migrations
                             AttackPoints = 0,
                             CoralProduction = 0,
                             DefensePoints = 0,
-                            Id = new Guid("ed7c9965-377b-4cb3-a0e4-46d8053930f9"),
+                            Id = new Guid("04c23259-a19f-40b0-a706-6cee35504c0c"),
                             Name = "Alkímia",
                             TaxIncrease = 30
                         },
