@@ -319,10 +319,10 @@ class AuthPageComponent {
                     this.router.navigate(['/main']);
                 }
             }, (err) => {
-                this.snackbar.open('Hibás felhasználónév vagy jelszó', 'Bezár', {
+                console.log(JSON.stringify(err));
+                this.snackbar.open(err.message, 'Bezár', {
                     duration: 3000
                 });
-                console.error('HURKAAAAA', err);
             });
         }
     }
@@ -336,10 +336,9 @@ class AuthPageComponent {
                     }
                     // tslint:disable-next-line:no-unused-expression
                 }, (err) => {
-                    this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'Bezár', {
+                    this.snackbar.open('Hello hello', 'Bezár', {
                         duration: 3000
                     });
-                    console.error('HURKAAAAA', err);
                 });
             }
             else {
