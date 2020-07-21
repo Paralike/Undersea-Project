@@ -127,7 +127,6 @@ namespace Undersea.BLL.Services
                         {
                             double a = city.CoralProduction * ((double)upgrade.CoralProduction / 100);
                             city.CoralProduction += (int)a;
-                            city.PearlProduction += city.PearlProduction * (upgrade.CoralProduction / 100);
                         }
                         
                         
