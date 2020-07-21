@@ -123,8 +123,13 @@ namespace Undersea.BLL.Services
                         u.CurrentTurn = 0;
                         var city = (await _cityRepository.GetWhere(c => c.UpgradesId == u.UpgradeId)).ElementAt(0);
                         var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
-                        city.CoralCount += city.CoralCount / upgrade.CoralProduction * 100;
-                        city.PearlCount += city.PearlCount / upgrade.CoralProduction * 100;
+                        if (upgrade.CoralProduction != 0)
+                        {
+                            city.CoralProduction += city.CoralProduction / upgrade.CoralProduction * 100;
+                            city.PearlProduction += city.PearlProduction / upgrade.CoralProduction * 100;
+                        }
+                        
+                        
                     }
                 }
                 await _upgradeJoinRepository.Update(u);
