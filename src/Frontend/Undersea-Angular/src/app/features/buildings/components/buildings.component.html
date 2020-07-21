@@ -36,7 +36,7 @@
   </div>
   <mat-divider></mat-divider>
   <div class="buttons-div">
-    <button [disabled]="!selectedBuilding" mat-button class="building-button" (click)="sendData()" id="build-button">Megveszem</button>
+    <button [disabled]="!selectedBuilding" mat-button class="building-button" (click)="$event.stopPropagation(); sendData()" id="build-button">Megveszem</button>
   </div>
 
 </div>

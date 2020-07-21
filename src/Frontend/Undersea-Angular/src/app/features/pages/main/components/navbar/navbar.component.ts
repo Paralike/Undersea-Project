@@ -94,6 +94,7 @@ export class NavbarComponent implements OnInit {
         spies: this.units[UnitType.Felfedezo].unitCount
       }
     });
+    dialogRef.afterClosed().subscribe(() => this.reload.emit());
   }
 
 }
