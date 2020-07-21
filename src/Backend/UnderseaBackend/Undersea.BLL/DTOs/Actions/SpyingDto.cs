@@ -8,6 +8,5 @@ namespace Undersea.BLL.DTOs.Actions
     {
         public Guid DefenderCityId { get; set; }
         public int SpyCount { get; set; }
-        public bool? WasSuccessful { get; set; }
     }
 }

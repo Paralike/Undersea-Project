@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Undersea.DAL.Migrations
 {
+<<<<<<< HEAD:src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200720123745_undersea.cs
     public partial class undersea : Migration
+=======
+    public partial class init : Migration
+>>>>>>> dev:src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200720133306_init.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -442,7 +446,11 @@ namespace Undersea.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "Game",
                 columns: new[] { "Id", "CurrentTurn" },
+<<<<<<< HEAD:src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200720123745_undersea.cs
                 values: new object[] { new Guid("6cadd4d8-79f2-4d67-a106-3683ec561722"), 1 });
+=======
+                values: new object[] { new Guid("d2a134ee-a68c-4574-8a75-2ac09a48ebac"), 1 });
+>>>>>>> dev:src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200720133306_init.cs
 
             migrationBuilder.InsertData(
                 table: "Units",
@@ -462,7 +470,11 @@ namespace Undersea.DAL.Migrations
                 values: new object[,]
                 {
                     { 0, 0, 10, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszaptraktor", 0 },
+<<<<<<< HEAD:src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200720123745_undersea.cs
                     { 5, 0, 0, 0, new Guid("fa55bfd5-6bef-480f-9eda-1f48a50a913e"), "Alkímia", 30 },
+=======
+                    { 5, 0, 0, 0, new Guid("ed7c9965-377b-4cb3-a0e4-46d8053930f9"), "Alkímia", 30 },
+>>>>>>> dev:src/Backend/UnderseaBackend/Undersea.DAL/Migrations/20200720133306_init.cs
                     { 1, 0, 15, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Iszapkombájn", 0 },
                     { 2, 0, 0, 20, new Guid("00000000-0000-0000-0000-000000000000"), "Korallfal", 0 },
                     { 3, 20, 0, 0, new Guid("00000000-0000-0000-0000-000000000000"), "Szonárágyú", 0 },

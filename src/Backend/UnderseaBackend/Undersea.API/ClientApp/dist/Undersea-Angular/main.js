@@ -416,7 +416,7 @@ function ArmyComponent_div_6_Template(rf, ctx) { if (rf & 1) {
     const i_r2 = ctx.index;
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "../../../../assets/images/", unit_r1.name, ".svg", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("src", "../../../../assets/images/", unit_r1.unitType, ".svg", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", unit_r1.name, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](15);
@@ -469,8 +469,9 @@ class ArmyComponent {
                     duration: 3000
                 });
             }, (err) => {
-                // console.log('Error:', err);
-                this.snackbar.open(err.message, 'Bezár', {
+                console.log('Error:', JSON.stringify(err));
+                console.log('Error:', JSON.parse(err.response).Message);
+                this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
                     duration: 5000
                 });
             });
@@ -4525,8 +4526,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    //  ApiBaseUrl: 'http://localhost:5000'
-    ApiBaseUrl: 'http://underseateam1.webtest.encosoft.internal'
+    ApiBaseUrl: 'http://localhost:5000'
+    // ApiBaseUrl: 'http://underseateam1.webtest.encosoft.internal'
 };
 /*
  * For easier debugging in development mode, you can import the following file

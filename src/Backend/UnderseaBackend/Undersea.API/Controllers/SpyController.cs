@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -13,35 +12,30 @@ namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SpyController : ControllerBase
     {
-        [Route("api/[controller]")]
-        [ApiController]
-        [Authorize]
-        public class AttackController : ControllerBase
+        private readonly ISpyService _spyService;
+        Guid id;
+
+        public SpyController(ISpyService spyService, IHttpContextAccessor httpContextAccessor)
         {
-            private readonly ISpyService _spyService;
-            Guid id;
-
-            public AttackController(ISpyService spyService, IHttpContextAccessor httpContextAccessor)
-            {
-                _spyService = spyService;
-                id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            }
-
-            [HttpPost]
-            public async Task<ActionResult> StartSpying([FromBody] SpyingDto spying)
-            {
-                await _spyService.StartSpying(spying);
-                return Ok();
-            }
-
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<SpyingResponseDto>>> GetAllAttacks()
-            {
-                return Ok(await _spyService.GetSpyings());
-            }
-
+            _spyService = spyService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> StartSpying([FromBody] SpyingDto spying)
+        {
+            await _spyService.StartSpying(spying);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<SpyingResponseDto>>> GetAllAttacks()
+        {
+            return Ok(await _spyService.GetSpyings());
+        }
+
     }
 }

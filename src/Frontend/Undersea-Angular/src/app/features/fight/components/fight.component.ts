@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class FightComponent implements OnInit {
 
-  displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses', 'general'];
+  displayedColumns: string[] = ['city', 'sharks', 'seals', 'seahorses', 'general', 'checkmark'];
   dataSource: AttackResponseModel[];
 
 
@@ -25,7 +25,9 @@ export class FightComponent implements OnInit {
 
   ngOnInit(): void {
     this.featureService.getFights().subscribe(res => {
-      this.dataSource = res.map((x): AttackResponseModel => ({...x}));
+      console.log(res);
+      this.dataSource = res.map((x): AttackResponseModel => ({cityName: x.cityName, unitList: x.unitList, wasSuccessful: x.wasSuccessful}));
+      console.log(this.dataSource);
     },
       (err) => {
         this.snackbar.open(err.message, 'Bezár', {

@@ -189,10 +189,8 @@ export class AttackClient {
         return _observableOf<FileResponse | null>(<any>null);
     }
 
-    getAttackableUsers(name: string | null | undefined): Observable<AttackableUsersDto[]> {
-        let url_ = this.baseUrl + "/api/Attack?";
-        if (name !== undefined && name !== null)
-            url_ += "name=" + encodeURIComponent("" + name) + "&";
+    getAttackableUsers(): Observable<AttackableUsersDto[]> {
+        let url_ = this.baseUrl + "/api/Attack";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -910,6 +908,120 @@ export class ProfileClient {
             }));
         }
         return _observableOf<RankDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class SpyClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    startSpying(spying: SpyingDto): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Spy";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(spying);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processStartSpying(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processStartSpying(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processStartSpying(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
+
+    getAllAttacks(): Observable<SpyingResponseDto[]> {
+        let url_ = this.baseUrl + "/api/Spy";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllAttacks(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllAttacks(<any>response_);
+                } catch (e) {
+                    return <Observable<SpyingResponseDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<SpyingResponseDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllAttacks(response: HttpResponseBase): Observable<SpyingResponseDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SpyingResponseDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<SpyingResponseDto[]>(<any>null);
     }
 }
 
@@ -1811,6 +1923,94 @@ export interface IRankDto {
     point: number;
     cityName?: string | undefined;
     rank: number;
+}
+
+export class SpyingDto implements ISpyingDto {
+    defenderCityId!: string;
+    spyCount!: number;
+
+    constructor(data?: ISpyingDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.defenderCityId = _data["defenderCityId"];
+            this.spyCount = _data["spyCount"];
+        }
+    }
+
+    static fromJS(data: any): SpyingDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpyingDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["defenderCityId"] = this.defenderCityId;
+        data["spyCount"] = this.spyCount;
+        return data; 
+    }
+}
+
+export interface ISpyingDto {
+    defenderCityId: string;
+    spyCount: number;
+}
+
+export class SpyingResponseDto implements ISpyingResponseDto {
+    cityName?: string | undefined;
+    spyCount!: number;
+    wasSuccessful?: boolean | undefined;
+    defendingPower?: number | undefined;
+
+    constructor(data?: ISpyingResponseDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.cityName = _data["cityName"];
+            this.spyCount = _data["spyCount"];
+            this.wasSuccessful = _data["wasSuccessful"];
+            this.defendingPower = _data["defendingPower"];
+        }
+    }
+
+    static fromJS(data: any): SpyingResponseDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpyingResponseDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cityName"] = this.cityName;
+        data["spyCount"] = this.spyCount;
+        data["wasSuccessful"] = this.wasSuccessful;
+        data["defendingPower"] = this.defendingPower;
+        return data; 
+    }
+}
+
+export interface ISpyingResponseDto {
+    cityName?: string | undefined;
+    spyCount: number;
+    wasSuccessful?: boolean | undefined;
+    defendingPower?: number | undefined;
 }
 
 export class UpgradeAttributeDto implements IUpgradeAttributeDto {

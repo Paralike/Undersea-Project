@@ -16,20 +16,22 @@ namespace Undersea.BLL.Services
     {
         private readonly ISpyRepository _spyRepository;
         private readonly IUserService _userService;
+        private readonly IArmyService _armyService;
         private readonly ICityRepository _cityRepository;
         private readonly IArmyUnitJoinRepository _armyUnitRepository;
 
-        public SpyService(ISpyRepository spyRepository, IUserService userService, ICityRepository cityRepository, IArmyUnitJoinRepository armyUnitRepository)
+        public SpyService(ISpyRepository spyRepository, IUserService userService, ICityRepository cityRepository, IArmyUnitJoinRepository armyUnitRepository, IArmyService armyService)
         {
             _spyRepository = spyRepository;
             _userService = userService;
             _cityRepository = cityRepository;
             _armyUnitRepository = armyUnitRepository;
+            _armyService = armyService;
         }
 
         public async Task<List<SpyingResponseDto>> GetSpyings()
         {
-            var spyings = (await _spyRepository.GetWhere(a => a.AttackerCity.UserId == _userService.GetCurrentUserId())).ToList();
+            var spyings = (await _spyRepository.GetWhere(s => s.AttackerCity.UserId == _userService.GetCurrentUserId())).ToList();
 
             List<SpyingResponseDto> spyingList = new List<SpyingResponseDto>();
 
@@ -39,7 +41,8 @@ namespace Undersea.BLL.Services
                 {
                     CityName = s.DefenderCity.Name,
                     SpyCount = s.SpyCount,
-                    WasSuccessful = s.WasSpyingSuccesful
+                    WasSuccessful = s.WasSpyingSuccesful,
+                    DefendingPower =  s.DefendingPower
                 });
             }
 
@@ -48,7 +51,6 @@ namespace Undersea.BLL.Services
 
         public async Task StartSpying(SpyingDto s)
         {
-            // TODO City lekérdezést kiszervezni
             var firstCity = (await _cityRepository.GetWhere(c => c.UserId == _userService.GetCurrentUserId())).First();
             var defenderCity = (await _cityRepository.GetWhere(c => c.UserId == s.DefenderCityId)).First();
 
@@ -59,7 +61,9 @@ namespace Undersea.BLL.Services
             Spying spying = new Spying()
             {
               AttackerCityId =  firstCity.Id,
+              AttackerCity = firstCity,
               DefenderCityId = s.DefenderCityId,
+              DefenderCity = defenderCity,
               SpyCount = s.SpyCount              
             };
 
@@ -68,8 +72,8 @@ namespace Undersea.BLL.Services
 
         public int CalculateSpying(Spying s)
         { 
-            int tamadoKemek = s.SpyCount; 
-            int vedekezoKemek = s.DefenderCity.AvailableArmy.Units.Count(u => u.UnitType == UnitType.Felfedezo);
+            int tamadoKemek = s.SpyCount;
+            int vedekezoKemek = s.DefenderCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount;
 
             return (tamadoKemek - vedekezoKemek) * 5;
         }
