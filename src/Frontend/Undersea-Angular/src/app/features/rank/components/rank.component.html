@@ -1,8 +1,6 @@
 <div>
   <h1>Ranglista</h1>
-<input class="search" type="text" placeholder="Felhasználónév">
-
-
+  <input class="search" type="search"  name='searchBar' #searchbox (input)="search(searchbox.value)" placeholder="Felhasználónév">
 <div class="infos">
     <table mat-table [dataSource]="dataSource" class="left-table" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="place">

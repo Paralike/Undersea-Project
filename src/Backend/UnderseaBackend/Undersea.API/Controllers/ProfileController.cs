@@ -32,9 +32,9 @@ namespace Undersea.API.Controllers
         }
 
         [HttpGet("ranks")]
-        public async Task<ActionResult<List<RankDto>>> GetRanks()
+        public async Task<ActionResult<List<RankDto>>> GetRanks(string name)
         {
-            return Ok(await _profileService.GetRank());
+            return Ok(await _profileService.GetRank(name));
         }
 
         [HttpGet]

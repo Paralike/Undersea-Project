@@ -50,6 +50,10 @@ namespace Undersea.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> RegisterUser([FromBody] RegisterDto registration)
         {
+            if (registration.Password.Length < 8)
+            {
+                return BadRequest("minimum 8 characters are required");
+            }
             var result = await _authService.RegisterUser(registration);
 
             if (result != null)

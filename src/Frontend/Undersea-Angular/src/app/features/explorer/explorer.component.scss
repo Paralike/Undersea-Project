@@ -32,7 +32,18 @@
     width: 20vw; 
     outline: none;  
 }
+.container{
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  align-items: center;
+  height: 40%;
+ 
+}
+.results{
+  outline: none;  
 
+}
 .spy {
   font-family: open-sans-bold;
   font-size: 1vw;
@@ -129,17 +140,11 @@ mat-divider {
     color: #ffffff;
     opacity: 1;
   }
-
-  mat-tab .labels {
-    font-family: baloo;
-    font-size: 1vw;
-    color: red;
+  
+  .spy > table{
+    top: 10%;
   }
-  .mat-tab-label {
-    font-family: baloo;
-    font-size: 1vw;
-    color: red;
-  }
+ 
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -219,28 +224,6 @@ mat-divider {
 ::-webkit-scrollbar-thumb:hover {
   background: #03255F; 
 }
-.mat-tab-label {
-  min-width: 25px !important;
-  padding: 5px;
-  background-color: transparent;
-  color: #03255F;
-  font-weight: 700;
-}
-
-/* Styles for the active tab label */
- .mat-tab-label.mat-tab-label-active {
-  min-width: 25px !important;
-  padding: 5px;
-  background-color: transparent;
-  color: #03255F;
-  font-weight: 700;
-}
-
-/* Styles for the ink bar */
-::ng-deep  .mat-ink-bar {
-  background-color: #03255F;
-}
-
   ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background: #3F68AE;
     height: 5px;
@@ -250,4 +233,48 @@ mat-divider {
   background-color: #001234 !important;
   color: #9ffff0;
   font-weight: bold;
+}
+.tables{
+  display: flex;
+  flex-direction: row;
+}
+ .results .mat-table{
+  text-align: center;
+}
+
+.checkmark2 {
+  display:inline-block;
+  width: 22px;
+  height:22px;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+}
+
+.checkmark-circle2 {
+  position: absolute;
+  width:22px;
+  height:22px;
+  background-color: #9FFFF0;
+  border-radius:11px;
+  left:0;
+  top:0;
+}
+
+.checkmark-stem2 {
+  position: absolute;
+  width:3px;
+  height:9px;
+  background-color:#03255F;
+  left:11px;
+  top:6px;
+}
+
+.checkmark-kick2 {
+  position: absolute;
+  width:3px;
+  height:3px;
+  background-color:#03255F;
+  left:8px;
+  top:12px;
 }

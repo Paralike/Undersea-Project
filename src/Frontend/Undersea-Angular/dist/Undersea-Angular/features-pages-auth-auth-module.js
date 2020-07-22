@@ -319,10 +319,11 @@ class AuthPageComponent {
                     this.router.navigate(['/main']);
                 }
             }, (err) => {
-                console.log(JSON.stringify(err));
-                this.snackbar.open(err.message, 'Bezár', {
-                    duration: 3000
-                });
+                if (err.status === 401) {
+                    this.snackbar.open('Hibás név és jelszó páros', 'Bezár', {
+                        duration: 3000
+                    });
+                }
             });
         }
     }
@@ -334,9 +335,13 @@ class AuthPageComponent {
                         localStorage.setItem('token', res.token);
                         this.router.navigate(['/main']);
                     }
-                    // tslint:disable-next-line:no-unused-expression
+                    else {
+                        this.snackbar.open('Ezzel a névvel már regisztráltak', 'Bezár', {
+                            duration: 3000
+                        });
+                    }
                 }, (err) => {
-                    this.snackbar.open('Hello hello', 'Bezár', {
+                    this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
                         duration: 3000
                     });
                 });

@@ -27,12 +27,13 @@ export class ExplorerComponent implements OnInit {
   @ViewChild('matslider') slider: MatSlider;
   encapsulation: ViewEncapsulation.None;
   displayedColumns: string[] = ['name', 'selected'];
-  displayedColumnsResults: string[] = ['cityname', 'spycount', 'defense'];
+  displayedColumnsResults: string[] = ['cityname', 'spycount', 'defense', 'wassuccessful'];
   dataSource: any;
   dataSource1: any;
   explorerList: any;
   selected: boolean;
   selectedUserId: string;
+  name: string;
 
   ngOnInit(): void {
     this.service.getAllAttacks().subscribe(res => {

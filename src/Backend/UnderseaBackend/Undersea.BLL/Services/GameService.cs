@@ -125,8 +125,8 @@ namespace Undersea.BLL.Services
                         var upgrade = (await _upgradeAttributeRepository.GetWhere(c => c.UpgradeType == u.UpgradeType)).ElementAt(0);
                         if (upgrade.CoralProduction != 0)
                         {
-                            city.CoralProduction += city.CoralProduction / upgrade.CoralProduction * 100;
-                            city.PearlProduction += city.PearlProduction / upgrade.CoralProduction * 100;
+                            double a = city.CoralProduction * ((double)upgrade.CoralProduction / 100);
+                            city.CoralProduction += (int)a;
                         }
                         
                         
@@ -197,6 +197,10 @@ namespace Undersea.BLL.Services
                 s.WasSpyingSuccesful = true;
                 s.DefendingPower = await _armyService.GetArmyDefensePower(s.DefenderCity.AvailableArmyId);
                 s.AttackerCity.AvailableArmy.Units.Single(u => u.UnitType == UnitType.Felfedezo).UnitCount += s.SpyCount;
+            }
+            else
+            {
+                s.WasSpyingSuccesful = false;
             }
         }
 
