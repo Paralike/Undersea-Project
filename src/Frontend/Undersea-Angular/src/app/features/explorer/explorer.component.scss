@@ -58,6 +58,14 @@
   margin: 3%;
 }
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
 .search {
   width: 100%;
   height: 40px;
@@ -78,17 +86,32 @@ button {
   border-radius: 90px;
   opacity: 1;
   font-family: baloo;
-  padding-top: 0.2%;
   text-align: center;
-  margin-top: 5%;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  width: 192px;
-  height: 50px;
+  width: 8vw;
+  height: 5vh;
   font-size: 1vw;
-  padding: 1%;
-  padding-left: 4%;
+
+}
+
+.button {
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   height: 8vh;
+  
+}
+
+mat-divider {
+   margin: 1vh;
+   width: 100%;
 }
   .mat-table {
     width: 90%;

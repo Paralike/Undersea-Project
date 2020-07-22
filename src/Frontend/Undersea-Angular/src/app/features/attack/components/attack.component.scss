@@ -67,7 +67,7 @@ h1 {
     
     overflow-y: auto;
     overflow-x: hidden;
-    height: 40vh;
+    height: 50vh;
     font-family: open-sans-bold;
     font-size: 1vw;
     width: 25vw;   
@@ -76,6 +76,8 @@ h1 {
 .infos-2 {
     font-family: open-sans-bold;
     font-size: 1vw;
+    height: 50vh;
+    overflow: auto;
 }
 .slider {
     width: 30px;
@@ -94,13 +96,29 @@ h1 {
     text-align: center;
     margin-top: 5%;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    width: 192px;
-    height: 50px;
+    width: 8vw;
+    height: 5vh;
     font-size: 1vw;
-    padding: 1%;
-    padding-left: 4%;
+
+ }
+
+ .button {
+     width: 100%;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: center;
+    
+ }
+
+ mat-divider {
+     margin: 1vh;
+     width: 100%;
  }
 
 
