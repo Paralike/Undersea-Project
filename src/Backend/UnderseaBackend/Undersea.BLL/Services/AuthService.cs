@@ -1,35 +1,38 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Auth;
+using Undersea.BLL.Interfaces;
+using Undersea.DAL.Models;
 
 namespace Undersea.BLL.Services
 {
     public class AuthService : IAuthService
     {
-        private UserManager<IdentityUser> _userManager;
-        private SignInManager<IdentityUser> _signInManager;
+        private UserManager<User> _userManager;
+        private SignInManager<User> _signInManager;
+        private readonly IArmyService _armyService;
 
-        public AuthService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthService(UserManager<User> userManager, SignInManager<User> signInManager, IArmyService armyService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _armyService = armyService;
         }
 
-        public AuthResponseDto GetToken(IdentityUser user)
+        public AuthResponseDto GetToken(User user)
         {
             if (user == null)
                 return null;
 
             var claims = new[] {
-                    new Claim("Id", user.Id.ToString()),
-                    new Claim("Username", user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName),
                    };
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
@@ -38,7 +41,7 @@ namespace Undersea.BLL.Services
             var tokenOptions = new JwtSecurityToken(
                 issuer: "http://localhost:5000",
                 audience: "http://localhost:5000",
-                claims: new List<Claim>(),
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: signinCredentials
             );
@@ -49,35 +52,38 @@ namespace Undersea.BLL.Services
             };
         }
 
-        public async Task<IdentityUser> GetUser(LoginDto user)
+        public async Task<User> GetUser(LoginDto userDto)
         {
-            var user1 = await _userManager.FindByNameAsync(user.Username);
-            var result = await _signInManager.PasswordSignInAsync(user1, user.Password, false, false);
+            var _user = await _userManager.FindByNameAsync(userDto.Username);
+
+            if (_user == null)
+            {
+                return null;
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(_user, userDto.Password, false, false);
 
             if (result.Succeeded)
-                return user1;
+                return _user;
 
             else
                 return null;
         }
 
-        public async Task<AuthResponseDto> RegisterUser(RegisterDto newUser)
+        public async Task<AuthResponseDto> RegisterUser(RegisterDto newUserDto)
         {
-            var user = new IdentityUser(newUser.Username);
-            user.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(user, newUser.Password);
+            var user = new User(newUserDto.Username, newUserDto.City);
+            user.PasswordHash = new PasswordHasher<User>().HashPassword(user, newUserDto.Password);
 
             var result = await _userManager.CreateAsync(user);
 
-            if (result.Succeeded)
-                return GetToken(user);
-
-            else
+            if (result.Succeeded && (await _signInManager.PasswordSignInAsync(user, newUserDto.Password, false, false)).Succeeded)
             {
-                foreach (IdentityError e in result.Errors)
-                    Console.WriteLine(e.Description);
-
-                return null;
+                await _armyService.FillArmy(user.Id);
+                return GetToken(user);
             }
+
+            return new AuthResponseDto();
 
         }
 

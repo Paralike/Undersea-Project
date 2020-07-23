@@ -1,20 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using Undersea.DAL.Enums;
 
 namespace Undersea.DAL.Models
 {
-    public partial class Army
+    public class Army : IDbEntity
     {
+        public Guid Id { get; set; }
+        public virtual City City { get; set; }
+        public Guid CityId { get; set; }
+        public virtual ICollection<ArmyUnit> Units { get; set; }
+        public virtual Attack Attack { get; set; }
+
+
         public Army()
         {
-            Attack = new HashSet<Attack>();
+            Id = Guid.NewGuid();
+
+            Units = new List<ArmyUnit>();
         }
 
-        public int Id { get; set; }
-        public int? UserId { get; set; }
-        public int? Units { get; set; }
+        public Army(int csatacsikoCount, int lezercapaCount, int rohamfokaCount, int hadvezer)
+        {
+            Id = Guid.NewGuid();
 
-        public virtual Profile User { get; set; }
-        public virtual ICollection<Attack> Attack { get; set; }
+            Units = new List<ArmyUnit>() {
+                new ArmyUnit
+            {
+                ArmyId = Id,
+                UnitType = UnitType.Csatacsiko,
+                UnitCount = csatacsikoCount,
+            },
+
+                new ArmyUnit
+            {
+                    ArmyId = Id,
+                UnitType = UnitType.Lezercapa,
+                UnitCount = lezercapaCount,
+            },
+                new ArmyUnit
+            {
+                  ArmyId = Id,
+                UnitType = UnitType.Rohamfoka,
+                UnitCount = rohamfokaCount,
+            },
+
+                                new ArmyUnit
+            {
+                  ArmyId = Id,
+                UnitType = UnitType.Hadvezer,
+                UnitCount = hadvezer,
+            },
+            };
+        }
+
+        public Army(List<int> unitCount)
+        {
+            int i = 0;
+            Id = Guid.NewGuid();
+
+            Units = new List<ArmyUnit>();
+
+            foreach (UnitType type in Enum.GetValues(typeof(UnitType)))
+            {
+                Units.Add(new ArmyUnit()
+                {
+                    ArmyId = Id,
+                    Army = this,
+                    UnitType = type,
+                    UnitCount = unitCount[i++],
+                });
+            }
+        }
+
     }
 }

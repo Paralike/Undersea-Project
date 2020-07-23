@@ -1,33 +1,89 @@
-<div class="header">
+<div class="flex">
+  <div class="navbar">
+    <a class="infos">
+      <span>{{currentTurn}}.kör</span>
+      <span>{{rank}}.hely</span>
+      <!-- <button mat-button (click)="endTurn()">Kör vége</button> -->
+    </a>
 
-    <div class="infos">
-        <ul>
-            <li class="game-infos"><span>4.kör</span></li>
-            <li class="game-infos"><span>23.hely</span></li>
-            <li class="icons">
-                    <span><img src="assets/images/007-shark.svg" alt="image"></span>
-                    <span>0</span>
-            </li>
-            <li>
-                <span><img src="assets/images/025-seal.svg" alt="image"></span>
-                <span>5</span>
-            </li>
-            <li>
-                <span><img src="assets/images/013-seahorse.svg" alt="image"></span>
-                <span>13</span>
-            </li>
-            <li>
-                <span><img src="assets/images/shell.svg" alt="image"></span>
-                <span>230</span>
-            </li>
-            <li>
-                <span><img src="assets/images/018-coral.svg" alt="image"></span>
-                <span>230</span>
-            </li>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <span>
+          <div class="img-div">
+            <img src="assets/images/Lézercápa.svg" alt="image">
+          </div>
+          <div class="data">{{city.availableArmy.unitList[0].unitCount}}</div>
+        </span>
+      </li>
+      <li class="nav-item">
+        <span>
+          <div class="img-div">
+            <img src="assets/images/Rohamfóka.svg" alt="image">
+          </div>
+          <div class="data">{{city.availableArmy.unitList[1].unitCount}}</div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="img-div">
+            <img src="assets/images/Csatacsikó.svg" alt="image">
+          </div>
+          <div class="data">{{city.availableArmy.unitList[2].unitCount}}</div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+        <div class="img-div">
+          <img src="assets/images/Hadvezér.svg" alt="image">
+        </div>
+        <div class="data">{{city.availableArmy.unitList[3].unitCount}}</div>
+      </span>
+    </li>
+    <li class="nav-item"> <span>
+      <div class="img-div">
+        <img src="assets/images/Felfedező.svg" alt="image">
+      </div>
+      <div class="data">{{city.availableArmy.unitList[4].unitCount}}</div>
+    </span>
+  </li>
+      <li class="nav-item"> <span>
+          <div class="img-div">
+            <img src="assets/images/shell.svg" alt="image">
+          </div>
+          <div class="data">
+            <div>{{city.pearlCount}}</div>
+            <div class="second-data">{{city.pearlProduction}}/kör</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
+          <div class="img-div">
+            <img src="assets/images/018-coral.svg" alt="image">
+          </div>
+          <div class="data">
+            <div>{{city.coralCount}}</div>
+            <div class="second-data">{{city.coralProduction}}/kör</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
 
-        </ul>
+          <img src="assets/images/Zátonyvár.png" alt="" class="building-img">
 
+          <div class="data">
+            <div>{{city.buildings[0].quantity}}</div>
+            <div class="second-data">{{city.buildings[0].status}} épül</div>
+          </div>
+        </span>
+      </li>
+      <li class="nav-item"> <span>
 
-    </div>
-   
+          <img src="assets/images/Áramlásirányító.png" alt="" class="building-img">
+
+          <div class="data">
+            <div>{{city.buildings[1].quantity}}</div>
+            <div class="second-data">{{city.buildings[1].status}} épül</div>
+          </div>
+        </span>
+      </li>
+    </ul>
+  </div>
 </div>

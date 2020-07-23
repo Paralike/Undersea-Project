@@ -1,33 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.Interfaces;
 
 namespace Undersea.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProfileController : ControllerBase
     {
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ProfileDto>> DeleteProfile(int id)
+        readonly IProfileService _profileService;
+        Guid id;
+
+        public ProfileController(IProfileService profileService, IHttpContextAccessor httpContextAccessor)
         {
-            return Ok();
+            _profileService = profileService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ProfileDto>> GetProfile()
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProfile(Guid id)
         {
-            return Ok();
+            return Ok(_profileService.DeleteProfile(id));
         }
 
         [HttpGet("ranks")]
-        public async Task<ActionResult> GetRanks()
+        public async Task<ActionResult<List<RankDto>>> GetRanks(string name)
         {
-            return Ok();
+            return Ok(await _profileService.GetRank(name));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<RankDto>> GetProfile()
+        {
+            return Ok(await _profileService.GetProfile(id));
         }
 
     }

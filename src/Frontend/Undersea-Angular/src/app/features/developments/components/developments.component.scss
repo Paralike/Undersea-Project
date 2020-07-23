@@ -1,0 +1,204 @@
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 11vw;
+  height: 30vh;
+  background-color: #03255f;
+  margin-bottom: 0.4vh;
+  cursor: pointer;
+  
+}
+
+.flex{ 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 60vh;
+}
+.round {
+  color: #9FFFF0;
+  font-family: open-sans-semibold;
+  font-size: 0.875vw;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.content > img {
+  margin-bottom: 5%;
+}
+.guide{
+  font-weight: bold;
+}
+h2{
+  font-family: baloo;
+  font-size: 1.5vw;
+}
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  overflow: scroll;
+  background-color: #03255f;
+  height: 40vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  font-size: 0.8vw;
+  flex-wrap: wrap;
+  font-family: open-sans-regular;
+  
+}
+
+
+.buttons-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #03255f;
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+  height: 5vh;
+  width: 100%;
+}
+
+::ng-deep .mat-dialog-container {
+  background-color: #03255f !important;
+  color: white;
+  border-radius: 16px;
+}
+
+
+.development-desc {
+  margin: none;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  outline: none;
+  border-radius: 16px;
+  font-family: open-sans-regular;
+  
+
+}
+.development-name {
+  font-weight: bold;
+  margin-bottom: 5%;
+  font-family: open-sans-bold;
+
+}
+
+div:focus {
+  background-color: rgba($color: #FFFF, $alpha: 0.12);
+  outline: none;
+  border-radius: 16px;
+  
+}
+
+.quantity {
+  margin: 0.5vh;
+}
+
+.price {
+  margin-bottom: 0.5vh;
+}
+
+button {
+  display: block;
+  width: 10vw;
+  background: transparent linear-gradient(258deg, #9ffff0 0%, #6beee9 36%, #0fcfde 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #3b7dbd;
+  border-radius: 90px;
+  border: none;
+  font-family: baloo;
+  font-size: 0.8vw;
+  letter-spacing: 0px;
+  color: #001234;
+  padding: 0.5%;
+  margin-bottom: 1%;
+}
+button:disabled {
+  opacity: 0.4;
+  color: #001234;
+}
+
+
+.divider {
+  width: 100%;
+}
+
+::ng-deep .mat-snack-bar-container{
+  background-color: #03255F !important;
+  color: #9FFFF0;
+  font-weight: bold;
+}
+
+.checkmark {
+  top: 10px;
+  left: 10px;
+  position: absolute;
+  display:inline-block;
+  width: 22px;
+  height:22px;
+  -ms-transform: rotate(45deg); 
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+
+  .checkmark-circle {
+      position: absolute;
+      width:22px;
+      height:22px;
+      background-color: #9FFFF0;
+      border-radius:11px;
+      left:0;
+      top:0;
+  }
+
+  .checkmark-stem {
+      position: absolute;
+      width:3px;
+      height:9px;
+      background-color:#03255F;
+      left:11px;
+      top:6px;
+  }
+
+  .checkmark-kick {
+      position: absolute;
+      width:3px;
+      height:3px;
+      background-color:#03255F;
+      left:8px;
+      top:12px;
+  }
+
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #03255f;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3f68ae;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #03255f;
+}

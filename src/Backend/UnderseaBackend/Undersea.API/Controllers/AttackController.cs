@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
+using Undersea.BLL.DTOs.Actions;
+using Undersea.BLL.Interfaces;
 
 namespace Undersea.API.Controllers
 {
@@ -16,19 +18,33 @@ namespace Undersea.API.Controllers
     [Authorize]
     public class AttackController : ControllerBase
     {
+        private readonly IAttackService _attackService;
+        Guid id;
+
+        public AttackController(IAttackService attackService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        {
+            _attackService = attackService;
+            id = Guid.Parse(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        }
+
         [HttpPost]
-        // TODO FromBody csak egy paraméterhez lehet
         public async Task<ActionResult> StartAttack([FromBody] AttackDto attack)
         {
-            int id = int.Parse(User.FindFirst("Id")?.Value);
-            //User-ből id-t ki lehet szedni
+            await _attackService.StartAttack(id, attack);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult<AttackableUsersDto>> GetAttackableUsers()
+        public async Task<ActionResult<IEnumerable<AttackableUsersDto>>> GetAttackableUsers(string name)
         {
-            return Ok(new AttackableUsersDto());
+            return Ok(await _attackService.GetAttackableUsers(id,name));
         }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<AttackResponseDto>>> GetAllAttacks()
+        {
+            return Ok(await _attackService.GetAttacks(id));
+        }
+
     }
 }

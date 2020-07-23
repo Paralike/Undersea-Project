@@ -22,7 +22,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/UnitDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UnitDto"
+              }
             }
           }
         }
@@ -43,7 +46,10 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UnitPurchaseDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ArmyUnitDto"
+              }
             },
             "x-nullable": false
           }
@@ -101,12 +107,48 @@
           "application/json",
           "text/json"
         ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "name",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/AttackableUsersDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttackableUsersDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Attack/all": {
+      "get": {
+        "tags": [
+          "Attack"
+        ],
+        "operationId": "Attack_GetAllAttacks",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttackResponseDto"
+              }
             }
           }
         }
@@ -204,8 +246,118 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/BuildingDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BuildingDto"
+              }
             }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Buildings"
+        ],
+        "operationId": "Buildings_PurchaseBuilding",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "buildingType",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/BuildingType"
+            },
+            "x-nullable": false,
+            "enum": [
+              0,
+              1
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/BuildingType": {
+      "get": {
+        "tags": [
+          "BuildingType"
+        ],
+        "operationId": "BuildingType_GetBuildings",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BuildingAttributeDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/City": {
+      "get": {
+        "tags": [
+          "City"
+        ],
+        "operationId": "City_GetCity",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CityDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/Game": {
+      "get": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_GetGameState",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_NextTurn",
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -216,6 +368,33 @@
           "Profile"
         ],
         "operationId": "Profile_DeleteProfile",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "guid",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/ranks": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "operationId": "Profile_GetRanks",
         "produces": [
           "text/plain",
           "application/json",
@@ -223,12 +402,10 @@
         ],
         "parameters": [
           {
-            "type": "integer",
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "format": "int32",
-            "x-nullable": false
+            "type": "string",
+            "name": "name",
+            "in": "query",
+            "x-nullable": true
           }
         ],
         "responses": {
@@ -236,7 +413,10 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ProfileDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RankDto"
+              }
             }
           }
         }
@@ -258,18 +438,34 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ProfileDto"
+              "$ref": "#/definitions/RankDto"
             }
           }
         }
       }
     },
-    "/api/Profile/ranks": {
-      "get": {
+    "/api/Spy": {
+      "post": {
         "tags": [
-          "Profile"
+          "Spy"
         ],
-        "operationId": "Profile_GetRanks",
+        "operationId": "Spy_StartSpying",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "spying",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpyingDto"
+            },
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": true,
@@ -279,14 +475,12 @@
             }
           }
         }
-      }
-    },
-    "/api/Updgrades": {
+      },
       "get": {
         "tags": [
-          "Updgrades"
+          "Spy"
         ],
-        "operationId": "Updgrades_GetUpgrades",
+        "operationId": "Spy_GetAllAttacks",
         "produces": [
           "text/plain",
           "application/json",
@@ -297,7 +491,90 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/UpgradeDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SpyingResponseDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Upgrades": {
+      "get": {
+        "tags": [
+          "Upgrades"
+        ],
+        "operationId": "Upgrades_GetCurrentUpgradeStatuses",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UpgradeDto"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Upgrades"
+        ],
+        "operationId": "Upgrades_PurchaseUpgrade",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "upgradeType",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/UpgradeType"
+            },
+            "x-nullable": false,
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/UpgradeType": {
+      "get": {
+        "tags": [
+          "UpgradeType"
+        ],
+        "operationId": "UpgradeType_GetUpgrades",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UpgradeAttributeDto"
+              }
             }
           }
         }
@@ -333,6 +610,9 @@
         },
         "unitType": {
           "$ref": "#/definitions/UnitType"
+        },
+        "name": {
+          "type": "string"
         }
       }
     },
@@ -340,69 +620,105 @@
       "type": "integer",
       "description": "",
       "x-enumNames": [
+        "Lezercapa",
         "Rohamfoka",
         "Csatacsiko",
-        "Lezercsapa"
+        "Hadvezer",
+        "Felfedezo"
       ],
       "enum": [
         0,
         1,
-        2
+        2,
+        3,
+        4
       ]
     },
-    "UnitPurchaseDto": {
+    "ArmyUnitDto": {
       "type": "object",
+      "required": [
+        "unitType",
+        "unitCount"
+      ],
       "properties": {
-        "purchasedUnits": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          }
+        "unitType": {
+          "$ref": "#/definitions/UnitType"
+        },
+        "unitCount": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
     "AttackDto": {
       "type": "object",
+      "required": [
+        "defenderCityId"
+      ],
       "properties": {
-        "battles": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/ArmyDto"
+        "defenderCityId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
           }
+        }
+      }
+    },
+    "AttackableUsersDto": {
+      "type": "object",
+      "required": [
+        "id",
+        "username"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "guid"
+        },
+        "username": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "AttackResponseDto": {
+      "type": "object",
+      "properties": {
+        "cityName": {
+          "type": "string"
+        },
+        "unitList": {
+          "$ref": "#/definitions/ArmyDto"
+        },
+        "wasSuccessful": {
+          "type": "boolean"
         }
       }
     },
     "ArmyDto": {
       "type": "object",
       "required": [
-        "armyFoodNecessity"
+        "armyFoodNecessity",
+        "armyPearlNecessity"
       ],
       "properties": {
         "unitList": {
-          "type": "object",
-          "x-dictionaryKey": {
-            "$ref": "#/definitions/UnitType"
-          },
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArmyUnitDto"
           }
         },
         "armyFoodNecessity": {
           "type": "integer",
           "format": "int32"
-        }
-      }
-    },
-    "AttackableUsersDto": {
-      "type": "object",
-      "properties": {
-        "attackableUsers": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+        },
+        "armyPearlNecessity": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -459,7 +775,9 @@
         "status",
         "price",
         "turnCount",
-        "buildingType"
+        "buildingType",
+        "quantity",
+        "currentTurn"
       ],
       "properties": {
         "status": {
@@ -469,15 +787,20 @@
           "type": "integer",
           "format": "int32"
         },
-        "description": {
-          "type": "string"
-        },
         "turnCount": {
           "type": "integer",
           "format": "int32"
         },
         "buildingType": {
           "$ref": "#/definitions/BuildingType"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "currentTurn": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -485,9 +808,9 @@
       "type": "integer",
       "description": "",
       "x-enumNames": [
+        "UnBuilt",
         "InProgress",
-        "Done",
-        "UnBuilt"
+        "Done"
       ],
       "enum": [
         0,
@@ -507,15 +830,55 @@
         1
       ]
     },
-    "ProfileDto": {
+    "BuildingAttributeDto": {
       "type": "object",
       "required": [
+        "buildingType",
+        "price",
+        "resident",
+        "coral",
+        "hostCapacity"
+      ],
+      "properties": {
+        "buildingType": {
+          "$ref": "#/definitions/BuildingType"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "resident": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "coral": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hostCapacity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "CityDto": {
+      "type": "object",
+      "required": [
+        "id",
         "pearlCount",
         "pearlProduction",
         "coralCount",
-        "coralProduction"
+        "coralProduction",
+        "servicePay"
       ],
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "guid"
+        },
         "pearlCount": {
           "type": "integer",
           "format": "int32"
@@ -544,29 +907,156 @@
             "$ref": "#/definitions/UpgradeDto"
           }
         },
-        "army": {
+        "availableArmy": {
           "$ref": "#/definitions/ArmyDto"
+        },
+        "allArmy": {
+          "$ref": "#/definitions/ArmyDto"
+        },
+        "servicePay": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
     "UpgradeDto": {
       "type": "object",
       "required": [
-        "id",
-        "turnCount",
+        "upgradeType",
+        "currentTurn",
         "status"
       ],
       "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
+        "upgradeType": {
+          "$ref": "#/definitions/UpgradeType"
         },
-        "turnCount": {
+        "currentTurn": {
           "type": "integer",
           "format": "int32"
         },
         "status": {
           "$ref": "#/definitions/Status"
+        }
+      }
+    },
+    "UpgradeType": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Iszaptraktor",
+        "Iszapkombajn",
+        "Korallfal",
+        "Szonaragyu",
+        "VizalattiHarcmuveszetek",
+        "Alkimia"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "RankDto": {
+      "type": "object",
+      "required": [
+        "userId",
+        "point",
+        "rank"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "username": {
+          "type": "string"
+        },
+        "point": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cityName": {
+          "type": "string"
+        },
+        "rank": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "SpyingDto": {
+      "type": "object",
+      "required": [
+        "defenderCityId",
+        "spyCount"
+      ],
+      "properties": {
+        "defenderCityId": {
+          "type": "string",
+          "format": "guid"
+        },
+        "spyCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "SpyingResponseDto": {
+      "type": "object",
+      "required": [
+        "spyCount"
+      ],
+      "properties": {
+        "cityName": {
+          "type": "string"
+        },
+        "spyCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "wasSuccessful": {
+          "type": "boolean"
+        },
+        "defendingPower": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "UpgradeAttributeDto": {
+      "type": "object",
+      "required": [
+        "upgradeType",
+        "coralProduction",
+        "defensePoints",
+        "attackPoints",
+        "taxIncrease"
+      ],
+      "properties": {
+        "upgradeType": {
+          "$ref": "#/definitions/UpgradeType"
+        },
+        "coralProduction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "defensePoints": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "attackPoints": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "taxIncrease": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
         }
       }
     }

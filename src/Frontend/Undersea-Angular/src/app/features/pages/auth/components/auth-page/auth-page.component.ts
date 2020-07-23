@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { error } from '@angular/compiler/src/util';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { noWhiteSpace } from '../../../../../shared/nowhitespace';
 
 @Component({
   selector: 'app-auth-page',
@@ -23,7 +24,7 @@ export class AuthPageComponent implements OnInit {
   });
 
   registerForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, noWhiteSpace]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8)]),
@@ -36,20 +37,9 @@ export class AuthPageComponent implements OnInit {
   constructor(private authService: AuthpageService, private router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    localStorage.setItem('token', '');
   }
 
-  get name() { return this.loginForm.get('name'); }
 
-  get password() { return this.loginForm.get('password'); }
-
-  get namer() { return this.registerForm.get('name'); }
-
-  get passwordr() { return this.registerForm.get('password'); }
-
-  get passwordr2() { return this.registerForm.get('password2'); }
-
-  get cityNamer() { return this.registerForm.get('cityName'); }
 
 
   login() {
@@ -61,15 +51,17 @@ export class AuthPageComponent implements OnInit {
           localStorage.setItem('token', res.token);
           this.router.navigate(['/main']);
         }
-
       },
         (err) => {
-          this.snackbar.open('Hibás felhasználónév vagy jelszó', 'kuka');
-          console.error('HURKAAAAA', err);
+
+          if (err.status === 401) {
+            this.snackbar.open('Hibás név és jelszó páros', 'Bezár', {
+              duration: 3000
+            });
+          }
         });
 
     }
-
   }
 
 
@@ -80,31 +72,37 @@ export class AuthPageComponent implements OnInit {
         this.authService.register(
           this.registerForm.value.name,
           this.registerForm.value.password,
+          this.registerForm.value.password2,
           this.registerForm.value.cityName,
-          this.registerForm.value.password2
         ).subscribe(res => {
           if (res.token != null) {
 
             localStorage.setItem('token', res.token);
             this.router.navigate(['/main']);
+
           }
-          // tslint:disable-next-line:no-unused-expression
+          else {
+            this.snackbar.open('Ezzel a névvel már regisztráltak', 'Bezár', {
+              duration: 3000
+            });
+          }
         }, (err) => {
-          this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'kuka');
-          console.error('HURKAAAAA', err);
+          this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
+            duration: 3000
+          });
         });
       }
+
+
       else {
-        this.snackbar.open('A 2 jelszó nem egyezik', 'kuka', {
+        this.snackbar.open('A 2 jelszó nem egyezik!', 'Bezár', {
           duration: 5000
         });
       }
     }
   }
-
   changeMode(mode: boolean) {
     this.isReg = mode;
     this.ngOnInit();
   }
-
 }

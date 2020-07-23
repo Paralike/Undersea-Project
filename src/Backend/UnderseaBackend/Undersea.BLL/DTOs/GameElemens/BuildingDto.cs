@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Undersea.DAL.Enums;
+﻿using Undersea.DAL.Enums;
 
 namespace Undersea.BLL.DTOs
 {
@@ -10,8 +7,9 @@ namespace Undersea.BLL.DTOs
     {
         public Status Status { get; set; }
         public int Price { get; set; }
-        public string Description { get; set; }
         public int TurnCount { get; set; }
         public BuildingType BuildingType { get; set; }
+        public int Quantity { get; set; }
+        public int CurrentTurn { get; set; }
     }
 }

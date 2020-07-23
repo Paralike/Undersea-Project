@@ -1,22 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
+using Undersea.API.Middlewares;
+using Undersea.BLL.Interfaces;
 using Undersea.BLL.Services;
 using Undersea.DAL;
-
+using Undersea.DAL.Models;
+using Undersea.DAL.Repositories;
+using Undersea.DAL.Repositories.Interfaces;
+using Undersea.DAL.Repositories.Repositories;
+using Undersea.DAL.Repository.Interfaces;
+using Undersea.DAL.Repository.Repositories;
+using Hangfire;
+using Hangfire.SqlServer;
+using Undersea.BLL.Hubs;
 
 namespace Undersea.API
 {
@@ -32,19 +38,54 @@ namespace Undersea.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole<Guid>>(options =>
+            {
+                options.User.AllowedUserNameCharacters = "aábcdeéfghijklmnoöõpqrstuüûvwxyzAÁBCDEÉFGHIJKLMNOÖÕPQRSTUÜÛVWXYZ0123456789 -._@+";
+            })
             .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<AppDbContext>(o =>
-                    o.UseSqlServer(Configuration["ConnectionString"]));
+            o.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddHttpContextAccessor();
 
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAttackService, AttackService>();
+            services.AddTransient<IArmyService, ArmyService>();
+            services.AddTransient<IUpgradeService, UpgradeService>();
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<ILogService, LoggerService>();
+            services.AddTransient<IGameService, GameService>();
+            services.AddTransient<IBuildingService, BuildingService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<ISpyService, SpyService>();
+            services.AddTransient<ISignalHub, SignalHub>();
 
-            services.AddScoped<UserManager<IdentityUser>>();
-            services.AddScoped<SignInManager<IdentityUser>>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IArmyRepository, ArmyRepository>();
+            services.AddTransient<IAttackRepository, AttackRepository>();
+            services.AddTransient<IUnitRepository, UnitRepository>();
+            services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<IUpgradeAttributeRepository, UpgradeAttributeRepository>();
+            services.AddTransient<IBuildingAttributeRepository, BuildingAttributeRepository>();
+            services.AddTransient<IUpgradeJoinRepository, UpgradeJoinRepository>();
+            services.AddTransient<IBuildingJoinRepository, BuildingJoinRepository>();
+            services.AddTransient<IBuildingRepository, BuildingRepository>();
+            services.AddTransient<IArmyUnitJoinRepository, ArmyUnitJoinRepository>();
+            services.AddTransient<IUpgradeRepository, UpgradeRepository>();
+            services.AddTransient<ILoggerRepository, LoggerRepository>();
+            services.AddTransient<ISpyRepository, SpyRepository>();
 
+            services.AddTransient<UserManager<User>>();
+            services.AddTransient<SignInManager<User>>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -63,17 +104,35 @@ namespace Undersea.API
 
             });
 
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+
+            services.AddHangfireServer();
+
             services.AddCors();
 
             services.AddControllers();
 
             services.AddSwaggerDocument();
 
-
+            services.AddSignalR().AddJsonProtocol(options =>
+                options.PayloadSerializerOptions.PropertyNamingPolicy = null
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs)
         {
             if (env.IsDevelopment())
             {
@@ -81,11 +140,17 @@ namespace Undersea.API
             }
 
             app.UseCors(
-            options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-            );
+                    options => options
+                        .WithOrigins("http://localhost:4200", "http://localhost:5000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                );
 
-
+            app.UseMiddleware<ExceptionHandler>();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseHangfireDashboard();
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
@@ -94,11 +159,24 @@ namespace Undersea.API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            InitDatabase(app);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalHub>("/signalHub");
             });
+        }
 
+        private static void InitDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                var _gameService = serviceScope.ServiceProvider.GetService<IGameService>();
+                RecurringJob.AddOrUpdate(() => _gameService.NextTurn(), "*/5 * * * *");
+            }
         }
     }
 }

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Threading.Tasks;
 using Undersea.BLL.DTOs;
 using Undersea.BLL.DTOs.Auth;
 using Undersea.BLL.Services;
@@ -21,7 +13,7 @@ namespace Undersea.API.Controllers
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        IAuthService _authService;
+        private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {
@@ -29,16 +21,18 @@ namespace Undersea.API.Controllers
         }
 
         [HttpPost("login")]
-
         public async Task<ActionResult<AuthResponseDto>> AuthenticateUser([FromBody] LoginDto login)
-
         {
             if (login == null)
             {
                 return BadRequest("Invalid client request");
             }
-
             var user = await _authService.GetUser(login);
+
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException();
+            }
 
             var response = _authService.GetToken(user);
 
@@ -46,10 +40,9 @@ namespace Undersea.API.Controllers
             {
                 return Ok(response);
             }
-
             else
             {
-                return Unauthorized();
+                throw new UnauthorizedAccessException();
             }
 
         }
@@ -57,6 +50,10 @@ namespace Undersea.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> RegisterUser([FromBody] RegisterDto registration)
         {
+            if (registration.Password.Length < 8)
+            {
+                return BadRequest("minimum 8 characters are required");
+            }
             var result = await _authService.RegisterUser(registration);
 
             if (result != null)
