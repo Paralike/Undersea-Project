@@ -31,6 +31,7 @@ export class MainPageComponent implements OnInit {
       });
     this.featureService.getProfile().subscribe(res => {
       this.profile = res;
+
     });
   }
 

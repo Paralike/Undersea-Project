@@ -12,13 +12,14 @@ export class ProfileCardComponent implements OnInit {
 
   constructor(private authPageService: AuthpageService, private router: Router) { }
 
-
   ngOnInit(): void {
   }
 
   logout() {
     localStorage.setItem('token', null);
     this.router.navigate(['login']);
+
+
 
   }
 

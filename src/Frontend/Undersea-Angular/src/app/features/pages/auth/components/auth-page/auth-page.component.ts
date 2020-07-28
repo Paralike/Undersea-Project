@@ -45,18 +45,22 @@ export class AuthPageComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(res => {
+
         if (res.token != null) {
+
           localStorage.setItem('token', res.token);
           this.router.navigate(['/main']);
         }
       },
         (err) => {
+
           if (err.status === 401) {
             this.snackbar.open('Hibás név és jelszó páros', 'Bezár', {
               duration: 3000
             });
           }
         });
+
     }
   }
 
@@ -72,6 +76,7 @@ export class AuthPageComponent implements OnInit {
           this.registerForm.value.cityName,
         ).subscribe(res => {
           if (res.token != null) {
+
             localStorage.setItem('token', res.token);
             this.router.navigate(['/main']);
 

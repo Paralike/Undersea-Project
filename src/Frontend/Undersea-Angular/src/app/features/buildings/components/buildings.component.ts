@@ -11,6 +11,7 @@ import { BuildingDto, BuildingAttributeDto } from 'src/app/shared';
   styleUrls: ['./buildings.component.scss']
 })
 export class BuildingsComponent implements OnInit {
+
   public buildings: BuildingAttributeModel[];
   public selectedBuilding: BuildingModel;
   public addBuilding: BuildingModel[];
@@ -47,6 +48,7 @@ export class BuildingsComponent implements OnInit {
 
   unselect() {
     this.selectedBuilding = null;
+
   }
 
   sendData() {

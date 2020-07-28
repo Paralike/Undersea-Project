@@ -11,6 +11,7 @@ import { SignalViewModel } from 'src/app/core/models/signal-view-model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
   @Input() city: CityDto;
   @Input() rank: number;
