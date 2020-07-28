@@ -3033,7 +3033,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Projekt\Undersea\src\Frontend\Undersea-Angular\src\polyfills.ts */"./src/polyfills.ts");
+module.exports = __webpack_require__(/*! C:\Project\Betanulo\Undersea-Project\src\Frontend\Undersea-Angular\src\polyfills.ts */"./src/polyfills.ts");
 
 
 /***/ })

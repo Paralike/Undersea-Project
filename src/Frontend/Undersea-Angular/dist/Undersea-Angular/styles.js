@@ -486,8 +486,8 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projekt\Undersea\src\Frontend\Undersea-Angular\node_modules\@angular\material\prebuilt-themes\pink-bluegrey.css */"./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css");
-module.exports = __webpack_require__(/*! C:\Projekt\Undersea\src\Frontend\Undersea-Angular\src\styles.scss */"./src/styles.scss");
+__webpack_require__(/*! C:\Project\Betanulo\Undersea-Project\src\Frontend\Undersea-Angular\node_modules\@angular\material\prebuilt-themes\pink-bluegrey.css */"./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css");
+module.exports = __webpack_require__(/*! C:\Project\Betanulo\Undersea-Project\src\Frontend\Undersea-Angular\src\styles.scss */"./src/styles.scss");
 
 
 /***/ })

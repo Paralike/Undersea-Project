@@ -117,7 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function AuthPageComponent_form_7_div_2_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " N\u00E9v kit\u00F6lt\u00E9se k\u00F6ltelez\u0151 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " N\u00E9v kit\u00F6lt\u00E9se k\u00F6telez\u0151 ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function AuthPageComponent_form_7_div_2_Template(rf, ctx) { if (rf & 1) {
@@ -131,7 +131,7 @@ function AuthPageComponent_form_7_div_2_Template(rf, ctx) { if (rf & 1) {
 } }
 function AuthPageComponent_form_7_div_4_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Jelsz\u00F3 kit\u00F6lt\u00E9se k\u00F6ltelez\u0151 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Jelsz\u00F3 kit\u00F6lt\u00E9se k\u00F6telez\u0151 ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function AuthPageComponent_form_7_div_4_Template(rf, ctx) { if (rf & 1) {
@@ -319,9 +319,11 @@ class AuthPageComponent {
                     this.router.navigate(['/main']);
                 }
             }, (err) => {
-                this.snackbar.open('Hibás felhasználónév vagy jelszó', 'Bezár', {
-                    duration: 3000
-                });
+                if (err.status === 401) {
+                    this.snackbar.open('Hibás név és jelszó páros', 'Bezár', {
+                        duration: 3000
+                    });
+                }
             });
         }
     }
@@ -333,12 +335,15 @@ class AuthPageComponent {
                         localStorage.setItem('token', res.token);
                         this.router.navigate(['/main']);
                     }
-                    // tslint:disable-next-line:no-unused-expression
+                    else {
+                        this.snackbar.open('Ezzel a névvel már regisztráltak', 'Bezár', {
+                            duration: 3000
+                        });
+                    }
                 }, (err) => {
-                    this.snackbar.open('Hoppá, valami nem jó, próbálj másik névvel regisztrálni', 'Bezár', {
+                    this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
                         duration: 3000
                     });
-                    console.error('HURKAAAAA', err);
                 });
             }
             else {
