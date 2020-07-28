@@ -44,13 +44,13 @@
                 </div>
                 <div class="plus-minus">
 
-                    <div class="plus-icon" (click)="minusUnit(i)">
+                    <div class="plus-icon" (click)="minusUnit(i)" (mousedown)="mousDown(-1, i)" (mouseup)="mouseup()" (mouseleave)="mouseup()" >
                         -
                     </div>
                     <div>
                         {{this.addUnit[unit.unitType].unitCount}}
                     </div>
-                    <div class="plus-icon" (click)="plusUnit(i)">
+                    <div class="plus-icon" (click)="plusUnit(i)" (mousedown)="mousDown(1, i)" (mouseup)="mouseup()" (mouseleave)="mouseup()" >
                         +
                     </div>
     
