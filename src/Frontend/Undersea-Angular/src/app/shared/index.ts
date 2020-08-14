@@ -312,6 +312,7 @@ export class AuthClient {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(login);
+        console.log(content_);
 
         let options_ : any = {
             body: content_,

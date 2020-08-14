@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+    nodeapp:
+        ports:
+        - "8080:80"
+    webapp : 
+        environment: 
+            ConnectionStrings__DefaultConnection: Server=db,1433;Database=undersea;User=SA;Password=P.ssw0rd;
+            ConnectionStrings__HangfireConnection : Server=db,1433;Database=undersea;User=SA;Password=P.ssw0rd;
+        ports: 
+            - "8088:80"
+    db: 
+        ports:
+            - "1433:1433"
+        volumes:
+            - ./volumes/my-vol:/var/opt/mssql

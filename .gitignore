@@ -7,3 +7,4 @@
 /src/Backend/UnderseaBackend/Undersea.API/obj
 /src/Backend/UnderseaBackend/.vs/UnderseaBackend/v16
 /.vs
+docker/my-vol

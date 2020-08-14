@@ -9,6 +9,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ArmyUnitDto, UnitType } from 'src/app/shared';
+import { clearLine } from 'readline';
+import { clearImmediate } from 'timers';
+import { debounceTime } from 'rxjs/operators';
 
 
 @Component({
@@ -20,6 +23,8 @@ export class ArmyComponent implements OnInit {
   public army: ArmyModel[];
   public addUnit: ArmyUnitModel[];
   gyongy = 'Gyöngy';
+  timeoutHandler;
+  timeoutHandler1;
 
 
   constructor(
@@ -64,11 +69,35 @@ export class ArmyComponent implements OnInit {
           duration: 3000
         });
       }, (err) => {
-       this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
+        this.snackbar.open(JSON.parse(err.response).Message, 'Bezár', {
           duration: 5000
-         });
+        });
       });
     }
+
+
+  }
+  public mouseup() {
+
+    if (this.timeoutHandler || this.timeoutHandler1) {
+      clearInterval(this.timeoutHandler);
+      clearTimeout(this.timeoutHandler1);
+      this.timeoutHandler = null;
+      this.timeoutHandler1 = null;
+    }
+
+  }
+
+  mousDown(add: number, unit: number) {
+    this.timeoutHandler1 = setTimeout(() => {
+      this.timeoutHandler = setInterval(() => {
+        if (this.addUnit[unit].unitCount > 2 || add === 1) {
+          this.addUnit[unit].unitCount += 3 * add;
+        }
+
+      }, 1);
+    }, 500);
+
 
 
   }

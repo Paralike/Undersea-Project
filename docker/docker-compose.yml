@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  nodeapp:
+    image: nodeapp
+    build:
+      context: ../src/Frontend/Undersea-Angular/
+      dockerfile: Dockerfile
+    restart : unless-stopped
+  webapp:
+    image: backend-im
+    build: 
+      context: ../src/Backend/UnderseaBackend/
+      dockerfile: Dockerfile
+    depends_on: 
+      - db
+    restart : unless-stopped
+  db: 
+    image: "mcr.microsoft.com/mssql/server"
+    restart : unless-stopped
+
